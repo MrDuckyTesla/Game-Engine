@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="game/Assets/Fonts/|game/Assets/Sprites/|game/Assets/|Assets/Fonts/|Assets/Sprites/|Assets/" kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/nicol/eclipse-workspace/TCE/core-4.5.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
