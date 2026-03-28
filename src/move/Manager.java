@@ -3,7 +3,11 @@ package move;
 public class Manager {
 
 	public Manager() {
-		// TODO Auto-generated constructor stub
+		
 	}
+	
+//	public MoveSet getMoveSet() {
+//		return new MoveSet();
+//	}
 
 }

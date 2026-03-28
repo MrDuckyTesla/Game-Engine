@@ -154,11 +154,7 @@ public abstract class Character extends Obstacle {
 	public boolean getOverworld() {return this.overWorldCurr;}
 	public boolean getSprint() {return this.overSprint;}
 	// Set
-	protected void setOverState(int state) {
-//		if (this.letMove) {
-			this.overCurrState = state;
-//		}
-	}
+	protected void setOverState(int state) {this.overCurrState = state;}
 	protected void setOverDir(int dir) {this.overCurrDir = dir;}
 	protected void setSprint(boolean state) {this.overSprint = state;}
 	// Private set
