@@ -79,7 +79,7 @@ public class Main extends PApplet {
 //		rect(min(mouseX, width-100), min(mouseY, height-100), 100, 100);
 //		circle(50, 700, 50);
 
-		test.update(this);
+		test.update();
 //		p.update();
 		
 		textSize(36); text(Math.round(this.frameRate)+"fps", 10, 30);

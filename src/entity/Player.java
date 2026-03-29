@@ -13,7 +13,7 @@ public class Player extends Character {
 		super.update();
 		
 		if (this.getOverworld()) {
-//			if (ToolKit.keyIsDown(88)) {this.setOverState(2);}
+//			if (ToolKit.keyIsDown(88)) {this.setOverState(2);} // Sword Swing
 		    if (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39) || ToolKit.keyIsDown(83) || ToolKit.keyIsDown(40) || ToolKit.keyIsDown(65) || ToolKit.keyIsDown(37) || ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38)) {this.setOverState(false);}
 		    else {this.setOverState(true);}
 //		    if (ToolKit.keyIsDown(16)) {}

@@ -1,6 +1,8 @@
-package move;
+package movement;
 
 import java.util.ArrayList;
+
+import abilities.Ability;
 import entity.Obstacle;
 import entity.Point;
 import game.ToolKit;
@@ -8,7 +10,6 @@ import processing.core.PApplet;
 
 public class EightDirectionalMove extends MoveSet {
 	
-	private final static int MOVE_TYPE = 1;
 	private boolean isIdle = true;
 	private int dir = 0;
 	private float maxSpeed, currSpeed;  // How much object is allowed to move in a frame
@@ -25,7 +26,6 @@ public class EightDirectionalMove extends MoveSet {
 
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
-		
 		Point p = this.getPotential(); this.totalDist.resetPoint();
 		for (Obstacle o : room) {
 			if (o != c && o.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
@@ -36,25 +36,30 @@ public class EightDirectionalMove extends MoveSet {
 					else if (p.getY() > 0) {if (this.setY(o.getY() - c.getH() - 0.0001f)) {p.resetY();}}
 				}  // If c collides with border
 			} 
-			
-		}
-		PApplet app = Point.getApp();	
+		} PApplet app = Point.getApp();	
 		if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.xywh.getW(), this.xywh.getH(), 0, 0, app.width, app.height)) {
 			if (p.getX() < 0) {if (this.setX(0.0001f)) {p.resetX();}}
 			else if (p.getX() > 0) {if (this.setX(app.width - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
-		}
-		this.isIdle = p.isZero();
+		} this.isIdle = p.isZero();
 		this.xywh.addXY(p);
 //		this.showHitBox();
+	}
+	
+	@Override
+	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] abilities) {
+		for (Ability a : abilities) {
+			a.update(c, this);
+		}
+		this.move(room, c);
 	}
 	
 	@Override
 	public Point getPoint() {return this.xywh.getPoint();}
 
 	@Override
-	public int getMoveType() {return EightDirectionalMove.MOVE_TYPE;}
+	public Moves getMoveType() {return Moves.eightDirectional;}
 	
 	private Point getPotential() {
 		Point s = new Point();

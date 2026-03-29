@@ -2,6 +2,9 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import abilities.Ability;
+import abilities.Sprint;
 import entity.*;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -48,17 +51,11 @@ public class Room {
 		
 	}
 	
-	public void update(PApplet app) {
+	public void update() {
+		Ability[] a = new Ability[] {new Sprint(16)};
 		Collections.sort(room);
-//		p.m.move(room, p);
-//		for (Obstacle o : room) {
-			
-//			if (o.isTangible()) {
-//				p.isCollide(o);
-//			}
-//		}
 		for (Obstacle o : room) {
-			o.getMoveSet().move(room, o);
+			o.getMoveSet().move(room, o, a);
 			o.update();
 		}
 	}

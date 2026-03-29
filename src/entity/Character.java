@@ -3,8 +3,8 @@ package entity;
 import java.util.ArrayList;
 import game.Animation;
 import game.ToolKit;
-import move.Manager;
-import move.MoveSet;
+import movement.Manager;
+import movement.MoveSet;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -66,7 +66,7 @@ public abstract class Character extends Obstacle {
 		overScaledWidth = Character.OVER_WIDTH * this.scale.getX(); overScaledHeight = Character.OVER_HEIGHT * this.scale.getX();
 		battScaledWidth = Character.BATT_WIDTH * this.scale.getY(); battScaledHeight = Character.BATT_HEIGHT * this.scale.getY();
 		
-		move = Manager.getMoveSet(this.get(), 3);
+		this.move = Manager.getMoveSet(this.get(), 3);
 	}
 	
 	@Override
@@ -89,44 +89,16 @@ public abstract class Character extends Obstacle {
 			this.overPosit = this.move.getPoint();
 		} 
 		
-		else {  // Battle state
-			
-		}
-		
 		// Update last state variables
 	    this.overLastDir = this.move.getDir();
 	    this.overWorldLast = this.overWorldCurr;
 	    this.overLastState = this.overCurrState;
 	    this.battLastDir = this.battCurrDir;
-//	    this.battPositLast = this.battPosit.get();
 	    this.set(this.overPosit);
 		
 	}
 	
 	public void showHitBox() {Point.pushApp(); Point.fillApp(255, 0, 0); Point.rectApp(this.overPosit.getX(), this.overPosit.getY(), overScaledWidth, overScaledHeight); Point.popApp();}
-	
-//	private int basicCollisionOver(int state, float x1, float y1, float x2, float y2) {
-//	    this.overCurrState = 1;
-//	    if ((this.overCurrDir == 0 || this.overCurrDir == 1 || this.overCurrDir == 7) && this.overPosit.getX() + this.overSpeed > x2 - this.overScaledWidth) {
-//	      this.setOverX(x2 - this.overScaledWidth); return this.overCurrDir;  // Right
-//	    } 
-//	    if ((this.overCurrDir == 1 || this.overCurrDir == 2 || this.overCurrDir == 3) && this.overPosit.getY() + this.overSpeed > y2 - this.overScaledHeight) {
-//	      this.setOverY(y2 - this.overScaledHeight); return this.overCurrDir;  // Down
-//	    } 
-//	    if ((this.overCurrDir == 3 || this.overCurrDir == 4 || this.overCurrDir == 5) && this.overPosit.getX() - this.overSpeed < x1) {
-//	      this.setOverX(x1); return this.overCurrDir;  // Left
-//	    } 
-//	    if ((this.overCurrDir == 5 || this.overCurrDir == 6 || this.overCurrDir == 7) && this.overPosit.getY() - this.overSpeed < y1) {
-//	      this.setOverY(y1); return this.overCurrDir;  // Up
-//	    } this.overCurrState = state; return -1;
-//	  }
-	
-//	private float stateSpeed() {
-//		float speed = 0; this.overStateCheck1();  // Create temporary variable and check if sprinting or if doing sword animation
-//		if (this.overCurrState == 3) {speed = this.overSpeed;}  // Overworld Walk
-//		if (this.overCurrState == 2) {speed = this.overSpeed/2;}  // Sword Swing (walking)
-//		this.overStateCheck2(); return speed; // Reset Sprinting speed if sprinting and return temporary variable
-//	}
 	
 	private void animateMoveOver(int start, int frames, boolean ignore, boolean fullAnim) {
 		int startReal = start + this.move.getDir() * frames; PApplet app = Point.getApp();
@@ -142,12 +114,6 @@ public abstract class Character extends Obstacle {
 //		}
 //		else {this.unskipAnim = false;}
 	}
-	
-//	private void calculateOverMove(float speed) {
-//		if (this.overCurrDir % 2 == 1) {speed *= 0.7071068f;}  // sin 45
-//		if (this.overCurrDir % 4 != 2) {this.overMove.setX(this.overCurrDir % 7 < 2? speed : -speed);}
-//		if (this.overCurrDir % 4 - 1 != -1) {this.overMove.setY(this.overCurrDir < 4? speed : -speed);}
-//	}
 	
 	private void overStateCheck1() {
 //		if (this.overSprint) {this.overSpeed *= 2; this.overAnimSpeed /= 2;}  // If sprinting, double all speeds

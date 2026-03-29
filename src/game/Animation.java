@@ -121,11 +121,5 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 	public int getIndexCount() {return this.indexCount;}
 	public int getTimeRun() {return this.timeRun;}
 	public float getTimeIncrease() {return this.timeIncrease;}
-	// Set
-	public void setIndex(int index) {this.index = index;}
-	public void setFrameIndex(int frameIndex) {this.frameIndex = frameIndex;}
-	public void setIndexCount(int indexCount) {this.indexCount = indexCount;}
-	public void setTimeRun(int timeRun) {this.timeRun = timeRun;}
-	public void setTimeIncrease(float timeIncrease) {this.timeIncrease = timeIncrease;}
 
 }

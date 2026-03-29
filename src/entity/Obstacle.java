@@ -3,14 +3,14 @@ package entity;
 import java.util.ArrayList;
 
 import game.ToolKit;
-import move.Manager;
-import move.MoveSet;
+import movement.Manager;
+import movement.MoveSet;
 import processing.core.PApplet;
 
 public class Obstacle extends Point {
 	
 	private float w, h;
-	private boolean isTangible;
+	private boolean isTangible, isMovable , isBreakable;
 	
 	public Obstacle() {super(); this.instantiate(0, 0);}
 	public Obstacle(boolean t) {super(); this.instantiate(w, h, t);}
@@ -39,6 +39,8 @@ public class Obstacle extends Point {
 	
 	public boolean isCollide(Obstacle o) {return ToolKit.rectRectCollide(this.getX(), this.getY(), this.w, this.h, o.getX(), o.getY(), o.getW(), o.getH());}
 	public boolean isTangible() {return this.isTangible;}
+	public boolean isMovable() {return this.isMovable;}
+	public boolean isBreakable() {return this.isBreakable;}
 	
 	public boolean displayRect() {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX(), getY(), w, h); return true;}
 	public boolean displayRect(float s) {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX()*s, getY()*s, w*s, h*s); return true;}

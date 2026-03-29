@@ -1,13 +1,14 @@
-package move;
+package movement;
 
 import java.util.ArrayList;
+
+import abilities.Ability;
 import entity.Character;
 import entity.Obstacle;
 import entity.Point;
 
 public class BiDirectionalMove extends MoveSet {
 	
-	private final static int MOVE_TYPE = 0;
 	private Obstacle xywh, bg;
 	
 	public BiDirectionalMove(Obstacle xywh, Obstacle bg) {
@@ -17,7 +18,11 @@ public class BiDirectionalMove extends MoveSet {
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	@Override
+	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] a) {
+		this.move(room, c);
 	}
 
 	@Override
@@ -27,9 +32,9 @@ public class BiDirectionalMove extends MoveSet {
 	}
 
 	@Override
-	public int getMoveType() {
+	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return 0;
+		return Moves.biDirectional;
 	}
 
 	@Override

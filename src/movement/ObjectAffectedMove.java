@@ -1,23 +1,26 @@
-package move;
+package movement;
 
 import java.util.ArrayList;
+import abilities.Ability;
 import entity.Obstacle;
 import entity.Point;
 
-public class GravityAffectedMove extends MoveSet {
+public class ObjectAffectedMove extends MoveSet {
 	
-	private final static int MOVE_TYPE = 2;
-	Point coords = new Point();
-	private Obstacle xywh, bg;
-	
-	public GravityAffectedMove(Obstacle xywh, Obstacle bg) {
-		this.xywh = xywh; this.bg = bg;
+	public ObjectAffectedMove() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c) {
+	public void move(ArrayList<Obstacle> r, Obstacle c) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void move(ArrayList<Obstacle> r, Obstacle c, Ability[] a) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -27,21 +30,21 @@ public class GravityAffectedMove extends MoveSet {
 	}
 
 	@Override
-	public int getMoveType() {
+	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return 0;
+		return Moves.objectAffected;
 	}
 
 	@Override
 	public void setDir(int d) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setIdle(boolean i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -55,6 +58,5 @@ public class GravityAffectedMove extends MoveSet {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 }
