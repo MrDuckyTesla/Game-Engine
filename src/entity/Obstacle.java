@@ -1,6 +1,10 @@
 package entity;
 
+import java.util.ArrayList;
+
 import game.ToolKit;
+import move.Manager;
+import move.MoveSet;
 import processing.core.PApplet;
 
 public class Obstacle extends Point {
@@ -53,6 +57,7 @@ public class Obstacle extends Point {
 	public Point getPoint() {return super.get();}
 	public Point getCorner(boolean topSide, boolean rightSide) {return new Point(rightSide? getX()+w : getX(), topSide? getY() : getY()+h);}
 	public Point[] getCorners() {return new Point[] {getCorner(true, false), getCorner(true, true), getCorner(false, true), getCorner(false, false)};}
+	public MoveSet getMoveSet() {return Manager.getMoveSet();}
 	
 	// Overridden functions
 	@Override

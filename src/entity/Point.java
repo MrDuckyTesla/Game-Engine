@@ -65,6 +65,8 @@ public class Point implements Comparable<Object> {
 	public void addXY(float x) {this.addX(x); this.addY(x);}
 	public void addXY(float x, float y) {this.addX(x); this.addY(y);}
 	public void addXY(Point p) {this.addX(p.getX()); this.addY(p.getY());}
+	// Multiply
+	public void multpilyXY(float x) {this.x *= x; this.y *= x;}
 	
 	// Overridden functions
 	@Override

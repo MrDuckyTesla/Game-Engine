@@ -1,7 +1,6 @@
 package move;
 
 import java.util.ArrayList;
-import entity.Character;
 import entity.Obstacle;
 import entity.Point;
 
@@ -16,12 +15,46 @@ public class GravityAffectedMove extends MoveSet {
 	}
 
 	@Override
-	public Point move(ArrayList<Obstacle> room, Character c) {
+	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
-		return new Point();
+		
 	}
 
 	@Override
-	public int getMoveType() {return GravityAffectedMove.MOVE_TYPE;}
+	public Point getPoint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getMoveType() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setDir(int d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setIdle(boolean i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getDir() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean getIsIdle() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

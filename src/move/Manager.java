@@ -1,13 +1,16 @@
 package move;
 
-public class Manager {
+import entity.Obstacle;
+import entity.Point;
 
-	public Manager() {
-		
+public class Manager {
+	
+	public static MoveSet getMoveSet() {
+		return new EightDirectionalMove();
 	}
 	
-//	public MoveSet getMoveSet() {
-//		return new MoveSet();
-//	}
+	public static MoveSet getMoveSet(Obstacle xywh, float maxSpeed) {
+		return new EightDirectionalMove(xywh, maxSpeed);
+	}
 
 }

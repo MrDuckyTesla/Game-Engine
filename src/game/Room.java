@@ -50,13 +50,15 @@ public class Room {
 	
 	public void update(PApplet app) {
 		Collections.sort(room);
-		
+//		p.m.move(room, p);
+//		for (Obstacle o : room) {
+			
+//			if (o.isTangible()) {
+//				p.isCollide(o);
+//			}
+//		}
 		for (Obstacle o : room) {
-			if (o.isTangible()) {
-				p.isCollide(o);
-			}
-		}
-		for (Obstacle o : room) {
+			o.getMoveSet().move(room, o);
 			o.update();
 		}
 	}

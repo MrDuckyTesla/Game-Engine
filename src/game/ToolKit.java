@@ -465,6 +465,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	public static boolean compareProcessingColorList(PApplet app, int color1, int[] color2) {return app.red(color1) == color2[0] && app.green(color1) == color2[1] && app.blue(color1) == color2[2] && app.alpha(color1) == color2[3];}
 	public static boolean compareColorList(int r, int g, int b, int a, int[] col) {return r == col[0] && g == col[1] && b == col[2] && a == col[3];}  // Checks if two colors are not different
 	public static boolean compareColorColor(int[] col1, int[] col2) {return col1[0] == col2[0] && col1[1] == col2[1] && col1[2] == col2[2] && col1[3] == col2[3];}  // Checks if two colors are the same
+	public static Point getImageWH(PImage p) {return new Point(p.width, p.height);}
 	
 	// Alternate versions of functions (I really like default parameters, so sad that java removes those)
 	public static void pixelate(PApplet app, int res) {ToolKit.pixelate(app, res, 0, 0, app.width, app.height);}
