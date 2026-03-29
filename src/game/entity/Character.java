@@ -32,7 +32,7 @@ public abstract class Character extends Obstacle {
 	
 	private MoveSet move;
 	
-	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NESSESSICARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS
+	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
 	public Character(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer, int[] colorTint) {
 		super(overPosit, Character.OVER_WIDTH * scale.getX(), Character.OVER_HEIGHT * scale.getY());
