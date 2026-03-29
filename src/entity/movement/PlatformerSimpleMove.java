@@ -1,22 +1,33 @@
-package movement;
+package entity.movement;
 
 import java.util.ArrayList;
-import abilities.Ability;
+
 import entity.Obstacle;
 import entity.Point;
+import entity.movement.abilities.Ability;
 
-public class ObjectAffectedMove extends MoveSet {
+// Legacy version without procedural animation
+public class PlatformerSimpleMove extends MoveSet {
 	
-	public ObjectAffectedMove() {
-		// TODO Auto-generated constructor stub
+	Point coords = new Point();
+	private Obstacle xywh;
+	private float impulse, friction, speed, accelerationY;
+	
+	public PlatformerSimpleMove() {
+		this.xywh = new Obstacle(0, 0, 9, 13);
+		this.impulse = 17; this.friction = 0.8f;
+		this.speed = 2.5f; this.accelerationY = 1;
 	}
+	
+//	public PlatformerMove(Obstacle xywh, Obstacle bg) {
+//		this.xywh = xywh; this.bg = bg;
+//	}
 
 	@Override
-	public void move(ArrayList<Obstacle> r, Obstacle c) {
+	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
-
 	}
-
+	
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c, Ability ability) {ability.update(c, this); this.move(room, c);}
 	@Override
@@ -31,19 +42,19 @@ public class ObjectAffectedMove extends MoveSet {
 	@Override
 	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.objectAffected;
+		return Moves.platformer;
 	}
 
 	@Override
 	public void setDir(int d) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void setIdle(boolean i) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -57,5 +68,6 @@ public class ObjectAffectedMove extends MoveSet {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 }

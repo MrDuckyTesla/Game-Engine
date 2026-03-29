@@ -1,4 +1,4 @@
-package movement;
+package entity.movement;
 
 public enum Moves {
 	biDirectional, eightDirectional, platformer, objectAffected

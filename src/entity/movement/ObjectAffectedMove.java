@@ -1,24 +1,23 @@
-package movement;
+package entity.movement;
 
 import java.util.ArrayList;
-import abilities.Ability;
+
 import entity.Obstacle;
 import entity.Point;
+import entity.movement.abilities.Ability;
 
-public class PlatformerMove extends MoveSet {
+public class ObjectAffectedMove extends MoveSet {
 	
-	Point coords = new Point();
-	private Obstacle xywh, bg;
-	
-	public PlatformerMove(Obstacle xywh, Obstacle bg) {
-		this.xywh = xywh; this.bg = bg;
+	public ObjectAffectedMove() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c) {
+	public void move(ArrayList<Obstacle> r, Obstacle c) {
 		// TODO Auto-generated method stub
+
 	}
-	
+
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c, Ability ability) {ability.update(c, this); this.move(room, c);}
 	@Override
@@ -33,19 +32,19 @@ public class PlatformerMove extends MoveSet {
 	@Override
 	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.platformer;
+		return Moves.objectAffected;
 	}
 
 	@Override
 	public void setDir(int d) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setIdle(boolean i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -59,6 +58,5 @@ public class PlatformerMove extends MoveSet {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 }

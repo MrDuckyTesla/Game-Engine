@@ -1,4 +1,4 @@
-package movement;
+package entity.movement;
 
 import entity.Obstacle;
 

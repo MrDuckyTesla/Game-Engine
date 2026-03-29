@@ -1,10 +1,11 @@
 package entity;
 
 import java.util.ArrayList;
+
+import entity.movement.Manager;
+import entity.movement.MoveSet;
 import game.Animation;
 import game.ToolKit;
-import movement.Manager;
-import movement.MoveSet;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -25,11 +26,6 @@ public abstract class Character extends Obstacle {
 	private int[] animateState = new int[] {0, 0, 0, 0};
 	private int overAnimSpeed = 12, battAnimSpeed = 5;
 	private boolean changeAnim = false, unskipAnim = false;
-	// Movement Variables
-//	final private float OVER_MOVE_SPEED_CAP = 6, BATT_IMPUL = 17, BATT_FRICT = 0.8f;
-//	private Point battPositLast, battVeloc = new Point(), battAccel = new Point(0, 1), overMove = new Point();
-//	private float overSpeed = 3, battSpeed = 2.5f;
-	private boolean overSprint = false;
 	// World Variables
 	private float overScaledWidth, overScaledHeight, battScaledWidth, battScaledHeight;
 	private int overLastDir = 0, overCurrState = 1, overLastState = 0, battCurrDir = 0, battLastDir = 0, battCurrState = 0;
@@ -117,7 +113,7 @@ public abstract class Character extends Obstacle {
 	
 	private void overStateCheck1() {
 //		if (this.overSprint) {this.overSpeed *= 2; this.overAnimSpeed /= 2;}  // If sprinting, double all speeds
-		if (this.overSprint) {this.overAnimSpeed /= 2;}  // If sprinting, double all speeds
+//		if (this.overSprint) {this.overAnimSpeed /= 2;}  // If sprinting, double all speeds
 		if (this.unskipAnim) {  // If we are staying in an animation
 			if ((this.animManager.getIndexCount() + 1) % this.overAnimSpeed == 0 && this.animManager.getIndex() == this.animateState[2]) {this.unskipAnim = false;}  // If the animation has ended, end the animation
 //			else {this.overCurrState = this.animateState[0]; this.overCurrDir = this.overLastDir;}  //Else, keep the character state and direction the same
@@ -130,11 +126,9 @@ public abstract class Character extends Obstacle {
 	public int getOverDir() {return this.move.getDir();}
 	public boolean getOverState() {return this.move.getIsIdle();}
 	public boolean getOverworld() {return this.overWorldCurr;}
-	public boolean getSprint() {return this.overSprint;}
 	// Set
 	protected void setOverState(boolean isIdle) {this.move.setIdle(isIdle);}
 	protected void setOverDir(int dir) {this.move.setDir(dir);}
-	protected void setSprint(boolean state) {this.overSprint = state;}
 	
 	// Overridden functions
 	@Override

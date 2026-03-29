@@ -1,10 +1,10 @@
-package abilities;
+package entity.movement.abilities;
 
 import entity.Obstacle;
+import entity.movement.EightDirectionalMove;
+import entity.movement.MoveSet;
+import entity.movement.Moves;
 import game.ToolKit;
-import movement.EightDirectionalMove;
-import movement.MoveSet;
-import movement.Moves;
 
 public class Sword8d extends Ability {
 	

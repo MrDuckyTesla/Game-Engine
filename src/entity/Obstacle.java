@@ -2,9 +2,9 @@ package entity;
 
 import java.util.ArrayList;
 
+import entity.movement.Manager;
+import entity.movement.MoveSet;
 import game.ToolKit;
-import movement.Manager;
-import movement.MoveSet;
 import processing.core.PApplet;
 
 public class Obstacle extends Point {

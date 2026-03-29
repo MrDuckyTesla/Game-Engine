@@ -1,7 +1,7 @@
-package abilities;
+package entity.movement.abilities;
 
 import entity.Obstacle;
-import movement.MoveSet;
+import entity.movement.MoveSet;
 
 public abstract class Ability {
 	

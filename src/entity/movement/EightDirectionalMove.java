@@ -1,10 +1,10 @@
-package movement;
+package entity.movement;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
 import entity.Obstacle;
 import entity.Point;
+import entity.movement.abilities.Ability;
 import game.ToolKit;
 import processing.core.PApplet;
 

@@ -1,10 +1,10 @@
-package abilities;
+package entity.movement.abilities;
 
 import entity.Obstacle;
+import entity.movement.EightDirectionalMove;
+import entity.movement.MoveSet;
+import entity.movement.Moves;
 import game.ToolKit;
-import movement.MoveSet;
-import movement.EightDirectionalMove;
-import movement.Moves;
 
 //this class ONLY works on objects using EightDirectionalMove()
 public class Sprint8d extends Ability {

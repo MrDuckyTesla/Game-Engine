@@ -1,20 +1,26 @@
 package game;
 
-import java.util.ArrayList;
-
-import movement.MoveSet;
 import processing.core.PImage;
 
 public class Animator {
 	
-	private ArrayList<Animation> anims = new ArrayList<Animation>();
+	private Animation currAnim;
+	private boolean isLetChange, isNewAnim;
 
 	public Animator(PImage p) {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void addAnimation(Animation anim) {
+	public void update() {
 		
 	}
+	
+	public void changeAnimation(Animation anim) {
+		if (this.isLetChange) {
+			
+		}
+	}
+	
+	public int getFrameEnd() {return 0;}
 
 }
