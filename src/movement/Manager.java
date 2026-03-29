@@ -1,8 +1,6 @@
 package movement;
 
-import java.util.ArrayList;
 import entity.Obstacle;
-import entity.Point;
 
 public class Manager {
 	

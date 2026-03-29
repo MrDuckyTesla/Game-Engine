@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import abilities.Ability;
-import abilities.Sprint;
+import abilities.*;
 import entity.*;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -52,10 +52,15 @@ public class Room {
 	}
 	
 	public void update() {
-		Ability[] a = new Ability[] {new Sprint(16)};
+		Ability[] a = new Ability[] {new Sprint8d(16), new Sword8d(88)};
 		Collections.sort(room);
 		for (Obstacle o : room) {
+			try {
 			o.getMoveSet().move(room, o, a);
+			}
+			catch (IllegalArgumentException e) {
+				
+			}
 			o.update();
 		}
 	}

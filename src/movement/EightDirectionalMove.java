@@ -44,16 +44,14 @@ public class EightDirectionalMove extends MoveSet {
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero();
 		this.xywh.addXY(p);
+		this.setNormSpeed();
 //		this.showHitBox();
 	}
 	
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] abilities) {
-		for (Ability a : abilities) {
-			a.update(c, this);
-		}
-		this.move(room, c);
-	}
+	public void move(ArrayList<Obstacle> room, Obstacle c, Ability ability) {ability.update(c, this); this.move(room, c);}
+	@Override
+	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] abilities) {for (Ability a : abilities) {a.update(c, this);} this.move(room, c);}
 	
 	@Override
 	public Point getPoint() {return this.xywh.getPoint();}
@@ -71,6 +69,8 @@ public class EightDirectionalMove extends MoveSet {
 		return s;
 	}
 	
+	public void halfSpeed() {this.currSpeed = this.currSpeed/2;}
+	public void doubSpeed() {this.currSpeed = Math.min(this.maxSpeed, this.currSpeed*2);}
 	public void setHalfSpeed() {this.currSpeed = this.maxSpeed/4;}
 	public void setNormSpeed() {this.currSpeed = this.maxSpeed/2;}
 	public void setDoubSpeed() {this.currSpeed = this.maxSpeed;}

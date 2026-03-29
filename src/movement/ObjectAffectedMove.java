@@ -18,10 +18,9 @@ public class ObjectAffectedMove extends MoveSet {
 	}
 
 	@Override
-	public void move(ArrayList<Obstacle> r, Obstacle c, Ability[] a) {
-		// TODO Auto-generated method stub
-
-	}
+	public void move(ArrayList<Obstacle> room, Obstacle c, Ability ability) {ability.update(c, this); this.move(room, c);}
+	@Override
+	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] abilities) {for (Ability a : abilities) {a.update(c, this);} this.move(room, c);}
 
 	@Override
 	public Point getPoint() {

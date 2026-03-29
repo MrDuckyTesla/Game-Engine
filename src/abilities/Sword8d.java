@@ -2,31 +2,32 @@ package abilities;
 
 import entity.Obstacle;
 import game.ToolKit;
-import movement.MoveSet;
 import movement.EightDirectionalMove;
+import movement.MoveSet;
 import movement.Moves;
 
-public class Sprint extends Ability {
+public class Sword8d extends Ability {
 	
 	private boolean isActive = false;
-	
-	public Sprint(int key) {
+
+	public Sword8d(int key) {
 		super(key);
+		// TODO Auto-generated constructor stub
 	}
 	
-	public Sprint(int[] keys) {
+	public Sword8d(int[] keys) {
 		super(keys);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void update(Obstacle o, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
-		for (int key : this.getKeys()) {this.isActive = ToolKit.keyIsDown(key);}
-		if (this.isActive) {((EightDirectionalMove) m).setDoubSpeed();}
-		else {((EightDirectionalMove) m).setNormSpeed();}
+		for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
+		if (this.isActive) {((EightDirectionalMove) m).halfSpeed();}
 	}
 
 	@Override
 	public boolean isActive() {return this.isActive;}
-	
+
 }
