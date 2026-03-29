@@ -2,9 +2,8 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import entity.*;
-import entity.movement.abilities.*;
+import game.entity.*;
+import game.entity.abilities.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 

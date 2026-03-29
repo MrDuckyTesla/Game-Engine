@@ -1,6 +1,6 @@
 package game;
 
-import entity.*;
+import game.entity.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 

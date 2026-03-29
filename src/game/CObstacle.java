@@ -2,8 +2,8 @@ package game;
 
 import java.util.ArrayList;
 
-import entity.Obstacle;
-import entity.Point;
+import game.entity.Obstacle;
+import game.entity.Point;
 import processing.core.PApplet;
 
 public class CObstacle {  // Complex Obstacle (basically multiple rectangles stitched together)

@@ -2,9 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
-import entity.Obstacle;
-import entity.Player;
-import entity.Point;
+import game.entity.Obstacle;
+import game.entity.Player;
+import game.entity.Point;
 import processing.core.PApplet;
 import processing.core.PImage;
 
