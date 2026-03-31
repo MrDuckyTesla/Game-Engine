@@ -1,6 +1,6 @@
 TOP PRIORITIES (New)
 
-#1: Handle all movement and collision in modular way (IE seperate classes) (also you can implement battles at a later point)
+#1: Clean up new movement, ability, and animation classes
 #2: Add interracting with other entities
 #3: Make working menu system
 #4: Implement tile based background and editor
