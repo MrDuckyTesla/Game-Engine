@@ -19,13 +19,22 @@ public class ObjectAffectedMove extends MoveSet {
 	}
 
 	@Override
+	public float getX() {return 0;}
+	@Override
+	public float getY() {return 0;}
+	@Override
+	public float getW() {return 0;}
+	@Override
+	public float getH() {return 0;}
+	
+	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Obstacle getBox() {
+	public Obstacle getObstacle() {
 		return null;
 	}
 

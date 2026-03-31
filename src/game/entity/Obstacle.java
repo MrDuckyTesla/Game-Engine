@@ -1,7 +1,5 @@
 package game.entity;
 
-import java.util.ArrayList;
-
 import game.ToolKit;
 import game.entity.movement.Manager;
 import game.entity.movement.MoveSet;
@@ -9,21 +7,20 @@ import processing.core.PApplet;
 
 public class Obstacle extends Point {
 	
+	private MoveSet move = Manager.getMoveSet();
 	private float w, h;
 	private boolean isTangible, isMovable , isBreakable;
 	
 	public Obstacle() {super(); this.instantiate(0, 0);}
-	public Obstacle(boolean t) {super(); this.instantiate(w, h, t);}
 	public Obstacle(Point p) {super(p.getX(), p.getY()); this.instantiate(w, h);}
-	public Obstacle(boolean t, Point p) {super(p.getX(), p.getY()); this.instantiate(w, h, t);}
 	public Obstacle(float x, float y) {super(x, y); this.instantiate(w, h);}
-	public Obstacle(boolean t, float x, float y) {super(x, y); this.instantiate(w, h, t);}
 	public Obstacle(Point p, Point q) {super(p.compareTo(q) < 0? p : q); this.w = PApplet.abs(p.getX() - q.getX()); this.h = PApplet.abs(p.getY() - q.getY());}
-	public Obstacle(boolean t, Point p, Point q) {super(p.compareTo(q) < 0? p : q); this.w = PApplet.abs(p.getX() - q.getX()); this.h = PApplet.abs(p.getY() - q.getY()); this.isTangible = t;}
 	public Obstacle(Point p, float w, float h) {super(p.getX(), p.getY()); this.instantiate(w, h);}
-	public Obstacle(boolean t, Point p, float w, float h) {super(p.getX(), p.getY()); this.instantiate(w, h, t);}
 	public Obstacle(float x, float y, float w, float h) {super(x, y); this.instantiate(w, h);}
-	public Obstacle(boolean t, float x, float y, float w, float h) {super(x, y); this.instantiate(w, h, t);}
+	
+	public Obstacle(MoveSet m) {super(m.getX(), m.getY()); this.instantiate(m, false, true, false);}
+	public Obstacle(MoveSet s, boolean t, boolean m, boolean b) {super(s.getX(), s.getY()); this.instantiate(s, t, m, b);}
+	public Obstacle(Point p, float w, float h, boolean t, boolean m, boolean b) {super(p.getX(), p.getY()); this.instantiate(null, t, m, b);}
 	
 	public boolean isTLInside(Obstacle other) {return ToolKit.pointRectCollide(getX(), getY(), other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isTRInside(Obstacle other) {return ToolKit.pointRectCollide(getX()+w, getY(), other.getX(), other.getY(), other.getW(), other.getH());}
@@ -31,8 +28,8 @@ public class Obstacle extends Point {
 	public boolean isBLInside(Obstacle other) {return ToolKit.pointRectCollide(getX(), getY()+h, other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isInside(Obstacle other) {return this.isTLInside(other) && this.isTRInside(other) && this.isBRInside(other) && this.isBLInside(other);} // Checks if this has all four corners inside other
 	
-	private void instantiate(float w, float h, boolean t) {this.w = w; this.h = h; this.isTangible = t;}
-	private void instantiate(float w, float h) {this.instantiate(w, h, true);}
+	private void instantiate(MoveSet s, boolean t, boolean m, boolean b) {if (s != null) {this.move = s; this.w = s.getW(); this.h = s.getH();} this.isTangible = t; this.isMovable = m; this.isBreakable = b;}
+	private void instantiate(float w, float h) {this.instantiate(null, true, false, false); this.w = w; this.h = h;}
 	
 	public void update() {this.displayRect();}  // Function for children to inherit, will probably be used for animated obstacles
 	public void interact() {}  // Another function for children to inherit, will probably be used for text box
@@ -60,7 +57,7 @@ public class Obstacle extends Point {
 	public Point getCorner(boolean topSide, boolean rightSide) {return new Point(rightSide? getX()+w : getX(), topSide? getY() : getY()+h);}
 	public Point[] getCorners() {return new Point[] {getCorner(true, false), getCorner(true, true), getCorner(false, true), getCorner(false, false)};}
 	public Entity getType() {return Entity.Obstacle;}
-	public MoveSet getMoveSet() {return Manager.getMoveSet();}
+	public MoveSet getMoveSet() {return this.move;}
 	
 	// Overridden functions
 	@Override

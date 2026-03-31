@@ -27,6 +27,15 @@ public class PlatformerSimpleMove extends MoveSet {
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public float getX() {return this.xywh.getX();}
+	@Override
+	public float getY() {return this.xywh.getY();}
+	@Override
+	public float getW() {return this.xywh.getW();}
+	@Override
+	public float getH() {return this.xywh.getH();}
 
 	@Override
 	public Point getPoint() {
@@ -35,7 +44,7 @@ public class PlatformerSimpleMove extends MoveSet {
 	}
 	
 	@Override
-	public Obstacle getBox() {
+	public Obstacle getObstacle() {
 		return null;
 	}
 

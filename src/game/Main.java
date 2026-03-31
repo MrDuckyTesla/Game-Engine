@@ -1,6 +1,8 @@
 package game;
 
 import game.entity.*;
+import game.entity.movement.*;
+import game.entity.movement.MoveSet;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -9,6 +11,8 @@ public class Main extends PApplet {
 	Obstacle[] obstacles;
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
+	private PImage[] tesla = new PImage[] {null, null};
+	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Obstacle(400, 400, 28*3, 28*3), 3)};
 	PImage image1, bck1, tile1;
 	Level tutorial;
 	Room test;
@@ -32,6 +36,7 @@ public class Main extends PApplet {
 		textFont(createFont("src/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
 		noCursor(); noStroke(); textSize(20);
 		image1 = loadImage("src/Assets/Sprites/Tesla/Tesla_Overworld.png");
+		tesla[0] = image1;
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 		tile1 = loadImage("/src/Assets/Sprites/Tiles/grass_1.png");
 //		colorList = Engine.PreCompile(this, image1, new int[][] {{180, 157, 130, 31}, {187, 171}, {190, 163, 140}});
@@ -41,9 +46,10 @@ public class Main extends PApplet {
 		cobstacle.cleanArray();
 		obstacles = cobstacle.getObstacleArray().clone();
 		Point.setApp(this);
-		Point p1 = new Point(400, 400);
-		Point p2 = new Point(400, 500);
-		p = new Player(p1, p1, new Point(3, 3), image1, image1, PlayerSpriteLayers[0], PlayerSpriteLayers[1], PlayerColorTints);
+//		Point p1 = new Point(400, 400);
+//		Point p2 = new Point(400, 500);
+//		(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale)
+		p = new Player(tesla, moves, PlayerSpriteLayers, PlayerColorTints, new int[] {3, 3});
 		test = new Room(p, bck1);
 		test.add(200, 200, 100, 100);
 		test.add(300, 300, 100, 100);
@@ -52,8 +58,8 @@ public class Main extends PApplet {
 //			Point q = new Point((float)Math.random()*800, (float)Math.random()*800);
 //			test.add(new Enemy( q, q, new Point(3, 3), image1.copy(), image1.copy(), PlayerSpriteLayers[0], PlayerSpriteLayers[1]));
 //		}
-		test.add(new Enemy(p1, p1, new Point(3, 3), image1.copy(), image1.copy(), PlayerSpriteLayers[0], PlayerSpriteLayers[1]));
-		test.add(new Enemy(p2, p2, new Point(3, 3), image1.copy(), image1.copy(), PlayerSpriteLayers[0], PlayerSpriteLayers[1]));
+//		test.add(new Enemy(p1, p1, new Point(3, 3), image1.copy(), image1.copy(), PlayerSpriteLayers[0], PlayerSpriteLayers[1]));
+//		test.add(new Enemy(p2, p2, new Point(3, 3), image1.copy(), image1.copy(), PlayerSpriteLayers[0], PlayerSpriteLayers[1]));
 //		Level l1 = new Level();
 //		Room r1 = new Room();
 //		(PApplet app, Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer, int[] overColorTint, int[] battColorTint)

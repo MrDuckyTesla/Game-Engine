@@ -15,9 +15,6 @@ public class Level {
 	
 	Player p;
 	
-	// Most simple player
-	public Level(PImage img) {Point q = new Point(); int[][] c = {}; this.p = new Player(q, q, q, img, img, c, c, new int[0]);}
-	
 	public Level(Player p) {this.p = p;}
 	
 	public void addRoom(Obstacle o, PImage i) {rooms.add(new Room(p, o, i));}

@@ -21,13 +21,22 @@ public class BiDirectionalMove extends MoveSet {
 	}
 
 	@Override
+	public float getX() {return this.xywh.getX();}
+	@Override
+	public float getY() {return this.xywh.getY();}
+	@Override
+	public float getW() {return this.xywh.getW();}
+	@Override
+	public float getH() {return this.xywh.getH();}
+	
+	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Obstacle getBox() {
+	public Obstacle getObstacle() {
 		return null;
 	}
 

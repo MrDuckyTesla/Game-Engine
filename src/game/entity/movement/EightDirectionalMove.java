@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import game.ToolKit;
 import game.entity.Obstacle;
 import game.entity.Point;
-import game.entity.abilities.Ability;
 import processing.core.PApplet;
 
 public class EightDirectionalMove extends MoveSet {
 	
-	private boolean isIdle = true, forceWalk = true, canChange = true;
-	private int dir = 0;
+	private boolean isIdle = true, forceWalk = false, canChange = true;
+	private int dir = 0, scale = 1;
 	private float maxSpeed, currSpeed;  // How much object is allowed to move in a frame
 	private Point totalDist = new Point();  // The total amount that the object has moved in a frame
 	private Obstacle xywh;
@@ -41,14 +40,22 @@ public class EightDirectionalMove extends MoveSet {
 			else if (p.getX() > 0) {if (this.setX(app.width - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
-		} this.isIdle = p.isZero() && this.forceWalk; this.xywh.addXY(p); this.setNormSpeed();
+		} this.isIdle = p.isZero() && !this.forceWalk; this.xywh.addXY(p); this.setNormSpeed();
 		this.showHitBox();
 	}
 	
 	@Override
+	public float getX() {return this.xywh.getX();}
+	@Override
+	public float getY() {return this.xywh.getY();}
+	@Override
+	public float getW() {return this.xywh.getW();}
+	@Override
+	public float getH() {return this.xywh.getH();}
+	@Override
 	public Point getPoint() {return this.xywh.getPoint();}
 	@Override
-	public Obstacle getBox() {return this.xywh.get();}
+	public Obstacle getObstacle() {return this.xywh.get();}
 
 	@Override
 	public Moves getMoveType() {return Moves.eightDirectional;}
@@ -59,7 +66,7 @@ public class EightDirectionalMove extends MoveSet {
 		float speed = this.currSpeed;
 		if (this.dir % 2 == 1) {speed *= 0.7071068f;}  // sin 45
 		if (this.dir % 4 != 2) {s.setX(this.dir % 7 < 2? speed : -speed);}
-		if (this.dir % 4 - 1 != -1) {s.setY(this.dir < 4? speed : -speed);}
+		if (this.dir % 4 != 0) {s.setY(this.dir < 4? speed : -speed);}
 		return s;
 	}
 	
@@ -86,7 +93,7 @@ public class EightDirectionalMove extends MoveSet {
 	@Override
 	public void setDir(int d) {if (this.canChange) {this.dir = d;}}
 	@Override
-	public void setIdle(boolean i) {if (this.forceWalk) {this.isIdle = i;}}
+	public void setIdle(boolean i) {if (!this.forceWalk) {this.isIdle = i;}}
 	@Override
 	public int getDir() {return this.dir;}
 	@Override

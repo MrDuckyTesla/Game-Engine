@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 import game.entity.*;
+import game.entity.Character;
 import game.entity.abilities.*;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -56,8 +57,9 @@ public class Room {
 		Collections.sort(room);
 		for (Obstacle o : room) {
 			try {
-				if (o.getType() == Entity.Player)
-				o.getMoveSet().move(room, o, a);
+				if (o.getType() == Entity.Player) {
+				((Character) o).move(room, a);
+				}
 			}
 			catch (IllegalArgumentException e) {
 				
