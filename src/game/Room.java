@@ -49,12 +49,15 @@ public class Room {
 		
 	}
 	
+	public Ability[] a = new Ability[] {new Sprint8d(16), new Sword8d(88)};
+	
 	public void update() {
-		Ability[] a = new Ability[] {new Sprint8d(16), new Sword8d(88)};
+		
 		Collections.sort(room);
 		for (Obstacle o : room) {
 			try {
-			o.getMoveSet().move(room, o, a);
+				if (o.getType() == Entity.Player)
+				o.getMoveSet().move(room, o, a);
 			}
 			catch (IllegalArgumentException e) {
 				

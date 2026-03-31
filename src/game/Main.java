@@ -9,7 +9,7 @@ public class Main extends PApplet {
 	Obstacle[] obstacles;
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
-	PImage image1, bck1;
+	PImage image1, bck1, tile1;
 	Level tutorial;
 	Room test;
 	Player p;
@@ -33,6 +33,7 @@ public class Main extends PApplet {
 		noCursor(); noStroke(); textSize(20);
 		image1 = loadImage("src/Assets/Sprites/Tesla/Tesla_Overworld.png");
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
+		tile1 = loadImage("/src/Assets/Sprites/Tiles/grass_1.png");
 //		colorList = Engine.PreCompile(this, image1, new int[][] {{180, 157, 130, 31}, {187, 171}, {190, 163, 140}});
 //		Engine.changeColor(this, image1, colorList, new int[] {111, 111, 255, 255, 111, 111, 255, 200, 0});
 		obstacles = new Obstacle[] {new Obstacle(150, 200, 500, 100), new Obstacle(0, 380, 120, 100), new Obstacle(600, 600, 120, 160), new Obstacle(260, 500, 180, 80), new Obstacle(600, 175, 100, 300)};

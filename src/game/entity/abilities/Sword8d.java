@@ -8,7 +8,7 @@ import game.entity.movement.Moves;
 
 public class Sword8d extends Ability {
 	
-	private boolean isActive = false;
+	private long timeUnlock = 0;
 
 	public Sword8d(int key) {
 		super(key);
@@ -23,11 +23,16 @@ public class Sword8d extends Ability {
 	@Override
 	public void update(Obstacle o, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
-		for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
-		if (this.isActive) {((EightDirectionalMove) m).halfSpeed();}
+		if (this.isActive()) {((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false);}
+		else {
+			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1500;}} 
+			this.setSwing(m, true);
+		}
 	}
+	
+	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(swing); ((EightDirectionalMove) m).setCanChange(swing); }
 
 	@Override
-	public boolean isActive() {return this.isActive;}
+	public boolean isActive() {return System.currentTimeMillis() < this.timeUnlock;}
 
 }

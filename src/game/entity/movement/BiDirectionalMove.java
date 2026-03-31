@@ -19,15 +19,15 @@ public class BiDirectionalMove extends MoveSet {
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
 	}
-	
-	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c, Ability ability) {ability.update(c, this); this.move(room, c);}
-	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] abilities) {for (Ability a : abilities) {a.update(c, this);} this.move(room, c);}
 
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Obstacle getBox() {
 		return null;
 	}
 

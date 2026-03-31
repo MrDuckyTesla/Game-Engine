@@ -14,5 +14,8 @@ public class NonPlayerCharacter extends Character{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public Entity getType() {return Entity.NonPlayerCharacter;}
 
 }

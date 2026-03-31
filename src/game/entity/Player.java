@@ -32,5 +32,8 @@ public class Player extends Character {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public Entity getType() {return Entity.Player;}
 
 }

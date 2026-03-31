@@ -37,3 +37,6 @@ noah
 noahs
 subarrays
 kinematics
+precompiles
+spritesheet
+greyscale

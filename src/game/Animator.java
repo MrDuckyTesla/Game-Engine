@@ -3,23 +3,32 @@ package game;
 import game.entity.Character;
 import game.entity.Obstacle;
 import game.entity.Point;
+import game.entity.movement.MoveSet;
+import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Animator {
 	
+	private PImage img;
+	private MoveSet move;
 	private Animation currAnim;
+	private float animSpeed;
+	private int start, frames, frameEnd;
 	private boolean isLetChange, isNewAnim;
 
-	public Animator() {currAnim = new Animation();}
-	
-	public void update() {
-		
+	public Animator() {
+		this.img = null;
+		this.currAnim = new Animation();
+		this.isLetChange = false;
+		this.isNewAnim = false;
 	}
 	
-	public void changeAnimation(PImage i, Obstacle xywh, float scale, int frameStart, int frameEnd, int frame, boolean changeAnimation, boolean resetIndex) {
-		if (this.isLetChange) {
-//			this.animManager.animate(app, this.overImage, super.getX(), super.getY(), Character.OVER_WIDTH, Character.OVER_HEIGHT, this.scale.getX(), startReal, startReal + frames - 1, this.overAnimSpeed, this.changeAnim, this.overLastState != this.overCurrState);
-		}
+	public void update() {
+		this.currAnim.animate(Point.getApp(), this.img, this.move.getPoint().getX(), this.move.getPoint().getY(), 28, 28, 3, this.start, this.start + this.frames - 1, 6, false);
+	}
+	
+	public void changeAnimation(PImage i, MoveSet m, int start, int frames, float scale, int frameStart, int frameEnd, boolean changeAnimation, boolean resetIndex) {
+		this.img = i; this.move = m; this.frames = frames; this.start = start + this.move.getDir() * this.frames; this.frameEnd = frameEnd;
 	}
 	
 	public int getFrameEnd() {return 0;}

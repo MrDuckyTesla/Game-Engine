@@ -4,7 +4,9 @@ TOP PRIORITIES (New)
 #2: Add interracting with other entities
 #3: Make working menu system
 #4: Implement tile based background and editor
-$5: THREADS
+#5: THREADS
+
+note that theoretically given enough obstacles, player cna move infinite amount in one frame
 
 TOP PRIORITIES (Old) (filtered)
 

@@ -9,7 +9,7 @@ import processing.core.PApplet;
 
 public class EightDirectionalMove extends MoveSet {
 	
-	private boolean isIdle = true;
+	private boolean isIdle = true, forceWalk = true, canChange = true;
 	private int dir = 0;
 	private float maxSpeed, currSpeed;  // How much object is allowed to move in a frame
 	private Point totalDist = new Point();  // The total amount that the object has moved in a frame
@@ -33,27 +33,22 @@ public class EightDirectionalMove extends MoveSet {
 					else if (p.getX() > 0) {if (this.setX(o.getX() - c.getW() - 0.0001f)) {p.resetX();}}
 					if (p.getY() < 0) {if (this.setY(o.getY() + o.getH() + 0.0001f)) {p.resetY();}}
 					else if (p.getY() > 0) {if (this.setY(o.getY() - c.getH() - 0.0001f)) {p.resetY();}}
-				}  // If c collides with border
+				} 
 			} 
-		} PApplet app = Point.getApp();	
+		} PApplet app = Point.getApp();  // If c collides with window border
 		if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.xywh.getW(), this.xywh.getH(), 0, 0, app.width, app.height)) {
 			if (p.getX() < 0) {if (this.setX(0.0001f)) {p.resetX();}}
 			else if (p.getX() > 0) {if (this.setX(app.width - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
-		} this.isIdle = p.isZero();
-		this.xywh.addXY(p);
-		this.setNormSpeed();
+		} this.isIdle = p.isZero() && this.forceWalk; this.xywh.addXY(p); this.setNormSpeed();
 //		this.showHitBox();
 	}
 	
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c, Ability ability) {ability.update(c, this); this.move(room, c);}
-	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c, Ability[] abilities) {for (Ability a : abilities) {a.update(c, this);} this.move(room, c);}
-	
-	@Override
 	public Point getPoint() {return this.xywh.getPoint();}
+	@Override
+	public Obstacle getBox() {return this.xywh.get();}
 
 	@Override
 	public Moves getMoveType() {return Moves.eightDirectional;}
@@ -84,10 +79,13 @@ public class EightDirectionalMove extends MoveSet {
 		Point.fillApp(0, 0, 0);
 	}
 	
+	public void setForceWalk(boolean forceWalk) {this.forceWalk = forceWalk;}
+	public void setCanChange(boolean canChange) {this.canChange = canChange;}
+	
 	@Override
-	public void setDir(int d) {this.dir = d;}
+	public void setDir(int d) {if (this.canChange) {this.dir = d;}}
 	@Override
-	public void setIdle(boolean i) {this.isIdle = i;}
+	public void setIdle(boolean i) {if (this.forceWalk) {this.isIdle = i;}}
 	@Override
 	public int getDir() {return this.dir;}
 	@Override

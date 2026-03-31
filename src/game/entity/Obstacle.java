@@ -59,6 +59,7 @@ public class Obstacle extends Point {
 	public Point getPoint() {return super.get();}
 	public Point getCorner(boolean topSide, boolean rightSide) {return new Point(rightSide? getX()+w : getX(), topSide? getY() : getY()+h);}
 	public Point[] getCorners() {return new Point[] {getCorner(true, false), getCorner(true, true), getCorner(false, true), getCorner(false, false)};}
+	public Entity getType() {return Entity.Obstacle;}
 	public MoveSet getMoveSet() {return Manager.getMoveSet();}
 	
 	// Overridden functions

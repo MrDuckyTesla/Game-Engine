@@ -8,8 +8,18 @@ import processing.core.PImage;
 
 public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT BEING EXPANDED TO MORE OF A GAME ENGINE" - Old Nico <= I also took out all the animation functions and made it into its own class - Nico. yeah so its more of a toolkit, renamed
 	
+	/**
+	 * Stores all keys that are being held down
+	 */
 	private static boolean[] keys = new boolean[128];
 	
+	/**
+	 * Precompiles the layers and colors of an image into a list
+	 * @param app PApplet instance that is being used
+	 * @param image The (presumably) spritesheet being compiled
+	 * @param layerList An array separated by layer holding greyscale colors (EX: [ [a, b, c], [d, e], [f] ], 
+	 * @return Returns a 1d ArrayList thats formatted with the index of color, the layer it belongs to, and the color
+	 */
 	public static ArrayList<Integer> PreCompile(PApplet app, PImage image, int[][] layerList) {  // PreCompile to avoid lag
 		ArrayList<Integer> colorList = new ArrayList<>();  // List of colors and indexes to return
 		image.loadPixels();  // Load pixels for scanning

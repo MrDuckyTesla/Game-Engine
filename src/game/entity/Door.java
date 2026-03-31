@@ -2,7 +2,7 @@ package game.entity;
 
 import game.Room;
 
-public class Door extends Obstacle{
+public class Door extends Trigger{
 	
 	Room next;
 
