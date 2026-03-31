@@ -19,7 +19,7 @@ public abstract class Character extends Obstacle {
 	public int charID;
 	
 	private PImage[] images;
-	private ArrayList<Integer>[] colorLists;
+	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
 	private int[][][] colorLayers;
 	private int[] colorTints, scale;
 	// Animation Variables
@@ -41,20 +41,14 @@ public abstract class Character extends Obstacle {
 	public Character(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale) {
 		super(move[0]);
 		this.move = move;
+		this.images = img;
 		this.colorLayers = colorLayers;
 		this.colorTints = colorTints;
 		this.scale = scale;
-//		this.instantiate(scale);
+		
+		for (int i = 0; i < move.length; i++) {this.colorLists.add(ToolKit.PreCompile(Point.getApp(), this.images[i], colorLayers[i]));}
+		ToolKit.changeColor(Point.getApp(), this.images[0], this.colorLists.get(0), colorTints);
 	}
-	
-//	private void instantiate(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {
-//		this.charID = Character.id; Character.id++; PApplet app = Point.getApp(); this.scale = scale.get();// this.battPositLast = battPosit.get();
-//		this.overPosit = overPosit.get(); this.overImage = overImage.get(); this.battPosit = battPosit.get(); this.battImage = battImage.get();
-//		this.overColorList = ToolKit.PreCompile(app, this.overImage, overColorLayer); this.battColorList = ToolKit.PreCompile(app,  this.battImage, battColorLayer);
-//		ToolKit.changeColor(app,  this.overImage, overColorList, colorTint); ToolKit.changeColor(app, this.battImage, battColorList,colorTint);
-//		
-//		this.move = Manager.getMoveSet(this.get(), 3);
-//	}
 	
 	public void move(ArrayList<Obstacle> r, Ability[] a) {
 		this.move[this.currMove].move(r, this, a);
@@ -123,6 +117,8 @@ public abstract class Character extends Obstacle {
 	// Set
 	protected void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
 	protected void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
+	
+	public PImage getImg() {return this.images[this.currMove];};
 	
 	// Overridden functions
 	@Override

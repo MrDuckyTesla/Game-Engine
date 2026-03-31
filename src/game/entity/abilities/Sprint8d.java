@@ -1,6 +1,7 @@
 package game.entity.abilities;
 
 import game.ToolKit;
+import game.entity.Entity;
 import game.entity.Obstacle;
 import game.entity.movement.EightDirectionalMove;
 import game.entity.movement.MoveSet;
@@ -20,10 +21,12 @@ public class Sprint8d extends Ability {
 		for (int key : this.getKeys()) {this.isActive = ToolKit.keyIsDown(key);}
 		if (this.isActive) {
 			((EightDirectionalMove) m).doubSpeed();
-			
-			
+			if (o.getType() == Entity.Player) {
+				m.getAnimator().setAnimSpeed(6);
+			}
 		}
 	}
+
 
 	@Override
 	public boolean isActive() {return this.isActive;}

@@ -50,7 +50,7 @@ public class Room {
 		
 	}
 	
-	public Ability[] a = new Ability[] {new Sprint8d(16), new Sword8d(88)};
+	public Ability[] a = new Ability[] {new Walk8d(), new Sprint8d(16), new Sword8d(88)};
 	
 	public void update() {
 		

@@ -27,6 +27,7 @@ public class Sword8d extends Ability {
 		else {
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1000;}} 
 			this.setSwing(m, true);
+			// this.animateMoveOver(48, 4, false, true);
 		}
 	}
 	

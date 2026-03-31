@@ -2,6 +2,7 @@ package game.entity.movement;
 
 import java.util.ArrayList;
 
+import game.Animator;
 import game.entity.Obstacle;
 import game.entity.Point;
 import game.entity.abilities.Ability;
@@ -17,6 +18,7 @@ public class PlatformerSimpleMove extends MoveSet {
 		this.xywh = new Obstacle(0, 0, 9, 13);
 		this.impulse = 17; this.friction = 0.8f;
 		this.speed = 2.5f; this.accelerationY = 1;
+		// FOR WHEN ANIMATION IS NEEDED, battAnimSpeed = 5;
 	}
 	
 //	public PlatformerMove(Obstacle xywh, Obstacle bg) {
@@ -26,6 +28,13 @@ public class PlatformerSimpleMove extends MoveSet {
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public Animator getAnimator() {
+		// TODO Auto-generated method stub
+		return null;
+		
 	}
 	
 	@Override
@@ -70,6 +79,12 @@ public class PlatformerSimpleMove extends MoveSet {
 	public int getDir() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public boolean dirChanged() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override

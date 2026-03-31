@@ -12,8 +12,8 @@ public class Main extends PApplet {
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
 	private PImage[] tesla = new PImage[] {null, null};
-	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Obstacle(400, 400, 28*3, 28*3), 3)};
-	PImage image1, bck1, tile1;
+	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Obstacle(400, 400, 28*3, 28*3), 3), new PlatformerSimpleMove()};
+	PImage bck1, tile1;
 	Level tutorial;
 	Room test;
 	Player p;
@@ -35,8 +35,9 @@ public class Main extends PApplet {
 		surface.setIcon(loadImage("src/Assets/Sprites/icon64.png"));
 		textFont(createFont("src/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
 		noCursor(); noStroke(); textSize(20);
-		image1 = loadImage("src/Assets/Sprites/Tesla/Tesla_Overworld.png");
-		tesla[0] = image1;
+		tesla[0] = loadImage("src/Assets/Sprites/Tesla/Tesla_Overworld.png");
+		tesla[1] = loadImage("src/Assets/Sprites/Tesla/Tesla_Battle.png");
+//		tesla[0] = image1;
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 		tile1 = loadImage("/src/Assets/Sprites/Tiles/grass_1.png");
 //		colorList = Engine.PreCompile(this, image1, new int[][] {{180, 157, 130, 31}, {187, 171}, {190, 163, 140}});

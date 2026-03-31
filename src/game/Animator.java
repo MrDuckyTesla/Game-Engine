@@ -9,28 +9,32 @@ import processing.core.PImage;
 
 public class Animator {
 	
-	private PImage img;
-	private MoveSet move;
+	private PImage i;
+	private MoveSet m;
 	private Animation currAnim;
-	private float animSpeed;
+	private int animSpeed;
 	private int start, frames, frameEnd;
 	private boolean isLetChange, isNewAnim;
 
 	public Animator() {
-		this.img = null;
 		this.currAnim = new Animation();
 		this.isLetChange = false;
 		this.isNewAnim = false;
 	}
 	
 	public void update() {
-		this.currAnim.animate(Point.getApp(), this.img, this.move.getPoint().getX(), this.move.getPoint().getY(), 28, 28, 3, this.start, this.start + this.frames - 1, 6, false);
+		this.currAnim.animate(Point.getApp(), i, m.getX(), m.getY(), 28, 28, 3, this.start, this.start + this.frames - 1, this.animSpeed, false);
 	}
 	
-	public void changeAnimation(PImage i, MoveSet m, int start, int frames, float scale, int frameStart, int frameEnd, boolean changeAnimation, boolean resetIndex) {
-		this.img = i; this.move = m; this.frames = frames; this.start = start + this.move.getDir() * this.frames; this.frameEnd = frameEnd;
+	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed) {
+		this.i = i; this.m = m; this.animSpeed = animSpeed;
+		this.frames = frames; this.start = start + m.getDir() * this.frames;
 	}
+	
+	public void setAnimSpeed(int speed) {this.animSpeed = speed;}
 	
 	public int getFrameEnd() {return 0;}
+	
+	public boolean canAnimate() {return this.m != null;}
 
 }

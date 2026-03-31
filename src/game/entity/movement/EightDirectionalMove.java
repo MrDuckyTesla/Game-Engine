@@ -1,6 +1,8 @@
 package game.entity.movement;
 
 import java.util.ArrayList;
+
+import game.Animator;
 import game.ToolKit;
 import game.entity.Obstacle;
 import game.entity.Point;
@@ -9,18 +11,18 @@ import processing.core.PApplet;
 public class EightDirectionalMove extends MoveSet {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
-	private int dir = 0, scale = 1;
+	private int dir = 0, ldir = 0, scale = 1;
 	private float maxSpeed, currSpeed;  // How much object is allowed to move in a frame
 	private Point totalDist = new Point();  // The total amount that the object has moved in a frame
 	private Obstacle xywh;
 	
-	public EightDirectionalMove() {
-		this.xywh = new Obstacle(0, 0, 28, 28); this.maxSpeed = 6;
-	}
+	private Animator a = new Animator();
 	
-	public EightDirectionalMove(Obstacle xywh, float speed) {
-		this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed;
-	}
+	public EightDirectionalMove() {this.instantiate(new Obstacle(0, 0, 28, 28), 3);}
+	public EightDirectionalMove(Obstacle xywh, float speed) {this.instantiate(xywh, speed);}
+	public EightDirectionalMove(Obstacle xywh, float speed, Animator a) {this.instantiate(xywh, speed); this.a = a;}
+	
+	private void instantiate(Obstacle xywh, float speed) {this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed;}
 
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
@@ -40,9 +42,19 @@ public class EightDirectionalMove extends MoveSet {
 			else if (p.getX() > 0) {if (this.setX(app.width - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
-		} this.isIdle = p.isZero() && !this.forceWalk; this.xywh.addXY(p); this.setNormSpeed();
-		this.showHitBox();
+		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
+		
+		if (a.canAnimate()) {
+			a.update();
+		}
+		else {
+			this.showHitBox();
+		}
+		
 	}
+	
+	@Override
+	public Animator getAnimator() {return this.a;}
 	
 	@Override
 	public float getX() {return this.xywh.getX();}
@@ -96,6 +108,8 @@ public class EightDirectionalMove extends MoveSet {
 	public void setIdle(boolean i) {if (!this.forceWalk) {this.isIdle = i;}}
 	@Override
 	public int getDir() {return this.dir;}
+	@Override
+	public boolean dirChanged() {return this.dir == this.ldir;}
 	@Override
 	public boolean getIsIdle() {return this.isIdle;}
 

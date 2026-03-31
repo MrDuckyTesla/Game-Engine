@@ -14,6 +14,8 @@ public abstract class MoveSet {
 	public void move(ArrayList<Obstacle> r, Obstacle o, Ability ab) {ab.update(o, this); this.move(r, o);}
 	public void move(ArrayList<Obstacle> r, Obstacle o, Ability[] ab) {for (Ability a : ab) {a.update(o, this);} this.move(r, o);}
 	
+	public abstract Animator getAnimator();
+	
 	public abstract float getX();
 	public abstract float getY();
 	public abstract float getW();
@@ -26,6 +28,7 @@ public abstract class MoveSet {
 	public abstract void setIdle(boolean i);
 	
 	public abstract int getDir();
+	public abstract boolean dirChanged();
 	public abstract boolean getIsIdle();
 
 }

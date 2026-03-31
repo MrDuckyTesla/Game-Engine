@@ -4,9 +4,11 @@ import game.ToolKit;
 import game.entity.movement.Manager;
 import game.entity.movement.MoveSet;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Obstacle extends Point {
 	
+	private PImage i;
 	private MoveSet move = Manager.getMoveSet();
 	private float w, h;
 	private boolean isTangible, isMovable , isBreakable;
