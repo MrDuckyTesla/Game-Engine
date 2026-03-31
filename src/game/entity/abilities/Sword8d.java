@@ -8,7 +8,7 @@ import game.entity.movement.Moves;
 
 public class Sword8d extends Ability {
 	
-	private long timeUnlock = 0;
+	private long timeUnlock = 0;  // REPLACE ME WITH ANIMATION END
 
 	public Sword8d(int key) {
 		super(key);
@@ -25,7 +25,7 @@ public class Sword8d extends Ability {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (this.isActive()) {((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false);}
 		else {
-			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1500;}} 
+			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1000;}} 
 			this.setSwing(m, true);
 		}
 	}

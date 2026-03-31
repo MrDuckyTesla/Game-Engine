@@ -71,14 +71,14 @@ public abstract class Character extends Obstacle {
 		else {this.changeAnim = this.overWorldCurr? this.overLastDir == this.move.getDir() : this.battLastDir == this.battCurrDir;}
 		if (this.overWorldCurr) {  // If in overworld
 			
-			this.overStateCheck1(); // Check if sprinting or if doing sword animation
+//			this.overStateCheck1(); // Check if sprinting or if doing sword animation
 			// Overworld states start here
-			if (this.move.getIsIdle()) {this.overCurrState = 1;}
-			else {this.overCurrState = 3;}
+//			if (this.move.getIsIdle()) {this.overCurrState = 1;}
+//			else {this.overCurrState = 3;}
 			
-			if (this.overCurrState == 3) {this.animateMoveOver(16, 4, false, false);}  // Overworld Walk
+//			if (this.overCurrState == 3) {this.animateMoveOver(16, 4, false, false);}  // Overworld Walk
 //			if (this.overCurrState == 2) {this.animateMoveOver(48, 4, false, true);}  // Sword Swing (walking)
-			if (this.overCurrState == 1) {this.animateMoveOver(0, 2, true, false);}  // Overworld Idle
+//			if (this.overCurrState == 1) {this.animateMoveOver(0, 2, true, false);}  // Overworld Idle
 //			this.overStateCheck2();  // Reset Sprinting speed if sprinting
 			
 			this.overPosit = this.move.getPoint();

@@ -42,7 +42,7 @@ public class EightDirectionalMove extends MoveSet {
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && this.forceWalk; this.xywh.addXY(p); this.setNormSpeed();
-//		this.showHitBox();
+		this.showHitBox();
 	}
 	
 	@Override
@@ -74,9 +74,10 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean setHelper(float x, boolean isX) {return PApplet.abs((isX? this.xywh.getX() : this.xywh.getY()) - x) <= this.currSpeed;}
 	
 	public void showHitBox() {
+		Point.pushApp();
 		if (isIdle) {Point.fillApp(255, 0, 0);}
 		Point.getApp().rect(xywh.getX(), xywh.getY(), xywh.getW(), xywh.getH());
-		Point.fillApp(0, 0, 0);
+		Point.popApp();
 	}
 	
 	public void setForceWalk(boolean forceWalk) {this.forceWalk = forceWalk;}

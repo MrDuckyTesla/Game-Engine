@@ -12,23 +12,7 @@ public abstract class MoveSet {
 	public abstract void move(ArrayList<Obstacle> r, Obstacle o);
 	
 	public void move(ArrayList<Obstacle> r, Obstacle o, Ability ab) {ab.update(o, this); this.move(r, o);}
-	
 	public void move(ArrayList<Obstacle> r, Obstacle o, Ability[] ab) {for (Ability a : ab) {a.update(o, this);} this.move(r, o);}
-	
-	public void move(ArrayList<Obstacle> r, Obstacle o, Animator an) {
-		
-		this.move(r, o);
-	}
-	
-	public void move(ArrayList<Obstacle> r, Obstacle o, Ability ab, Animator an) {
-		
-		this.move(r, o, ab);
-	}
-	
-	public void move(ArrayList<Obstacle> r, Obstacle o, Ability[] ab, Animator an) {
-		
-		this.move(r, o, ab);
-	}
 	
 	public abstract Point getPoint();
 	public abstract Obstacle getBox();
