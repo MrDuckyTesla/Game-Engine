@@ -15,8 +15,6 @@ public class Walk8d extends Ability {
 	}
 
 	@Override
-	public boolean isActive() {
-		return true;
-	}
+	public boolean isActive() {return true;}
 
 }

@@ -13,10 +13,10 @@ import processing.core.PImage;
 public abstract class Character extends Obstacle {
 	
 	// Static variables
-	final private static int OVER_WIDTH = 28, OVER_HEIGHT = 28, BATT_WIDTH = 9, BATT_HEIGHT = 13;
+//	final private static int OVER_WIDTH = 28, OVER_HEIGHT = 28, BATT_WIDTH = 9, BATT_HEIGHT = 13;
 	private static int id = 0;
 	// Constructor Variables
-	public int charID;
+	private int charID;
 	
 	private PImage[] images;
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
@@ -40,14 +40,16 @@ public abstract class Character extends Obstacle {
 	
 	public Character(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale) {
 		super(move[0]);
+		charID = Character.id;
+		Character.id++;
 		this.move = move;
 		this.images = img;
 		this.colorLayers = colorLayers;
 		this.colorTints = colorTints;
 		this.scale = scale;
 		
-		for (int i = 0; i < move.length; i++) {this.colorLists.add(ToolKit.PreCompile(Point.getApp(), this.images[i], colorLayers[i]));}
-		ToolKit.changeColor(Point.getApp(), this.images[0], this.colorLists.get(0), colorTints);
+		for (int i = 0; i < move.length; i++) {this.colorLists.add(ToolKit.PreCompile(Point.getApp(), this.images[i], this.colorLayers[i]));}
+		ToolKit.changeColor(Point.getApp(), this.images[0], this.colorLists.get(0), this.colorTints);
 	}
 	
 	public void move(ArrayList<Obstacle> r, Ability[] a) {

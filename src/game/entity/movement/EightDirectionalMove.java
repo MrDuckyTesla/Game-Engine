@@ -1,7 +1,6 @@
 package game.entity.movement;
 
 import java.util.ArrayList;
-
 import game.Animator;
 import game.ToolKit;
 import game.entity.Obstacle;
@@ -43,13 +42,7 @@ public class EightDirectionalMove extends MoveSet {
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
-		
-		if (a.canAnimate()) {
-			a.update();
-		}
-		else {
-			this.showHitBox();
-		}
+		if (a.canAnimate()) {a.update();} else {this.showHitBox();}
 		
 	}
 	
