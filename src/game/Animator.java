@@ -1,10 +1,7 @@
 package game;
 
-import game.entity.Character;
-import game.entity.Obstacle;
 import game.entity.Point;
 import game.entity.movement.MoveSet;
-import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Animator {
@@ -14,20 +11,22 @@ public class Animator {
 	private Animation currAnim;
 	private int animSpeed;
 	private int start, frames, frameEnd;
-	private boolean isLetChange, isNewAnim;
+	private boolean changeAnim;
 
 	public Animator() {
 		this.currAnim = new Animation();
-		this.isLetChange = false;
-		this.isNewAnim = false;
 	}
 	
 	public void update() {
-		this.currAnim.animate(Point.getApp(), i, m.getX(), m.getY(), 28, 28, 3, this.start, this.start + this.frames - 1, this.animSpeed, false);
+		this.currAnim.animate(Point.getApp(), i, m.getX(), m.getY(), 28, 28, 3, this.start, this.start + this.frames - 1, this.animSpeed, false, this.changeAnim);
 	}
 	
 	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed) {
-		this.i = i; this.m = m; this.animSpeed = animSpeed;
+		this.setAnim (i, m, start, frames, animSpeed, false);
+	}
+	
+	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed, boolean change) {
+		this.i = i; this.m = m; this.animSpeed = animSpeed; this.changeAnim = change;
 		this.frames = frames; this.start = start + m.getDir() * this.frames;
 	}
 	

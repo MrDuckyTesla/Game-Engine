@@ -43,12 +43,10 @@ public class EightDirectionalMove extends MoveSet {
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
 		if (a.canAnimate()) {a.update();} else {this.showHitBox();}
-		
 	}
 	
 	@Override
 	public Animator getAnimator() {return this.a;}
-	
 	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override
