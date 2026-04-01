@@ -21,9 +21,7 @@ public class Sprint8d extends Ability {
 		for (int key : this.getKeys()) {this.isActive = ToolKit.keyIsDown(key);}
 		if (this.isActive) {
 			((EightDirectionalMove) m).doubSpeed();
-			if (o.getType() == Entity.Player) {
-				m.getAnimator().setAnimSpeed(6);
-			}
+			m.getAnimator().setAnimSpeed(6);
 		}
 	}
 

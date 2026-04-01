@@ -35,5 +35,9 @@ public class Animator {
 	public int getFrameEnd() {return 0;}
 	
 	public boolean canAnimate() {return this.m != null;}
+	
+	public boolean isDone() {
+		return false;
+	}
 
 }
