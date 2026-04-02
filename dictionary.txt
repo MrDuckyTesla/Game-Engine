@@ -40,3 +40,7 @@ kinematics
 precompiles
 spritesheet
 greyscale
+pixelates
+endpoint
+tho
+ngl
