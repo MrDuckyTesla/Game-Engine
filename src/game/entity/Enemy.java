@@ -1,5 +1,6 @@
 package game.entity;
 
+import game.entity.abilities.Abilities;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
 import processing.core.PImage;
@@ -40,7 +41,11 @@ public class Enemy extends NonPlayerCharacter {
 			this.getMoveSet().setDir((int)(Math.random() * 8));
 			this.getMoveSet().setIdle(Math.random() > 0.5);
 			for (Ability a : this.getAbilities()) {
-//				a.setActive(Math.random() > 0.95);
+				if (a.getType() == Abilities.sword8d) {
+					a.setActive(Math.random() > 0.99);
+				} else {
+					a.setActive(Math.random() > 0.8);
+				}
 			}
 		}
 	}

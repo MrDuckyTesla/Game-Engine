@@ -32,5 +32,9 @@ public class Sword8d extends Ability {
 	public boolean isActive() {return System.currentTimeMillis() < this.timeUnlock;}
 	@Override
 	public void setActive(boolean activate) {this.activate = activate;}
+	@Override
+	public Ability get() {return this.getKeys() == null? new Sword8d() : new Sword8d(this.getKeys());}
+	@Override
+	public Abilities getType() {return Abilities.sword8d;}
 
 }

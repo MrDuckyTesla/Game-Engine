@@ -43,7 +43,19 @@ public class Obstacle extends Point {
 	public boolean isBLInside(Obstacle other) {return ToolKit.pointRectCollide(getX(), getY()+h, other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isInside(Obstacle other) {return this.isTLInside(other) && this.isTRInside(other) && this.isBRInside(other) && this.isBLInside(other);} // Checks if this has all four corners inside other
 	
-	private void instantiate(MoveSet s, Ability[] a, boolean t, boolean m, boolean b) {if (s != null) {this.move = s; this.w = s.getW(); this.h = s.getH();} this.a = a; this.isTangible = t; this.isMovable = m; this.isBreakable = b;}
+	private void instantiate(MoveSet s, Ability[] a, boolean t, boolean m, boolean b) {
+		if (s != null) {
+			this.move = s; this.w = s.getW(); this.h = s.getH();
+		} 
+		if (a != null) {
+			this.a = new Ability[a.length];
+			for (int i = 0; i < a.length; i++) {
+				this.a[i] = a[i].get();
+			}
+		}
+		
+		this.isTangible = t; this.isMovable = m; this.isBreakable = b;
+	}
 	private void instantiate(float w, float h) {this.instantiate(null, null, true, false, false); this.w = w; this.h = h;}
 	
 	

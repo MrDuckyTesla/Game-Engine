@@ -21,5 +21,10 @@ public class Walk8d extends Ability {
 
 	@Override
 	public boolean isActive() {return true;}
+	
+	@Override
+	public Ability get() {return new Walk8d();}
+	@Override
+	public Abilities getType() {return Abilities.walk8d;}
 
 }

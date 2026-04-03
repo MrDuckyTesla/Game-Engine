@@ -16,8 +16,12 @@ public abstract class Ability {
 	public abstract void setActive(boolean activate);
 	public abstract boolean isActive();
 	
+	public abstract Ability get();
+	
 	public int[] getKeys() {return this.keys;}
 	
 	public void setKeys(int key) {this.keys = new int[] {key};}
 	public void setKeys(int[] keys) {this.keys = keys;}
+	
+	public abstract Abilities getType();
 }

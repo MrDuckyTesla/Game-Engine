@@ -31,5 +31,9 @@ public class Sprint8d extends Ability {
 	public void setActive(boolean activate) {this.activate = activate;}
 	@Override
 	public boolean isActive() {return this.isActive;}
+	@Override
+	public Ability get() {return this.getKeys() == null? new Sprint8d() : new Sprint8d(this.getKeys());}
+	@Override
+	public Abilities getType() {return Abilities.sprint8d;}
 	
 }
