@@ -1,9 +1,11 @@
 TOP PRIORITIES (New)
 
-#1: Handle all movement and collision in modular way (IE seperate classes) (also you can implement battles at a later point)
-#2: Add interracting with other entities
-#3: Make working menu system
-#4: Implement tile based background and editor
+#1: Add interracting with other entities
+#2: Make working menu system
+#3: Implement tile based background and editor
+#4: THREADS
+
+note that theoretically given enough obstacles, player cna move infinite amount in one frame
 
 TOP PRIORITIES (Old) (filtered)
 
@@ -65,3 +67,4 @@ Other things to implement on a later date:
   attack simulator? (for boss fights)
   maybe spread out computationally expensive functions over multiple frames
   Recreate old python version of game along with a td and mitocondrio for the shits and giggles
+  Idle games are peak lol make one of those with game engine

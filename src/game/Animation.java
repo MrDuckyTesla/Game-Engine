@@ -8,6 +8,7 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 	private int index = 0;  // Current Image Index
 	private int frameIndex = 0;  // Count of frames
 	private int indexCount = 0;  // How long its been since last index
+	private int totalFrames = 0;
 	private int timeRun = 0;
 	private float timeIncrease;
 	
@@ -18,6 +19,7 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 		// "I wanted the animations to stay constant and use new animation" - Old Nico
 		int temp = frameEnd - frameStart + 1;
 		if (resetIndex) {  // Reset all variables
+			this.totalFrames = 0;
 			this.index = frameStart;
 			this.frameIndex = 0;
 		} else {this.frameIndex++;}  // Update frame index
@@ -25,7 +27,7 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 		if (!changeAnimation) {  // If not changing animation
 			this.index = frameStart + (this.index - frameStart) % temp;
 			if (this.index < frameStart) {this.index = frameEnd;}
-		} if (this.indexCount == 0 && !resetIndex) {this.index = frameStart + (this.index - frameStart + 1) % temp;}  // Check if enough frames passed
+		} if (this.indexCount == 0 && !resetIndex) {this.index = frameStart + (this.index - frameStart + 1) % temp; this.totalFrames++;}  // Check if enough frames passed
 		app.image(image, x, y, width * scale, height * scale, this.index * width, 0, this.index * width + width, height);  // Then draw the image
 	}
 	
@@ -46,19 +48,6 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 	public void animateNew(PApplet app, PImage image, float x, float y, int width, int height, int scale, int frameStart, int frameEnd, int frame, boolean changeAnimation) {
 		this.animateNew(app, image, x, y, width, height, scale, frameStart, frameEnd, frame, changeAnimation, false);
 	}
-	
-	// THIS COMMENTED CODE IS IN JAVASCRIPT (original code technically wont run because currFrame doesn't exist in said code, so i didn't feel like rewriting it here)
-
-//	animateOld(img, x, y, wid, hgt, scl, frmSrt, frmEnd, frm, anmChg) {  // Keep this in case the new one goes horribly wrong
-//	    if (!anmChg)  this.currFrame = frameCount % frm;  // Check if its a different animation, if so reset the animation frame count
-//	    else this.currFrame = 0;  // Else, reset variable
-//	    if ((frameCount - this.currFrame) % frm == 0) {  // Check if enough frames passed
-//	      this.index ++;  // Change the index
-//	      if (this.index > frmEnd || this.index < frmSrt) this.index = frmSrt;  // Check if we passed the desired frame, if so reset to starting frame
-//	    }
-//	    // Then draw the image
-//	    image(img, x, y, wid * scl, hgt * scl, this.index * wid, 0, wid, hgt);
-//	  }
 	
 	public static void leaveTrails() {  // Draw last num amount of images at once, maybe with increasing transparency
 		// Make me first
@@ -94,38 +83,54 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 		this.animateLegsRun(app, centerX, centerY, floorY, 250, 150, 200, 100, 200, 150, 25, 10, 100, 1.35f, new int[] {111, 111, 255, 255}, new int[] {255, 111, 111, 255}, false, false, false);
 	}
 	
-//	function animateLegsRun(centerX, centerY, radiusX, radiusY, length, offsetX=0, offsetY=0, res=40, thickness=5, speed=10, jump=5, lengthQuotent=1.35, color1=[0, 0, 0, 255], color2=[255, 255, 255, 255], faceRight=false, showShadow=false, showHitbox=false) {
-//	  let num = 1, y1 = radiusY*sin(frameCount/speed+PI) + centerY + lengthQuotent*length, y2 = radiusY*sin(frameCount/speed) + centerY + lengthQuotent*length;
-//	  if (!faceRight) num = -1;
-//	  let x1 = num*radiusX*cos(frameCount/speed+PI) + centerX, x2 = num*radiusX*cos(frameCount/speed) + centerX, img;
-//	  centerY += jump*cos(frameCount/(speed/2)+PI);
-//	  let coords1 = getLimbCoords(centerX, centerY, length, length, x1+offsetX, y1+offsetY, faceRight);
-//	  let coords2 = getLimbCoords(centerX, centerY, length, length, x2+offsetX, y2+offsetY, faceRight);
-//	  
-//	  if (showShadow || showHitbox) {
-//	    fill(255, 0, 0);
-//	    if (showShadow)  ellipse(centerX+offsetX, centerY+length*lengthQuotent+offsetY, 2*radiusX, 2*radiusY);
-//	    if (showHitbox)  rect(centerX - radiusX - thickness/2, centerY - thickness/2, 2*radiusX + thickness/2, 2*length + thickness);
-//	  }
-//
-//	  img = lineImage(centerX, centerY, coords2[0], coords2[1], res, thickness, width, color1);
-//	  img.copy(lineImage(coords2[0], coords2[1], coords2[2], coords2[3], res, thickness, width, color1), 0, 0, res, res, 0, 0, res, res);
-//	  img.copy(lineImage(centerX, centerY, coords1[0], coords1[1], res, thickness, width, color2), 0, 0, res, res, 0, 0, res, res);
-//	  img.copy(lineImage(coords1[0], coords1[1], coords1[2], coords1[3], res, thickness, width, color2), 0, 0, res, res, 0, 0, res, res);
-//	  image(img, 0, 0, 400, 400);
-//}
-	
 	// Get
 	public int getIndex() {return this.index;}
 	public int getFrameIndex() {return this.frameIndex;}
 	public int getIndexCount() {return this.indexCount;}
 	public int getTimeRun() {return this.timeRun;}
+	public int getTotalFrames() {return this.totalFrames;}
 	public float getTimeIncrease() {return this.timeIncrease;}
-	// Set
-	public void setIndex(int index) {this.index = index;}
-	public void setFrameIndex(int frameIndex) {this.frameIndex = frameIndex;}
-	public void setIndexCount(int indexCount) {this.indexCount = indexCount;}
-	public void setTimeRun(int timeRun) {this.timeRun = timeRun;}
-	public void setTimeIncrease(float timeIncrease) {this.timeIncrease = timeIncrease;}
 
 }
+
+
+
+
+
+//function animateLegsRun(centerX, centerY, radiusX, radiusY, length, offsetX=0, offsetY=0, res=40, thickness=5, speed=10, jump=5, lengthQuotent=1.35, color1=[0, 0, 0, 255], color2=[255, 255, 255, 255], faceRight=false, showShadow=false, showHitbox=false) {
+//let num = 1, y1 = radiusY*sin(frameCount/speed+PI) + centerY + lengthQuotent*length, y2 = radiusY*sin(frameCount/speed) + centerY + lengthQuotent*length;
+//if (!faceRight) num = -1;
+//let x1 = num*radiusX*cos(frameCount/speed+PI) + centerX, x2 = num*radiusX*cos(frameCount/speed) + centerX, img;
+//centerY += jump*cos(frameCount/(speed/2)+PI);
+//let coords1 = getLimbCoords(centerX, centerY, length, length, x1+offsetX, y1+offsetY, faceRight);
+//let coords2 = getLimbCoords(centerX, centerY, length, length, x2+offsetX, y2+offsetY, faceRight);
+//
+//if (showShadow || showHitbox) {
+//  fill(255, 0, 0);
+//  if (showShadow)  ellipse(centerX+offsetX, centerY+length*lengthQuotent+offsetY, 2*radiusX, 2*radiusY);
+//  if (showHitbox)  rect(centerX - radiusX - thickness/2, centerY - thickness/2, 2*radiusX + thickness/2, 2*length + thickness);
+//}
+//
+//img = lineImage(centerX, centerY, coords2[0], coords2[1], res, thickness, width, color1);
+//img.copy(lineImage(coords2[0], coords2[1], coords2[2], coords2[3], res, thickness, width, color1), 0, 0, res, res, 0, 0, res, res);
+//img.copy(lineImage(centerX, centerY, coords1[0], coords1[1], res, thickness, width, color2), 0, 0, res, res, 0, 0, res, res);
+//img.copy(lineImage(coords1[0], coords1[1], coords1[2], coords1[3], res, thickness, width, color2), 0, 0, res, res, 0, 0, res, res);
+//image(img, 0, 0, 400, 400);
+//}
+
+
+
+
+
+// THIS COMMENTED CODE IS IN JAVASCRIPT (original code technically wont run because currFrame doesn't exist in said code, so i didn't feel like rewriting it here)
+
+//animateOld(img, x, y, wid, hgt, scl, frmSrt, frmEnd, frm, anmChg) {  // Keep this in case the new one goes horribly wrong
+//    if (!anmChg)  this.currFrame = frameCount % frm;  // Check if its a different animation, if so reset the animation frame count
+//    else this.currFrame = 0;  // Else, reset variable
+//    if ((frameCount - this.currFrame) % frm == 0) {  // Check if enough frames passed
+//      this.index ++;  // Change the index
+//      if (this.index > frmEnd || this.index < frmSrt) this.index = frmSrt;  // Check if we passed the desired frame, if so reset to starting frame
+//    }
+//    // Then draw the image
+//    image(img, x, y, wid * scl, hgt * scl, this.index * wid, 0, wid, hgt);
+//  }

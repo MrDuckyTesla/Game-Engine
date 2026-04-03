@@ -2,9 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
-import entity.Obstacle;
-import entity.Player;
-import entity.Point;
+import game.entity.Obstacle;
+import game.entity.Player;
+import game.entity.Point;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -14,9 +14,6 @@ public class Level {
 	private ArrayList<Room> rooms = new ArrayList<Room>();
 	
 	Player p;
-	
-	// Most simple player
-	public Level(PImage img) {Point q = new Point(); int[][] c = {}; this.p = new Player(q, q, q, img, img, c, c, new int[0]);}
 	
 	public Level(Player p) {this.p = p;}
 	

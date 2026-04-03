@@ -2,8 +2,9 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import entity.*;
-import processing.core.PApplet;
+import game.entity.*;
+import game.entity.Character;
+import game.entity.abilities.*;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
@@ -48,14 +49,10 @@ public class Room {
 		
 	}
 	
-	public void update(PApplet app) {
+	public void update() {
+		Obstacle.setRoom(room);
 		Collections.sort(room);
 		
-		for (Obstacle o : room) {
-			if (o.isTangible()) {
-				p.isCollide(o);
-			}
-		}
 		for (Obstacle o : room) {
 			o.update();
 		}
