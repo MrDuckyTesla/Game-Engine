@@ -1,24 +1,25 @@
 package game.entity;
 
-import game.ToolKit;
+import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
 import processing.core.PImage;
 
 public class Enemy extends NonPlayerCharacter {
+	
+	private long timeWander = 0;
 
 //	public Enemy(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer, int[] colorTint) {super(overPosit, battPosit, scale, overImage, battImage, overColorLayer, battColorLayer, colorTint);}
 //	public Enemy(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(overPosit, battPosit, scale, overImage, battImage, overColorLayer, battColorLayer);}
 //	public Enemy(Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(scale, overImage, battImage, overColorLayer, battColorLayer);}
 	
-	public Enemy(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale) {
-		super(img, move, colorLayers, colorTints, scale);
-		// TODO Auto-generated constructor stub
+	public Enemy(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
+		super(img, move, abilities, colorLayers, colorTints);
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		
+		this.wander();
 //		if (this.getOverworld()) {
 //		    // Check direction
 //		    if (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39)) {this.setOverDir(0);}  // Walk Right
@@ -30,6 +31,18 @@ public class Enemy extends NonPlayerCharacter {
 //		    else if ((ToolKit.keyIsDown(65) || ToolKit.keyIsDown(37)) && (ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38))) {this.setOverDir(5);}  // Left - Up
 //		    else if ((ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38)) && (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39))) {this.setOverDir(7);}  // Up - Right
 //		}
+	}
+	
+	private void wander() {
+		
+		if (this.timeWander < System.currentTimeMillis()) {
+			this.timeWander = System.currentTimeMillis() + Math.round(Math.random() * 1000);
+			this.getMoveSet().setDir((int)(Math.random() * 8));
+			this.getMoveSet().setIdle(Math.random() > 0.5);
+			for (Ability a : this.getAbilities()) {
+//				a.setActive(Math.random() > 0.95);
+			}
+		}
 	}
 	
 	@Override

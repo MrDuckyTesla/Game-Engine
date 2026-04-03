@@ -1,11 +1,9 @@
 package game.entity.movement;
 
 import java.util.ArrayList;
-
 import game.Animator;
 import game.entity.Obstacle;
 import game.entity.Point;
-import game.entity.abilities.Ability;
 
 // Legacy version without procedural animation
 public class PlatformerSimpleMove extends MoveSet {
@@ -38,6 +36,11 @@ public class PlatformerSimpleMove extends MoveSet {
 	}
 	
 	@Override
+	public MoveSet get() {
+		// TODO Auto-generated method stub
+		return new PlatformerSimpleMove();
+	}
+	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override
 	public float getY() {return this.xywh.getY();}
@@ -45,6 +48,12 @@ public class PlatformerSimpleMove extends MoveSet {
 	public float getW() {return this.xywh.getW();}
 	@Override
 	public float getH() {return this.xywh.getH();}
+	@Override
+	public float getS() {return 0;}
+	@Override
+	public float getSW() {return this.xywh.getW();}
+	@Override
+	public float getSH() {return this.xywh.getH();}
 
 	@Override
 	public Point getPoint() {

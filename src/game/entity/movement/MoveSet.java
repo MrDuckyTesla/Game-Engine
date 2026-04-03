@@ -15,10 +15,14 @@ public abstract class MoveSet {
 	
 	public abstract Animator getAnimator();
 	
+	public abstract MoveSet get();
 	public abstract float getX();
 	public abstract float getY();
 	public abstract float getW();
 	public abstract float getH();
+	public abstract float getS();
+	public abstract float getSW();
+	public abstract float getSH();
 	public abstract Point getPoint();
 	public abstract Obstacle getObstacle();
 	public abstract Moves getMoveType();

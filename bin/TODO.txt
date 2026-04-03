@@ -1,10 +1,9 @@
 TOP PRIORITIES (New)
 
-#1: Clean up new movement, ability, and animation classes
-#2: Add interracting with other entities
-#3: Make working menu system
-#4: Implement tile based background and editor
-#5: THREADS
+#1: Add interracting with other entities
+#2: Make working menu system
+#3: Implement tile based background and editor
+#4: THREADS
 
 note that theoretically given enough obstacles, player cna move infinite amount in one frame
 

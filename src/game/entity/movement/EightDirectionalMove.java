@@ -10,25 +10,28 @@ import processing.core.PApplet;
 public class EightDirectionalMove extends MoveSet {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
-	private int dir = 0, ldir = 0, scale = 1;
-	private float maxSpeed, currSpeed;  // How much object is allowed to move in a frame
+	private int dir = 0, ldir = 0;
+	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
 	private Point totalDist = new Point();  // The total amount that the object has moved in a frame
 	private Obstacle xywh;
 	
 	private Animator a = new Animator();
 	
-	public EightDirectionalMove() {this.instantiate(new Obstacle(0, 0, 28, 28), 3);}
-	public EightDirectionalMove(Obstacle xywh, float speed) {this.instantiate(xywh, speed);}
-	public EightDirectionalMove(Obstacle xywh, float speed, Animator a) {this.instantiate(xywh, speed); this.a = a;}
+	public EightDirectionalMove() {this.instantiate(new Obstacle(0, 0, 28, 28), 3, 3);}
+	public EightDirectionalMove(Obstacle xywh, float speed) {this.instantiate(xywh, speed, 1);}
+	public EightDirectionalMove(Obstacle xywh, float speed, Animator a) {this.instantiate(xywh, speed, 1); this.a = a;}
 	
-	private void instantiate(Obstacle xywh, float speed) {this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed;}
+	public EightDirectionalMove(Obstacle xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
+	public EightDirectionalMove(Obstacle xywh, float speed, float scale, Animator a) {this.instantiate(xywh, speed, scale); this.a = a;}
+	
+	private void instantiate(Obstacle xywh, float speed, float scale) {this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
 
 	@Override
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		Point p = this.getPotential(); this.totalDist.resetPoint();
 		for (Obstacle o : room) {
 			if (o != c && o.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
-				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.xywh.getW(), this.xywh.getH(), o.getX(), o.getY(), o.getW(), o.getH())) {
+				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), o.getX(), o.getY(), o.getW(), o.getH())) {
 					if (p.getX() < 0) {if (this.setX(o.getX() + o.getW() + 0.0001f)) {p.resetX();}}
 					else if (p.getX() > 0) {if (this.setX(o.getX() - c.getW() - 0.0001f)) {p.resetX();}}
 					if (p.getY() < 0) {if (this.setY(o.getY() + o.getH() + 0.0001f)) {p.resetY();}}
@@ -36,17 +39,19 @@ public class EightDirectionalMove extends MoveSet {
 				} 
 			} 
 		} PApplet app = Point.getApp();  // If c collides with window border
-		if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.xywh.getW(), this.xywh.getH(), 0, 0, app.width, app.height)) {
+		if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, app.width, app.height)) {
 			if (p.getX() < 0) {if (this.setX(0.0001f)) {p.resetX();}}
 			else if (p.getX() > 0) {if (this.setX(app.width - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
-		if (a.canAnimate()) {a.update();} else {this.showHitBox();}
+		if (a.canAnimate()) {a.update();} // else {this.showHitBox();}
 	}
 	
 	@Override
 	public Animator getAnimator() {return this.a;}
+	@Override
+	public MoveSet get() {return new EightDirectionalMove(this.xywh.get(), this.maxSpeed/2, this.scale, this.a.get());}
 	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override
@@ -55,6 +60,12 @@ public class EightDirectionalMove extends MoveSet {
 	public float getW() {return this.xywh.getW();}
 	@Override
 	public float getH() {return this.xywh.getH();}
+	@Override
+	public float getS() {return this.scale;}
+	@Override
+	public float getSW() {return this.xywh.getW() * this.scale;}
+	@Override
+	public float getSH() {return this.xywh.getH() * this.scale;}
 	@Override
 	public Point getPoint() {return this.xywh.getPoint();}
 	@Override

@@ -7,12 +7,13 @@ public abstract class Ability {
 	
 	private int[] keys;
 
-	public Ability() {}
+	public Ability() {this.keys = null;}
 	public Ability(int key) {this.keys = new int[] {key};}
 	public Ability(int[] keys) {this.keys = keys;}
 	
 	public abstract void update(Obstacle o, MoveSet m) throws IllegalArgumentException;
 	
+	public abstract void setActive(boolean activate);
 	public abstract boolean isActive();
 	
 	public int[] getKeys() {return this.keys;}

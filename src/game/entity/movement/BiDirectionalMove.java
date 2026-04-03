@@ -1,12 +1,9 @@
 package game.entity.movement;
 
 import java.util.ArrayList;
-
 import game.Animator;
-import game.entity.Character;
 import game.entity.Obstacle;
 import game.entity.Point;
-import game.entity.abilities.Ability;
 
 public class BiDirectionalMove extends MoveSet {
 	
@@ -27,6 +24,11 @@ public class BiDirectionalMove extends MoveSet {
 		return null;
 		
 	}
+	
+	@Override
+	public MoveSet get() {
+		return new BiDirectionalMove(this.xywh.get(), this.bg.get());
+	}
 
 	@Override
 	public float getX() {return this.xywh.getX();}
@@ -36,6 +38,12 @@ public class BiDirectionalMove extends MoveSet {
 	public float getW() {return this.xywh.getW();}
 	@Override
 	public float getH() {return this.xywh.getH();}
+	@Override
+	public float getS() {return 0;}
+	@Override
+	public float getSW() {return this.xywh.getW();}
+	@Override
+	public float getSH() {return this.xywh.getH();}
 	
 	@Override
 	public Point getPoint() {

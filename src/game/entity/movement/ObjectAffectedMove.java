@@ -1,7 +1,6 @@
 package game.entity.movement;
 
 import java.util.ArrayList;
-
 import game.Animator;
 import game.entity.Obstacle;
 import game.entity.Point;
@@ -34,16 +33,27 @@ public class ObjectAffectedMove extends MoveSet {
 	public float getW() {return 0;}
 	@Override
 	public float getH() {return 0;}
+	@Override
+	public float getS() {return 0;}
+	@Override
+	public float getSW() {return 0;}
+	@Override
+	public float getSH() {return 0;}
+	
+	@Override
+	public MoveSet get() {
+		return new ObjectAffectedMove();
+	}
 	
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Point();
 	}
 	
 	@Override
 	public Obstacle getObstacle() {
-		return null;
+		return new Obstacle();
 	}
 
 	@Override

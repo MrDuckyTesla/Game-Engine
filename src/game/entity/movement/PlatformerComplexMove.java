@@ -12,5 +12,11 @@ public class PlatformerComplexMove extends PlatformerSimpleMove {
 	public void move(ArrayList<Obstacle> room, Obstacle c) {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public MoveSet get() {
+		// TODO Auto-generated method stub
+		return new PlatformerComplexMove();
+	}
 
 }

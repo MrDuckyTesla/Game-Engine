@@ -10,7 +10,7 @@ public class Animator {
 	private MoveSet m;
 	private Animation currAnim;
 	private int animSpeed;
-	private int start, frames, frameEnd;
+	private int start, frames;
 	private boolean changeAnim;
 
 	public Animator() {
@@ -18,7 +18,7 @@ public class Animator {
 	}
 	
 	public void update() {
-		this.currAnim.animate(Point.getApp(), i, m.getX(), m.getY(), 28, 28, 3, this.start, this.start + this.frames - 1, this.animSpeed, false, this.changeAnim);
+		this.currAnim.animate(Point.getApp(), i, m.getX(), m.getY(), (int) m.getW(), (int) m.getH(), m.getS(), this.start, this.start + this.frames - 1, this.animSpeed, false, this.changeAnim);
 	}
 	
 	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed) {
@@ -32,7 +32,9 @@ public class Animator {
 	
 	public void setAnimSpeed(int speed) {this.animSpeed = speed;}
 	
-	public int getFrameEnd() {return 0;}
+	public Animator get() {return new Animator();}
+	
+	public int getTotalFrames() {return this.currAnim.getTotalFrames();}
 	
 	public boolean canAnimate() {return this.m != null;}
 	

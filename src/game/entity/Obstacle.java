@@ -1,14 +1,20 @@
 package game.entity;
 
+import java.util.ArrayList;
+
 import game.ToolKit;
+import game.entity.abilities.Ability;
 import game.entity.movement.Manager;
 import game.entity.movement.MoveSet;
+import game.entity.movement.Moves;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Obstacle extends Point {
 	
+	private static ArrayList<Obstacle> currRoom;
 	private PImage i;
+	private Ability[] a;
 	private MoveSet move = Manager.getMoveSet();
 	private float w, h;
 	private boolean isTangible, isMovable , isBreakable;
@@ -20,9 +26,16 @@ public class Obstacle extends Point {
 	public Obstacle(Point p, float w, float h) {super(p.getX(), p.getY()); this.instantiate(w, h);}
 	public Obstacle(float x, float y, float w, float h) {super(x, y); this.instantiate(w, h);}
 	
-	public Obstacle(MoveSet m) {super(m.getX(), m.getY()); this.instantiate(m, false, true, false);}
-	public Obstacle(MoveSet s, boolean t, boolean m, boolean b) {super(s.getX(), s.getY()); this.instantiate(s, t, m, b);}
-	public Obstacle(Point p, float w, float h, boolean t, boolean m, boolean b) {super(p.getX(), p.getY()); this.instantiate(null, t, m, b);}
+	public Obstacle(MoveSet m) {super(m.getX(), m.getY()); this.instantiate(m, null, false, true, false);}
+	public Obstacle(MoveSet s, boolean t, boolean m, boolean b) {super(s.getX(), s.getY()); this.instantiate(s, null, t, m, b);}
+	public Obstacle(Point p, float w, float h, boolean t, boolean m, boolean b) {super(p.getX(), p.getY()); this.instantiate(null, null, t, m, b);}
+	
+	public Obstacle(MoveSet m, Ability[] a) {super(m.getX(), m.getY()); this.instantiate(m, a, false, true, false);}
+	public Obstacle(MoveSet s, Ability[] a, boolean t, boolean m, boolean b) {super(s.getX(), s.getY()); this.instantiate(s, a, t, m, b);}
+	public Obstacle(Point p, float w, float h, Ability[] a, boolean t, boolean m, boolean b) {super(p.getX(), p.getY()); this.instantiate(null, a, t, m, b);}
+	
+	public static void setRoom(ArrayList<Obstacle> room) {Obstacle.currRoom = room;}
+	public static ArrayList<Obstacle> getRoom() {return Obstacle.currRoom;}
 	
 	public boolean isTLInside(Obstacle other) {return ToolKit.pointRectCollide(getX(), getY(), other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isTRInside(Obstacle other) {return ToolKit.pointRectCollide(getX()+w, getY(), other.getX(), other.getY(), other.getW(), other.getH());}
@@ -30,8 +43,9 @@ public class Obstacle extends Point {
 	public boolean isBLInside(Obstacle other) {return ToolKit.pointRectCollide(getX(), getY()+h, other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isInside(Obstacle other) {return this.isTLInside(other) && this.isTRInside(other) && this.isBRInside(other) && this.isBLInside(other);} // Checks if this has all four corners inside other
 	
-	private void instantiate(MoveSet s, boolean t, boolean m, boolean b) {if (s != null) {this.move = s; this.w = s.getW(); this.h = s.getH();} this.isTangible = t; this.isMovable = m; this.isBreakable = b;}
-	private void instantiate(float w, float h) {this.instantiate(null, true, false, false); this.w = w; this.h = h;}
+	private void instantiate(MoveSet s, Ability[] a, boolean t, boolean m, boolean b) {if (s != null) {this.move = s; this.w = s.getW(); this.h = s.getH();} this.a = a; this.isTangible = t; this.isMovable = m; this.isBreakable = b;}
+	private void instantiate(float w, float h) {this.instantiate(null, null, true, false, false); this.w = w; this.h = h;}
+	
 	
 	public void update() {this.displayRect();}  // Function for children to inherit, will probably be used for animated obstacles
 	public void interact() {}  // Another function for children to inherit, will probably be used for text box
@@ -60,6 +74,9 @@ public class Obstacle extends Point {
 	public Point[] getCorners() {return new Point[] {getCorner(true, false), getCorner(true, true), getCorner(false, true), getCorner(false, false)};}
 	public Entity getType() {return Entity.Obstacle;}
 	public MoveSet getMoveSet() {return this.move;}
+	public Moves getMoveSetType() {return this.move.getMoveType();}
+	public Ability[] getAbilities() {return this.a;}
+	public PImage getImg() {return this.i;};
 	
 	// Overridden functions
 	@Override

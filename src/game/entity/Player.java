@@ -1,18 +1,20 @@
 package game.entity;
 
 import game.ToolKit;
+import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
+import game.entity.movement.Moves;
 import processing.core.PImage;
 
 public class Player extends Character {
 	
-	public Player(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale) {super(img, move, colorLayers, colorTints, scale);}
+	public Player(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {super(img, move, abilities, colorLayers, colorTints);}
 
 	@Override
 	public void update() {
 		super.update();
 		
-		if (this.getOverworld()) {
+		if (this.getMoveSet().getMoveType() == Moves.eightDirectional) {
 		    if (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39) || ToolKit.keyIsDown(83) || ToolKit.keyIsDown(40) || ToolKit.keyIsDown(65) || ToolKit.keyIsDown(37) || ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38)) {this.setOverState(false);}
 		    else {this.setOverState(true);}
 		    // Check direction

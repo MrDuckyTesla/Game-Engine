@@ -5,7 +5,6 @@ import java.util.Collections;
 import game.entity.*;
 import game.entity.Character;
 import game.entity.abilities.*;
-import processing.core.PApplet;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
@@ -50,20 +49,11 @@ public class Room {
 		
 	}
 	
-	public Ability[] a = new Ability[] {new Walk8d(), new Sprint8d(16), new Sword8d(88)};
-	
 	public void update() {
-		
+		Obstacle.setRoom(room);
 		Collections.sort(room);
+		
 		for (Obstacle o : room) {
-			try {
-				if (o.getType() == Entity.Player) {
-				((Character) o).move(room, a);
-				}
-			}
-			catch (IllegalArgumentException e) {
-				
-			}
 			o.update();
 		}
 	}
