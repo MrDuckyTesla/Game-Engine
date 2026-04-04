@@ -20,8 +20,8 @@ public class Sword8d extends Ability {
 	public void update(Obstacle o, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (this.isActive()) {((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); m.getAnimator().setAnim(o.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle());}
-		else {if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1000;}}} 
-			else if (this.activate) {this.timeUnlock  = System.currentTimeMillis() + 1000;}
+		else {if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1000; m.getAnimator().resetAnim();}}} 
+			else if (this.activate) {this.timeUnlock  = System.currentTimeMillis() + 1000; m.getAnimator().resetAnim();}
 			this.setSwing(m, true);
 		} this.lIsIdle = m.getIsIdle();
 	}

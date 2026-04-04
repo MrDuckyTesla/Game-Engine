@@ -98,6 +98,6 @@ public class Obstacle extends Point {
 	@Override
 	public String toString() {return "("+getX()+", "+getY() + ", "+w+", "+h+")";}
 	@Override
-	public int compareTo(Object o) {return (int) (getY() + getH() - ((Obstacle) o).getY() - ((Obstacle) o).getH());}
+	public int compareTo(Object o) {return Float.compare(getY() + getH(), ((Obstacle) o).getY() + ((Obstacle) o).getH());}
 
 }

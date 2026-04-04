@@ -30,6 +30,10 @@ public class Animator {
 		this.frames = frames; this.start = start + m.getDir() * this.frames;
 	}
 	
+	public void resetAnim() {
+		this.currAnim = new Animation();
+	}
+	
 	public void setAnimSpeed(int speed) {this.animSpeed = speed;}
 	
 	public Animator get() {return new Animator();}

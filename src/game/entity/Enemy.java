@@ -3,6 +3,7 @@ package game.entity;
 import game.entity.abilities.Abilities;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
+import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Enemy extends NonPlayerCharacter {
