@@ -70,7 +70,7 @@ public class Point implements Comparable<Object> {
 	
 	// Overridden functions
 	@Override
-	public int compareTo(Object o) {return (int) (getY() - ((Point) o).getY());}
+	public int compareTo(Object o) {return Float.compare(getY(), ((Point) o).getY());}
 	@Override
 	public boolean equals(Object other) {return this.x == ((Point) other).getX() && this.y == ((Point) other).getY();}
 	@Override

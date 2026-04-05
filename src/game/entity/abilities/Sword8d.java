@@ -8,9 +8,7 @@ import game.entity.movement.Moves;
 
 public class Sword8d extends Ability {
 	
-	private long timeUnlock = 0;  // REPLACE ME WITH ANIMATION END
-	private boolean hasUnlocked = false;
-	private boolean activate, lIsIdle = true;
+	private boolean lIsIdle = true, activate = false, isActive = false;;
 
 	public Sword8d() {}
 	public Sword8d(int key) {super(key);}
@@ -19,9 +17,13 @@ public class Sword8d extends Ability {
 	@Override
 	public void update(Obstacle o, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
-		if (this.isActive()) {((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); m.getAnimator().setAnim(o.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle());}
-		else {if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.timeUnlock  = System.currentTimeMillis() + 1000;}}} 
-			else if (this.activate) {this.timeUnlock  = System.currentTimeMillis() + 1000;}
+		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
+			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
+			m.getAnimator().setAnim(o.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
+		} else {
+			this.isActive = false;
+			if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}} 
+			else if (this.activate) {m.getAnimator().resetAnim(); this.isActive = true;}
 			this.setSwing(m, true);
 		} this.lIsIdle = m.getIsIdle();
 	}
@@ -29,7 +31,7 @@ public class Sword8d extends Ability {
 	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing); }
 
 	@Override
-	public boolean isActive() {return System.currentTimeMillis() < this.timeUnlock;}
+	public boolean isActive() {return this.isActive;}
 	@Override
 	public void setActive(boolean activate) {this.activate = activate;}
 	@Override

@@ -30,11 +30,15 @@ public class Animator {
 		this.frames = frames; this.start = start + m.getDir() * this.frames;
 	}
 	
+	public void resetAnim() {
+		this.currAnim = new Animation();
+	}
+	
 	public void setAnimSpeed(int speed) {this.animSpeed = speed;}
 	
 	public Animator get() {return new Animator();}
 	
-	public int getTotalFrames() {return this.currAnim.getTotalFrames();}
+	public boolean getDoneAnimation(int frames) {return this.currAnim.getLastFrame() && this.currAnim.getTotalFrames() >= frames - 1;}
 	
 	public boolean canAnimate() {return this.m != null;}
 	

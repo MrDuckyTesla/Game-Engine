@@ -5,6 +5,7 @@ import processing.core.PImage;
 
 public class Animation {  // Ripped from the Engine class so i could make it static
 	
+	private boolean lastFrame = false;
 	private int index = 0;  // Current Image Index
 	private int frameIndex = 0;  // Count of frames
 	private int indexCount = 0;  // How long its been since last index
@@ -28,6 +29,7 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 			this.index = frameStart + (this.index - frameStart) % temp;
 			if (this.index < frameStart) {this.index = frameEnd;}
 		} if (this.indexCount == 0 && !resetIndex) {this.index = frameStart + (this.index - frameStart + 1) % temp; this.totalFrames++;}  // Check if enough frames passed
+		this.lastFrame = (this.frameIndex + 1) % frame == 0 && !resetIndex;
 		app.image(image, x, y, width * scale, height * scale, this.index * width, 0, this.index * width + width, height);  // Then draw the image
 	}
 	
@@ -84,6 +86,7 @@ public class Animation {  // Ripped from the Engine class so i could make it sta
 	}
 	
 	// Get
+	public boolean getLastFrame() {return this.lastFrame;}
 	public int getIndex() {return this.index;}
 	public int getFrameIndex() {return this.frameIndex;}
 	public int getIndexCount() {return this.indexCount;}
