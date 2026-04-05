@@ -38,7 +38,7 @@ public class Animator {
 	
 	public Animator get() {return new Animator();}
 	
-	public int getTotalFrames() {return this.currAnim.getTotalFrames();}
+	public boolean getDoneAnimation(int frames) {return this.currAnim.getLastFrame() && this.currAnim.getTotalFrames() >= frames - 1;}
 	
 	public boolean canAnimate() {return this.m != null;}
 	

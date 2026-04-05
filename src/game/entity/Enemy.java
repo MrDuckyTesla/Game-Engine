@@ -3,7 +3,6 @@ package game.entity;
 import game.entity.abilities.Abilities;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
-import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Enemy extends NonPlayerCharacter {
@@ -35,8 +34,11 @@ public class Enemy extends NonPlayerCharacter {
 //		}
 	}
 	
-	private void wander() {
+	private void walkTowardsPlayer() {
 		
+	}
+	
+	private void wander() {
 		if (this.timeWander < System.currentTimeMillis()) {
 			this.timeWander = System.currentTimeMillis() + Math.round(Math.random() * 1000);
 			this.getMoveSet().setDir((int)(Math.random() * 8));
