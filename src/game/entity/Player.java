@@ -8,7 +8,7 @@ import processing.core.PImage;
 
 public class Player extends Entity {
 	
-	public Player(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {super(img, move, abilities, colorLayers, colorTints);}
+	public Player(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {super(img, move, abilities, colorLayers, colorTints, false, false);}
 
 	@Override
 	public void update() {

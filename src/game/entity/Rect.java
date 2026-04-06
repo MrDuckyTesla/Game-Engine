@@ -22,19 +22,18 @@ public class Rect extends Point {
 	public boolean isInside(Rect other) {return this.isTLInside(other) && this.isTRInside(other) && this.isBRInside(other) && this.isBLInside(other);} // Checks if this has all four corners inside other
 	private void instantiate(float w, float h) {this.w = w; this.h = h;}
 	
-	
-	public void update() {this.displayRect();}  // Function for children to inherit, will probably be used for animated obstacles
+//	public void update() {this.displayRect();}  // Function for children to inherit, will probably be used for animated obstacles
 	public void interact() {}  // Another function for children to inherit, will probably be used for text box
 	
 	public boolean isCollide(Rect o) {return ToolKit.rectRectCollide(this.getX(), this.getY(), this.w, this.h, o.getX(), o.getY(), o.getW(), o.getH());}
 	
-	public boolean displayRect() {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX(), getY(), w, h); return true;}
-	public boolean displayRect(float s) {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX()*s, getY()*s, w*s, h*s); return true;}
+//	public boolean displayRect() {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX(), getY(), w, h); return true;}
+//	public boolean displayRect(float s) {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX()*s, getY()*s, w*s, h*s); return true;}
 	public boolean displayRect(PApplet app, float s) {app.rect(getX()*s, getY()*s, w*s, h*s); return true;}
 	public boolean displayRect(PApplet app) {app.rect(getX(), getY(), w, h); return true;}
 	public boolean displayRect(PApplet app, int[] color) {app.push(); app.fill(app.color(color[0], color[1], color[2])); app.rect(getX(), getY(), w, h); app.pop(); return true;}
 	
-	public boolean appRect(float w, float h) {Point.rectApp(this.getX(), this.getY(), this.w, this.h); return true;}
+//	public boolean appRect(float w, float h) {Point.rectApp(this.getX(), this.getY(), this.w, this.h); return true;}
 	
 	// Get
 	public float getW() {return this.w;}

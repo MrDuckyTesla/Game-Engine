@@ -23,6 +23,7 @@ public class Room {
 	public void add(Entity o) {room.add(o);}
 	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
 	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
+	public void add(float x, float y, float w, float h) {room.add(new NonPlayerCharacter(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background) {
 		this.p = p; this.background = background; room.add(this.p);

@@ -94,10 +94,10 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean setHelper(float x, boolean isX) {return PApplet.abs((isX? this.xywh.getX() : this.xywh.getY()) - x) <= this.maxSpeed;}
 	
 	public void showHitBox() {
-		Point.pushApp();
-		if (isIdle) {Point.fillApp(255, 0, 0);}
-		Point.getApp().rect(xywh.getX(), xywh.getY(), this.getSW(), this.getSH());
-		Point.popApp();
+		ToolKit.pushApp();
+		if (isIdle) {ToolKit.fillApp(255, 0, 0);}
+		ToolKit.getApp().rect(xywh.getX(), xywh.getY(), this.getSW(), this.getSH());
+		ToolKit.popApp();
 	}
 	
 	public void setForceWalk(boolean forceWalk) {this.forceWalk = forceWalk;}

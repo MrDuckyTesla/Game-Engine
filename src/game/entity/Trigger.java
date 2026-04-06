@@ -7,7 +7,7 @@ import processing.core.PImage;
 public abstract class Trigger extends Entity {
 
 	public Trigger(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
-		super(img, move, abilities, colorLayers, colorTints);
+		super(img, move, abilities, colorLayers, colorTints, false, false);
 		// TODO Auto-generated constructor stub
 	}
 
