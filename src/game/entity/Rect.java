@@ -7,7 +7,6 @@ import processing.core.PApplet;
 public class Rect extends Point {
 	
 	private float w, h;
-	private boolean isTangible, isMovable , isBreakable;
 	
 	public Rect() {super(); this.instantiate(0, 0);}
 	public Rect(Point p) {super(p.getX(), p.getY()); this.instantiate(w, h);}
@@ -15,27 +14,19 @@ public class Rect extends Point {
 	public Rect(Point p, Point q) {super(p.compareTo(q) < 0? p : q); this.w = PApplet.abs(p.getX() - q.getX()); this.h = PApplet.abs(p.getY() - q.getY());}
 	public Rect(Point p, float w, float h) {super(p.getX(), p.getY()); this.instantiate(w, h);}
 	public Rect(float x, float y, float w, float h) {super(x, y); this.instantiate(w, h);}
-	public Rect(Point p, float w, float h, boolean t, boolean m, boolean b) {super(p.getX(), p.getY()); this.instantiate(t, m, b);}
 	
 	public boolean isTLInside(Rect other) {return ToolKit.pointRectCollide(getX(), getY(), other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isTRInside(Rect other) {return ToolKit.pointRectCollide(getX()+w, getY(), other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isBRInside(Rect other) {return ToolKit.pointRectCollide(getX()+w, getY()+h, other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isBLInside(Rect other) {return ToolKit.pointRectCollide(getX(), getY()+h, other.getX(), other.getY(), other.getW(), other.getH());}
 	public boolean isInside(Rect other) {return this.isTLInside(other) && this.isTRInside(other) && this.isBRInside(other) && this.isBLInside(other);} // Checks if this has all four corners inside other
-	
-	private void instantiate(boolean t, boolean m, boolean b) {
-		this.isTangible = t; this.isMovable = m; this.isBreakable = b;
-	}
-	private void instantiate(float w, float h) {this.instantiate(true, false, false); this.w = w; this.h = h;}
+	private void instantiate(float w, float h) {this.w = w; this.h = h;}
 	
 	
 	public void update() {this.displayRect();}  // Function for children to inherit, will probably be used for animated obstacles
 	public void interact() {}  // Another function for children to inherit, will probably be used for text box
 	
 	public boolean isCollide(Rect o) {return ToolKit.rectRectCollide(this.getX(), this.getY(), this.w, this.h, o.getX(), o.getY(), o.getW(), o.getH());}
-	public boolean isTangible() {return this.isTangible;}
-	public boolean isMovable() {return this.isMovable;}
-	public boolean isBreakable() {return this.isBreakable;}
 	
 	public boolean displayRect() {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX(), getY(), w, h); return true;}
 	public boolean displayRect(float s) {if (!Point.getHasApp()) {return false;} Point.getApp().rect(getX()*s, getY()*s, w*s, h*s); return true;}

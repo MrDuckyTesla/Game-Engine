@@ -2,11 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
-import game.entity.Rect;
 import game.entity.Player;
-import game.entity.Point;
-import processing.core.PApplet;
-import processing.core.PImage;
 
 // A level holds many Rooms
 public class Level {

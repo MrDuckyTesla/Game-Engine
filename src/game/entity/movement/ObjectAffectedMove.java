@@ -2,7 +2,6 @@ package game.entity.movement;
 
 import java.util.ArrayList;
 import game.Animator;
-import game.entity.Rect;
 import game.entity.Entity;
 import game.entity.Point;
 

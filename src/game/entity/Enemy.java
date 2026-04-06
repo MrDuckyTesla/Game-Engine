@@ -34,9 +34,9 @@ public class Enemy extends NonPlayerCharacter {
 //		}
 	}
 	
-	private void walkTowardsPlayer() {
-		
-	}
+//	private void walkTowardsPlayer() {
+//		
+//	}
 	
 	private void wander() {
 		if (this.timeWander < System.currentTimeMillis()) {

@@ -11,14 +11,16 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	private static ArrayList<Entity> currRoom;
 	private static int id = 0;
-	private int entID, currMove = 0, totalStates = 0;
-	private int[] colorTints;
-	private int[][][] colorLayers;
+	
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
-	private Point showXY;
+	private boolean isTangible = false, isMovable = false, isBreakable = false;
+	private int entID, currMove = 0, totalStates = 0;
+	private int[][][] colorLayers;
+	private Ability[] abilities;
+	private int[] colorTints;
 	private PImage[] images;
 	private MoveSet[] move;
-	private Ability[] abilities;
+	private Point showXY;
 	
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
@@ -74,7 +76,9 @@ public abstract class Entity implements Comparable<Entity> {
 
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
 
-	public boolean isTangible() {return false;}
+	public boolean isTangible() {return this.isTangible;}
+	public boolean isMovable() {return this.isMovable;}
+	public boolean isBreakable() {return this.isBreakable;}
 
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
 

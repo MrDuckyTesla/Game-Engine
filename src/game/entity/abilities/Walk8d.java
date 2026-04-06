@@ -1,7 +1,6 @@
 package game.entity.abilities;
 
 import game.entity.Entity;
-import game.entity.Rect;
 import game.entity.movement.MoveSet;
 import game.entity.movement.Moves;
 
