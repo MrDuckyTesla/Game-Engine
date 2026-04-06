@@ -1,6 +1,7 @@
 package game.entity;
 
 import java.util.ArrayList;
+import game.Room;
 import game.ToolKit;
 import game.entity.abilities.Ability;
 import game.entity.movement.*;
@@ -9,8 +10,12 @@ import processing.core.PImage;
 public abstract class Entity implements Comparable<Entity> {
 	
 	// Static variables
-	private static ArrayList<Entity> currRoom;
+	private static Room currRoom;
 	private static int id = 0;
+	
+	// Static methods
+	public static ArrayList<Entity> getRoom() {return Entity.currRoom.getRoom();}
+	public static void setRoom(Room room) {Entity.currRoom = room;}
 	
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
@@ -45,58 +50,51 @@ public abstract class Entity implements Comparable<Entity> {
 	}
 	
 	public void update() {	
-		this.move[this.currMove].move(Entity.getRoom(), this, new float[] {0, 0, 800, 800}, this.abilities, this.showXY);
+		Point backCoords = Entity.currRoom.getBackCoords();
+		this.move[this.currMove].move(Entity.getRoom(), this, new float[] {
+				backCoords.getX(), 
+				backCoords.getY(), 
+				backCoords.getX() + Entity.currRoom.getImageWidth(), 
+				backCoords.getY() + Entity.currRoom.getImageHeight()
+		}, this.abilities, this.showXY);
 	    this.showXY.set(this.getMoveSet().getPoint());
 	}
 	
-	// Get
-	public int getOverDir() {return this.move[this.currMove].getDir();}
-	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
-	// Set
-	protected void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
-	protected void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
-
+	// Abstract methods
 	public abstract void interact();
-
 	public abstract Entities getType();
-
-	public float getX() {return this.getMoveSet().getX();}
-
-	public float getY() {return this.getMoveSet().getY();}
-
-	public float getW() {return this.getMoveSet().getSW();}
-
-	public float getH() {return this.getMoveSet().getSH();}
 	
-	public void setX(float x) {this.showXY.setX(x);}
-	
-	public void setY(float y) {this.showXY.setY(y);}
-
-	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
-
+	// Getter methods
+	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
 	public boolean isTangible() {return this.isTangible;}
-	
 	public boolean isBreakable() {return this.isBreakable;}
-
+	public int getOverDir() {return this.move[this.currMove].getDir();}
+	public float getX() {return this.getMoveSet().getX();}
+	public float getY() {return this.getMoveSet().getY();}
+	public float getW() {return this.getMoveSet().getSW();}
+	public float getH() {return this.getMoveSet().getSH();}
+	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
-
-	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
-
 	public PImage getImg() {return this.images[this.currMove];};
-	
 	public Ability[] getAbilities() {return this.abilities;}
+	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
 	
-	public static void setRoom(ArrayList<Entity> room) {Entity.currRoom = room;}
+	// Setter methods
+	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
+	public void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
+	public void setX(float x) {this.showXY.setX(x);}
+	public void setY(float y) {this.showXY.setY(y);}
 	
-	public static ArrayList<Entity> getRoom() {return Entity.currRoom;}
+	// Adder methods
+	public void addX(float x) {this.showXY.addX(x);}
+	public void addY(float y) {this.showXY.addY(y);}
 	
-	
-	
+	// Overridden methods
+	@Override
+	public int compareTo(Entity e) {return Float.compare(this.getY() + this.getH(), e.getY() + e.getH());}
 	@Override
 	public String toString() {return "("+this.getX()+", "+this.getY() + ", "+this.getW()+", "+this.getH()+")";}
 	@Override
 	public boolean equals(Object other) {if(other.getClass() != this.getClass()) {return false;} return this.entID == ((Entity) other).entID;}
-	@Override
-	public int compareTo(Entity e) {return Float.compare(this.getY() + this.getH(), e.getY() + e.getH());}
 
 }

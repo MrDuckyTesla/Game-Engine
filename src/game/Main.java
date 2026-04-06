@@ -43,6 +43,7 @@ public class Main extends PApplet {
 		noCursor(); noStroke(); textSize(20);
 		tesla[0] = loadImage("src/Assets/Sprites/Tesla/Tesla_Overworld.png");
 		tesla[1] = loadImage("src/Assets/Sprites/Tesla/Tesla_Battle.png");
+		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 //		tesla[0] = image1;
 //		colorList = Engine.PreCompile(this, image1, new int[][] {{180, 157, 130, 31}, {187, 171}, {190, 163, 140}});
 //		Engine.changeColor(this, image1, colorList, new int[] {111, 111, 255, 255, 111, 111, 255, 200, 0});
@@ -66,12 +67,10 @@ public class Main extends PApplet {
 			test.add((float) Math.random() * (800-28*3), (float) Math.random() * (800-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
 		}
 		// five hundred teslas
-		for (int i = 0; i < 100; i++) {
-			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(800-28*3), (float)Math.random()*(800-28*3), 28, 28), 1, 1), new PlatformerSimpleMove()};
+		for (int i = 0; i < 10; i++) {
+			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(800-28*3), (float)Math.random()*(800-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
-			for (int j = 0; j < EnemyColorTints.length; j++) {
-				EnemyColorTints[j] = (int) (Math.random() * 256);
-			}
+			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
 			test.add(new Enemy(tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
 		}
 		

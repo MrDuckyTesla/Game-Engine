@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 import game.entity.*;
+import game.entity.movement.*;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
@@ -13,20 +14,20 @@ public class Room {
 	// BACKGROUND VARIABLES
 	private PImage background;
 	private Point backCoords;
-	private boolean backX, backY, hasInstantiated = false;
+	private boolean backBoolX, backBoolY, hasInstantiated = false;
 	
-	public Room(Player p, PImage background) {this.instantiate(p, background);}
-	public Room(Player p, Entity o, PImage background) {this.p = p; this.background = background; room.add(p); room.add(o);}
-	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background); this.add(o);}
-	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background); this.add(o);}
+	public Room(Player p, PImage background) {this.instantiate(p, background, new Point());}
+	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(p); room.add(o);}
+	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
+	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	
 	public void add(Entity o) {room.add(o);}
 	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
 	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
 	public void add(float x, float y, float w, float h) {room.add(new NonPlayerCharacter(x, y, w, h));}
 	
-	private void instantiate(Player p, PImage background) {
-		this.p = p; this.background = background; room.add(this.p);
+	private void instantiate(Player p, PImage background, Point backCoords) {
+		this.p = p; this.background = null; this.backCoords = backCoords; room.add(this.p);
 	}
 	
 	//TODO implement reading from file
@@ -43,51 +44,25 @@ public class Room {
 	}
 	
 	public void update() {
-		Entity.setRoom(room);
+		Entity.setRoom(this);
 		Collections.sort(room);
+		if (this.background != null) {this.moveBackground();}
 		
 		for (Entity e : room) {
 			e.update();
-			e.setX(10);
+			e.addX(this.backCoords.getX());
 		}
 	}
-	
-//	private void update() {
-//		this.p.update();
-//		for (int i = 0; i < room.size(); i++) {room.get(i).update();}
-//		for (Obstacle o : room) {if (!o.getClass().equals(Character.class)) {if (!p.isCollide(o)) {o.isCollide(p);}}}
-//	}
-	
-	public void moveBackground() {
-//		if (!this.hasInstantiated) {this.instantiateVars(); this.hasInstantiated = true;}
-//	    if (this.backX) {  // If background is moving X
-//	    	this.backCoords.changeX(-this.p.getMoveX());
-//	    	if (this.backCoords.getX() <= (float) this.p.getApp().width - this.background.width || this.backCoords.getX() >= 0) {
-//	    		this.backCoords.setX(this.backCoords.getX() <= (float) this.p.getApp().width - this.background.width? (float) this.p.getApp().width - this.background.width : 0);
-//	    		this.backX = false;
-//	    	}
-//	    } else {  // Else moving character X
-//	    	this.p.changeOverX();
-//	    	float temp = (float) this.p.getApp().width/2 - this.p.getWidth()/2;
-//	    	if ((this.p.getX() >= temp && this.backCoords.getX() >= 0) || (this.p.getX() <= temp && this.backCoords.getX() <= (float) this.p.getApp().width - this.background.width)) {
-//	    		this.p.setX(temp);
-//	    		this.backX = true;
-//	    	}
-//	    } if (this.backY) {  // If background is moving Y
-//	    	this.backCoords.changeY(-this.p.getMoveY());
-//	    	if (this.backCoords.getY() <= this.p.getApp().height - this.background.height || this.backCoords.getY() >= 0) {
-//	    		this.backCoords.setY(this.backCoords.getY() <= this.p.getApp().height - this.background.height? this.p.getApp().height - this.background.height : 0);
-//	    		this.backY = false;
-//	    	}
-//	    } else {  // Else moving character Y
-//	    	this.p.changeOverY();
-//	    	float temp = this.p.getApp().height/2 - this.p.getHeight()/2;
-//	    	if ((this.p.getY() >= temp && this.backCoords.getY() >= 0) || (this.p.getY() <= temp && this.backCoords.getY() <= this.p.getApp().height - this.background.height)) {
-//	    		this.p.setY(temp);
-//	    		this.backY = true;
-//	    	}
-//	    } this.p.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
-//	    System.out.println(this.backX + " " + this.backY);
+
+	private void moveBackground() {
+		
+	    System.out.println(this.backCoords.getX() + " " + this.backCoords.getY() + " " + this.backBoolX + " " + this.backBoolY);
+	    ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 	}
+	
+	public ArrayList<Entity> getRoom() {return this.room;}
+	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
+	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
+	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}
 	
 }
