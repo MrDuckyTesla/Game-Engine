@@ -1,5 +1,100 @@
 package game.entity;
 
-public enum Entity {
-	Obstacle, Player, NonPlayerCharacter, Enemy, Projectile, Door
+import java.util.ArrayList;
+import game.ToolKit;
+import game.entity.abilities.Ability;
+import game.entity.movement.MoveSet;
+import game.entity.movement.Moves;
+import processing.core.PImage;
+
+public abstract class Entity implements Comparable<Entity> {
+	
+	private static ArrayList<Entity> currRoom;
+	private static int id = 0;
+	private int entID, currMove = 0, totalStates = 0;
+	private int[] colorTints;
+	private int[][][] colorLayers;
+	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
+	private Point showXY;
+	private PImage[] images;
+	private MoveSet[] move;
+	private Ability[] abilities;
+	
+	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
+	
+	public Entity(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
+		this.entID = Entity.id; Entity.id++;
+		this.showXY = new Point();
+		this.totalStates = move.length;
+		this.images = new PImage[this.totalStates];
+		this.move = new MoveSet[this.totalStates];
+		this.abilities = new Ability[abilities.length];
+		for (int i = 0; i < this.totalStates; i++) {
+			this.images[i] = img[i].copy();
+			this.move[i] = move[i].get();
+		}
+		for (int i = 0; i < abilities.length; i++) {
+			this.abilities[i] = abilities[i].get();
+		}
+		this.colorLayers = colorLayers;
+		this.colorTints = colorTints;
+		for (int i = 0; i < move.length; i++) {this.colorLists.add(ToolKit.PreCompile(Point.getApp(), this.images[i], this.colorLayers[i]));}
+		ToolKit.changeColor(Point.getApp(), this.images[0], this.colorLists.get(0), this.colorTints);
+	}
+	
+	public void update() {	
+		this.move[this.currMove].move(Entity.getRoom(), this, new float[] {0, 0, 800, 800}, this.abilities, this.showXY);
+	    this.showXY.set(this.getMoveSet().getPoint());
+	}
+	
+	// Get
+	public int getOverDir() {return this.move[this.currMove].getDir();}
+	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
+	// Set
+	protected void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
+	protected void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
+	
+	// Overridden functions
+
+	public abstract void interact();
+
+	public abstract Entities getType();
+
+	public float getX() {return this.getMoveSet().getX();}
+
+	public float getY() {return this.getMoveSet().getY();}
+
+	public float getW() {return this.getMoveSet().getSW();}
+
+	public float getH() {return this.getMoveSet().getSH();}
+	
+	public void setX(float x) {this.showXY.setX(x);}
+	
+	public void setY(float y) {this.showXY.setY(y);}
+
+	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
+
+	public boolean isTangible() {return false;}
+
+	public MoveSet getMoveSet() {return this.move[this.currMove];}
+
+	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
+
+	public PImage getImg() {return this.images[this.currMove];};
+	
+	public Ability[] getAbilities() {return this.abilities;}
+	
+	public static void setRoom(ArrayList<Entity> room) {Entity.currRoom = room;}
+	
+	public static ArrayList<Entity> getRoom() {return Entity.currRoom;}
+	
+	
+	
+	@Override
+	public String toString() {return "("+this.getX()+", "+this.getY() + ", "+this.getW()+", "+this.getH()+")";}
+	@Override
+	public boolean equals(Object other) {if(other.getClass() != this.getClass()) {return false;} return this.entID == ((Entity) other).entID;}
+	@Override
+	public int compareTo(Entity e) {return Float.compare(this.getY() + this.getH(), e.getY() + e.getH());}
+
 }

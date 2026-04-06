@@ -2,7 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
-import game.entity.Obstacle;
+import game.entity.Rect;
 import game.entity.Player;
 import game.entity.Point;
 import processing.core.PApplet;
@@ -17,8 +17,8 @@ public class Level {
 	
 	public Level(Player p) {this.p = p;}
 	
-	public void addRoom(Obstacle o, PImage i) {rooms.add(new Room(p, o, i));}
-	public void addRoom(Obstacle[] o, PImage i) {rooms.add(new Room(p, o, i));}
+//	public void addRoom(Rect o, PImage i) {rooms.add(new Room(p, o, i));}
+//	public void addRoom(Rect[] o, PImage i) {rooms.add(new Room(p, o, i));}
 	
 	public void addRooms(Room[] r) {
 		

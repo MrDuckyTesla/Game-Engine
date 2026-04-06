@@ -68,3 +68,4 @@ Other things to implement on a later date:
   maybe spread out computationally expensive functions over multiple frames
   Recreate old python version of game along with a td and mitocondrio for the shits and giggles
   Idle games are peak lol make one of those with game engine
+  make it so a random obstacle in overworld becomes a boss fight when hit lol

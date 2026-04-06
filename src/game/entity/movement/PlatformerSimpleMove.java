@@ -2,18 +2,19 @@ package game.entity.movement;
 
 import java.util.ArrayList;
 import game.Animator;
-import game.entity.Obstacle;
+import game.entity.Rect;
+import game.entity.Entity;
 import game.entity.Point;
 
 // Legacy version without procedural animation
 public class PlatformerSimpleMove extends MoveSet {
 	
 	Point coords = new Point();
-	private Obstacle xywh;
+	private Rect xywh;
 	private float impulse, friction, speed, accelerationY;
 	
 	public PlatformerSimpleMove() {
-		this.xywh = new Obstacle(0, 0, 9, 13);
+		this.xywh = new Rect(0, 0, 9, 13);
 		this.impulse = 17; this.friction = 0.8f;
 		this.speed = 2.5f; this.accelerationY = 1;
 		// FOR WHEN ANIMATION IS NEEDED, battAnimSpeed = 5;
@@ -24,7 +25,7 @@ public class PlatformerSimpleMove extends MoveSet {
 //	}
 
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c) {
+	public void move(ArrayList<Entity> room, Entity c, float[] bg, Point xy) {
 		// TODO Auto-generated method stub
 	}
 	
@@ -58,11 +59,6 @@ public class PlatformerSimpleMove extends MoveSet {
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Obstacle getObstacle() {
 		return null;
 	}
 

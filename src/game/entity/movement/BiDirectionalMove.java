@@ -2,19 +2,20 @@ package game.entity.movement;
 
 import java.util.ArrayList;
 import game.Animator;
-import game.entity.Obstacle;
+import game.entity.Rect;
+import game.entity.Entity;
 import game.entity.Point;
 
 public class BiDirectionalMove extends MoveSet {
 	
-	private Obstacle xywh, bg;
+	private Rect xywh, bg;
 	
-	public BiDirectionalMove(Obstacle xywh, Obstacle bg) {
+	public BiDirectionalMove(Rect xywh, Rect bg) {
 		this.xywh = xywh; this.bg = bg;
 	}
 
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c) {
+	public void move(ArrayList<Entity> room, Entity e, float[] bg, Point xy) {
 		// TODO Auto-generated method stub
 	}
 	
@@ -48,11 +49,6 @@ public class BiDirectionalMove extends MoveSet {
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Obstacle getObstacle() {
 		return null;
 	}
 

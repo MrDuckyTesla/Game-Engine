@@ -3,14 +3,12 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 import game.entity.*;
-import game.entity.Character;
-import game.entity.abilities.*;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
 public class Room {
 
-	private ArrayList<Obstacle> room = new ArrayList<Obstacle>();
+	private ArrayList<Entity> room = new ArrayList<Entity>();
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
@@ -18,19 +16,13 @@ public class Room {
 	private boolean backX, backY, hasInstantiated = false;
 	
 	public Room(Player p, PImage background) {this.instantiate(p, background);}
-	public Room(Player p, Obstacle o, PImage background) {this.p = p; this.background = background; room.add(p); room.add(o);}
-	public Room(Player p, Obstacle[] o, PImage background) {this.instantiate(p, background); this.add(o);}
-	public Room(Player p,ArrayList<Obstacle> o, PImage background) {this.instantiate(p, background); this.add(o);}
-	public Room(Player p, Point q, Point r, PImage background) {this.instantiate(p, background); this.add(q, r);}
-	public Room(Player p, Point q, float w, float h, PImage background) {this.instantiate(p, background); this.add(q, w, h);}
-	public Room(Player p,float x, float y, float w, float h, PImage background) {this.instantiate(p, background); this.add(x, y, w, h);}
+	public Room(Player p, Entity o, PImage background) {this.p = p; this.background = background; room.add(p); room.add(o);}
+	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background); this.add(o);}
+	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background); this.add(o);}
 	
-	public void add(Obstacle o) {room.add(o); Collections.sort(room);}
-	public void add(Point p, float w, float h) {room.add(new Obstacle(p, w, h));}
-	public void add(float x, float y, float w, float h) {room.add(new Obstacle(x, y, w, h));}
-	public void add(Point p, Point q) {room.add(new Obstacle(p, q));}
-	public void add(Obstacle[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
-	public void add(ArrayList<Obstacle> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
+	public void add(Entity o) {room.add(o);}
+	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
+	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
 	
 	private void instantiate(Player p, PImage background) {
 		this.p = p; this.background = background; room.add(this.p);
@@ -50,11 +42,12 @@ public class Room {
 	}
 	
 	public void update() {
-		Obstacle.setRoom(room);
+		Entity.setRoom(room);
 		Collections.sort(room);
 		
-		for (Obstacle o : room) {
-			o.update();
+		for (Entity e : room) {
+			e.update();
+			e.setX(10);
 		}
 	}
 	

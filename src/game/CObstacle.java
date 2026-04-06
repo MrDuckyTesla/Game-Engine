@@ -2,29 +2,29 @@ package game;
 
 import java.util.ArrayList;
 
-import game.entity.Obstacle;
+import game.entity.Rect;
 import game.entity.Point;
 import processing.core.PApplet;
 
 public class CObstacle {  // Complex Obstacle (basically multiple rectangles stitched together)
 	
-	private ArrayList<Obstacle> cobstacle = new ArrayList<Obstacle>();
+	private ArrayList<Rect> cobstacle = new ArrayList<Rect>();
 	
 	public CObstacle() {}
-	public CObstacle(Obstacle obstacle) {addObstacle(obstacle);}
+	public CObstacle(Rect obstacle) {addObstacle(obstacle);}
 	public CObstacle(float x, float y) {addObstacle(x, y);}
 	public CObstacle(float x, float y, float w, float h) {addObstacle(x, y, w, h);}
-	public CObstacle(ArrayList<Obstacle> list) {addObstacles(list);}
-	public CObstacle(Obstacle[] list) {addObstacles(list);}
+	public CObstacle(ArrayList<Rect> list) {addObstacles(list);}
+	public CObstacle(Rect[] list) {addObstacles(list);}
 	public CObstacle(CObstacle cobstacle) {addObstacles(cobstacle);}
 	public CObstacle(float[][] list) {addObstacles(list);}
 	public CObstacle(float[] list) {addObstacles(list);}
 	
-	public void addObstacle(Obstacle obstacle) {cobstacle.add(obstacle);}
-	public void addObstacle(float x, float y) {cobstacle.add(new Obstacle(x, y));}
-	public void addObstacle(float x, float y, float w, float h) {cobstacle.add(new Obstacle(x, y, w, h));}
-	public void addObstacles(ArrayList<Obstacle> list) {for (int i = 0; i < list.size(); i++) {cobstacle.add(list.get(i));}}
-	public void addObstacles(Obstacle[] list) {for (int i = 0; i < list.length; i++) {cobstacle.add(list[i]);}}
+	public void addObstacle(Rect obstacle) {cobstacle.add(obstacle);}
+	public void addObstacle(float x, float y) {cobstacle.add(new Rect(x, y));}
+	public void addObstacle(float x, float y, float w, float h) {cobstacle.add(new Rect(x, y, w, h));}
+	public void addObstacles(ArrayList<Rect> list) {for (int i = 0; i < list.size(); i++) {cobstacle.add(list.get(i));}}
+	public void addObstacles(Rect[] list) {for (int i = 0; i < list.length; i++) {cobstacle.add(list[i]);}}
 	public void addObstacles(CObstacle cobstacle) {addObstacles(cobstacle.getArrayList());}
 	public void addObstacles(float[][] list) {for (int i = 0; i < list.length; i++) {addObstacle(list[i][0], list[i][1], list[i][2], list[i][3]);}}
 	public void addObstacles(float[] list) {for (int i = 0; i < list.length; i+=4) {addObstacle(list[i], list[i+1], list[i+2], list[i+3]);}}
@@ -34,23 +34,23 @@ public class CObstacle {  // Complex Obstacle (basically multiple rectangles sti
 	public void cleanArray() {
 		for (int i = 1; i < cobstacle.size(); i++) {
 			for (int j = 0; j < i; j++) {
-				Obstacle ob1 = cobstacle.get(i), ob2 = cobstacle.get(j);
+				Rect ob1 = cobstacle.get(i), ob2 = cobstacle.get(j);
 				if (ob1.isInside(ob2) || ob1.getW() <= 0 || ob1.getH() <= 0) {cobstacle.remove(i); i--; j=i;}
 				else {
 					boolean isTouchingInside = true;
 					while (isTouchingInside) {
 						if (ob1.getX() < ob2.getX() && ob1.getX() + ob1.getW() > ob2.getX()) {  // If on the left and intersecting with rect
-							cobstacle.set(i, new Obstacle(ob1.getX(), ob1.getY(), ob2.getX()- ob1.getX(), ob1.getH()));  // NEW Specified Object that we must move
-							cobstacle.add(i+1, new Obstacle(ob2.getX(), ob1.getY(), ob1.getW() - (ob2.getX()- ob1.getX()), ob1.getH())); //  The second half of the object
+							cobstacle.set(i, new Rect(ob1.getX(), ob1.getY(), ob2.getX()- ob1.getX(), ob1.getH()));  // NEW Specified Object that we must move
+							cobstacle.add(i+1, new Rect(ob2.getX(), ob1.getY(), ob1.getW() - (ob2.getX()- ob1.getX()), ob1.getH())); //  The second half of the object
 						} else if (ob1.getX() < ob2.getX()+ob2.getW() && ob1.getX() + ob1.getW() > ob2.getX() + ob2.getW()) {  // If on the right and intersecting with rect
-							cobstacle.set(i, new Obstacle(ob1.getX(), ob1.getY(), ob2.getX() + ob2.getW() - ob1.getX(), ob1.getH()));  // NEW Specified Object that we must move
-							cobstacle.add(i+1, new Obstacle(ob2.getX()+ob2.getW(), ob1.getY(), ob1.getX()+ob1.getW()-ob2.getX()-ob2.getW(), ob1.getH())); // the second half of the object
+							cobstacle.set(i, new Rect(ob1.getX(), ob1.getY(), ob2.getX() + ob2.getW() - ob1.getX(), ob1.getH()));  // NEW Specified Object that we must move
+							cobstacle.add(i+1, new Rect(ob2.getX()+ob2.getW(), ob1.getY(), ob1.getX()+ob1.getW()-ob2.getX()-ob2.getW(), ob1.getH())); // the second half of the object
 						} else if (ob1.getY() < ob2.getY() && ob1.getY() + ob1.getH() > ob2.getY()) {
-							cobstacle.set(i, new Obstacle(ob1.getX(), ob1.getY(), ob1.getW(), ob2.getY() - ob1.getY()));  // NEW Specified Object that we must move
-							cobstacle.add(i+1, new Obstacle(ob1.getX(), ob2.getY(), ob1.getW(), ob1.getH() - (ob2.getY()- ob1.getY()))); // Will probably get replaced lol what a loser smh
+							cobstacle.set(i, new Rect(ob1.getX(), ob1.getY(), ob1.getW(), ob2.getY() - ob1.getY()));  // NEW Specified Object that we must move
+							cobstacle.add(i+1, new Rect(ob1.getX(), ob2.getY(), ob1.getW(), ob1.getH() - (ob2.getY()- ob1.getY()))); // Will probably get replaced lol what a loser smh
 						} else if (ob1.getY() < ob2.getY()+ob2.getH() && ob1.getY() + ob1.getH() > ob2.getY() + ob2.getH()) {
-							cobstacle.set(i, new Obstacle(ob1.getX(), ob1.getY(), ob1.getW(), ob2.getY() + ob2.getH() - ob1.getY()));  // NEW Specified Object that we must move
-							cobstacle.add(i+1, new Obstacle(ob1.getX(), ob2.getY()+ob2.getH(), ob1.getW(), ob1.getY()+ob1.getH()-ob2.getY()-ob2.getH())); // the second half of the object
+							cobstacle.set(i, new Rect(ob1.getX(), ob1.getY(), ob1.getW(), ob2.getY() + ob2.getH() - ob1.getY()));  // NEW Specified Object that we must move
+							cobstacle.add(i+1, new Rect(ob1.getX(), ob2.getY()+ob2.getH(), ob1.getW(), ob1.getY()+ob1.getH()-ob2.getY()-ob2.getH())); // the second half of the object
 						} ob1 = cobstacle.get(i); ob2 = cobstacle.get(j);  // get new/changed versions of obstacle
 						isTouchingInside = ToolKit.rectRectCollideNotExact(ob1.getX(), ob1.getY(), ob1.getW(), ob1.getH(), ob2.getX(), ob2.getY(), ob2.getW(), ob2.getH());
 						if (ob1.isInside(ob2) || ob1.getW() <= 0 || ob1.getH() <= 0) {cobstacle.remove(i); i--; j=-1;  isTouchingInside = false;}
@@ -62,13 +62,13 @@ public class CObstacle {  // Complex Obstacle (basically multiple rectangles sti
 			isSillSimplify = false;
 			for (int i = 0; i < cobstacle.size(); i++) {
 				for (int j = 0; j < cobstacle.size(); j++) {
-					Obstacle ob1 = cobstacle.get(i), ob2 = cobstacle.get(j);
+					Rect ob1 = cobstacle.get(i), ob2 = cobstacle.get(j);
 					if (ToolKit.rectRectCollide(ob1.getX(), ob1.getY(), ob1.getW(), ob1.getH(), ob2.getX(), ob2.getY(), ob2.getW(), ob2.getH()) && i != j) {
 						if (ob1.getW() == ob2.getW() && ob1.getX() == ob2.getX()) {
-							cobstacle.set(i, new Obstacle(ob1.getX(), ob1.getY()<ob2.getY()? ob1.getY() : ob2.getY(), ob1.getW(), ob1.getH()+ob2.getH()));
+							cobstacle.set(i, new Rect(ob1.getX(), ob1.getY()<ob2.getY()? ob1.getY() : ob2.getY(), ob1.getW(), ob1.getH()+ob2.getH()));
 							cobstacle.remove(j); i = 0; j = -1; isSillSimplify = true;
 						} else if  (ob1.getH() == ob2.getH() && ob1.getY() == ob2.getY()) {
-							cobstacle.set(i, new Obstacle(ob1.getX()<ob2.getX()? ob1.getX() : ob2.getX(), ob1.getY(), ob1.getW()+ob2.getW(), ob1.getH()));
+							cobstacle.set(i, new Rect(ob1.getX()<ob2.getX()? ob1.getX() : ob2.getX(), ob1.getY(), ob1.getW()+ob2.getW(), ob1.getH()));
 							cobstacle.remove(j); i = 0; j = -1; isSillSimplify = true;
 						}
 					}
@@ -84,10 +84,10 @@ public class CObstacle {  // Complex Obstacle (basically multiple rectangles sti
 		}
 	}
 	
-	public Obstacle getObstacle(int index) {return cobstacle.get(index);}
+	public Rect getObstacle(int index) {return cobstacle.get(index);}
 	public float[] getObstacleArray(int index) {return cobstacle.get(index).getXYWH();}
 	
-	public ArrayList<Obstacle> getArrayList() {return cobstacle;}
+	public ArrayList<Rect> getArrayList() {return cobstacle;}
 	
 	public float getPerimeter() {return -1;}
 	
@@ -117,8 +117,8 @@ public class CObstacle {  // Complex Obstacle (basically multiple rectangles sti
 		} return p;  // Found best p!
 	}
 
-	public Obstacle[] getObstacleArray() {
-		Obstacle[] list = new Obstacle[this.cobstacle.size()];
+	public Rect[] getObstacleArray() {
+		Rect[] list = new Rect[this.cobstacle.size()];
 		for (int i = 0; i < list.length; i++) {list[i] = this.cobstacle.get(i);}
 		return list;
 	}

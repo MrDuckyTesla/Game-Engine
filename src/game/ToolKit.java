@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-
 import game.entity.Point;
 import processing.core.PApplet;
 import processing.core.PImage;

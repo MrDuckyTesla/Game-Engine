@@ -4,7 +4,7 @@ import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
 import processing.core.PImage;
 
-public class NonPlayerCharacter extends Character{
+public class NonPlayerCharacter extends Entity{
 	
 	private static Player p;
 
@@ -32,6 +32,6 @@ public class NonPlayerCharacter extends Character{
 	}
 	
 	@Override
-	public Entity getType() {return Entity.NonPlayerCharacter;}
+	public Entities getType() {return Entities.NonPlayerCharacter;}
 
 }

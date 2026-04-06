@@ -17,8 +17,8 @@ public class Animator {
 		this.currAnim = new Animation();
 	}
 	
-	public void update() {
-		this.currAnim.animate(Point.getApp(), i, m.getX(), m.getY(), (int) m.getW(), (int) m.getH(), m.getS(), this.start, this.start + this.frames - 1, this.animSpeed, false, this.changeAnim);
+	public void update(Point xy) {
+		this.currAnim.animate(Point.getApp(), i, xy.getX(), xy.getY(), (int) m.getW(), (int) m.getH(), m.getS(), this.start, this.start + this.frames - 1, this.animSpeed, false, this.changeAnim);
 	}
 	
 	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed) {
