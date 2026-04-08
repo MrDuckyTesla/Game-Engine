@@ -13,8 +13,7 @@ public class Room {
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
-	private Point backCoords;
-	private boolean backBoolX, backBoolY, hasInstantiated = false;
+	private Point backCoords, playCoords;
 	
 	public Room(Player p, PImage background) {this.instantiate(p, background, new Point());}
 	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(p); room.add(o);}
@@ -27,7 +26,7 @@ public class Room {
 	public void add(float x, float y, float w, float h) {room.add(new NonPlayerCharacter(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background, Point backCoords) {
-		this.p = p; this.background = null; this.backCoords = backCoords; room.add(this.p);
+		this.p = p; this.background = background; this.backCoords = backCoords; room.add(this.p); this.playCoords = p.getXY();
 	}
 	
 	//TODO implement reading from file
@@ -48,15 +47,39 @@ public class Room {
 		Collections.sort(room);
 		if (this.background != null) {this.moveBackground();}
 		
+		((EightDirectionalMove) p.getMoveSet()).showHitBG();
+		
 		for (Entity e : room) {
 			e.update();
-			e.addX(this.backCoords.getX());
+			e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
 		}
 	}
 
 	private void moveBackground() {
+		Point pot = this.p.getPotential();
+		boolean left = p.getX() + pot.getX() > ToolKit.getAppWidth()/2 - p.getW()/2;
+		if (left && p.getX() + pot.getX() < this.background.width - ToolKit.getAppWidth()/2 - p.getW()/2) {
+			this.playCoords.setX(ToolKit.getAppWidth()/2 - p.getW()/2);
+			this.backCoords.addX(-pot.getX());
+		}
+		else {
+			this.playCoords.addX(pot.getX());
+			this.backCoords.setX(left? -this.background.width + ToolKit.getAppWidth(): 0);
+		}
 		
-	    System.out.println(this.backCoords.getX() + " " + this.backCoords.getY() + " " + this.backBoolX + " " + this.backBoolY);
+		boolean up = p.getY() + pot.getY() > ToolKit.getAppHeight()/2 - p.getH()/2;
+		if (up && p.getY() + pot.getY() < this.background.height - ToolKit.getAppHeight()/2 - p.getH()/2) {
+			this.playCoords.setY(ToolKit.getAppHeight()/2 - p.getH()/2);
+			this.backCoords.addY(-pot.getY());
+		}
+		else {
+			this.playCoords.addY(pot.getY());
+			this.backCoords.setY(up? -this.background.height + ToolKit.getAppHeight(): 0);
+		}
+		
+		p.setXY(this.playCoords.getX(), this.playCoords.getY());
+//		System.out.println(backCoords + " " + playCoords);
+
 	    ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 	}
 	

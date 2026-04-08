@@ -1,10 +1,7 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
 import game.Animator;
-import game.entity.Rect;
-import game.entity.Entity;
-import game.entity.Point;
+import game.entity.*;
 
 // Legacy version without procedural animation
 public class PlatformerSimpleMove extends MoveSet {
@@ -25,7 +22,7 @@ public class PlatformerSimpleMove extends MoveSet {
 //	}
 
 	@Override
-	public void move(ArrayList<Entity> room, Entity c, float[] bg, Point xy) {
+	public void move(Entity c, Point xy) {
 		// TODO Auto-generated method stub
 	}
 	

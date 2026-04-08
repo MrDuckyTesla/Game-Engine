@@ -15,6 +15,8 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	// Static methods
 	public static ArrayList<Entity> getRoom() {return Entity.currRoom.getRoom();}
+	public static int getRW() {return Entity.currRoom.getImageWidth();}
+	public static int getRH() {return Entity.currRoom.getImageHeight();}
 	public static void setRoom(Room room) {Entity.currRoom = room;}
 	
 	// Instance variables
@@ -31,7 +33,7 @@ public abstract class Entity implements Comparable<Entity> {
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
 	public Entity(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
-		this.entID = Entity.id; Entity.id++; this.showXY = new Point(); 
+		this.entID = Entity.id; Entity.id++; this.showXY = new Point();
 		try {
 			this.totalStates = move.length;
 			this.images = new PImage[this.totalStates]; this.move = new MoveSet[this.totalStates];
@@ -50,13 +52,8 @@ public abstract class Entity implements Comparable<Entity> {
 	}
 	
 	public void update() {	
-		Point backCoords = Entity.currRoom.getBackCoords();
-		this.move[this.currMove].move(Entity.getRoom(), this, new float[] {
-				backCoords.getX(), 
-				backCoords.getY(), 
-				backCoords.getX() + Entity.currRoom.getImageWidth(), 
-				backCoords.getY() + Entity.currRoom.getImageHeight()
-		}, this.abilities, this.showXY);
+//		Point backCoords = Entity.currRoom.getBackCoords();
+		this.move[this.currMove].move(this, this.abilities, this.showXY);
 	    this.showXY.set(this.getMoveSet().getPoint());
 	}
 	
@@ -73,21 +70,25 @@ public abstract class Entity implements Comparable<Entity> {
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
+	public Point getXY() {return this.getMoveSet().getPoint();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
 	public PImage getImg() {return this.images[this.currMove];};
 	public Ability[] getAbilities() {return this.abilities;}
 	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
+	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getPotentialA() : new Point();}
 	
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
 	public void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
+	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}
 	
 	// Adder methods
 	public void addX(float x) {this.showXY.addX(x);}
 	public void addY(float y) {this.showXY.addY(y);}
+	public void addXY(float x, float y) {this.showXY.addX(x); this.showXY.addY(y);}
 	
 	// Overridden methods
 	@Override

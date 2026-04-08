@@ -1,7 +1,5 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
-
 import game.Animator;
 import game.entity.Entity;
 import game.entity.Point;
@@ -9,10 +7,10 @@ import game.entity.abilities.Ability;
 
 public abstract class MoveSet {
 	
-	public abstract void move(ArrayList<Entity> r, Entity e, float[] bg, Point xy);
+	public abstract void move(Entity e, Point xy);
 	
-	public void move(ArrayList<Entity> r, Entity e, float[] bg, Ability ab, Point xy) {this.move(r, e, bg, xy); ab.update(e, this);}
-	public void move(ArrayList<Entity> r, Entity e, float[] bg, Ability[] ab, Point xy) {this.move(r, e, bg, xy); for (Ability a : ab) {a.update(e, this);}}
+	public void move(Entity e, Ability ab, Point xy) {this.move(e, xy); ab.update(e, this);}
+	public void move(Entity e, Ability[] ab, Point xy) {this.move(e, xy); for (Ability a : ab) {a.update(e, this);}}
 	
 	public abstract Animator getAnimator();
 	

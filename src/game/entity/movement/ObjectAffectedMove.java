@@ -1,6 +1,5 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
 import game.Animator;
 import game.ToolKit;
 import game.entity.Entity;
@@ -14,7 +13,7 @@ public class ObjectAffectedMove extends MoveSet {
 	public ObjectAffectedMove(float x, float y, float w, float h) {this.x = x; this.y = y; this.w = w; this.h = h;}
 
 	@Override
-	public void move(ArrayList<Entity> r, Entity e, float[] bg, Point xy) {
+	public void move(Entity e, Point xy) {
 		ToolKit.rectApp(xy.getX(), xy.getY(), this.w,this.h);
 	}
 	

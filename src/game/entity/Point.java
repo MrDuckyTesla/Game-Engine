@@ -38,10 +38,13 @@ public class Point implements Comparable<Object> {
 	public float getY() {return this.y;}
 	public float[] getXY() {return new float[] {x, y};}
 	public Point getAdd(Point p) {return new Point(this.x + p.getX(), this.y + p.getY());}
+	public Point getSub(Point p) {return new Point(this.x - p.getX(), this.y - p.getY());}
 	// Set
 	public void set(Point p) {this.x = p.getX(); this.y = p.getY();}
 	public void setX(float x) {this.x = x;}
 	public void setY(float y) {this.y = y;}
+	public void setX(Point x) {this.x = x.getX();}
+	public void setY(Point y) {this.y = y.getY();}
 	public void setXY(float x, float y) {this.x = x; this.y = y;}
 	public void setXY(Point p) {this.x = p.getX(); this.y = p.getY();}
 	// Add
@@ -50,6 +53,7 @@ public class Point implements Comparable<Object> {
 	public void addXY(float x) {this.addX(x); this.addY(x);}
 	public void addXY(float x, float y) {this.addX(x); this.addY(y);}
 	public void addXY(Point p) {this.addX(p.getX()); this.addY(p.getY());}
+	public void subXY(Point p) {this.addX(-p.getX()); this.addY(-p.getY());}
 	// Multiply
 	public void multpilyXY(float x) {this.x *= x; this.y *= x;}
 	

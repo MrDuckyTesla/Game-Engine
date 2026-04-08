@@ -16,7 +16,7 @@ public class Main extends PApplet {
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
 	private PImage[] tesla = new PImage[] {null, null};
-	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect(400, 400, 28, 28), 3, 3), new PlatformerSimpleMove()};
+	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect(400-14*3, 400-14*3, 28, 28), 3, 3), new PlatformerSimpleMove()};
 	private Ability[] abilities = new Ability[] {new Walk8d(), new Sword8d(88), new Sprint8d(16)};
 	private Ability[] abilities2 = new Ability[] {new Walk8d(), new Sword8d(), new Sprint8d()};
 	PImage bck1, tile1;
@@ -63,12 +63,12 @@ public class Main extends PApplet {
 //		test.add(200, 200, 100, 100);
 //		test.add(300, 300, 100, 100);
 		
-		for (int i = 0; i < 5; i++) {
-			test.add((float) Math.random() * (800-28*3), (float) Math.random() * (800-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
+		for (int i = 0; i < 20; i++) {
+			test.add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
 		}
 		// five hundred teslas
-		for (int i = 0; i < 10; i++) {
-			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(800-28*3), (float)Math.random()*(800-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
+		for (int i = 0; i < 100; i++) {
+			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
 			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
 			test.add(new Enemy(tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));

@@ -1,7 +1,5 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
-
 import game.entity.Entity;
 import game.entity.Point;
 
@@ -9,7 +7,7 @@ import game.entity.Point;
 public class PlatformerComplexMove extends PlatformerSimpleMove {
 	
 	@Override
-	public void move(ArrayList<Entity> room, Entity c, float[] bg, Point xy) {
+	public void move(Entity c, Point xy) {
 		// TODO Auto-generated method stub
 	}
 	

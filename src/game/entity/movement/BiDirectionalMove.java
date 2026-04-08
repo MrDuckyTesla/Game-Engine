@@ -1,6 +1,5 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
 import game.Animator;
 import game.entity.Rect;
 import game.entity.Entity;
@@ -15,7 +14,7 @@ public class BiDirectionalMove extends MoveSet {
 	}
 
 	@Override
-	public void move(ArrayList<Entity> room, Entity e, float[] bg, Point xy) {
+	public void move(Entity e, Point xy) {
 		// TODO Auto-generated method stub
 	}
 	
