@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import game.entity.*;
 import game.entity.movement.*;
+import game.util.Point;
+import game.util.ToolKit;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
 public class Room {
 
-	private ArrayList<Entity> room = new ArrayList<Entity>();
+	private ArrayList<Entity> room = new ArrayList<Entity>(), temp = new ArrayList<Entity>();
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
@@ -20,10 +22,10 @@ public class Room {
 	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	
-	public void add(Entity o) {room.add(o);}
-	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
-	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
-	public void add(float x, float y, float w, float h) {room.add(new NonPlayerCharacter(x, y, w, h));}
+	public void add(Entity o) {temp.add(o);}
+	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {temp.add(o[i]);}}
+	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {temp.add(o.get(i));}}
+	public void add(float x, float y, float w, float h) {temp.add(new NonPlayerCharacter(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background, Point backCoords) {
 		this.p = p; this.background = background; this.backCoords = backCoords; room.add(this.p);// this.playCoords = p.getXY();
@@ -44,16 +46,28 @@ public class Room {
 	
 	public void update() {
 		Entity.setRoom(this);  // Make sure Entity has current room set
-		Collections.sort(room);  // Sort room to keep ordering correct
+		
+		// Add any temporary entities
+		for (int i = 0; i < temp.size(); i++) {
+			room.add(this.temp.get(i));
+			temp.remove(i); i--;
+		} Collections.sort(room);  // Sort room to keep ordering correct
 		
 		if (this.background != null) {
 			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 		} ((EightDirectionalMove) p.getMoveSet()).showHitBG();
 		
-		for (Entity e : room) {
-			e.update();
-			e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
+		for (int i = 0; i < room.size(); i++) {
+			Entity e = this.room.get(i);
+			
+			if (!e.isMarked()) {
+				e.update();
+				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
+				if (e.getType() == Entities.TRIGGER) {this.room.remove(i); i--;}
+			} else {this.room.remove(i); i--;}
 		}
+		
+		System.out.println(this.room.size());
 		
 		this.moveBackground();
 	}
@@ -71,6 +85,7 @@ public class Room {
 	}
 	
 	public ArrayList<Entity> getRoom() {return this.room;}
+	public Player getPlayer() {return this.p;}
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
 	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}

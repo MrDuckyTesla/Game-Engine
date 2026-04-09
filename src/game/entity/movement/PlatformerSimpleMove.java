@@ -1,7 +1,9 @@
 package game.entity.movement;
 
-import game.Animator;
 import game.entity.*;
+import game.util.Animator;
+import game.util.Point;
+import game.util.Rect;
 
 // Legacy version without procedural animation
 public class PlatformerSimpleMove extends MoveSet {

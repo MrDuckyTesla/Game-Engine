@@ -1,9 +1,10 @@
 package game.entity;
 
-import game.ToolKit;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
 import game.entity.movement.Moves;
+import game.entity.trigger.Triggers;
+import game.util.ToolKit;
 import processing.core.PImage;
 
 public class Player extends Entity {
@@ -30,12 +31,12 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void interact() {
+	public void interact(Triggers t) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
-	public Entities getType() {return Entities.Player;}
+	public Entities getType() {return Entities.PLAYER;}
 
 }

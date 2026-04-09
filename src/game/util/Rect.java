@@ -1,7 +1,6 @@
-package game.entity;
+package game.util;
 
 
-import game.ToolKit;
 import processing.core.PApplet;
 
 public class Rect extends Point {

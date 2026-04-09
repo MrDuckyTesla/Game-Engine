@@ -1,8 +1,8 @@
-package game;
+package game.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import game.entity.Point;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
