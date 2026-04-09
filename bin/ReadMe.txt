@@ -23,6 +23,7 @@ OverWorld:
   Move Right:              D, ArrowRight
   Sprint:                  Shift
   Attack:                  X
+  Interact:				   Z
 Battle:
   Move Left:               A, ArrowLeft
   Move Right:              D, ArrowRight
