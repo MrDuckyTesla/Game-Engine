@@ -67,7 +67,7 @@ public class Room {
 			} else {this.room.remove(i); i--;}
 		}
 		
-		System.out.println(this.room.size());
+//		System.out.println(this.room.size());
 		
 		this.moveBackground();
 	}
