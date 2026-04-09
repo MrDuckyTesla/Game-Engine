@@ -3,11 +3,10 @@ package game.entity;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
 import game.entity.movement.ObjectAffectedMove;
+import game.entity.trigger.Triggers;
 import processing.core.PImage;
 
 public class NonPlayerCharacter extends Entity{
-	
-	private static Player p;
 
 //	public NonPlayerCharacter(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer, int[] colorTint) {super(overPosit, battPosit, scale, overImage, battImage, overColorLayer, battColorLayer, colorTint);}
 //	public NonPlayerCharacter(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(overPosit, battPosit, scale, overImage, battImage, overColorLayer, battColorLayer);}
@@ -19,25 +18,17 @@ public class NonPlayerCharacter extends Entity{
 	}
 	
 	public NonPlayerCharacter(float x, float y, float w, float h) {
-		super(null, new MoveSet[] {new ObjectAffectedMove(x, y, w, h)}, null, null, null, false, true);
+		super(null, new MoveSet[] {new ObjectAffectedMove(x, y, w, h)}, null, null, null, true, true);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public static void setPlayer(Player p) {
-		if (NonPlayerCharacter.p == null) {
-			NonPlayerCharacter.p = p;
-		}
-	}
-	
-	public Player getPlayer() {return NonPlayerCharacter.p;}
 
 	@Override
-	public void interact() {
-		// TODO Auto-generated method stub
+	public void interact(Triggers t) {
+//		this.markDelete();
 		
 	}
 	
 	@Override
-	public Entities getType() {return Entities.NonPlayerCharacter;}
+	public Entities getType() {return Entities.NON_PLAYER_CHARACTER;}
 
 }

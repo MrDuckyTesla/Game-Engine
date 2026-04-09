@@ -1,10 +1,11 @@
 package game.entity.abilities;
 
-import game.ToolKit;
 import game.entity.Entity;
 import game.entity.movement.EightDirectionalMove;
 import game.entity.movement.MoveSet;
 import game.entity.movement.Moves;
+import game.entity.trigger.Triggers;
+import game.util.ToolKit;
 
 public class Sword8d extends Ability {
 	
@@ -15,11 +16,12 @@ public class Sword8d extends Ability {
 	public Sword8d(int[] keys) {super(keys);}
 
 	@Override
-	public void update(Entity o, MoveSet m) throws IllegalArgumentException {
+	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
-			m.getAnimator().setAnim(o.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
+			m.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
+			Interact8d.createInteraction8d(m, e, Triggers.DELETE);
 		} else {
 			this.isActive = false;
 			if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}} 
@@ -37,6 +39,6 @@ public class Sword8d extends Ability {
 	@Override
 	public Ability get() {return this.getKeys() == null? new Sword8d() : new Sword8d(this.getKeys());}
 	@Override
-	public Abilities getType() {return Abilities.sword8d;}
+	public Abilities getType() {return Abilities.SWORD_EIGHT_DIR;}
 
 }

@@ -1,6 +1,6 @@
 package test;
 
-import game.ToolKit;
+import game.util.ToolKit;
 import processing.core.PApplet;
 
 public class Particle {

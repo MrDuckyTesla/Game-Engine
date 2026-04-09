@@ -1,5 +1,5 @@
 package game.entity.abilities;
 
 public enum Abilities {
-	walk8d, sprint8d, sword8d
+	WALK_EIGHT_DIR, SPRINT_EIGHT_DIR, SWORD_EIGHT_DIR, INTERACT_EIGHT_DIR
 }

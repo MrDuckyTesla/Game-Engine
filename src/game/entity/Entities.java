@@ -1,5 +1,5 @@
 package game.entity;
 
 public enum Entities {
-	Obstacle, Player, NonPlayerCharacter, Enemy, Projectile, Door
+	PLAYER, NON_PLAYER_CHARACTER, ENEMY, PROJECTILE, TRIGGER
 }

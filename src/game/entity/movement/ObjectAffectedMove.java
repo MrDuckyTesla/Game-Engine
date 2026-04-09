@@ -1,9 +1,9 @@
 package game.entity.movement;
 
-import game.Animator;
-import game.ToolKit;
 import game.entity.Entity;
-import game.entity.Point;
+import game.util.Animator;
+import game.util.Point;
+import game.util.ToolKit;
 
 public class ObjectAffectedMove extends MoveSet {
 	

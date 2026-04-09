@@ -1,8 +1,8 @@
-package game;
+package test;
 
 import java.util.ArrayList;
 
-import game.entity.Point;
+import game.util.Point;
 import processing.core.PApplet;
 
 public class Path {

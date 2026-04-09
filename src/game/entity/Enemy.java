@@ -3,6 +3,7 @@ package game.entity;
 import game.entity.abilities.Abilities;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
+import game.entity.trigger.Triggers;
 import processing.core.PImage;
 
 public class Enemy extends NonPlayerCharacter {
@@ -50,7 +51,7 @@ public class Enemy extends NonPlayerCharacter {
 			this.getMoveSet().setDir((int)(Math.random() * 8));
 			this.getMoveSet().setIdle(Math.random() > 0.5);
 			for (Ability a : this.getAbilities()) {
-				if (a.getType() == Abilities.sword8d) {
+				if (a.getType() == Abilities.SWORD_EIGHT_DIR) {
 					a.setActive(Math.random() > 0.99);
 				} else {
 					a.setActive(Math.random() > 0.8);
@@ -60,9 +61,13 @@ public class Enemy extends NonPlayerCharacter {
 	}
 	
 	@Override
-	public void interact() {
-		// TODO Auto-generated method stub
-		
+	public void interact(Triggers t) {
+		if (t == Triggers.DELETE) {
+			this.markDelete();
+		}
+		if (t == Triggers.INTERACT) {
+//			this.markDelete();
+		}
 	}
 
 }

@@ -1,9 +1,9 @@
 package game.entity.movement;
 
-import game.Animator;
-import game.entity.Rect;
 import game.entity.Entity;
-import game.entity.Point;
+import game.util.Animator;
+import game.util.Point;
+import game.util.Rect;
 
 public class BiDirectionalMove extends MoveSet {
 	

@@ -1,4 +1,4 @@
-package game.entity;
+package game.util;
 
 public class Point implements Comparable<Object> {
 	

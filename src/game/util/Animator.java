@@ -1,6 +1,5 @@
-package game;
+package game.util;
 
-import game.entity.Point;
 import game.entity.movement.MoveSet;
 import processing.core.PImage;
 

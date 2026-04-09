@@ -1,11 +1,12 @@
 package game.entity;
 
-import java.util.ArrayList;
-import game.Room;
-import game.ToolKit;
-import game.entity.abilities.Ability;
+import game.util.*;
+import game.entity.trigger.*;
 import game.entity.movement.*;
+import java.util.ArrayList;
 import processing.core.PImage;
+import game.Room;
+import game.entity.abilities.Ability;
 
 public abstract class Entity implements Comparable<Entity> {
 	
@@ -15,14 +16,16 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	// Static methods
 	public static ArrayList<Entity> getRoom() {return Entity.currRoom.getRoom();}
+	public static Player getPlayer() {return Entity.currRoom.getPlayer();}
 	public static int getRW() {return Entity.currRoom.getImageWidth();}
 	public static int getRH() {return Entity.currRoom.getImageHeight();}
 	public static void setRoom(Room room) {Entity.currRoom = room;}
+	public static void addtrigger(Trigger t) {Entity.currRoom.add(t);}
 	
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
+	private boolean isTangible, isBreakable, isMarked = false;
 	private int entID, totalStates, currMove = 0;
-	private boolean isTangible, isBreakable;
 	private int[][][] colorLayers;
 	private Ability[] abilities;
 	private int[] colorTints;
@@ -46,37 +49,38 @@ public abstract class Entity implements Comparable<Entity> {
 			ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), this.colorTints);
 		} catch (NullPointerException e) {
 			this.move = new MoveSet[] {new ObjectAffectedMove(move[0].getX(), move[0].getY(), move[0].getW(), move[0].getH())};
-			this.abilities = new Ability[0];
-			this.isTangible = true;
+			this.abilities = new Ability[0]; this.isTangible = isTangible; this.isBreakable = isBreakable;
 		}
 	}
 	
 	public void update() {	
-//		Point backCoords = Entity.currRoom.getBackCoords();
 		this.move[this.currMove].move(this, this.abilities, this.showXY);
 	    this.showXY.set(this.getMoveSet().getPoint());
 	}
 	
+	public final void markDelete() {this.isMarked = true;}
+	public final boolean isMarked() {return this.isMarked;}
+	public boolean isTangible() {return this.isTangible;}
+	public boolean isBreakable() {return this.isBreakable;}
+	
 	// Abstract methods
-	public abstract void interact();
+	public abstract void interact(Triggers t);
 	public abstract Entities getType();
 	
 	// Getter methods
 	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
-	public boolean isTangible() {return this.isTangible;}
-	public boolean isBreakable() {return this.isBreakable;}
 	public int getOverDir() {return this.move[this.currMove].getDir();}
 	public float getX() {return this.getMoveSet().getX();}
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
-	public Point getXY() {return this.getMoveSet().getPoint();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
+	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
+	public Point getXY() {return this.getMoveSet().getPoint();}
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
 	public PImage getImg() {return this.images[this.currMove];};
 	public Ability[] getAbilities() {return this.abilities;}
 	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
-	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getPotentialA() : new Point();}
 	
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
@@ -94,7 +98,7 @@ public abstract class Entity implements Comparable<Entity> {
 	@Override
 	public int compareTo(Entity e) {return Float.compare(this.getY() + this.getH(), e.getY() + e.getH());}
 	@Override
-	public String toString() {return "("+this.getX()+", "+this.getY() + ", "+this.getW()+", "+this.getH()+")";}
+	public String toString() {return "("+this.getX()+", "+this.getY() + ", "+this.getW()+", "+this.getH()+")"+", Type \""+this.getType()+"\"";}
 	@Override
 	public boolean equals(Object other) {if(other.getClass() != this.getClass()) {return false;} return this.entID == ((Entity) other).entID;}
 

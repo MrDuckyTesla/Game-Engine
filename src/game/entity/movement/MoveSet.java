@@ -1,9 +1,9 @@
 package game.entity.movement;
 
-import game.Animator;
 import game.entity.Entity;
-import game.entity.Point;
 import game.entity.abilities.Ability;
+import game.util.Animator;
+import game.util.Point;
 
 public abstract class MoveSet {
 	

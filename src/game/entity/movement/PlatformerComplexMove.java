@@ -1,7 +1,7 @@
 package game.entity.movement;
 
 import game.entity.Entity;
-import game.entity.Point;
+import game.util.Point;
 
 // Version with Inverse Kinematics, and procedural Animation
 public class PlatformerComplexMove extends PlatformerSimpleMove {

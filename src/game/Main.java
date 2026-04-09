@@ -1,14 +1,13 @@
 package game;
 
 import game.entity.*;
-import game.entity.abilities.Ability;
-import game.entity.abilities.Sprint8d;
-import game.entity.abilities.Sword8d;
-import game.entity.abilities.Walk8d;
+import game.entity.abilities.*;
 import game.entity.movement.*;
-import game.entity.movement.MoveSet;
+import game.util.Rect;
+import game.util.ToolKit;
 import processing.core.PApplet;
 import processing.core.PImage;
+import test.CObstacle;
 
 public class Main extends PApplet {
 	
@@ -17,7 +16,7 @@ public class Main extends PApplet {
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
 	private PImage[] tesla = new PImage[] {null, null};
 	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect(400-14*3, 400-14*3, 28, 28), 3, 3), new PlatformerSimpleMove()};
-	private Ability[] abilities = new Ability[] {new Walk8d(), new Sword8d(88), new Sprint8d(16)};
+	private Ability[] abilities = new Ability[] {new Walk8d(), new Sword8d(88), new Sprint8d(16), new Interact8d(90)};
 	private Ability[] abilities2 = new Ability[] {new Walk8d(), new Sword8d(), new Sprint8d()};
 	PImage bck1, tile1;
 	Level tutorial;
@@ -56,7 +55,6 @@ public class Main extends PApplet {
 //		Point p2 = new Point(400, 500);
 //		(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale)
 		p = new Player(tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints);
-		NonPlayerCharacter.setPlayer(p);
 		test = new Room(p, bck1);
 //		test.add(new Enemy(new PImage[] {tesla[0].copy(), tesla[1].copy()}, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
 //		test.add(new Enemy(new PImage[] {tesla[0].copy(), tesla[1].copy()}, moves2, abilities2, PlayerSpriteLayers, EnemyColorTints));
