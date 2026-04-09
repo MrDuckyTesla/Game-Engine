@@ -6,9 +6,9 @@ import game.entity.movement.MoveSet;
 import game.entity.movement.Moves;
 import processing.core.PImage;
 
-public class Player extends Character {
+public class Player extends Entity {
 	
-	public Player(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {super(img, move, abilities, colorLayers, colorTints);}
+	public Player(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {super(img, move, abilities, colorLayers, colorTints, false, false);}
 
 	@Override
 	public void update() {
@@ -36,6 +36,6 @@ public class Player extends Character {
 	}
 	
 	@Override
-	public Entity getType() {return Entity.Player;}
+	public Entities getType() {return Entities.Player;}
 
 }

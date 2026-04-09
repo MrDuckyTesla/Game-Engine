@@ -1,10 +1,7 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
-import game.Animator;
-import game.ToolKit;
-import game.entity.Obstacle;
-import game.entity.Point;
+import game.*;
+import game.entity.*;
 import processing.core.PApplet;
 
 public class EightDirectionalMove extends MoveSet {
@@ -12,24 +9,24 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean isIdle = true, forceWalk = false, canChange = true;
 	private int dir = 0, ldir = 0;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
-	private Point totalDist = new Point();  // The total amount that the object has moved in a frame
-	private Obstacle xywh;
+	private Point totalDist = new Point(), p;  // The total amount that the object has moved in a frame
+	private Rect xywh;
 	
 	private Animator a = new Animator();
 	
-	public EightDirectionalMove() {this.instantiate(new Obstacle(0, 0, 28, 28), 3, 3);}
-	public EightDirectionalMove(Obstacle xywh, float speed) {this.instantiate(xywh, speed, 1);}
-	public EightDirectionalMove(Obstacle xywh, float speed, Animator a) {this.instantiate(xywh, speed, 1); this.a = a;}
+	public EightDirectionalMove() {this.instantiate(new Rect(0, 0, 28, 28), 3, 3);}
+	public EightDirectionalMove(Rect xywh, float speed) {this.instantiate(xywh, speed, 1);}
+	public EightDirectionalMove(Rect xywh, float speed, Animator a) {this.instantiate(xywh, speed, 1); this.a = a;}
 	
-	public EightDirectionalMove(Obstacle xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
-	public EightDirectionalMove(Obstacle xywh, float speed, float scale, Animator a) {this.instantiate(xywh, speed, scale); this.a = a;}
+	public EightDirectionalMove(Rect xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
+	public EightDirectionalMove(Rect xywh, float speed, float scale, Animator a) {this.instantiate(xywh, speed, scale); this.a = a;}
 	
-	private void instantiate(Obstacle xywh, float speed, float scale) {this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
+	private void instantiate(Rect xywh, float speed, float scale) {this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
 
 	@Override
-	public void move(ArrayList<Obstacle> room, Obstacle c) {
-		Point p = this.getPotential(); this.totalDist.resetPoint();
-		for (Obstacle o : room) {
+	public void move(Entity c, Point xy) {
+		this.p = this.getPotential(); this.totalDist.resetPoint();
+		for (Entity o : Entity.getRoom()) {
 			if (o != c && o.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
 				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), o.getX(), o.getY(), o.getW(), o.getH())) {
 					if (p.getX() < 0) {if (this.setX(o.getX() + o.getW() + 0.0001f)) {p.resetX();}}
@@ -38,14 +35,13 @@ public class EightDirectionalMove extends MoveSet {
 					else if (p.getY() > 0) {if (this.setY(o.getY() - c.getH() - 0.0001f)) {p.resetY();}}
 				} 
 			} 
-		} PApplet app = Point.getApp();  // If c collides with window border
-		if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, app.width, app.height)) {
+		} if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, Entity.getRW(), Entity.getRH())) {
 			if (p.getX() < 0) {if (this.setX(0.0001f)) {p.resetX();}}
-			else if (p.getX() > 0) {if (this.setX(app.width - c.getW() - 0.0001f)) {p.resetX();}}
+			else if (p.getX() > 0) {if (this.setX(Entity.getRW() - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
-			else if (p.getY() > 0) {if (this.setY(app.height - c.getH() - 0.0001f)) {p.resetY();}}
+			else if (p.getY() > 0) {if (this.setY(Entity.getRH() - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
-		if (a.canAnimate()) {a.update();} // else {this.showHitBox();}
+		if (a.canAnimate()) {a.update(xy);} // else {this.showHitBox();}
 	}
 	
 	@Override
@@ -68,8 +64,6 @@ public class EightDirectionalMove extends MoveSet {
 	public float getSH() {return this.xywh.getH() * this.scale;}
 	@Override
 	public Point getPoint() {return this.xywh.getPoint();}
-	@Override
-	public Obstacle getObstacle() {return this.xywh.get();}
 
 	@Override
 	public Moves getMoveType() {return Moves.eightDirectional;}
@@ -83,6 +77,7 @@ public class EightDirectionalMove extends MoveSet {
 		if (this.dir % 4 != 0) {s.setY(this.dir < 4? speed : -speed);}
 		return s;
 	}
+	public Point getPotentialA() {return this.p == null? new Point() : this.p;}
 	
 	public void halfSpeed() {this.currSpeed = this.currSpeed/2;}
 	public void doubSpeed() {this.currSpeed = Math.min(this.maxSpeed, this.currSpeed*2);}
@@ -95,10 +90,17 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean setHelper(float x, boolean isX) {return PApplet.abs((isX? this.xywh.getX() : this.xywh.getY()) - x) <= this.maxSpeed;}
 	
 	public void showHitBox() {
-		Point.pushApp();
-		if (isIdle) {Point.fillApp(255, 0, 0);}
-		Point.getApp().rect(xywh.getX(), xywh.getY(), xywh.getW(), xywh.getH());
-		Point.popApp();
+		ToolKit.pushApp();
+		if (isIdle) {ToolKit.fillApp(255, 0, 0);}
+		ToolKit.getApp().rect(xywh.getX(), xywh.getY(), this.getSW(), this.getSH());
+		ToolKit.popApp();
+	}
+	
+	public void showHitBG() {
+		ToolKit.pushApp();
+		ToolKit.fillApp(55, 55, 55);
+		ToolKit.getApp().rect(0, 0, Entity.getRW(), Entity.getRH());
+		ToolKit.popApp();
 	}
 	
 	public void setForceWalk(boolean forceWalk) {this.forceWalk = forceWalk;}

@@ -1,7 +1,7 @@
 package game;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import game.entity.Point;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -11,7 +11,11 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	/**
 	 * Stores all keys that are being held down
 	 */
-	private static boolean[] keys = new boolean[128];
+	private static HashMap<Integer, Boolean> keys = new HashMap<>();
+	/**
+	 * Stores the PApplet being used by all classes
+	 */
+	private static PApplet app = null;
 	
 	/**
 	 * Precompiles the layers and colors of an image into a list
@@ -21,19 +25,16 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @return Returns a 1d ArrayList thats formatted with the index of color, the layer it belongs to, and the color
 	 */
 	public static ArrayList<Integer> PreCompile(PApplet app, PImage image, int[][] layerList) {  // PreCompile to avoid lag
-		ArrayList<Integer> colorList = new ArrayList<>();  // List of colors and indexes to return
+		HashMap<Integer, Integer> layer = new HashMap<>(layerList.length, 1);
+		for (int i = 0; i < layerList.length; i++) {  // Iterate through color layers before image loop
+			for (int j = 0; j < layerList[i].length; j++) {layer.put(layerList[i][j], i);}
+		} ArrayList<Integer> colorList = new ArrayList<>();  // List of colors and indexes to return
 		image.loadPixels();  // Load pixels for scanning
 		for (int i = 0; i < image.pixels.length; i++) {  // Iterate through pixels
 			if (app.alpha(image.pixels[i]) != 0){   // Check if pixel is transparent
-				for (int j = 0; j < layerList.length; j++) {  // Iterate through color layers
-					for (int k = 0; k < layerList[j].length; k++) {
-						if (app.red(image.pixels[i]) == layerList[j][k]) {
-							colorList.add(i);  // Push index
-							colorList.add(j);  // Push layer
-							colorList.add(image.pixels[i]);  // Push color
-						}
-					}
-				}
+				colorList.add(i);  // Push index
+				colorList.add(layer.get((int)app.red(image.pixels[i])));  // Push layer
+				colorList.add(image.pixels[i]);  // Push color
 			}
 		} return colorList;  // Return ArrayList
 	}
@@ -597,9 +598,9 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	
 	public static <T> ArrayList<T> removeAll(T val, ArrayList<T> arr) {for (int i = 0; i < arr.size(); i++) {if (arr.get(i).equals(val)) {arr.remove(i); i--;}} return arr;}
 	
-	public static boolean keyIsDown(int key) {return keys[key];}
+	public static boolean keyIsDown(int key) {if (keys.containsKey(key)) { return keys.get(key);} keys.put(key, false); return false;}
 	
-	public static void setKey(int key, boolean state) {if (key < ToolKit.keys.length) {keys[key] = state;}}
+	public static void setKey(int key, boolean state) {keys.put(key, state);}
 	
 	public static <T> T[] pushBack(T[] a, T b) {for (int i = a.length-1; i > 0; i--) {a[i] = a[i-1];} a[0] = b; return a;}
 	
@@ -610,6 +611,17 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	public static ArrayList<Integer> addNotInArray(ArrayList<Integer> a, int[] b) {for (int i = 0; i < b.length; i++) {if (!a.contains(b[i])) {a.add(b[i]);}} return a;}
 	
 	public static ArrayList<Integer> add(ArrayList<Integer> a, int[] b) {for (int i = 0; i < b.length; i++) {a.add(b[i]);} return a;}
+		
+	// PApplet methods
+	public static PApplet getApp() {if (ToolKit.app == null) {return new PApplet();} return ToolKit.app;}
+	public static int getAppWidth() {if (ToolKit.app == null) {return -1;} return ToolKit.app.width;}
+	public static int getAppHeight() {if (ToolKit.app == null) {return -1;} return ToolKit.app.height;}
+	public static boolean getHasApp() {return ToolKit.app == null;}
+	public static boolean setApp(PApplet app) {if (ToolKit.app != null) {return false;} ToolKit.app = app; return true;}
+	public static boolean pushApp() {if (ToolKit.app == null) {return false;} ToolKit.app.push(); return true;}
+	public static boolean popApp() {if (ToolKit.app == null) {return false;} ToolKit.app.pop(); return true;}
+	public static boolean fillApp(int r, int g, int b) {if (ToolKit.app == null) {return false;} ToolKit.app.fill(ToolKit.app.color(r, g, b)); return true;}
+	public static boolean rectApp(float x, float y, float w, float h) {if (ToolKit.app == null) {return false;} ToolKit.app.rect(x, y, w, h); return true;}
 	
 }
 

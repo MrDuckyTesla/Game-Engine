@@ -1,6 +1,6 @@
 package game.entity.abilities;
 
-import game.entity.Obstacle;
+import game.entity.Entity;
 import game.entity.movement.MoveSet;
 import game.entity.movement.Moves;
 
@@ -9,7 +9,7 @@ public class Walk8d extends Ability {
 	private boolean lIsIdle = true;
 
 	@Override
-	public void update(Obstacle o, MoveSet m) throws IllegalArgumentException {
+	public void update(Entity o, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (m.getIsIdle()) {m.getAnimator().setAnim(o.getImg(), m, 0, 2, 12);}
 		else {m.getAnimator().setAnim(o.getImg(), m, 16, 4, 12, this.lIsIdle != m.getIsIdle());}

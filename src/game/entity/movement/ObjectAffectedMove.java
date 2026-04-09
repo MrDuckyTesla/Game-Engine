@@ -1,21 +1,20 @@
 package game.entity.movement;
 
-import java.util.ArrayList;
 import game.Animator;
-import game.entity.Obstacle;
+import game.ToolKit;
+import game.entity.Entity;
 import game.entity.Point;
-import game.entity.abilities.Ability;
 
 public class ObjectAffectedMove extends MoveSet {
 	
-	public ObjectAffectedMove() {
-		// TODO Auto-generated constructor stub
-	}
+	private float x, y, w, h;
+	
+	public ObjectAffectedMove() {}
+	public ObjectAffectedMove(float x, float y, float w, float h) {this.x = x; this.y = y; this.w = w; this.h = h;}
 
 	@Override
-	public void move(ArrayList<Obstacle> r, Obstacle c) {
-		// TODO Auto-generated method stub
-
+	public void move(Entity e, Point xy) {
+		ToolKit.rectApp(xy.getX(), xy.getY(), this.w,this.h);
 	}
 	
 	@Override
@@ -26,19 +25,19 @@ public class ObjectAffectedMove extends MoveSet {
 	}
 
 	@Override
-	public float getX() {return 0;}
+	public float getX() {return this.x;}
 	@Override
-	public float getY() {return 0;}
+	public float getY() {return this.y;}
 	@Override
-	public float getW() {return 0;}
+	public float getW() {return this.w;}
 	@Override
-	public float getH() {return 0;}
+	public float getH() {return this.h;}
 	@Override
-	public float getS() {return 0;}
+	public float getS() {return 1;}
 	@Override
-	public float getSW() {return 0;}
+	public float getSW() {return this.getW() * this.getS();}
 	@Override
-	public float getSH() {return 0;}
+	public float getSH() {return this.getH() * this.getS();}
 	
 	@Override
 	public MoveSet get() {
@@ -48,12 +47,7 @@ public class ObjectAffectedMove extends MoveSet {
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return new Point();
-	}
-	
-	@Override
-	public Obstacle getObstacle() {
-		return new Obstacle();
+		return new Point(this.x, this.y);
 	}
 
 	@Override

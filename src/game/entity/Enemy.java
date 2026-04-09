@@ -14,7 +14,13 @@ public class Enemy extends NonPlayerCharacter {
 //	public Enemy(Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(scale, overImage, battImage, overColorLayer, battColorLayer);}
 	
 	public Enemy(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
-		super(img, move, abilities, colorLayers, colorTints);
+		super(img, move, abilities, colorLayers, colorTints, false, true);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Enemy(float x, float y, float w, float h) {
+		super(x, y, w, h);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -34,9 +40,9 @@ public class Enemy extends NonPlayerCharacter {
 //		}
 	}
 	
-	private void walkTowardsPlayer() {
-		
-	}
+//	private void walkTowardsPlayer() {
+//		
+//	}
 	
 	private void wander() {
 		if (this.timeWander < System.currentTimeMillis()) {
