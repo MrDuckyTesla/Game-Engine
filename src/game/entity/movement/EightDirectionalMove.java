@@ -9,7 +9,7 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean isIdle = true, forceWalk = false, canChange = true;
 	private int dir = 0, ldir = 0;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
-	private Point totalDist = new Point(), p;  // The total amount that the object has moved in a frame
+	private Point totalDist;  // The total amount that the object has moved in a frame
 	private Rect xywh;
 	
 	private Animator a = new Animator();
@@ -21,11 +21,11 @@ public class EightDirectionalMove extends MoveSet {
 	public EightDirectionalMove(Rect xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
 	public EightDirectionalMove(Rect xywh, float speed, float scale, Animator a) {this.instantiate(xywh, speed, scale); this.a = a;}
 	
-	private void instantiate(Rect xywh, float speed, float scale) {this.xywh = xywh; this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
+	private void instantiate(Rect xywh, float speed, float scale) {this.xywh = xywh; this.totalDist = new Point(); this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
 
 	@Override
 	public void move(Entity c, Point xy) {
-		this.p = this.getPotential(); this.totalDist.resetPoint();
+		Point p = this.getPotential(); this.totalDist = this.xywh.getPoint();
 		for (Entity o : Entity.getRoom()) {
 			if (o != c && o.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
 				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), o.getX(), o.getY(), o.getW(), o.getH())) {
@@ -41,7 +41,7 @@ public class EightDirectionalMove extends MoveSet {
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(Entity.getRH() - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
-		if (a.canAnimate()) {a.update(xy);} // else {this.showHitBox();}
+		if (a.canAnimate()) {a.update(xy);} this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public class EightDirectionalMove extends MoveSet {
 		if (this.dir % 4 != 0) {s.setY(this.dir < 4? speed : -speed);}
 		return s;
 	}
-	public Point getPotentialA() {return this.p == null? new Point() : this.p;}
+	public Point getMoveDist() {return this.totalDist;}
 	
 	public void halfSpeed() {this.currSpeed = this.currSpeed/2;}
 	public void doubSpeed() {this.currSpeed = Math.min(this.maxSpeed, this.currSpeed*2);}

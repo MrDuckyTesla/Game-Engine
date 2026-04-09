@@ -76,7 +76,7 @@ public abstract class Entity implements Comparable<Entity> {
 	public PImage getImg() {return this.images[this.currMove];};
 	public Ability[] getAbilities() {return this.abilities;}
 	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
-	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getPotentialA() : new Point();}
+	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}

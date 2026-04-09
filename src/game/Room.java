@@ -43,16 +43,19 @@ public class Room {
 	}
 	
 	public void update() {
-		Entity.setRoom(this);
-		Collections.sort(room);
-		if (this.background != null) {this.moveBackground();}
+		Entity.setRoom(this);  // Make sure Entity has current room set
+		Collections.sort(room);  // Sort room to keep ordering correct
 		
-		((EightDirectionalMove) p.getMoveSet()).showHitBG();
+		if (this.background != null) {
+			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
+		} ((EightDirectionalMove) p.getMoveSet()).showHitBG();
 		
 		for (Entity e : room) {
 			e.update();
 			e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
 		}
+		
+		this.moveBackground();
 	}
 
 	private void moveBackground() {
@@ -65,7 +68,6 @@ public class Room {
 		if (up && p.getY() + pot.getY() < this.background.height - ToolKit.getAppHeight()/2 - p.getH()/2) {
 			this.backCoords.addY(-pot.getY());  // Move background Y coord
 		} else {this.backCoords.setY(up? -this.background.height + ToolKit.getAppHeight(): 0);}
-	    ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 	}
 	
 	public ArrayList<Entity> getRoom() {return this.room;}
