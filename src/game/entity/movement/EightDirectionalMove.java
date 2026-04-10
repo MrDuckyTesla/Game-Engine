@@ -1,11 +1,7 @@
 package game.entity.movement;
 
-import game.*;
 import game.entity.*;
-import game.util.Animator;
-import game.util.Point;
-import game.util.Rect;
-import game.util.ToolKit;
+import game.util.*;
 import processing.core.PApplet;
 
 public class EightDirectionalMove extends MoveSet {

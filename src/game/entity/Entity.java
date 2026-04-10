@@ -12,7 +12,7 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	// Static variables
 	private static Room currRoom;
-	private static int id = 0;
+	private static long id = 0;
 	
 	// Static methods
 	public static ArrayList<Entity> getRoom() {return Entity.currRoom.getRoom();}
@@ -25,17 +25,18 @@ public abstract class Entity implements Comparable<Entity> {
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
 	private boolean isTangible, isBreakable, isMarked = false;
-	private int entID, totalStates, currMove = 0;
+	private int totalStates, currMove = 0;
 	private int[][][] colorLayers;
 	private Ability[] abilities;
 	private int[] colorTints;
 	private PImage[] images;
 	private MoveSet[] move;
 	private Point showXY;
+	private long entID;
 	
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
-	public Entity(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+	public Entity(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {  // Allow pre-computing color list outside class and using it here in constructor
 		this.entID = Entity.id; Entity.id++; this.showXY = new Point();
 		try {
 			this.totalStates = move.length;
@@ -74,6 +75,8 @@ public abstract class Entity implements Comparable<Entity> {
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
+	public float getBGX() {return this.getMoveSet().getX() + Entity.currRoom.getBackCoords().getX();}
+	public float getBGY() {return this.getMoveSet().getY() + Entity.currRoom.getBackCoords().getY();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
 	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}

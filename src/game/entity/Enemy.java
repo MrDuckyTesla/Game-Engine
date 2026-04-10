@@ -4,6 +4,7 @@ import game.entity.abilities.Abilities;
 import game.entity.abilities.Ability;
 import game.entity.movement.MoveSet;
 import game.entity.trigger.Triggers;
+import game.util.ToolKit;
 import processing.core.PImage;
 
 public class Enemy extends NonPlayerCharacter {
@@ -62,11 +63,17 @@ public class Enemy extends NonPlayerCharacter {
 	
 	@Override
 	public void interact(Triggers t) {
-		if (t == Triggers.DELETE) {
-			this.markDelete();
-		}
-		if (t == Triggers.INTERACT) {
-//			this.markDelete();
+		switch(t) {
+			case Triggers.DELETE:
+				this.markDelete();
+				break;
+			case Triggers.INTERACT:
+				if (!this.isMarked()) {
+					ToolKit.getApp().text("Hello.", this.getBGX(), this.getBGY());
+					this.setOverState(true);
+				} break;
+			default:
+				break;
 		}
 	}
 
