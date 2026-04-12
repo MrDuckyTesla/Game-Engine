@@ -16,10 +16,10 @@ public class Interact8d extends Ability {
 	
 	public static Interaction interaction8d(MoveSet m, Entity e, Triggers t) {
 		float halfW = m.getSW()/2, halfH = m.getSH()/2;
-		int dir = m.getDir(); Point xy = new Point();
-		if (dir % 4 != 2) {xy.setX(dir % 7 < 2? halfW : -halfW);}
-		if (dir % 4 != 0) {xy.setY(dir < 4? halfH : -halfH);}
-		if (dir % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
+		int dirInt = m.getDir(); Point xy = new Point();
+		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
+		if (dirInt % 4 != 0) {xy.setY(dirInt < 4? halfH : -halfH);}
+		if (dirInt % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
 		return new Interaction(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH, e, t);
 	}
 

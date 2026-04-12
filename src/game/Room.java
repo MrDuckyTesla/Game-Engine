@@ -55,7 +55,7 @@ public class Room {
 		for (int i = 0; i < room.size(); i++) {
 			Entity e = this.room.get(i);
 			
-			if (!e.isMarked()) {
+			if (!e.isDelete()) {
 				e.update();
 				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
 				if (e.getType() == Entities.TRIGGER) {this.room.remove(i); i--;}

@@ -6,11 +6,10 @@ import game.util.ToolKit;
 
 public final class Interaction extends Trigger {
 	
-	Triggers t;
+	private Triggers t;
 
 	public Interaction(float x, float y, float w, float h, Entity i, Triggers t) {
-		super(x, y, w, h, i);
-		this.t = t;
+		super(x, y, w, h, i); this.t = t;
 	}
 
 	@Override
@@ -20,7 +19,7 @@ public final class Interaction extends Trigger {
 				if (ToolKit.rectRectCollide (
 						this.getX(), this.getY(), this.getW(), this.getH(), 
 						e.getX(), e.getY(), e.getW(), e.getH()
-				)) {e.interact(this.t);}
+				)) {e.interact(this.t); e.setDeathDir(this.getCaster().getOverDir());}
 			}
 		}
 	}

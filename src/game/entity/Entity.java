@@ -11,6 +11,7 @@ import game.entity.abilities.Ability;
 public abstract class Entity implements Comparable<Entity> {
 	
 	// Static variables
+	private static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
 	private static Room currRoom;
 	private static long id = 0;
 	
@@ -24,8 +25,8 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
+	private int totalStates, currMove = 0, framesDie = 10, deathDir = 0;
 	private boolean isTangible, isBreakable, isMarked = false;
-	private int totalStates, currMove = 0;
 	private int[][][] colorLayers;
 	private Ability[] abilities;
 	private int[] colorTints;
@@ -57,10 +58,12 @@ public abstract class Entity implements Comparable<Entity> {
 	public void update() {	
 		this.move[this.currMove].move(this, this.abilities, this.showXY);
 	    this.showXY.set(this.getMoveSet().getPoint());
+	    if (this.isMarked) {this.framesDie--;}
 	}
 	
-	public final void markDelete() {this.isMarked = true;}
+	public final void markDelete() {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}
 	public final boolean isMarked() {return this.isMarked;}
+	public final boolean isDelete() {return this.framesDie < 0;}
 	public boolean isTangible() {return this.isTangible;}
 	public boolean isBreakable() {return this.isBreakable;}
 	
@@ -71,6 +74,7 @@ public abstract class Entity implements Comparable<Entity> {
 	// Getter methods
 	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
 	public int getOverDir() {return this.move[this.currMove].getDir();}
+	public int getDeathDir() {return this.deathDir;}
 	public float getX() {return this.getMoveSet().getX();}
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
@@ -88,6 +92,7 @@ public abstract class Entity implements Comparable<Entity> {
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
 	public void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
+	public void setDeathDir(int dir) {this.deathDir = dir;}
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
 	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}

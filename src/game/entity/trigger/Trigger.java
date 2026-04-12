@@ -16,6 +16,8 @@ public abstract class Trigger extends Entity {
 	
 	public Entity getCaster() {return this.caster;}
 	
+	public int getCastDir() {return this.caster.getOverDir();}
+	
 	public abstract Triggers getTrigger();
 	
 	@Override
