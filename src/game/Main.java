@@ -3,13 +3,12 @@ package game;
 import game.entity.*;
 import game.entity.abilities.*;
 import game.entity.movement.*;
-import game.util.Rect;
-import game.util.ToolKit;
+import game.util.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 import test.CObstacle;
 
-public class Main extends PApplet {
+public final class Main extends PApplet {
 	
 	Rect[] obstacles;
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
