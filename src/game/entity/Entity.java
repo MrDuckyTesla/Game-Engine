@@ -84,7 +84,7 @@ public abstract class Entity implements Comparable<Entity> {
 	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
-	public PImage getImg() {return this.images[this.currMove].get();};
+	public PImage getImg() {return this.images[this.currMove];};
 	public Ability[] getAbilities() {return this.abilities;}
 	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
 	
