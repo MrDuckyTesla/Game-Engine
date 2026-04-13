@@ -24,11 +24,7 @@ public class EightDirectionalMove extends MoveSet {
 
 	@Override
 	public void move(Entity c, Point xy) {
-		Point p;
-		if (c.isMarked()) {
-			boolean idle = this.isIdle; float speed = this.currSpeed; this.isIdle = false; this.setDoubSpeed();
-			p = this.getPotential(c.getDeathDir()); this.isIdle = idle; this.currSpeed = speed;
-		} else {p = this.getPotential(this.dir);}
+		Point p = this.getPotential();
 		this.totalDist = this.xywh.getPoint();
 		for (Entity e : Entity.getRoom()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
@@ -72,13 +68,12 @@ public class EightDirectionalMove extends MoveSet {
 	@Override
 	public Moves getMoveType() {return Moves.eightDirectional;}
 	
-	private Point getPotential(int dir) {
+	private Point getPotential() {
 		Point s = new Point();
-		if (this.isIdle) {return s;}
-		float speed = this.currSpeed;
-		if (dir % 2 == 1) {speed *= 0.7071068f;}  // sin 45
-		if (dir % 4 != 2) {s.setX(dir % 7 < 2? speed : -speed);}
-		if (dir % 4 != 0) {s.setY(dir < 4? speed : -speed);}
+		if (this.isIdle) {return s;} float speed = this.currSpeed;
+		if (this.dir % 2 == 1) {speed *= 0.7071068f;}  // sin 45
+		if (this.dir % 4 != 2) {s.setX(this.dir % 7 < 2? speed : -speed);}
+		if (this.dir % 4 != 0) {s.setY(this.dir < 4? speed : -speed);}
 		return s;
 	}
 	public Point getMoveDist() {return this.totalDist;}

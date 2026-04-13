@@ -2,6 +2,7 @@ package game.entity;
 
 import game.entity.abilities.Abilities;
 import game.entity.abilities.Ability;
+import game.entity.movement.EightDirectionalMove;
 import game.entity.movement.MoveSet;
 import game.entity.trigger.Triggers;
 import game.util.ToolKit;

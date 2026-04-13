@@ -30,7 +30,7 @@ public class Sword8d extends Ability {
 		} this.lIsIdle = m.getIsIdle();
 	}
 	
-	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing); }
+	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}
 
 	@Override
 	public boolean isActive() {return this.isActive;}

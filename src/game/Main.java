@@ -36,7 +36,7 @@ public class Main extends PApplet {
 	
 	@Override
 	public void setup() {
-		surface.setTitle("Tesla: Crash to Earth");
+		surface.setTitle("GAME TEST");
 		surface.setIcon(loadImage("src/Assets/Sprites/icon64.png"));
 		textFont(createFont("src/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
 		noCursor(); noStroke(); textSize(20);
