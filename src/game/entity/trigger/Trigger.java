@@ -10,7 +10,7 @@ public abstract class Trigger extends Entity {
 	private Entity caster;
 	
 	public Trigger(float x, float y, float w, float h, Entity caster) {
-		super(null, new MoveSet[] {new ObjectAffectedMove(x, y, w, h)}, null, null, null, false, false);
+		super(null, null, new MoveSet[] {new ObjectAffectedMove(x, y, w, h)}, null, null, null, false, false);
 		this.caster = caster;
 	}
 	

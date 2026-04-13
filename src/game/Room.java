@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import game.entity.*;
 import game.entity.movement.*;
+import game.entity.trigger.Trigger;
+import game.entity.trigger.Triggers;
 import game.util.Point;
 import game.util.ToolKit;
 import processing.core.PImage;
@@ -21,6 +23,7 @@ public class Room {
 	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(p); room.add(o);}
 	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
+	private Room() {}
 	
 	public void add(Entity o) {room.add(o);}
 	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
@@ -28,8 +31,10 @@ public class Room {
 	public void add(float x, float y, float w, float h) {room.add(new NonPlayerCharacter(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background, Point backCoords) {
-		this.p = p; this.background = background; this.backCoords = backCoords; room.add(this.p);// this.playCoords = p.getXY();
+		this.p = p; this.background = background; this.backCoords = backCoords; if (this.p != null) {room.add(this.p);}// this.playCoords = p.getXY();
 	}
+	
+	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; room.add(this.p); return true;} return false;}
 	
 	//TODO implement reading from file
 	public void add(String file) {
@@ -45,12 +50,11 @@ public class Room {
 	}
 	
 	public void update() {
-		Entity.setRoom(this);  // Make sure Entity has current room set
 		Collections.sort(room);  // Sort room to keep ordering correct
 		
 		if (this.background != null) {
 			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
-		} ((EightDirectionalMove) p.getMoveSet()).showHitBG();
+		}
 		
 		for (int i = 0; i < room.size(); i++) {
 			Entity e = this.room.get(i);
@@ -84,5 +88,39 @@ public class Room {
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
 	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}
+	
+	public static Interaction createInteraction(MoveSet m, Entity e, Triggers t) {
+		float halfW = m.getSW()/2, halfH = m.getSH()/2;
+		int dirInt = m.getDir(); Point xy = new Point();
+		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
+		if (dirInt % 4 != 0) {xy.setY(dirInt < 4? halfH : -halfH);}
+		if (dirInt % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
+		return new Room().new Interaction(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH, e, t);
+	}
+	
+	private class Interaction extends Trigger {
+		
+		private Triggers t;
+
+		public Interaction(float x, float y, float w, float h, Entity i, Triggers t) {
+			super(x, y, w, h, i); this.t = t;
+		}
+
+		@Override
+		public void update() {
+			for (Entity e : room) {
+				if (e.getType() != Entities.TRIGGER && !this.getCaster().equals(e)) {
+					if (ToolKit.rectRectCollide (
+							this.getX(), this.getY(), this.getW(), this.getH(), 
+							e.getX(), e.getY(), e.getW(), e.getH()
+					)) {e.interact(this.t);} // e.setDeathDir(this.getCaster().getOverDir());}
+				}
+			}
+		}
+
+		@Override
+		public Triggers getTrigger() {return this.t;}
+
+	}
 	
 }

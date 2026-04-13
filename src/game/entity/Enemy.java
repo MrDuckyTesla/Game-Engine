@@ -1,8 +1,7 @@
 package game.entity;
 
-import game.entity.abilities.Abilities;
-import game.entity.abilities.Ability;
-import game.entity.movement.EightDirectionalMove;
+import game.Room;
+import game.entity.abilities.*;
 import game.entity.movement.MoveSet;
 import game.entity.trigger.Triggers;
 import game.util.ToolKit;
@@ -16,8 +15,8 @@ public class Enemy extends NonPlayerCharacter {
 //	public Enemy(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(overPosit, battPosit, scale, overImage, battImage, overColorLayer, battColorLayer);}
 //	public Enemy(Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(scale, overImage, battImage, overColorLayer, battColorLayer);}
 	
-	public Enemy(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
-		super(img, move, abilities, colorLayers, colorTints, false, true);
+	public Enemy(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
+		super(room, img, move, abilities, colorLayers, colorTints, false, true);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -66,11 +65,11 @@ public class Enemy extends NonPlayerCharacter {
 	public void interact(Triggers t) {
 		switch(t) {
 			case Triggers.DELETE:
-				this.markDelete();
+//				this.markDelete();
 				break;
 			case Triggers.INTERACT:
 				if (!this.isMarked()) {
-					ToolKit.getApp().text("Hello.", this.getBGX(), this.getBGY());
+//					ToolKit.getApp().text("Hello.", this.getBGX(), this.getBGY());
 					this.setOverState(true);
 				} break;
 			default:

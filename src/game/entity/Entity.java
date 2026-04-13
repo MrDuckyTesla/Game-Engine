@@ -1,10 +1,10 @@
 package game.entity;
 
+import java.util.ArrayList;
+import processing.core.PImage;
 import game.util.*;
 import game.entity.trigger.*;
 import game.entity.movement.*;
-import java.util.ArrayList;
-import processing.core.PImage;
 import game.Room;
 import game.entity.abilities.Ability;
 
@@ -12,16 +12,14 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	// Static variables
 	private static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
-	private static Room currRoom;
 	private static long id = 0;
 	
-	// Static methods
-	public static ArrayList<Entity> getRoom() {return Entity.currRoom.getRoom();}
-	public static Player getPlayer() {return Entity.currRoom.getPlayer();}
-	public static int getRW() {return Entity.currRoom.getImageWidth();}
-	public static int getRH() {return Entity.currRoom.getImageHeight();}
-	public static void setRoom(Room room) {Entity.currRoom = room;}
-	public static void addtrigger(Trigger t) {Entity.currRoom.add(t);}
+	public ArrayList<Entity> getRoom() {return this.currRoom.getRoom();}
+//	public static Player getPlayer() {return Entity.currRoom.getPlayer();}
+	public int getRW() {return this.currRoom.getImageWidth();}
+	public int getRH() {return this.currRoom.getImageHeight();}
+//	public static void setRoom(Room room) {Entity.currRoom = room;}
+//	public static void addtrigger(Trigger t) {Entity.currRoom.add(t);}
 	
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
@@ -32,13 +30,14 @@ public abstract class Entity implements Comparable<Entity> {
 	private int[] colorTints;
 	private PImage[] images;
 	private MoveSet[] move;
+	private Room currRoom;
 	private Point showXY;
 	private long entID;
 	
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
-	public Entity(PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {  // Allow pre-computing color list outside class and using it here in constructor
-		this.entID = Entity.id; Entity.id++; this.showXY = new Point();
+	public Entity(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {  // Allow pre-computing color list outside class and using it here in constructor
+		this.entID = Entity.id; Entity.id++; this.showXY = new Point(); this.currRoom = room;
 		try {
 			this.totalStates = move.length;
 			this.images = new PImage[this.totalStates]; this.move = new MoveSet[this.totalStates];
@@ -61,7 +60,7 @@ public abstract class Entity implements Comparable<Entity> {
 	    if (this.isMarked) {this.framesDie--;}
 	}
 	
-	public final void markDelete() {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}
+//	public final void markDelete() {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}
 	public final boolean isMarked() {return this.isMarked;}
 	public final boolean isDelete() {return this.framesDie < 0;}
 	public boolean isTangible() {return this.isTangible;}
@@ -79,20 +78,20 @@ public abstract class Entity implements Comparable<Entity> {
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
-	public float getBGX() {return this.getMoveSet().getX() + Entity.currRoom.getBackCoords().getX();}
-	public float getBGY() {return this.getMoveSet().getY() + Entity.currRoom.getBackCoords().getY();}
+//	public float getBGX() {return this.getMoveSet().getX() + Entity.currRoom.getBackCoords().getX();}
+//	public float getBGY() {return this.getMoveSet().getY() + Entity.currRoom.getBackCoords().getY();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
 	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
-	public PImage getImg() {return this.images[this.currMove];};
+	public PImage getImg() {return this.images[this.currMove].get();};
 	public Ability[] getAbilities() {return this.abilities;}
 	public Moves getMoveSetType() {return this.move[this.currMove].getMoveType();}
 	
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
 	public void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
-	public void setDeathDir(int dir) {this.deathDir = dir;}
+//	public void setDeathDir(int dir) {this.deathDir = dir;}
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
 	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}
@@ -105,6 +104,7 @@ public abstract class Entity implements Comparable<Entity> {
 	// Overridden methods
 	@Override
 	public int compareTo(Entity e) {return Float.compare(this.getY() + this.getH(), e.getY() + e.getH());}
+	
 	@Override
 	public String toString() {return "("+this.getX()+", "+this.getY() + ", "+this.getW()+", "+this.getH()+")"+", Type \""+this.getType()+"\"";}
 	@Override

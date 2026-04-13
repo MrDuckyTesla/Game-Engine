@@ -1,38 +1,30 @@
 package game.entity.abilities;
 
+import game.Room;
 import game.entity.*;
 import game.entity.movement.*;
-import game.entity.trigger.Interaction;
-import game.entity.trigger.Triggers;
+import game.entity.trigger.*;
 import game.util.*;
 
 public class Interact8d extends Ability {
 	
 	private boolean isActive = false;
+	private Trigger currTrig = null;
 
 	public Interact8d() {}
 	public Interact8d(int key) {super(key);}
 	public Interact8d(int[] keys) {super(keys);}
 	
-	public static Interaction interaction8d(MoveSet m, Entity e, Triggers t) {
-		float halfW = m.getSW()/2, halfH = m.getSH()/2;
-		int dirInt = m.getDir(); Point xy = new Point();
-		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
-		if (dirInt % 4 != 0) {xy.setY(dirInt < 4? halfH : -halfH);}
-		if (dirInt % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
-		return new Interaction(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH, e, t);
-	}
+	@Override
+	public Trigger getTrigger() {return this.currTrig;}
 
 	@Override
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
-			for (int key : this.getKeys()) {this.isActive = ToolKit.keyIsDown(key);}
-		}
-		if (this.isActive) {
-			Entity.addtrigger(Interact8d.interaction8d(m, e, Triggers.INTERACT));
-//			ToolKit.getApp().rect(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH);
-		}
+			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
+		} this.currTrig = this.isActive? Room.createInteraction(m, e, Triggers.INTERACT) : null;
+//		ToolKit.getApp().rect(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH);
 	}
 	
 	@Override

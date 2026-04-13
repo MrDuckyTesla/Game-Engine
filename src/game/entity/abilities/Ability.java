@@ -2,6 +2,7 @@ package game.entity.abilities;
 
 import game.entity.Entity;
 import game.entity.movement.MoveSet;
+import game.entity.trigger.Trigger;
 
 public abstract class Ability {
 	
@@ -15,6 +16,11 @@ public abstract class Ability {
 	
 	public abstract void setActive(boolean activate);
 	public abstract boolean isActive();
+	/**
+	 * Only override this if you want to create an interaction
+	 * @return Returns the trigger being requested
+	 */
+	public Trigger getTrigger() {return null;}
 	
 	public abstract Ability get();
 	

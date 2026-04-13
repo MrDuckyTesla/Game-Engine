@@ -26,7 +26,7 @@ public class EightDirectionalMove extends MoveSet {
 	public void move(Entity c, Point xy) {
 		Point p = this.getPotential();
 		this.totalDist = this.xywh.getPoint();
-		for (Entity e : Entity.getRoom()) {
+		for (Entity e : c.getRoom()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
 				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), e.getX(), e.getY(), e.getW(), e.getH())) {
 					if (p.getX() < 0) {if (this.setX(e.getX() + e.getW() + 0.0001f)) {p.resetX();}}
@@ -35,11 +35,11 @@ public class EightDirectionalMove extends MoveSet {
 					else if (p.getY() > 0) {if (this.setY(e.getY() - c.getH() - 0.0001f)) {p.resetY();}}
 				} 
 			} 
-		} if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, Entity.getRW(), Entity.getRH())) {
+		} if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, c.getRW(), c.getRH())) {
 			if (p.getX() < 0) {if (this.setX(0.0001f)) {p.resetX();}}
-			else if (p.getX() > 0) {if (this.setX(Entity.getRW() - c.getW() - 0.0001f)) {p.resetX();}}
+			else if (p.getX() > 0) {if (this.setX(c.getRW() - c.getW() - 0.0001f)) {p.resetX();}}
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
-			else if (p.getY() > 0) {if (this.setY(Entity.getRH() - c.getH() - 0.0001f)) {p.resetY();}}
+			else if (p.getY() > 0) {if (this.setY(c.getRH() - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
 		if (a.canAnimate()) {a.update(xy);} this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
 	}
@@ -92,13 +92,6 @@ public class EightDirectionalMove extends MoveSet {
 		ToolKit.pushApp();
 		if (isIdle) {ToolKit.fillApp(255, 0, 0);}
 		ToolKit.getApp().rect(xywh.getX(), xywh.getY(), this.getSW(), this.getSH());
-		ToolKit.popApp();
-	}
-	
-	public void showHitBG() {
-		ToolKit.pushApp();
-		ToolKit.fillApp(55, 55, 55);
-		ToolKit.getApp().rect(0, 0, Entity.getRW(), Entity.getRH());
 		ToolKit.popApp();
 	}
 	

@@ -42,23 +42,9 @@ public final class Main extends PApplet {
 		tesla[0] = loadImage("src/Assets/Sprites/Tesla/Tesla_Overworld.png");
 		tesla[1] = loadImage("src/Assets/Sprites/Tesla/Tesla_Battle.png");
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
-//		tesla[0] = image1;
-//		colorList = Engine.PreCompile(this, image1, new int[][] {{180, 157, 130, 31}, {187, 171}, {190, 163, 140}});
-//		Engine.changeColor(this, image1, colorList, new int[] {111, 111, 255, 255, 111, 111, 255, 200, 0});
-		obstacles = new Rect[] {new Rect(150, 200, 500, 100), new Rect(0, 380, 120, 100), new Rect(600, 600, 120, 160), new Rect(260, 500, 180, 80), new Rect(600, 175, 100, 300)};
-		CObstacle cobstacle = new CObstacle(obstacles);
-		cobstacle.cleanArray();
-		obstacles = cobstacle.getObstacleArray().clone();
 		ToolKit.setApp(this);
-//		Point p1 = new Point(400, 400);
-//		Point p2 = new Point(400, 500);
-//		(PImage[] img, MoveSet[] move, int[][][] colorLayers, int[] colorTints, int[] scale)
-		p = new Player(tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints);
-		test = new Room(p, bck1);
-//		test.add(new Enemy(new PImage[] {tesla[0].copy(), tesla[1].copy()}, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
-//		test.add(new Enemy(new PImage[] {tesla[0].copy(), tesla[1].copy()}, moves2, abilities2, PlayerSpriteLayers, EnemyColorTints));
-//		test.add(200, 200, 100, 100);
-//		test.add(300, 300, 100, 100);
+		test = new Room(null, bck1);
+		p = new Player(test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints);
 		
 		for (int i = 0; i < 20; i++) {
 			test.add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
@@ -68,37 +54,18 @@ public final class Main extends PApplet {
 			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
 			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
-			test.add(new Enemy(tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
+			test.add(new Enemy(test, tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
 		}
 		
-//		Level l1 = new Level();
-//		Room r1 = new Room();
-//		(PApplet app, Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer, int[] overColorTint, int[] battColorTint)
-//		r1.add(p);
-//		l1.addRoom(r1);
 	}
 	
 	@Override
 	public void draw() {
 		background(50);
-		// PATHFINDIING
-		
-//		for (int i = 0; i < obstacles.length; i++) {
-//			obstacles[i].display(this, new int[] {(int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256)});
-//		}
-//		
-//		ArrayList<Point> criticalPoints = Engine.pathfind(50, 700, min(mouseX, width-100), min(mouseY, height-100), 100, 100, obstacles, 0, 0, width, height);
-//		for (int i = 0; i < criticalPoints.size(); i++) {
-//			criticalPoints.get(i).display(this, 30);
-//		}
-//		System.out.println(criticalPoints);
-//		Engine.lineDraw(this, min(mouseX, width-100)+50, min(mouseY, height-100)+50, 25*2, 350*2);
-//		
-//		rect(min(mouseX, width-100), min(mouseY, height-100), 100, 100);
-//		circle(50, 700, 50);
 
+//		System.out.println(test.getRoom().size());
+		
 		test.update();
-//		p.update();
 		
 		textSize(36); text(Math.round(this.frameRate)+"fps", 10, 30);
 		

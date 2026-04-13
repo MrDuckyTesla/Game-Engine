@@ -1,19 +1,22 @@
 package game.entity.abilities;
 
+import game.Room;
 import game.entity.Entity;
-import game.entity.movement.EightDirectionalMove;
-import game.entity.movement.MoveSet;
-import game.entity.movement.Moves;
-import game.entity.trigger.Triggers;
+import game.entity.movement.*;
+import game.entity.trigger.*;
 import game.util.ToolKit;
 
 public class Sword8d extends Ability {
 	
 	private boolean lIsIdle = true, activate = false, isActive = false;;
+	private Trigger currTrig = null;
 
 	public Sword8d() {}
 	public Sword8d(int key) {super(key);}
 	public Sword8d(int[] keys) {super(keys);}
+	
+	@Override
+	public Trigger getTrigger() {return this.currTrig;}
 
 	@Override
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
@@ -21,7 +24,7 @@ public class Sword8d extends Ability {
 		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			m.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
-			Entity.addtrigger(Interact8d.interaction8d(m, e, Triggers.DELETE));
+			this.currTrig = this.isActive? Room.createInteraction(m, e, Triggers.DELETE) : null;
 		} else {
 			this.isActive = false;
 			if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}} 
