@@ -14,13 +14,6 @@ public abstract class Entity implements Comparable<Entity> {
 	private static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
 	private static long id = 0;
 	
-	public ArrayList<Entity> getRoom() {return this.currRoom.getRoom();}
-//	public static Player getPlayer() {return Entity.currRoom.getPlayer();}
-	public int getRW() {return this.currRoom.getImageWidth();}
-	public int getRH() {return this.currRoom.getImageHeight();}
-//	public static void setRoom(Room room) {Entity.currRoom = room;}
-//	public static void addtrigger(Trigger t) {Entity.currRoom.add(t);}
-	
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
 	private int totalStates, currMove = 0, framesDie = 10, deathDir = 0;
@@ -78,8 +71,9 @@ public abstract class Entity implements Comparable<Entity> {
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
-//	public float getBGX() {return this.getMoveSet().getX() + Entity.currRoom.getBackCoords().getX();}
-//	public float getBGY() {return this.getMoveSet().getY() + Entity.currRoom.getBackCoords().getY();}
+	public ArrayList<Entity> getRoom() {return this.currRoom.getRoom();}
+	public int getRW() {return this.currRoom.getImageWidth();}
+	public int getRH() {return this.currRoom.getImageHeight();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
 	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
@@ -91,7 +85,6 @@ public abstract class Entity implements Comparable<Entity> {
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.move[this.currMove].setIdle(isIdle);}
 	public void setOverDir(int dir) {this.move[this.currMove].setDir(dir);}
-//	public void setDeathDir(int dir) {this.deathDir = dir;}
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
 	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}

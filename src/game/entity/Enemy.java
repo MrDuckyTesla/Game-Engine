@@ -4,7 +4,6 @@ import game.Room;
 import game.entity.abilities.*;
 import game.entity.movement.MoveSet;
 import game.entity.trigger.Triggers;
-import game.util.ToolKit;
 import processing.core.PImage;
 
 public class Enemy extends NonPlayerCharacter {
