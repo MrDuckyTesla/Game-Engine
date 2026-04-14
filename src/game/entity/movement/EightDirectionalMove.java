@@ -9,7 +9,7 @@ import processing.core.PApplet;
 public class EightDirectionalMove extends MoveSet {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
-	private int dir = 0, ldir = 0;
+	private int dir = 0, ldir = 0, fdir = -1;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
 	private Point totalDist;  // The total amount that the object has moved in a frame
 	private Rect xywh;
@@ -29,7 +29,8 @@ public class EightDirectionalMove extends MoveSet {
 		Point p; Trigger t = c.getTrigger();
 		if (t != null && t.getTriggerType() == Triggers.DELETE) {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
-			p = this.getPotential(t.getCastDir());
+			this.fdir = this.fdir == -1? t.getCastDir() : this.fdir;
+			p = this.getPotential(this.fdir);
 		} else {p = this.getPotential();}
 		this.totalDist = this.xywh.getPoint();
 		for (Entity e : c.getRoomList()) {
