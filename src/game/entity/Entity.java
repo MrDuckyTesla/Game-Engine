@@ -53,7 +53,7 @@ public abstract class Entity implements Comparable<Entity> {
 	    if (this.isMarked) {this.framesDie--;}
 	}
 	
-	public final void markDelete() {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}
+	public final void markDelete() {if (!this.isMarked) {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}}
 	public final boolean isMarked() {return this.isMarked;}
 	public final boolean isDelete() {return this.framesDie < 0;}
 	public boolean isTangible() {return this.isTangible;}

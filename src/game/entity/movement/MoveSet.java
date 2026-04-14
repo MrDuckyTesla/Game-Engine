@@ -13,8 +13,8 @@ public abstract class MoveSet {
 	
 	public abstract void move(Entity e, Point xy);
 	
-	public void move(Entity e, Ability ab, Point xy) {this.reset(e, xy); ab.update(e, this); this.check(ab);}
-	public void move(Entity e, Ability[] ab, Point xy) {this.reset(e, xy); for (Ability a : ab) {a.update(e, this); this.check(a);}}
+	public final void move(Entity e, Ability ab, Point xy) {this.reset(e, xy); ab.update(e, this); this.check(ab);}
+	public final void move(Entity e, Ability[] ab, Point xy) {this.reset(e, xy); for (Ability a : ab) {a.update(e, this); this.check(a);}}
 	
 	private void reset(Entity e, Point xy) {
 		this.triggers.clear();;
@@ -26,7 +26,7 @@ public abstract class MoveSet {
 		if (t != null) {triggers.add(t);}
 	}
 	
-	public ArrayList<Trigger> getTriggers() {return this.triggers;}
+	public final ArrayList<Trigger> getTriggers() {return this.triggers;}
 	
 	public abstract Animator getAnimator();
 	

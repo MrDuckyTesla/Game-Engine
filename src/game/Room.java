@@ -59,15 +59,14 @@ public class Room {
 				e.update();
 				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
 				this.trig.addAll(e.getMoveSet().getTriggers());
+				e.getMoveSet().getTriggers().clear();
 				if (e.getType() == Entities.TRIGGER) {
 					this.room.remove(i); i--;
 				}
 			} else {this.room.remove(i); i--;}
 		} this.moveBackground();
 		for (Trigger t : this.trig) {room.add(t);}
-		System.out.println(this.trig.size());
 		this.trig.clear();
-		System.out.println(this.trig.size());
 	}
 
 	private void moveBackground() {
@@ -87,39 +86,5 @@ public class Room {
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
 	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}
-	
-	public static Interaction createInteraction(Room r, MoveSet m, Entity e, Triggers t) {
-		float halfW = m.getSW()/2, halfH = m.getSH()/2;
-		int dirInt = m.getDir(); Point xy = new Point();
-		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
-		if (dirInt % 4 != 0) {xy.setY(dirInt < 4? halfH : -halfH);}
-		if (dirInt % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
-		return r.new Interaction(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH, e, t);
-	}
-	
-	private class Interaction extends Trigger {
-		
-		private Triggers t;
-
-		public Interaction(float x, float y, float w, float h, Entity i, Triggers t) {
-			super(x, y, w, h, i); this.t = t;
-		}
-
-		@Override
-		public void update() {
-			for (Entity e : Room.this.room) {
-				if (e.getType() != Entities.TRIGGER && !this.getCaster().equals(e)) {
-					if (ToolKit.rectRectCollide (
-							this.getX(), this.getY(), this.getW(), this.getH(), 
-							e.getX(), e.getY(), e.getW(), e.getH()
-					)) {e.interact(this.t);} // e.setDeathDir(this.getCaster().getOverDir());}
-				}
-			}
-		}
-
-		@Override
-		public Triggers getTrigger() {return this.t;}
-
-	}
 	
 }

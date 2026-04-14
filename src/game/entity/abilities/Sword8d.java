@@ -1,6 +1,5 @@
 package game.entity.abilities;
 
-import game.Room;
 import game.entity.Entity;
 import game.entity.movement.*;
 import game.entity.trigger.*;
@@ -24,13 +23,14 @@ public class Sword8d extends Ability {
 		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			m.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
-			this.currTrig = this.isActive? Room.createInteraction(e.getRoom(), m, e, Triggers.DELETE) : null;
 		} else {
 			this.isActive = false;
-			if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}} 
-			else if (this.activate) {m.getAnimator().resetAnim(); this.isActive = true;}
+			if (this.getKeys() != null) {
+				for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}
+			} else if (this.activate) {m.getAnimator().resetAnim(); this.isActive = true;}
 			this.setSwing(m, true);
 		} this.lIsIdle = m.getIsIdle();
+		this.currTrig = this.isActive? Interaction.createInteraction(e.getRoom(), m, e, Triggers.DELETE) : null;
 	}
 	
 	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}
