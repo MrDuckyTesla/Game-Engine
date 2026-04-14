@@ -64,7 +64,9 @@ public class Enemy extends NonPlayerCharacter {
 	public void interact(Triggers t) {
 		switch(t) {
 			case Triggers.DELETE:
+				if (!this.isMarked()) {
 				this.markDelete();
+				}
 				break;
 			case Triggers.INTERACT:
 				if (!this.isMarked()) {

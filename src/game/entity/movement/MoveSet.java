@@ -17,7 +17,7 @@ public abstract class MoveSet {
 	public void move(Entity e, Ability[] ab, Point xy) {this.reset(e, xy); for (Ability a : ab) {a.update(e, this); this.check(a);}}
 	
 	private void reset(Entity e, Point xy) {
-		this.triggers = new ArrayList<Trigger>();
+		this.triggers.clear();;
 		this.move(e, xy);
 	}
 	

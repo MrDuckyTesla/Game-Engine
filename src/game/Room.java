@@ -65,7 +65,9 @@ public class Room {
 			} else {this.room.remove(i); i--;}
 		} this.moveBackground();
 		for (Trigger t : this.trig) {room.add(t);}
-		this.trig = new ArrayList<Trigger>();
+		System.out.println(this.trig.size());
+		this.trig.clear();
+		System.out.println(this.trig.size());
 	}
 
 	private void moveBackground() {
