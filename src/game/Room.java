@@ -11,6 +11,7 @@ import processing.core.PImage;
 public class Room {
 
 	private ArrayList<Entity> room = new ArrayList<Entity>();
+	private ArrayList<Trigger> trig = new ArrayList<Trigger>();
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
@@ -57,15 +58,14 @@ public class Room {
 			if (!e.isDelete()) {
 				e.update();
 				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
-				ArrayList<Trigger> trig = e.getMoveSet().getTriggers();
-				for (Trigger t : trig) {
-					room.add(t);
-				}
+				this.trig.addAll(e.getMoveSet().getTriggers());
 				if (e.getType() == Entities.TRIGGER) {
 					this.room.remove(i); i--;
 				}
 			} else {this.room.remove(i); i--;}
 		} this.moveBackground();
+		for (Trigger t : this.trig) {room.add(t);}
+		this.trig = new ArrayList<Trigger>();
 	}
 
 	private void moveBackground() {
