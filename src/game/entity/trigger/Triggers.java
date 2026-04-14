@@ -1,5 +1,5 @@
 package game.entity.trigger;
 
 public enum Triggers {
-	DELETE, INTERACT, TEXT 
+	DELETE, ATTACK, INTERACT, TELEPORT, MOVEMENT, DOOR, WALL
 }

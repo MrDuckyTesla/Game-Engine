@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-
 import game.entity.Player;
 
 // A level holds many Rooms

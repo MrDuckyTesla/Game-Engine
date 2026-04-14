@@ -1,17 +1,16 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import game.entity.*;
-import game.entity.movement.*;
-import game.util.Point;
-import game.util.ToolKit;
+import game.entity.trigger.*;
+import game.util.*;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
 public class Room {
 
-	private ArrayList<Entity> room = new ArrayList<Entity>(), temp = new ArrayList<Entity>();
+	private ArrayList<Entity> room = new ArrayList<Entity>();
+	private ArrayList<Trigger> trig = new ArrayList<Trigger>();
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
@@ -22,14 +21,16 @@ public class Room {
 	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	
-	public void add(Entity o) {temp.add(o);}
-	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {temp.add(o[i]);}}
-	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {temp.add(o.get(i));}}
-	public void add(float x, float y, float w, float h) {temp.add(new NonPlayerCharacter(x, y, w, h));}
+	public void add(Entity o) {room.add(o);}
+	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
+	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
+	public void add(float x, float y, float w, float h) {room.add(new Wall(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background, Point backCoords) {
-		this.p = p; this.background = background; this.backCoords = backCoords; room.add(this.p);// this.playCoords = p.getXY();
+		this.p = p; this.background = background; this.backCoords = backCoords; if (this.p != null) {room.add(this.p);}// this.playCoords = p.getXY();
 	}
+	
+	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; room.add(this.p); return true;} return false;}
 	
 	//TODO implement reading from file
 	public void add(String file) {
@@ -45,31 +46,24 @@ public class Room {
 	}
 	
 	public void update() {
-		Entity.setRoom(this);  // Make sure Entity has current room set
-		
-		// Add any temporary entities
-		for (int i = 0; i < temp.size(); i++) {
-			room.add(this.temp.get(i));
-			temp.remove(i); i--;
-		} Collections.sort(room);  // Sort room to keep ordering correct
+		Collections.sort(room);  // Sort room to keep ordering correct
 		
 		if (this.background != null) {
 			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
-		} ((EightDirectionalMove) p.getMoveSet()).showHitBG();
+		}
 		
 		for (int i = 0; i < room.size(); i++) {
 			Entity e = this.room.get(i);
-			
-			if (!e.isMarked()) {
+			if (!e.isDelete()) {
 				e.update();
 				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
-				if (e.getType() == Entities.TRIGGER) {this.room.remove(i); i--;}
-			} else {this.room.remove(i); i--;}
-		}
-		
-		System.out.println(this.room.size());
-		
-		this.moveBackground();
+				this.trig.addAll(e.getMoveSet().getTriggers());
+				e.getMoveSet().getTriggers().clear();
+			} else if (e.getType() == Entities.TRIGGER) {e.update(); this.room.remove(i--);}
+			else {this.room.remove(i--);}
+		} this.moveBackground();
+		for (Trigger t : this.trig) {room.add(t);}
+		this.trig.clear();
 	}
 
 	private void moveBackground() {

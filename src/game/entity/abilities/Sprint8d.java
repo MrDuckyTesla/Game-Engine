@@ -19,7 +19,8 @@ public class Sprint8d extends Ability {
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
-			for (int key : this.getKeys()) {this.isActive = ToolKit.keyIsDown(key);}
+			this.isActive = false;
+			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
 		} else {this.isActive = this.activate;}
 		if (this.isActive) {
 			((EightDirectionalMove) m).doubSpeed();

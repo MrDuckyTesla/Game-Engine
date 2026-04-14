@@ -19,9 +19,18 @@ public final class Door extends Trigger {
 	}
 
 	@Override
-	public Triggers getTrigger() {
+	public Triggers getTriggerType() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isDelete() {return false;}
+
+	@Override
+	public boolean isMarked() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

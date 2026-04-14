@@ -1,19 +1,21 @@
 package game.entity.abilities;
 
 import game.entity.Entity;
-import game.entity.movement.EightDirectionalMove;
-import game.entity.movement.MoveSet;
-import game.entity.movement.Moves;
-import game.entity.trigger.Triggers;
+import game.entity.movement.*;
+import game.entity.trigger.*;
 import game.util.ToolKit;
 
 public class Sword8d extends Ability {
 	
 	private boolean lIsIdle = true, activate = false, isActive = false;;
+	private Trigger currTrig = null;
 
 	public Sword8d() {}
 	public Sword8d(int key) {super(key);}
 	public Sword8d(int[] keys) {super(keys);}
+	
+	@Override
+	public Trigger getTrigger() {return this.currTrig;}
 
 	@Override
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
@@ -21,16 +23,17 @@ public class Sword8d extends Ability {
 		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			m.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
-			Interact8d.createInteraction8d(m, e, Triggers.DELETE);
 		} else {
 			this.isActive = false;
-			if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}} 
-			else if (this.activate) {m.getAnimator().resetAnim(); this.isActive = true;}
+			if (this.getKeys() != null) {
+				for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}
+			} else if (this.activate) {m.getAnimator().resetAnim(); this.isActive = true;}
 			this.setSwing(m, true);
 		} this.lIsIdle = m.getIsIdle();
+		this.currTrig = this.isActive? Interaction.createInteraction(e.getRoom(), m, e, Triggers.DELETE) : null;
 	}
 	
-	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing); }
+	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}
 
 	@Override
 	public boolean isActive() {return this.isActive;}
