@@ -1,16 +1,32 @@
 package game.entity.movement;
 
+import java.util.ArrayList;
 import game.entity.Entity;
 import game.entity.abilities.Ability;
+import game.entity.trigger.Trigger;
 import game.util.Animator;
 import game.util.Point;
 
 public abstract class MoveSet {
 	
+	private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
+	
 	public abstract void move(Entity e, Point xy);
 	
-	public void move(Entity e, Ability ab, Point xy) {this.move(e, xy); ab.update(e, this);}
-	public void move(Entity e, Ability[] ab, Point xy) {this.move(e, xy); for (Ability a : ab) {a.update(e, this);}}
+	public void move(Entity e, Ability ab, Point xy) {this.reset(e, xy); ab.update(e, this); this.check(ab);}
+	public void move(Entity e, Ability[] ab, Point xy) {this.reset(e, xy); for (Ability a : ab) {a.update(e, this); this.check(a);}}
+	
+	private void reset(Entity e, Point xy) {
+		this.triggers = new ArrayList<Trigger>();
+		this.move(e, xy);
+	}
+	
+	private void check(Ability ab) {
+		Trigger t = ab.getTrigger();
+		if (t != null) {triggers.add(t);}
+	}
+	
+	public ArrayList<Trigger> getTriggers() {return this.triggers;}
 	
 	public abstract Animator getAnimator();
 	

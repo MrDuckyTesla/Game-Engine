@@ -24,7 +24,7 @@ public class Sword8d extends Ability {
 		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			m.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
-			this.currTrig = this.isActive? Room.createInteraction(m, e, Triggers.DELETE) : null;
+			this.currTrig = this.isActive? Room.createInteraction(e.getRoom(), m, e, Triggers.DELETE) : null;
 		} else {
 			this.isActive = false;
 			if (this.getKeys() != null) {for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}} 

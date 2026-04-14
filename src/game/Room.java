@@ -1,13 +1,10 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import game.entity.*;
 import game.entity.movement.*;
-import game.entity.trigger.Trigger;
-import game.entity.trigger.Triggers;
-import game.util.Point;
-import game.util.ToolKit;
+import game.entity.trigger.*;
+import game.util.*;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
@@ -23,7 +20,6 @@ public class Room {
 	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(p); room.add(o);}
 	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
-	private Room() {}
 	
 	public void add(Entity o) {room.add(o);}
 	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
@@ -58,17 +54,18 @@ public class Room {
 		
 		for (int i = 0; i < room.size(); i++) {
 			Entity e = this.room.get(i);
-			
 			if (!e.isDelete()) {
 				e.update();
 				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
-				if (e.getType() == Entities.TRIGGER) {this.room.remove(i); i--;}
+				ArrayList<Trigger> trig = e.getMoveSet().getTriggers();
+				for (Trigger t : trig) {
+					room.add(t);
+				}
+				if (e.getType() == Entities.TRIGGER) {
+					this.room.remove(i); i--;
+				}
 			} else {this.room.remove(i); i--;}
-		}
-		
-//		System.out.println(this.room.size());
-		
-		this.moveBackground();
+		} this.moveBackground();
 	}
 
 	private void moveBackground() {
@@ -89,13 +86,13 @@ public class Room {
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
 	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}
 	
-	public static Interaction createInteraction(MoveSet m, Entity e, Triggers t) {
+	public static Interaction createInteraction(Room r, MoveSet m, Entity e, Triggers t) {
 		float halfW = m.getSW()/2, halfH = m.getSH()/2;
 		int dirInt = m.getDir(); Point xy = new Point();
 		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
 		if (dirInt % 4 != 0) {xy.setY(dirInt < 4? halfH : -halfH);}
 		if (dirInt % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
-		return new Room().new Interaction(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH, e, t);
+		return r.new Interaction(m.getX() + xy.getX() + halfW/2, m.getY() + xy.getY() + halfH/2, halfW, halfH, e, t);
 	}
 	
 	private class Interaction extends Trigger {
@@ -108,7 +105,7 @@ public class Room {
 
 		@Override
 		public void update() {
-			for (Entity e : room) {
+			for (Entity e : Room.this.room) {
 				if (e.getType() != Entities.TRIGGER && !this.getCaster().equals(e)) {
 					if (ToolKit.rectRectCollide (
 							this.getX(), this.getY(), this.getW(), this.getH(), 

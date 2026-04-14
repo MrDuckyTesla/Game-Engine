@@ -62,7 +62,7 @@ public final class Main extends PApplet {
 	public void draw() {
 		background(50);
 
-//		System.out.println(test.getRoom().size());
+		System.out.println(test.getRoom().size());
 		
 		test.update();
 		

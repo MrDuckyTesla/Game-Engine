@@ -53,7 +53,7 @@ public abstract class Entity implements Comparable<Entity> {
 	    if (this.isMarked) {this.framesDie--;}
 	}
 	
-//	public final void markDelete() {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}
+	public final void markDelete() {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}
 	public final boolean isMarked() {return this.isMarked;}
 	public final boolean isDelete() {return this.framesDie < 0;}
 	public boolean isTangible() {return this.isTangible;}
@@ -71,7 +71,8 @@ public abstract class Entity implements Comparable<Entity> {
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
-	public ArrayList<Entity> getRoom() {return this.currRoom.getRoom();}
+	public Room getRoom() {return this.currRoom;}
+	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom();}
 	public int getRW() {return this.currRoom.getImageWidth();}
 	public int getRH() {return this.currRoom.getImageHeight();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}

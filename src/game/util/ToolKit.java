@@ -598,7 +598,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	
 	public static <T> ArrayList<T> removeAll(T val, ArrayList<T> arr) {for (int i = 0; i < arr.size(); i++) {if (arr.get(i).equals(val)) {arr.remove(i); i--;}} return arr;}
 	
-	public static boolean keyIsDown(int key) {if (keys.containsKey(key)) { return keys.get(key);} keys.put(key, false); return false;}
+	public static boolean keyIsDown(int key) {if (keys.containsKey(key)) {return keys.get(key);} keys.put(key, false); return false;}
 	
 	public static void setKey(int key, boolean state) {keys.put(key, state);}
 	

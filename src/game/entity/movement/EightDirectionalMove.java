@@ -26,7 +26,7 @@ public class EightDirectionalMove extends MoveSet {
 	public void move(Entity c, Point xy) {
 		Point p = this.getPotential();
 		this.totalDist = this.xywh.getPoint();
-		for (Entity e : c.getRoom()) {
+		for (Entity e : c.getRoomList()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
 				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), e.getX(), e.getY(), e.getW(), e.getH())) {
 					if (p.getX() < 0) {if (this.setX(e.getX() + e.getW() + 0.0001f)) {p.resetX();}}

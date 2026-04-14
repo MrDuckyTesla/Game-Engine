@@ -23,7 +23,7 @@ public class Interact8d extends Ability {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
-		} this.currTrig = this.isActive? Room.createInteraction(m, e, Triggers.INTERACT) : null;
+		} this.currTrig = this.isActive? Room.createInteraction(e.getRoom(), m, e, Triggers.INTERACT) : null;
 	}
 	
 	@Override
