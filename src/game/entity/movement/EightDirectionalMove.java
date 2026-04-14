@@ -1,6 +1,7 @@
 package game.entity.movement;
 
 import game.entity.*;
+import game.entity.trigger.Trigger;
 import game.util.*;
 import processing.core.PApplet;
 
@@ -24,7 +25,11 @@ public class EightDirectionalMove extends MoveSet {
 
 	@Override
 	public void move(Entity c, Point xy) {
-		Point p = this.getPotential();
+		Point p; Trigger t = c.getTrigger();
+		if (t != null) {
+			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
+			p = this.getPotential(t.getCastDir());
+		} else {p = this.getPotential();}
 		this.totalDist = this.xywh.getPoint();
 		for (Entity e : c.getRoomList()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
@@ -68,14 +73,16 @@ public class EightDirectionalMove extends MoveSet {
 	@Override
 	public Moves getMoveType() {return Moves.eightDirectional;}
 	
-	private Point getPotential() {
+	private Point getPotential(int dir) {
 		Point s = new Point();
 		if (this.isIdle) {return s;} float speed = this.currSpeed;
-		if (this.dir % 2 == 1) {speed *= 0.7071068f;}  // sin 45
-		if (this.dir % 4 != 2) {s.setX(this.dir % 7 < 2? speed : -speed);}
-		if (this.dir % 4 != 0) {s.setY(this.dir < 4? speed : -speed);}
+		if (dir % 2 == 1) {speed *= 0.7071068f;}  // sin 45
+		if (dir % 4 != 2) {s.setX(dir % 7 < 2? speed : -speed);}
+		if (dir % 4 != 0) {s.setY(dir < 4? speed : -speed);}
 		return s;
 	}
+	private Point getPotential() {return this.getPotential(this.dir);}
+	
 	public Point getMoveDist() {return this.totalDist;}
 	
 	public void halfSpeed() {this.currSpeed = this.currSpeed/2;}

@@ -31,11 +31,17 @@ public class Interaction extends Trigger {
 				if (ToolKit.rectRectCollide (
 						this.getX(), this.getY(), this.getW(), this.getH(), 
 						e.getX(), e.getY(), e.getW(), e.getH()
-				)) {e.interact(this.t);} // e.setDeathDir(this.getCaster().getOverDir());}
+				)) {e.interact(this);}
 			}
 		}
 	}
 
 	@Override
-	public Triggers getTrigger() {return this.t;}
+	public Triggers getTriggerType() {return this.t;}
+
+	@Override
+	public boolean isDelete() {return true;}
+
+	@Override
+	public boolean isMarked() {	return false;}
 }

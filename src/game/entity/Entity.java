@@ -11,13 +11,13 @@ import game.entity.abilities.Ability;
 public abstract class Entity implements Comparable<Entity> {
 	
 	// Static variables
-	private static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
+	public static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
 	private static long id = 0;
 	
 	// Instance variables
 	private ArrayList<ArrayList<Integer>> colorLists = new ArrayList<ArrayList<Integer>>();
-	private int totalStates, currMove = 0, framesDie = 10, deathDir = 0;
-	private boolean isTangible, isBreakable, isMarked = false;
+	private int totalStates, currMove = 0;
+	private boolean isTangible, isBreakable;
 	private int[][][] colorLayers;
 	private Ability[] abilities;
 	private int[] colorTints;
@@ -50,29 +50,27 @@ public abstract class Entity implements Comparable<Entity> {
 	public void update() {	
 		this.move[this.currMove].move(this, this.abilities, this.showXY);
 	    this.showXY.set(this.getMoveSet().getPoint());
-	    if (this.isMarked) {this.framesDie--;}
 	}
-	
-	public final void markDelete() {if (!this.isMarked) {this.isMarked = true; ToolKit.changeColor(ToolKit.getApp(), this.images[0], this.colorLists.get(0), hurtColor);}}
-	public final boolean isMarked() {return this.isMarked;}
-	public final boolean isDelete() {return this.framesDie < 0;}
 	public boolean isTangible() {return this.isTangible;}
 	public boolean isBreakable() {return this.isBreakable;}
 	
 	// Abstract methods
-	public abstract void interact(Triggers t);
+	public abstract void interact(Trigger t);
+	public abstract Trigger getTrigger();
 	public abstract Entities getType();
+	public abstract boolean isDelete();
+	public abstract boolean isMarked();
 	
 	// Getter methods
 	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
 	public int getOverDir() {return this.move[this.currMove].getDir();}
-	public int getDeathDir() {return this.deathDir;}
 	public float getX() {return this.getMoveSet().getX();}
 	public float getY() {return this.getMoveSet().getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
 	public Room getRoom() {return this.currRoom;}
 	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom();}
+	public ArrayList<Integer> getColorList() {return colorLists.get(this.currMove);}
 	public int getRW() {return this.currRoom.getImageWidth();}
 	public int getRH() {return this.currRoom.getImageHeight();}
 	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}

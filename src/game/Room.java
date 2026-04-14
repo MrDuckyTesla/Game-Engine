@@ -2,7 +2,6 @@ package game;
 
 import java.util.*;
 import game.entity.*;
-import game.entity.movement.*;
 import game.entity.trigger.*;
 import game.util.*;
 import processing.core.PImage;
@@ -25,7 +24,7 @@ public class Room {
 	public void add(Entity o) {room.add(o);}
 	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
 	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
-	public void add(float x, float y, float w, float h) {room.add(new NonPlayerCharacter(x, y, w, h));}
+	public void add(float x, float y, float w, float h) {room.add(new Wall(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background, Point backCoords) {
 		this.p = p; this.background = background; this.backCoords = backCoords; if (this.p != null) {room.add(this.p);}// this.playCoords = p.getXY();
@@ -60,10 +59,8 @@ public class Room {
 				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
 				this.trig.addAll(e.getMoveSet().getTriggers());
 				e.getMoveSet().getTriggers().clear();
-				if (e.getType() == Entities.TRIGGER) {
-					this.room.remove(i); i--;
-				}
-			} else {this.room.remove(i); i--;}
+			} else if (e.getType() == Entities.TRIGGER) {e.update(); this.room.remove(i--);}
+			else {this.room.remove(i--);}
 		} this.moveBackground();
 		for (Trigger t : this.trig) {room.add(t);}
 		this.trig.clear();

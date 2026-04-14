@@ -1,7 +1,5 @@
 TOP PRIORITIES (New)
 
-utalize provate classes to make interractions and everything completley cut off from outside
-
 #1: Make working menu system
 #2: Implement tile based background and editor
 #3: THREADS

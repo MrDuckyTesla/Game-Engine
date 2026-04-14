@@ -14,17 +14,20 @@ public abstract class Trigger extends Entity {
 		this.caster = caster;
 	}
 	
-	public Entity getCaster() {return this.caster;}
-	
 	public int getCastDir() {return this.caster.getOverDir();}
 	
-	public abstract Triggers getTrigger();
+	public Entity getCaster() {return this.caster;}
+	
+	public abstract Triggers getTriggerType();
 	
 	@Override
 	public abstract void update();
 	
 	@Override
-	public final void interact(Triggers t) {}
+	public Trigger getTrigger() {return this;}
+	
+	@Override
+	public final void interact(Trigger t) {}
 	
 	@Override
 	public final Entities getType() {return Entities.TRIGGER;}

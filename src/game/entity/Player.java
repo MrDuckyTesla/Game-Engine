@@ -3,7 +3,7 @@ package game.entity;
 import game.Room;
 import game.entity.abilities.Ability;
 import game.entity.movement.*;
-import game.entity.trigger.Triggers;
+import game.entity.trigger.Trigger;
 import game.util.ToolKit;
 import processing.core.PImage;
 
@@ -33,12 +33,30 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void interact(Triggers t) {
+	public void interact(Trigger t) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
 	public Entities getType() {return Entities.PLAYER;}
+
+	@Override
+	public boolean isDelete() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isMarked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Trigger getTrigger() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
