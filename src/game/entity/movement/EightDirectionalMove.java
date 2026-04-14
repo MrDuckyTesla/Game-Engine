@@ -2,6 +2,7 @@ package game.entity.movement;
 
 import game.entity.*;
 import game.entity.trigger.Trigger;
+import game.entity.trigger.Triggers;
 import game.util.*;
 import processing.core.PApplet;
 
@@ -26,7 +27,7 @@ public class EightDirectionalMove extends MoveSet {
 	@Override
 	public void move(Entity c, Point xy) {
 		Point p; Trigger t = c.getTrigger();
-		if (t != null) {
+		if (t != null && t.getTriggerType() == Triggers.DELETE) {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
 			p = this.getPotential(t.getCastDir());
 		} else {p = this.getPotential();}
