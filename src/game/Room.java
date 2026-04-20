@@ -38,22 +38,14 @@ public class Room {
 		int key;
 		for (Entity e : list) {
 			key = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
-			if (!hash.containsKey(key)) {
-				hash.put(key, new ArrayList<Entity>());
-			}
-			hash.get(key).add(e);
+			hash.computeIfAbsent(key,  k -> new ArrayList<>()).add(e);
 			e.setHash(key);
 		}
 	}
 	
-	private void addHash(ArrayList<Entity> list, int key) {
-		for (Entity e : list) {
-			if (!hash.containsKey(key)) {
-				hash.put(key, new ArrayList<Entity>());
-			}
-			hash.get(key).add(e);
-			e.setHash(key);
-		}
+	private void addHash(Entity e, int key) {
+		hash.computeIfAbsent(key,  k -> new ArrayList<>()).add(e);
+		e.setHash(key);
 	}
 	
 	private void removeHash(ArrayList<Entity> list) {
@@ -61,22 +53,16 @@ public class Room {
 			ArrayList<Entity> chunk = hash.get(e.getHash());
 			if (chunk != null) {
 				chunk.remove(e);
-				if (chunk.size() == 0) {
-					hash.remove(e.getHash());
-				}
+				if (chunk.isEmpty()) {hash.remove(e.getHash());}
 			}
 		}
 	}
 	
-	private void removeHash(ArrayList<Entity> list, int key) {
-		for (Entity e : list) {
-			ArrayList<Entity> chunk = hash.get(key);
-			if (chunk != null) {
-				chunk.remove(e);
-				if (chunk.size() == 0) {
-					hash.remove(key);
-				}
-			}
+	private void removeHash(Entity e, int key) {
+		ArrayList<Entity> chunk = hash.get(key);
+		if (chunk != null) {
+			chunk.remove(e);
+			if (chunk.isEmpty()) {hash.remove(key);}
 		}
 	}
 	
@@ -116,13 +102,10 @@ public class Room {
 			}
 			newKey = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
 			if (e.getHash() != newKey) {
-				ArrayList<Entity> temp = new ArrayList<>();
-				temp.add(e);
-				this.removeHash(temp, e.getHash());
-				this.addHash(temp, newKey); 
+				this.removeHash(e, e.getHash());
+				this.addHash(e, newKey); 
 				e.setHash(newKey);
 			}
-			
 		} this.moveBackground(); this.room.removeAll(remove); this.room.addAll(add); 
 		this.addHash(add); 
 		this.removeHash(remove);
