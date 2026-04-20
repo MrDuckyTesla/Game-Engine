@@ -11,62 +11,42 @@ public class Room {
 	public static final int CHUNK_SIZE = 200;
 
 	private HashMap<Integer, ArrayList<Entity>> hash = new HashMap<>();
-	private ArrayList<Entity> room = new ArrayList<>();
-	private ArrayList<Entity> add = new ArrayList<>(), remove = new ArrayList<>();
+	private ArrayList<Entity> add, sub, mod;  // Lists to keep track of what added, removed and modified
 	
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
 	private Point backCoords;
 	
-	public Room(Player p, PImage background) {this.instantiate(p, background, new Point());}
-	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(o);}
-	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
-	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
+	public Room(PImage background) {this.instantiate(background, new Point());}
+	public Room(Entity o, PImage background) {this.instantiate(background, new Point()); add.add(o);}
+	public Room(Entity[] o, PImage background) {this.instantiate(background, new Point()); this.add(o);}
+	public Room(ArrayList<Entity> o, PImage background) {this.instantiate(background, new Point()); this.add(o);}
 	
-	public void add(Entity o) {room.add(o);}
-	public void add(Entity[] o) {for (int i = 0; i < o.length; i ++) {room.add(o[i]);}}
-	public void add(ArrayList<Entity> o) {for (int i = 0; i < o.size(); i ++) {room.add(o.get(i));}}
-	public void add(float x, float y, float w, float h) {room.add(new Wall(x, y, w, h));}
+	public void add(Entity e) {add.add(e);}
+	public void add(Entity[] l) {for (Entity e : l) {add.add(e);}}
+	public void add(Iterable<? extends Entity> l) {for (Entity e : l) {add.add(e);}}
+	public void add(float x, float y, float w, float h) {add.add(new Wall(x, y, w, h));}
 	
-	private void instantiate(Player p, PImage background, Point backCoords) {
-		this.p = p; this.background = background; this.backCoords = backCoords; 
-		if (this.p != null) {room.add(this.p);}
+	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; add.add(this.p); return true;} return false;}
+	
+	private void instantiate(PImage background, Point backCoords) {
+		this.background = background; this.backCoords = backCoords; 
+		this.add = new ArrayList<>(); this.sub = new ArrayList<>(); this.mod = new ArrayList<>();
 	}
 	
-	private void addHash(ArrayList<Entity> list) {
-		int key;
-		for (Entity e : list) {
-			key = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
-			hash.computeIfAbsent(key,  k -> new ArrayList<>()).add(e);
-			e.setHash(key);
-		}
-	}
+	// HASH ADD
+	private void addHash(Entity e, int key) {hash.computeIfAbsent(key,  k -> new ArrayList<>()).add(e); e.setHash(key);} 
+	private void addHash(Entity e) {this.addHash(e, Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE)));}
+	private void addHash(Iterable<? extends Entity> l) {for (Entity e : l) {this.addHash(e);}}
 	
-	private void addHash(Entity e, int key) {
-		hash.computeIfAbsent(key,  k -> new ArrayList<>()).add(e);
-		e.setHash(key);
-	}
-	
-	private void removeHash(ArrayList<Entity> list) {
-		for (Entity e : list) {
-			ArrayList<Entity> chunk = hash.get(e.getHash());
-			if (chunk != null) {
-				chunk.remove(e);
-				if (chunk.isEmpty()) {hash.remove(e.getHash());}
-			}
-		}
-	}
-	
+	// HASH REMOVE
 	private void removeHash(Entity e, int key) {
-		ArrayList<Entity> chunk = hash.get(key);
-		if (chunk != null) {
-			chunk.remove(e);
-			if (chunk.isEmpty()) {hash.remove(key);}
-		}
-	}
+		ArrayList<Entity> chunk = hash.get(key); if (chunk != null) {chunk.remove(e); if (chunk.isEmpty()) {hash.remove(key);}}
+	} private void removeHash(Entity e) {this.removeHash(e, e.getHash());}
+	private void removeHash(Iterable<? extends Entity> l) {for (Entity e : l) {this.removeHash(e);}}
 	
-	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; room.add(this.p); return true;} return false;}
+//	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; room.add(this.p); return true;} return false;}
 	
 	//TODO implement reading from file
 	public void add(String file) {
@@ -83,33 +63,47 @@ public class Room {
 	
 	public void update() {
 //		System.out.println(hash.size());
-		Collections.sort(room);  // Sort room to keep ordering correct
+//		Collections.sort(room);  // Sort room to keep ordering correct
 		
-		if (this.hash.size() == 0) {this.addHash(this.room);}
 		
 		if (this.background != null) {
-			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
+//			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 		} 
 		
-		int newKey;
-		for (Entity e : room) {
-			if (e.isDelete()) {
-				if (e.getType() == Entities.TRIGGER) {e.update();}
-				this.remove.add(e);
-			} else {
-				e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY());
-				e.update(); this.add.addAll(e.getMoveSet().getTriggers()); 
-			}
-			newKey = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
-			if (e.getHash() != newKey) {
-				this.removeHash(e, e.getHash());
-				this.addHash(e, newKey); 
-				e.setHash(newKey);
-			}
-		} this.moveBackground(); this.room.removeAll(remove); this.room.addAll(add); 
-		this.addHash(add); 
-		this.removeHash(remove);
-		remove.clear(); add.clear();
+		this.moveBackground();
+		ArrayList<Entity> show = Chunk.getNeighbors(this.p, this.hash, this.background.width, this.background.height, 3);
+		Collections.sort(show);
+		for (Entity e : show) {e.show();}
+		
+		for (ArrayList<Entity> l : hash.values()) {
+			for (Entity e : l) {
+				if (e.isDelete()) {
+					if (e.getType() == Entities.TRIGGER) {e.update();}
+					this.sub.add(e);
+				} 
+				
+				else {
+					e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY());
+					e.update(); this.add.addAll(e.getMoveSet().getTriggers()); 
+				}
+				
+				if (e.getHash() != Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE))) {
+					this.mod.add(e);
+				}
+			} 
+		}
+		
+		for (Entity e : this.mod) {
+			this.removeHash(e);
+			e.setHash(Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE)));
+			this.addHash(e);
+		}
+		
+		
+		
+		this.removeHash(sub); this.addHash(add); 
+		sub.clear(); add.clear(); mod.clear();
+
 		
 	}
 
@@ -125,11 +119,11 @@ public class Room {
 		} else {this.backCoords.setY(up? -this.background.height + ToolKit.getAppHeight(): 0);}
 	}
 	
-	public ArrayList<Entity> getRoom(float x, float y) {return new Chunk((int)(x/CHUNK_SIZE), (int)(y/CHUNK_SIZE)).getNeighbors(this.hash, background.width, background.height);}
+	public ArrayList<Entity> getRoom(Entity e) {return Chunk.getNeighbors(e, this.hash, this.background.width, this.background.height, 1);}
 	public Player getPlayer() {return this.p;}
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
 	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}
-	public int getSize() {return this.room.size();}
+	public int getSize() {return this.hash.size();}
 	
 }

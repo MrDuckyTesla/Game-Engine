@@ -43,5 +43,5 @@ public class Interaction extends Trigger {
 	public boolean isDelete() {return true;}
 
 	@Override
-	public boolean isMarked() {	return false;}
+	public boolean isMarked() {return false;}
 }

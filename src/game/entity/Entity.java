@@ -51,9 +51,14 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	public void update() {
 		this.move[this.currMove].move(this, this.abilities);
-	    if (this.anim.canAnimate()) {this.anim.update(this.showXY);}
-	    this.showXY.set(this.getMoveSet().getPoint());
+//	    this.showXY.set(this.getMoveSet().getPoint());
 	}
+	
+	public void show() {if (this.anim.canAnimate()) {this.anim.update(this.showXY);}}
+	
+	public int getHash() {return this.hash;}
+	public void setHash(int hash) {this.hash = hash;}
+
 	public boolean isTangible() {return this.isTangible;}
 	public boolean isBreakable() {return this.isBreakable;}
 	
@@ -75,11 +80,10 @@ public abstract class Entity implements Comparable<Entity> {
 	public float getH() {return this.getMoveSet().getSH();}
 	public Room getRoom() {return this.currRoom;}
 	public Animator getAnimator() {return this.anim;}
-	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this.getRX(), this.getRY());} // GET ONLY WHAT IS AROUND ENTITY
+	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this);} // GET ONLY WHAT IS AROUND ENTITY
 	public ArrayList<Integer> getColorList() {return colorLists.get(this.currMove);}
 	public int getRW() {return this.currRoom.getImageWidth();}
 	public int getRH() {return this.currRoom.getImageHeight();}
-	public int getHash() {return this.hash;}
 	public float[] getXYWH() {return new float[] {this.getRX(), this.getRY(), this.getW(), this.getH()};}
 	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
@@ -94,7 +98,6 @@ public abstract class Entity implements Comparable<Entity> {
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
 	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}
-	public void setHash(int hash) {this.hash = hash;}
 	
 	// Adder methods
 	public void addX(float x) {this.showXY.addX(x);}

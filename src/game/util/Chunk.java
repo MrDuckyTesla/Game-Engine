@@ -3,9 +3,26 @@ package game.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import game.Room;
+import game.entity.Entity;
+
 public class Chunk {
 	
 	public static int hash(int x, int y) {return 31*x+y;} // Apparently 31 is a magic number in hashing
+	
+	public static <E extends Entity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+		ArrayList<E> neighbors = new ArrayList<>(); int key;
+		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
+		for (int i = -size; i < 1+size; i++) {
+			for (int j = -size; j < 1+size; j++) {
+				int nX = x+i, nY = y+j;
+				if (nX <= wid && nY <= hgt && nX >= 0 && nY >= 0) {
+					key = hash(nX, nY);
+					if (h.containsKey(key)) {neighbors.addAll(h.get(key));}
+				}
+			}
+		} return neighbors;
+	}
 	
 	private final int x, y;
 
