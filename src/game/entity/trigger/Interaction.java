@@ -1,11 +1,9 @@
 package game.entity.trigger;
 
+import game.entity.*;
+import game.util.*;
 import game.Room;
-import game.entity.Entities;
-import game.entity.Entity;
 import game.entity.movement.MoveSet;
-import game.util.Point;
-import game.util.ToolKit;
 
 public class Interaction extends Trigger {
 	
@@ -43,5 +41,5 @@ public class Interaction extends Trigger {
 	public boolean isDelete() {return true;}
 
 	@Override
-	public boolean isMarked() {	return false;}
+	public boolean isMarked() {return false;}
 }

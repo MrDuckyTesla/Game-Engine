@@ -1,5 +1,7 @@
 TOP PRIORITIES (New)
 
+make interractions last until button is done being pressed
+
 #1: Make working menu system
 #2: Implement tile based background and editor
 #3: THREADS

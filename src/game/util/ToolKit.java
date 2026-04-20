@@ -3,6 +3,8 @@ package game.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import game.Room;
+import game.entity.Entity;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -611,6 +613,38 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	public static ArrayList<Integer> addNotInArray(ArrayList<Integer> a, int[] b) {for (int i = 0; i < b.length; i++) {if (!a.contains(b[i])) {a.add(b[i]);}} return a;}
 	
 	public static ArrayList<Integer> add(ArrayList<Integer> a, int[] b) {for (int i = 0; i < b.length; i++) {a.add(b[i]);} return a;}
+	
+	public static int hash(int x, int y) {return 31*x+y;} // Apparently 31 is a magic number in hashing
+	
+	public static <E extends Entity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+		ArrayList<E> neighbors = new ArrayList<>(); int key;
+		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
+		for (int i = -size; i < 1+size; i++) {
+			for (int j = -size; j < 1+size; j++) {
+				int nX = x+i, nY = y+j;
+				if (nX <= wid && nY <= hgt && nX >= 0 && nY >= 0) {
+					key = hash(nX, nY);
+					if (h.containsKey(key)) {neighbors.addAll(h.get(key));}
+				}
+			}
+		} return neighbors;
+	}
+	
+	public static <E extends Entity> ArrayList<E> getNeighborsRender(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+		ArrayList<E> neighbors = new ArrayList<>(); int key;
+		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
+		if (x - size < 0) {x = size;} else if (x + size > wid) {x = wid-size;}
+		if (y - size < 0) {y = size;} else if (y + size > hgt) {y = hgt-size;}
+		for (int i = -size; i < 1+size; i++) {
+			for (int j = -size; j < 1+size; j++) {
+				int nX = x+i, nY = y+j;
+				if (nX <= wid && nY <= hgt && nX >= 0 && nY >= 0) {
+					key = hash(nX, nY);
+					if (h.containsKey(key)) {neighbors.addAll(h.get(key));}
+				}
+			}
+		} return neighbors;
+	}
 		
 	// PApplet methods
 	public static PApplet getApp() {if (ToolKit.app == null) {return new PApplet();} return ToolKit.app;}

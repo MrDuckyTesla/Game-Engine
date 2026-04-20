@@ -52,7 +52,7 @@ public class NonPlayerCharacter extends Entity{
 			case Triggers.INTERACT:
 				if (!this.isMarked()) {
 //					ToolKit.changeColor(ToolKit.getApp(), this.getImg(), this.getColorList(), new int[] {0, 0, 255, 0, 0, 255, 255, 200, 0});
-//				ToolKit.getApp().text("Hello.", this.getBGX(), this.getBGY());
+				ToolKit.getApp().text("Hello.", this.getX(), this.getY());
 					this.setOverState(true);
 				} break;
 			default:

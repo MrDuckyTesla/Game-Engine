@@ -33,6 +33,7 @@ public final class Main extends PApplet {
 	
 	@Override
 	public void setup() {
+//		frameRate(9999);
 		surface.setTitle("GAME TEST");
 		surface.setIcon(loadImage("src/Assets/Sprites/icon64.png"));
 		textFont(createFont("src/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
@@ -41,7 +42,7 @@ public final class Main extends PApplet {
 		tesla[1] = loadImage("src/Assets/Sprites/Tesla/Tesla_Battle.png");
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 		ToolKit.setApp(this);
-		test = new Room(null, bck1);
+		test = new Room(bck1);
 		p = new Player(test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints);
 		
 		for (int i = 0; i < 20; i++) {
@@ -64,6 +65,11 @@ public final class Main extends PApplet {
 		test.update();
 		
 //		System.out.println(test.getSize());
+		
+//		MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
+//		int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
+//		for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
+//		test.add(new Enemy(test, tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
 		
 		textSize(36); text(Math.round(this.frameRate)+"fps", 10, 30);
 		
