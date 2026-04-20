@@ -94,6 +94,7 @@ public abstract class Entity implements Comparable<Entity> {
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
 	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}
+	public void setHash(int hash) {this.hash = hash;}
 	
 	// Adder methods
 	public void addX(float x) {this.showXY.addX(x);}

@@ -8,7 +8,7 @@ import processing.core.PImage;
 // A Room holds obstacles and by extension characters
 public class Room {
 	
-	public static final int CHUNK_SIZE = 100;
+	public static final int CHUNK_SIZE = 200;
 
 	private HashMap<Integer, ArrayList<Entity>> hash = new HashMap<>();
 	private ArrayList<Entity> room = new ArrayList<>();
@@ -20,7 +20,7 @@ public class Room {
 	private Point backCoords;
 	
 	public Room(Player p, PImage background) {this.instantiate(p, background, new Point());}
-	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(p); room.add(o);}
+	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(o);}
 	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	
@@ -42,6 +42,7 @@ public class Room {
 				hash.put(key, new ArrayList<Entity>());
 			}
 			hash.get(key).add(e);
+			e.setHash(key);
 		}
 	}
 	
@@ -51,18 +52,17 @@ public class Room {
 				hash.put(key, new ArrayList<Entity>());
 			}
 			hash.get(key).add(e);
+			e.setHash(key);
 		}
 	}
 	
 	private void removeHash(ArrayList<Entity> list) {
-		int key;
 		for (Entity e : list) {
-			key = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
-			ArrayList<Entity> chunk = hash.get(key);
+			ArrayList<Entity> chunk = hash.get(e.getHash());
 			if (chunk != null) {
 				chunk.remove(e);
 				if (chunk.size() == 0) {
-					hash.remove(key);
+					hash.remove(e.getHash());
 				}
 			}
 		}
@@ -96,7 +96,7 @@ public class Room {
 	}
 	
 	public void update() {
-		System.out.println(hash.size());
+//		System.out.println(hash.size());
 		Collections.sort(room);  // Sort room to keep ordering correct
 		
 		if (this.hash.size() == 0) {this.addHash(this.room);}
@@ -120,6 +120,7 @@ public class Room {
 				temp.add(e);
 				this.removeHash(temp, e.getHash());
 				this.addHash(temp, newKey); 
+				e.setHash(newKey);
 			}
 			
 		} this.moveBackground(); this.room.removeAll(remove); this.room.addAll(add); 
