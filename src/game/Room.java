@@ -2,22 +2,25 @@ package game;
 
 import java.util.*;
 import game.entity.*;
-import game.entity.trigger.*;
 import game.util.*;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters
 public class Room {
+	
+	public static final int CHUNK_SIZE = 200;
 
-	private ArrayList<Entity> room = new ArrayList<Entity>();
-	private ArrayList<Trigger> trig = new ArrayList<Trigger>();
+	private HashMap<Integer, ArrayList<Entity>> hash = new HashMap<>();
+	private ArrayList<Entity> room = new ArrayList<>();
+	private ArrayList<Entity> add = new ArrayList<>(), remove = new ArrayList<>();
+	
 	private Player p;
 	// BACKGROUND VARIABLES
 	private PImage background;
 	private Point backCoords;
 	
 	public Room(Player p, PImage background) {this.instantiate(p, background, new Point());}
-	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(p); room.add(o);}
+	public Room(Player p, Entity o, PImage background) {this.instantiate(p, background, new Point()); room.add(o);}
 	public Room(Player p, Entity[] o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	public Room(Player p,ArrayList<Entity> o, PImage background) {this.instantiate(p, background, new Point()); this.add(o);}
 	
@@ -27,7 +30,54 @@ public class Room {
 	public void add(float x, float y, float w, float h) {room.add(new Wall(x, y, w, h));}
 	
 	private void instantiate(Player p, PImage background, Point backCoords) {
-		this.p = p; this.background = background; this.backCoords = backCoords; if (this.p != null) {room.add(this.p);}// this.playCoords = p.getXY();
+		this.p = p; this.background = background; this.backCoords = backCoords; 
+		if (this.p != null) {room.add(this.p);}
+	}
+	
+	private void addHash(ArrayList<Entity> list) {
+		int key;
+		for (Entity e : list) {
+			key = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
+			if (!hash.containsKey(key)) {
+				hash.put(key, new ArrayList<Entity>());
+			}
+			hash.get(key).add(e);
+			e.setHash(key);
+		}
+	}
+	
+	private void addHash(ArrayList<Entity> list, int key) {
+		for (Entity e : list) {
+			if (!hash.containsKey(key)) {
+				hash.put(key, new ArrayList<Entity>());
+			}
+			hash.get(key).add(e);
+			e.setHash(key);
+		}
+	}
+	
+	private void removeHash(ArrayList<Entity> list) {
+		for (Entity e : list) {
+			ArrayList<Entity> chunk = hash.get(e.getHash());
+			if (chunk != null) {
+				chunk.remove(e);
+				if (chunk.size() == 0) {
+					hash.remove(e.getHash());
+				}
+			}
+		}
+	}
+	
+	private void removeHash(ArrayList<Entity> list, int key) {
+		for (Entity e : list) {
+			ArrayList<Entity> chunk = hash.get(key);
+			if (chunk != null) {
+				chunk.remove(e);
+				if (chunk.size() == 0) {
+					hash.remove(key);
+				}
+			}
+		}
 	}
 	
 	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; room.add(this.p); return true;} return false;}
@@ -46,42 +96,57 @@ public class Room {
 	}
 	
 	public void update() {
+//		System.out.println(hash.size());
 		Collections.sort(room);  // Sort room to keep ordering correct
+		
+		if (this.hash.size() == 0) {this.addHash(this.room);}
 		
 		if (this.background != null) {
 			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
-		}
+		} 
 		
-		for (int i = 0; i < room.size(); i++) {
-			Entity e = this.room.get(i);
-			if (!e.isDelete()) {
-				e.update();
-				e.setXY(e.getX()+this.backCoords.getX(), e.getY()+this.backCoords.getY());
-				this.trig.addAll(e.getMoveSet().getTriggers());
-				e.getMoveSet().getTriggers().clear();
-			} else if (e.getType() == Entities.TRIGGER) {e.update(); this.room.remove(i--);}
-			else {this.room.remove(i--);}
-		} this.moveBackground();
-		for (Trigger t : this.trig) {room.add(t);}
-		this.trig.clear();
+		int newKey;
+		for (Entity e : room) {
+			if (e.isDelete()) {
+				if (e.getType() == Entities.TRIGGER) {e.update();}
+				this.remove.add(e);
+			} else {
+				e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY());
+				e.update(); this.add.addAll(e.getMoveSet().getTriggers()); 
+			}
+			newKey = Chunk.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE));
+			if (e.getHash() != newKey) {
+				ArrayList<Entity> temp = new ArrayList<>();
+				temp.add(e);
+				this.removeHash(temp, e.getHash());
+				this.addHash(temp, newKey); 
+				e.setHash(newKey);
+			}
+			
+		} this.moveBackground(); this.room.removeAll(remove); this.room.addAll(add); 
+		this.addHash(add); 
+		this.removeHash(remove);
+		remove.clear(); add.clear();
+		
 	}
 
 	private void moveBackground() {
 		Point pot = this.p.getPotential();
-		boolean left = p.getX() + pot.getX() > ToolKit.getAppWidth()/2 - p.getW()/2;
-		if (left && p.getX() + pot.getX() < this.background.width - ToolKit.getAppWidth()/2 - p.getW()/2) {
+		boolean left = p.getRX() + pot.getX() > ToolKit.getAppWidth()/2 - p.getW()/2;
+		if (left && p.getRX() + pot.getX() < this.background.width - ToolKit.getAppWidth()/2 - p.getW()/2) {
 			this.backCoords.addX(-pot.getX());  // Move background X coord
 		} else {this.backCoords.setX(left? -this.background.width + ToolKit.getAppWidth(): 0);}
-		boolean up = p.getY() + pot.getY() > ToolKit.getAppHeight()/2 - p.getH()/2;
-		if (up && p.getY() + pot.getY() < this.background.height - ToolKit.getAppHeight()/2 - p.getH()/2) {
+		boolean up = p.getRY() + pot.getY() > ToolKit.getAppHeight()/2 - p.getH()/2;
+		if (up && p.getRY() + pot.getY() < this.background.height - ToolKit.getAppHeight()/2 - p.getH()/2) {
 			this.backCoords.addY(-pot.getY());  // Move background Y coord
 		} else {this.backCoords.setY(up? -this.background.height + ToolKit.getAppHeight(): 0);}
 	}
 	
-	public ArrayList<Entity> getRoom() {return this.room;}
+	public ArrayList<Entity> getRoom(float x, float y) {return new Chunk((int)(x/CHUNK_SIZE), (int)(y/CHUNK_SIZE)).getNeighbors(this.hash, background.width, background.height);}
 	public Player getPlayer() {return this.p;}
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
 	public int getImageHeight() {return this.background == null? ToolKit.getAppHeight() :this.background.height;}
+	public int getSize() {return this.room.size();}
 	
 }

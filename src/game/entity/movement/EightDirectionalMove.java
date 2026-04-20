@@ -1,44 +1,40 @@
 package game.entity.movement;
 
 import game.entity.*;
-import game.entity.trigger.Trigger;
-import game.entity.trigger.Triggers;
+import game.entity.trigger.*;
 import game.util.*;
 import processing.core.PApplet;
 
 public class EightDirectionalMove extends MoveSet {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
-	private int dir = 0, ldir = 0;
+	private int dir = 0, ldir = 0, fdir = -1;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
 	private Point totalDist;  // The total amount that the object has moved in a frame
 	private Rect xywh;
 	
-	private Animator a = new Animator();
-	
 	public EightDirectionalMove() {this.instantiate(new Rect(0, 0, 28, 28), 3, 3);}
 	public EightDirectionalMove(Rect xywh, float speed) {this.instantiate(xywh, speed, 1);}
-	public EightDirectionalMove(Rect xywh, float speed, Animator a) {this.instantiate(xywh, speed, 1); this.a = a;}
 	public EightDirectionalMove(Rect xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
-	public EightDirectionalMove(Rect xywh, float speed, float scale, Animator a) {this.instantiate(xywh, speed, scale); this.a = a;}
 	
 	private void instantiate(Rect xywh, float speed, float scale) {this.xywh = xywh; this.totalDist = new Point(); this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
 
 	@Override
-	public void move(Entity c, Point xy) {
+	public void move(Entity c) {
 		Point p; Trigger t = c.getTrigger();
 		if (t != null && t.getTriggerType() == Triggers.DELETE) {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
-			p = this.getPotential(t.getCastDir());
+			this.fdir = this.fdir == -1? t.getCastDir() : this.fdir;
+			p = this.getPotential(this.fdir);
 		} else {p = this.getPotential();}
 		this.totalDist = this.xywh.getPoint();
 		for (Entity e : c.getRoomList()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
-				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), e.getX(), e.getY(), e.getW(), e.getH())) {
-					if (p.getX() < 0) {if (this.setX(e.getX() + e.getW() + 0.0001f)) {p.resetX();}}
-					else if (p.getX() > 0) {if (this.setX(e.getX() - c.getW() - 0.0001f)) {p.resetX();}}
-					if (p.getY() < 0) {if (this.setY(e.getY() + e.getH() + 0.0001f)) {p.resetY();}}
-					else if (p.getY() > 0) {if (this.setY(e.getY() - c.getH() - 0.0001f)) {p.resetY();}}
+				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH())) {
+					if (p.getX() < 0) {if (this.setX(e.getRX() + e.getW() + 0.0001f)) {p.resetX();}}
+					else if (p.getX() > 0) {if (this.setX(e.getRX() - c.getW() - 0.0001f)) {p.resetX();}}
+					if (p.getY() < 0) {if (this.setY(e.getRY() + e.getH() + 0.0001f)) {p.resetY();}}
+					else if (p.getY() > 0) {if (this.setY(e.getRY() - c.getH() - 0.0001f)) {p.resetY();}}
 				} 
 			} 
 		} if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, c.getRW(), c.getRH())) {
@@ -47,13 +43,11 @@ public class EightDirectionalMove extends MoveSet {
 			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
 			else if (p.getY() > 0) {if (this.setY(c.getRH() - c.getH() - 0.0001f)) {p.resetY();}}
 		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
-		if (a.canAnimate()) {a.update(xy);} this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
+		this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
 	}
 	
 	@Override
-	public Animator getAnimator() {return this.a;}
-	@Override
-	public MoveSet get() {return new EightDirectionalMove(this.xywh.get(), this.maxSpeed/2, this.scale, this.a.get());}
+	public MoveSet get() {return new EightDirectionalMove(this.xywh.get(), this.maxSpeed/2, this.scale);}
 	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override

@@ -25,7 +25,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @return Returns a 1d ArrayList thats formatted with the index of color, the layer it belongs to, and the color
 	 */
 	public static ArrayList<Integer> PreCompile(PApplet app, PImage image, int[][] layerList) {  // PreCompile to avoid lag
-		HashMap<Integer, Integer> layer = new HashMap<>(layerList.length, 1);
+		HashMap<Integer, Integer> layer = new HashMap<>(layerList.length);
 		for (int i = 0; i < layerList.length; i++) {  // Iterate through color layers before image loop
 			for (int j = 0; j < layerList[i].length; j++) {layer.put(layerList[i][j], i);}
 		} ArrayList<Integer> colorList = new ArrayList<>();  // List of colors and indexes to return

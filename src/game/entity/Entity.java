@@ -23,14 +23,16 @@ public abstract class Entity implements Comparable<Entity> {
 	private int[] colorTints;
 	private PImage[] images;
 	private MoveSet[] move;
+	private Animator anim;
 	private Room currRoom;
 	private Point showXY;
 	private long entID;
+	private int hash;
 	
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
 	public Entity(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {  // Allow pre-computing color list outside class and using it here in constructor
-		this.entID = Entity.id; Entity.id++; this.showXY = new Point(); this.currRoom = room;
+		this.entID = Entity.id; Entity.id++; this.showXY = new Point(); anim = new Animator(); this.currRoom = room; this.hash = 0;
 		try {
 			this.totalStates = move.length;
 			this.images = new PImage[this.totalStates]; this.move = new MoveSet[this.totalStates];
@@ -47,8 +49,9 @@ public abstract class Entity implements Comparable<Entity> {
 		}
 	}
 	
-	public void update() {	
-		this.move[this.currMove].move(this, this.abilities, this.showXY);
+	public void update() {
+		this.move[this.currMove].move(this, this.abilities);
+	    if (this.anim.canAnimate()) {this.anim.update(this.showXY);}
 	    this.showXY.set(this.getMoveSet().getPoint());
 	}
 	public boolean isTangible() {return this.isTangible;}
@@ -64,16 +67,20 @@ public abstract class Entity implements Comparable<Entity> {
 	// Getter methods
 	public boolean getOverState() {return this.move[this.currMove].getIsIdle();}
 	public int getOverDir() {return this.move[this.currMove].getDir();}
-	public float getX() {return this.getMoveSet().getX();}
-	public float getY() {return this.getMoveSet().getY();}
+	public float getRX() {return this.getMoveSet().getX();}
+	public float getRY() {return this.getMoveSet().getY();}
+	public float getX() {return this.showXY.getX();}
+	public float getY() {return this.showXY.getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
 	public Room getRoom() {return this.currRoom;}
-	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom();}
+	public Animator getAnimator() {return this.anim;}
+	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this.getRX(), this.getRY());} // GET ONLY WHAT IS AROUND ENTITY
 	public ArrayList<Integer> getColorList() {return colorLists.get(this.currMove);}
 	public int getRW() {return this.currRoom.getImageWidth();}
 	public int getRH() {return this.currRoom.getImageHeight();}
-	public float[] getXYWH() {return new float[] {this.getX(), this.getY(), this.getW(), this.getH()};}
+	public int getHash() {return this.hash;}
+	public float[] getXYWH() {return new float[] {this.getRX(), this.getRY(), this.getW(), this.getH()};}
 	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
 	public MoveSet getMoveSet() {return this.move[this.currMove];}
@@ -87,6 +94,7 @@ public abstract class Entity implements Comparable<Entity> {
 	public void setX(float x) {this.showXY.setX(x);}
 	public void setY(float y) {this.showXY.setY(y);}
 	public void setXY(float x, float y) {this.showXY.setX(x); this.showXY.setY(y);}
+	public void setHash(int hash) {this.hash = hash;}
 	
 	// Adder methods
 	public void addX(float x) {this.showXY.addX(x);}
@@ -95,10 +103,10 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	// Overridden methods
 	@Override
-	public int compareTo(Entity e) {return Float.compare(this.getY() + this.getH(), e.getY() + e.getH());}
+	public int compareTo(Entity e) {return Float.compare(this.getRY() + this.getH(), e.getRY() + e.getH());}
 	
 	@Override
-	public String toString() {return "("+this.getX()+", "+this.getY() + ", "+this.getW()+", "+this.getH()+")"+", Type \""+this.getType()+"\"";}
+	public String toString() {return "("+this.getRX()+", "+this.getRY() + ", "+this.getW()+", "+this.getH()+")"+", Type \""+this.getType()+"\"";}
 	@Override
 	public boolean equals(Object other) {if(other.getClass() != this.getClass()) {return false;} return this.entID == ((Entity) other).entID;}
 
