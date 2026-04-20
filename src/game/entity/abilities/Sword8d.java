@@ -20,14 +20,14 @@ public class Sword8d extends Ability {
 	@Override
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
-		if (!m.getAnimator().getDoneAnimation(4) && this.isActive) {
+		if (!e.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
-			m.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
+			e.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
 		} else {
 			this.isActive = false;
 			if (this.getKeys() != null) {
-				for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {m.getAnimator().resetAnim(); this.isActive = true;}}
-			} else if (this.activate) {m.getAnimator().resetAnim(); this.isActive = true;}
+				for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {e.getAnimator().resetAnim(); this.isActive = true;}}
+			} else if (this.activate) {e.getAnimator().resetAnim(); this.isActive = true;}
 			this.setSwing(m, true);
 		} this.lIsIdle = m.getIsIdle();
 		this.currTrig = this.isActive? Interaction.createInteraction(e.getRoom(), m, e, Triggers.DELETE) : null;

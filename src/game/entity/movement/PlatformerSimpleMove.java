@@ -1,9 +1,7 @@
 package game.entity.movement;
 
 import game.entity.*;
-import game.util.Animator;
-import game.util.Point;
-import game.util.Rect;
+import game.util.*;
 
 // Legacy version without procedural animation
 public class PlatformerSimpleMove extends MoveSet {
@@ -24,15 +22,8 @@ public class PlatformerSimpleMove extends MoveSet {
 //	}
 
 	@Override
-	public void move(Entity c, Point xy) {
+	public void move(Entity c) {
 		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public Animator getAnimator() {
-		// TODO Auto-generated method stub
-		return null;
-		
 	}
 	
 	@Override

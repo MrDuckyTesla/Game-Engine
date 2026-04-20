@@ -4,22 +4,18 @@ import java.util.ArrayList;
 import game.entity.Entity;
 import game.entity.abilities.Ability;
 import game.entity.trigger.Trigger;
-import game.util.Animator;
 import game.util.Point;
 
 public abstract class MoveSet {
 	
 	private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
 	
-	public abstract void move(Entity e, Point xy);
+	public abstract void move(Entity e);
 	
-	public final void move(Entity e, Ability ab, Point xy) {this.reset(e, xy); ab.update(e, this); this.check(ab);}
-	public final void move(Entity e, Ability[] ab, Point xy) {this.reset(e, xy); for (Ability a : ab) {a.update(e, this); this.check(a);}}
+	public final void move(Entity e, Ability ab) {this.reset(e); ab.update(e, this); this.check(ab);}
+	public final void move(Entity e, Ability[] ab) {this.reset(e); for (Ability a : ab) {a.update(e, this); this.check(a);}}
 	
-	private void reset(Entity e, Point xy) {
-		this.triggers.clear();;
-		this.move(e, xy);
-	}
+	private void reset(Entity e) {this.triggers.clear(); this.move(e);}
 	
 	private void check(Ability ab) {
 		Trigger t = ab.getTrigger();
@@ -27,8 +23,6 @@ public abstract class MoveSet {
 	}
 	
 	public final ArrayList<Trigger> getTriggers() {return this.triggers;}
-	
-	public abstract Animator getAnimator();
 	
 	public abstract MoveSet get();
 	public abstract float getX();

@@ -1,7 +1,6 @@
 package game.entity.movement;
 
 import game.entity.Entity;
-import game.util.Animator;
 import game.util.Point;
 import game.util.ToolKit;
 
@@ -13,15 +12,8 @@ public class ObjectAffectedMove extends MoveSet {
 	public ObjectAffectedMove(float x, float y, float w, float h) {this.x = x; this.y = y; this.w = w; this.h = h;}
 
 	@Override
-	public void move(Entity e, Point xy) {
-		ToolKit.rectApp(xy.getX(), xy.getY(), this.w,this.h);
-	}
-	
-	@Override
-	public Animator getAnimator() {
-		// TODO Auto-generated method stub
-		return null;
-		
+	public void move(Entity e) {
+		ToolKit.rectApp(e.getX(), e.getY(), this.w,this.h);
 	}
 
 	@Override

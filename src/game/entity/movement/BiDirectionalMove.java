@@ -1,7 +1,6 @@
 package game.entity.movement;
 
 import game.entity.Entity;
-import game.util.Animator;
 import game.util.Point;
 import game.util.Rect;
 
@@ -14,15 +13,8 @@ public class BiDirectionalMove extends MoveSet {
 	}
 
 	@Override
-	public void move(Entity e, Point xy) {
+	public void move(Entity e) {
 		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public Animator getAnimator() {
-		// TODO Auto-generated method stub
-		return null;
-		
 	}
 	
 	@Override

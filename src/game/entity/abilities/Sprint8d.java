@@ -24,7 +24,7 @@ public class Sprint8d extends Ability {
 		} else {this.isActive = this.activate;}
 		if (this.isActive) {
 			((EightDirectionalMove) m).doubSpeed();
-			m.getAnimator().setAnimSpeed(6);
+			e.getAnimator().setAnimSpeed(6);
 		}
 	}
 

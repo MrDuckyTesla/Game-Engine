@@ -29,8 +29,8 @@ public class Interaction extends Trigger {
 		for (Entity e : this.getCaster().getRoomList()) {
 			if (e.getType() != Entities.TRIGGER && !this.getCaster().equals(e)) {
 				if (ToolKit.rectRectCollide (
-						this.getX(), this.getY(), this.getW(), this.getH(), 
-						e.getX(), e.getY(), e.getW(), e.getH()
+						this.getRX(), this.getRY(), this.getW(), this.getH(), 
+						e.getRX(), e.getRY(), e.getW(), e.getH()
 				)) {e.interact(this);}
 			}
 		}
