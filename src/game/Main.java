@@ -64,7 +64,7 @@ public final class Main extends PApplet {
 		
 		test.update();
 		
-		System.out.println(test.getSize());
+//		System.out.println(test.getSize());
 		
 //		MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 //		int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};

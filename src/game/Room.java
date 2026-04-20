@@ -38,8 +38,7 @@ public class Room {
 	}
 	
 	// HASH ADD
-	private void addHash(Entity e, int key) {hash.computeIfAbsent(key,  k -> new ArrayList<>()).add(e); e.setHash(key);} 
-	private void addHash(Entity e) {this.addHash(e, ToolKit.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE)));}
+	private void addHash(Entity e) {e.setHash(); this.hash.computeIfAbsent(e.getHash(),  k -> new ArrayList<>()).add(e);}
 	private void addHash(Iterable<? extends Entity> l) {for (Entity e : l) {this.addHash(e);}}
 	
 	// HASH REMOVE
@@ -89,20 +88,10 @@ public class Room {
 			} 
 		}
 		
-		for (Entity e : this.mod) {
-			this.removeHash(e);
-			e.setHash(ToolKit.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE)));
-			this.addHash(e);
-		}
-		
-		this.moveBackground();
-		
-		this.see = ToolKit.getNeighborsRender(this.p, this.hash, Room.WIDTH_CHUNK, Room.HEIGHT_CHUNK, 3);
-		Collections.sort(see);
-		for (Entity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}
-		
-		this.removeHash(sub); this.addHash(add); 
-		sub.clear(); add.clear(); mod.clear(); see.clear();
+		for (Entity e : this.mod) {this.removeHash(e); e.setHash(); this.addHash(e);}
+		this.moveBackground(); this.see = ToolKit.getNeighborsRender(this.p, this.hash, Room.WIDTH_CHUNK, Room.HEIGHT_CHUNK, 3);
+		Collections.sort(see); for (Entity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}
+		this.removeHash(sub); this.addHash(add); sub.clear(); add.clear(); mod.clear(); see.clear();
 		
 		
 	}

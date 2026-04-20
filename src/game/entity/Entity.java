@@ -56,7 +56,7 @@ public abstract class Entity implements Comparable<Entity> {
 	public void show() {if (this.anim.canAnimate()) {this.anim.update(this.showXY);}}
 	
 	public int getHash() {return this.hash;}
-	public void setHash(int hash) {this.hash = hash;}
+	public void setHash() {this.hash = ToolKit.hash((int)(this.getRX()/Room.CHUNK_SIZE), (int)(this.getRY()/Room.CHUNK_SIZE));}
 
 	public boolean isTangible() {return this.isTangible;}
 	public boolean isBreakable() {return this.isBreakable;}
