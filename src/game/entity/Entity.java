@@ -32,7 +32,7 @@ public abstract class Entity implements Comparable<Entity> {
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
 	public Entity(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {  // Allow pre-computing color list outside class and using it here in constructor
-		this.entID = Entity.id; Entity.id++; this.showXY = new Point(); anim = new Animator(); this.currRoom = room; this.hash = 0;
+		this.entID = Entity.id; Entity.id++; this.showXY = move[0].getPoint(); anim = new Animator(); this.currRoom = room; this.hash = 0;
 		try {
 			this.totalStates = move.length;
 			this.images = new PImage[this.totalStates]; this.move = new MoveSet[this.totalStates];
@@ -51,7 +51,6 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	public void update() {
 		this.move[this.currMove].move(this, this.abilities);
-//	    this.showXY.set(this.getMoveSet().getPoint());
 	}
 	
 	public void show() {if (this.anim.canAnimate()) {this.anim.update(this.showXY);}}
