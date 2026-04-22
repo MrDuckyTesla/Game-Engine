@@ -70,7 +70,6 @@ public class Room {
 		if (this.background != null) {
 //			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 		} 
-		
 		for (ArrayList<Entity> l : this.hash.values()) {
 			for (Entity e : l) {
 				
