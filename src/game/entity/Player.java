@@ -9,7 +9,7 @@ import processing.core.PImage;
 
 public class Player extends Entity {
 	
-	public Player(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
+	public Player(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints) {
 		super(room, img, move, abilities, colorLayers, colorTints, false, false); room.setPlayer(this);
 	}
 

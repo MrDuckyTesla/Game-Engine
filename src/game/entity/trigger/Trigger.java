@@ -1,8 +1,6 @@
 package game.entity.trigger;
 
-import game.entity.Entities;
-import game.entity.Entity;
-import game.entity.movement.MoveSet;
+import game.entity.*;
 import game.entity.movement.ObjectAffectedMove;
 
 public abstract class Trigger extends Entity {
@@ -10,7 +8,7 @@ public abstract class Trigger extends Entity {
 	private Entity caster;
 	
 	public Trigger(float x, float y, float w, float h, Entity caster) {
-		super(null, null, new MoveSet[] {new ObjectAffectedMove(x, y, w, h)}, null, null, null, false, false);
+		super(null, null, new ObjectAffectedMove(x, y, w, h), null, null, null, false, false);
 		this.caster = caster;
 	}
 	

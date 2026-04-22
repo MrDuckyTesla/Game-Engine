@@ -2,7 +2,6 @@ package game.entity.movement;
 
 import game.entity.Entity;
 import game.util.Point;
-import game.util.ToolKit;
 
 public class ObjectAffectedMove extends MoveSet {
 	
@@ -13,7 +12,7 @@ public class ObjectAffectedMove extends MoveSet {
 
 	@Override
 	public void move(Entity e) {
-		ToolKit.rectApp(e.getX(), e.getY(), this.w,this.h);
+		
 	}
 
 	@Override

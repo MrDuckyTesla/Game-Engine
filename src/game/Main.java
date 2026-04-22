@@ -11,14 +11,14 @@ public final class Main extends PApplet {
 	Rect[] obstacles;
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
-	private PImage[] tesla = new PImage[] {null, null};
+	private PImage[] tesla = new PImage[2];
 	private MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect(400-14*3, 400-14*3, 28, 28), 3, 3), new PlatformerSimpleMove()};
-	private Ability[] abilities = new Ability[] {new Walk8d(), new Sword8d(88), new Sprint8d(16), new Interact8d(90)};
+	private Ability[][] abilities = new Ability[][] {{new Walk8d(), new Sword8d(88), new Sprint8d(16), new Interact8d(90)}, {}};
 	private Ability[] abilities2 = new Ability[] {new Walk8d(), new Sword8d(), new Sprint8d()};
 	PImage bck1, tile1;
 	Level tutorial;
-	Room test;
-	Player p;
+	Room[] test = new Room[2];
+	MultiStateEntity p;
 
 	public static void main(String[] args) {
 		PApplet.main(Main.class);
@@ -42,18 +42,18 @@ public final class Main extends PApplet {
 		tesla[1] = loadImage("src/Assets/Sprites/Tesla/Tesla_Battle.png");
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 		ToolKit.setApp(this);
-		test = new Room(bck1);
-		p = new Player(test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints);
+		test[0] = new Room(bck1); test[1] = new Room(bck1);
+		p = new MultiStateEntity(new Entities[] {Entities.PLAYER, Entities.PLAYER}, test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints, false, false);
 		
 		for (int i = 0; i < 20; i++) {
-			test.add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
+			test[0].add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
 		}
 		// five hundred teslas
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
 			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
-			test.add(new Enemy(test, tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
+			test[0].add(new Enemy(test[0], tesla[0], moves[0], abilities2, PlayerSpriteLayers[0], EnemyColorTints));
 		}
 		
 	}
@@ -62,14 +62,16 @@ public final class Main extends PApplet {
 	public void draw() {
 		background(50);
 		
-		test.update();
+		test[0].update();
 		
 //		System.out.println(test.getSize());
 		
-//		MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
-//		int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
-//		for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
-//		test.add(new Enemy(test, tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
+//		for (int i = 0; i < 2; i++) {
+//			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
+//			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
+//			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
+//			test.add(new Enemy(test, tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
+//		}
 		
 		textSize(36); text(Math.round(this.frameRate)+"fps", 10, 30);
 		
