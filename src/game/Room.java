@@ -9,7 +9,7 @@ import processing.core.PImage;
 public class Room {
 	
 	public static final int CHUNK_SIZE = 200;
-	private static int WIDTH_CHUNK, HEIGHT_CHUNK;
+	private int WIDTH_CHUNK, HEIGHT_CHUNK;
 
 	private HashMap<Integer, ArrayList<Entity>> hash = new HashMap<>();
 	private ArrayList<Entity> add, sub, mod, see;  // Lists to keep track of what added, removed, modified and shown
@@ -37,8 +37,8 @@ public class Room {
 	private void instantiate(PImage background, Point backCoords) {
 		this.background = background; this.backCoords = backCoords; 
 		this.add = new ArrayList<>(); this.sub = new ArrayList<>(); this.mod = new ArrayList<>();
-		if (this.background == null) {Room.WIDTH_CHUNK = ToolKit.getAppWidth(); Room.HEIGHT_CHUNK = ToolKit.getAppHeight();}
-		else {Room.WIDTH_CHUNK = this.background.width / Room.CHUNK_SIZE; Room.HEIGHT_CHUNK = this.background.height / Room.CHUNK_SIZE;}
+		if (this.background == null) {this.background = new PImage(ToolKit.getAppWidth(),ToolKit.getAppHeight());}
+		this.WIDTH_CHUNK = this.background.width / Room.CHUNK_SIZE; this.HEIGHT_CHUNK = this.background.height / Room.CHUNK_SIZE;
 	}
 	
 	// HASH ADD
@@ -90,7 +90,7 @@ public class Room {
 		}
 		
 		for (Entity e : this.mod) {this.removeHash(e); e.setHash(); this.addHash(e);}
-		this.moveBackground(); this.see = ToolKit.getNeighborsRender(this.p, this.hash, Room.WIDTH_CHUNK, Room.HEIGHT_CHUNK, 3);
+		this.moveBackground(); this.see = ToolKit.getNeighborsRender(this.p, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 3);
 		Collections.sort(see); for (Entity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}
 		this.removeHash(sub); this.addHash(add); sub.clear(); add.clear(); mod.clear(); see.clear();
 	}
@@ -107,7 +107,7 @@ public class Room {
 		} else {this.backCoords.setY(up? -this.background.height + ToolKit.getAppHeight(): 0);}
 	}
 	
-	public ArrayList<Entity> getRoom(Entity e) {return ToolKit.getNeighbors(e, this.hash, Room.WIDTH_CHUNK, Room.HEIGHT_CHUNK, 1);}
+	public ArrayList<Entity> getRoom(Entity e) {return ToolKit.getNeighbors(e, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 1);}
 	public Player getPlayer() {return this.p;}
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}
