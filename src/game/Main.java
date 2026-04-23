@@ -70,7 +70,7 @@ public final class Main extends PApplet {
 //			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 //			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
 //			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
-//			test.add(new Enemy(test, tesla, moves, abilities2, PlayerSpriteLayers, EnemyColorTints));
+//			test[0].add(new Enemy(test[0], tesla[0], moves[0], abilities2, PlayerSpriteLayers[0], EnemyColorTints));
 //		}
 		
 		textSize(36); text(Math.round(this.frameRate)+"fps", 10, 30);
