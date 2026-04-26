@@ -49,7 +49,7 @@ public class PlatformerSimpleMove extends MoveSet {
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Point();
 	}
 
 	@Override

@@ -3,8 +3,7 @@ package game.entity;
 import game.Room;
 import game.entity.abilities.*;
 import game.entity.movement.*;
-import game.entity.trigger.Trigger;
-import game.entity.trigger.Triggers;
+import game.entity.trigger.*;
 import game.util.ToolKit;
 import processing.core.PImage;
 
@@ -15,7 +14,7 @@ public class NonPlayerCharacter extends Entity{
 	private int framesDie = 10;
 	private boolean isMarked = false;
 
-	public NonPlayerCharacter(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+	public NonPlayerCharacter(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		super(room, img, move, abilities, colorLayers, colorTints, isTangible, isBreakable);
 	}
 
@@ -32,7 +31,7 @@ public class NonPlayerCharacter extends Entity{
 			this.getMoveSet().setIdle(Math.random() > 0.5);
 			for (Ability a : this.getAbilities()) {
 				if (a.getType() == Abilities.SWORD_EIGHT_DIR) {
-					a.setActive(Math.random() > 0.99);
+//					a.setActive(Math.random() > 0.99);
 				} else {
 					a.setActive(Math.random() > 0.8);
 				}
@@ -51,8 +50,7 @@ public class NonPlayerCharacter extends Entity{
 				break;
 			case Triggers.INTERACT:
 				if (!this.isMarked()) {
-//					ToolKit.changeColor(ToolKit.getApp(), this.getImg(), this.getColorList(), new int[] {0, 0, 255, 0, 0, 255, 255, 200, 0});
-				ToolKit.getApp().text("Hello.", this.getX(), this.getY());
+					ToolKit.getApp().text("Hello.", this.getX(), this.getY());
 					this.setOverState(true);
 				} break;
 			default:

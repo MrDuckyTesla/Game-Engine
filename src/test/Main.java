@@ -2,8 +2,6 @@ package test;
 
 import game.util.ToolKit;
 import processing.core.PApplet;
-import processing.core.PFont;
-import processing.core.PImage;
 
 public class Main extends PApplet {
 	

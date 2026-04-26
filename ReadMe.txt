@@ -2,6 +2,9 @@ Start Date:  7/11/2024
 Last Updated:  4/26/2026
 Current Version 0.0.9.9
 
+To view code, navigate to src/game.
+To view assets, navigate to src/Assets.
+
 TODO:
 
 make interractions last until button is done being pressed

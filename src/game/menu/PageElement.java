@@ -7,5 +7,7 @@ public abstract class PageElement {
 	}
 	
 	public abstract void update();
+	
+	public abstract int getData();
 
 }

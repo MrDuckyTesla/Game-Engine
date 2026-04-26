@@ -11,7 +11,7 @@ public class Enemy extends NonPlayerCharacter {
 //	public Enemy(Point overPosit, Point battPosit, Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(overPosit, battPosit, scale, overImage, battImage, overColorLayer, battColorLayer);}
 //	public Enemy(Point scale, PImage overImage, PImage battImage, int[][] overColorLayer, int[][] battColorLayer) {super(scale, overImage, battImage, overColorLayer, battColorLayer);}
 	
-	public Enemy(Room room, PImage[] img, MoveSet[] move, Ability[] abilities, int[][][] colorLayers, int[] colorTints) {
+	public Enemy(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints) {
 		super(room, img, move, abilities, colorLayers, colorTints, false, true);
 		// TODO Auto-generated constructor stub
 	}

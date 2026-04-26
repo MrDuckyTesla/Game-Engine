@@ -12,4 +12,10 @@ public class Slider extends PageElement {
 		
 	}
 
+	@Override
+	public int getData() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
