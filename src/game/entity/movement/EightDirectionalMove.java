@@ -10,7 +10,7 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean isIdle = true, forceWalk = false, canChange = true;
 	private int dir = 0, ldir = 0, fdir = -1;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
-	private Point totalDist;  // The total amount that the object has moved in a frame
+	private Point totalDist, p, prevP;  // The total amount that the object has moved in a frame
 	private Rect xywh;
 	
 	public EightDirectionalMove() {this.instantiate(new Rect(0, 0, 28, 28), 3, 3);}
@@ -21,29 +21,44 @@ public class EightDirectionalMove extends MoveSet {
 
 	@Override
 	public void move(Entity c) {
-		Point p; Trigger t = c.getTrigger();
+		Trigger t = c.getTrigger();
 		if (t != null && t.getTriggerType() == Triggers.DELETE) {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
 			this.fdir = this.fdir == -1? t.getCastDir() : this.fdir;
-			p = this.getPotential(this.fdir);
-		} else {p = this.getPotential();}
+			this.p = this.getPotential(this.fdir);
+		} else {this.p = this.getPotential();} prevP = this.p.get();
 		this.totalDist = this.xywh.getPoint();
-		for (Entity e : c.getRoomList()) {
+		if (ToolKit.nRectRectCollide(this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), 0, 0, c.getRW(), c.getRH())) {
+			if (this.p.getX() < 0) {if (this.setX(0.0001f)) {this.p.resetX();}}
+			else if (this.p.getX() > 0) {if (this.setX(c.getRW() - c.getW() - 0.0001f)) {this.p.resetX();}}
+			if (this.p.getY() < 0) {if (this.setY(0.0001f)) {this.p.resetY();}}
+			else if (this.p.getY() > 0) {if (this.setY(c.getRH() - c.getH() - 0.0001f)) {this.p.resetY();}}
+		} for (Entity e : c.getRoomList()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
-				if (ToolKit.rectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH())) {
-					if (p.getX() < 0) {if (this.setX(e.getRX() + e.getW() + 0.0001f)) {p.resetX();}}
-					else if (p.getX() > 0) {if (this.setX(e.getRX() - c.getW() - 0.0001f)) {p.resetX();}}
-					if (p.getY() < 0) {if (this.setY(e.getRY() + e.getH() + 0.0001f)) {p.resetY();}}
-					else if (p.getY() > 0) {if (this.setY(e.getRY() - c.getH() - 0.0001f)) {p.resetY();}}
-				} 
+				float[] col = ToolKit.rectRectCollideCoords(this.xywh.getX(), this.xywh.getY(), this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH());
+				if (col.length != 0) {
+					switch ((int) col[2]) {
+						case 0:  // Down
+							this.setY(col[1]-0.001f); this.p.setY(0); break;
+						case 1:  // Left
+							this.setX(col[0]+0.001f); this.p.setX(0); break;
+						case 2:  // Up
+							this.setY(col[1]+0.001f); this.p.setY(0); break;
+						case 3:  // Right
+							this.setX(col[0]-0.001f); this.p.setX(0); break;
+					} 
+					if (ToolKit.rectRectCollide(this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH())) {  
+						this.p = prevP.get();  // If Above function somehow breaks, we reset everything
+						if (this.p.getX() < 0) {if (this.setX(e.getRX() + e.getW() + 0.001f)) {this.p.resetX();}}
+						else if (this.p.getX() > 0) {if (this.setX(e.getRX() - c.getW() - 0.001f)) {this.p.resetX();}}
+						else if (this.p.getY() < 0) {if (this.setY(e.getRY() + e.getH() + 0.001f)) {this.p.resetY();}}
+						else if (this.p.getY() > 0) {if (this.setY(e.getRY() - c.getH() - 0.001f)) {this.p.resetY();}}
+					}
+				
+				}
 			} 
-		} if (ToolKit.nRectRectCollide(this.xywh.getX()+p.getX(), this.xywh.getY() + p.getY(), this.getSW(), this.getSH(), 0, 0, c.getRW(), c.getRH())) {
-			if (p.getX() < 0) {if (this.setX(0.0001f)) {p.resetX();}}
-			else if (p.getX() > 0) {if (this.setX(c.getRW() - c.getW() - 0.0001f)) {p.resetX();}}
-			if (p.getY() < 0) {if (this.setY(0.0001f)) {p.resetY();}}
-			else if (p.getY() > 0) {if (this.setY(c.getRH() - c.getH() - 0.0001f)) {p.resetY();}}
-		} this.isIdle = p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(p); this.setNormSpeed();
-		this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
+		}  this.isIdle = this.p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(this.p); 
+		this.setNormSpeed(); this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
 	}
 	
 	@Override
