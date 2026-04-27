@@ -1,6 +1,6 @@
 Start Date:  7/11/2024
 Last Updated:  4/27/2026
-Current Version 0.1.0.0
+Current Version 0.1.0.1
 
 To view code, navigate to src/game.
 To view assets, navigate to src/Assets.
@@ -16,8 +16,6 @@ if people actually contribute to this repository, then maybe we can delve into 3
 be me doing the work so if you like any of what you read, feel free to get in touch with me to contribute. Cheers - MrDuckyTesla
 
 tldr: fully code based game engine -> make tedious code simple and streamlined -> minimal UI if any -> beginner friendly
-(I want to have functions you can call that display a UI that will allow you to edit different things such as a level 
-editor where you can place events, tiles, and entities freely onto a map so that way you can save the code to a text file)
 
 TODO:
 
@@ -27,6 +25,10 @@ TODO:
 #4: UI for making levels
 
 note that theoretically given enough obstacles, player can move infinite amount in one frame
+
+I want to have functions you can call that display a UI that will allow you to edit different things such as a level 
+editor where you can place events, tiles, and entities freely onto a map so that way you can save the code to a text file.
+Same thing but with menus too
 
 OLD TODO:
 #01:  Refactor by moving some character code into room code, make the code modular
