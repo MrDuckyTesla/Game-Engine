@@ -42,7 +42,7 @@ public abstract class Entity implements Comparable<Entity> {
 				ToolKit.changeColor(ToolKit.getApp(), this.image, this.colorLists, this.colorTints);
 			}
 		} catch (NullPointerException e) {
-			this.moveset = new ObjectAffectedMove(move.getX(), move.getY(), move.getW(), move.getH());
+			this.moveset = move == null? new ObjectAffectedMove(move.getX(), move.getY(), move.getW(), move.getH()) : move;
 			this.ability = new Ability[0]; this.isTangible = isTangible; this.isBreakable = isBreakable;
 		}
 	}
@@ -82,7 +82,7 @@ public abstract class Entity implements Comparable<Entity> {
 	public int getRW() {return this.currRoom.getImageWidth();}
 	public int getRH() {return this.currRoom.getImageHeight();}
 	public float[] getXYWH() {return new float[] {this.getRX(), this.getRY(), this.getW(), this.getH()};}
-	public Point getPotential() {return this.getMoveSetType() == Moves.eightDirectional? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
+	public Point getPotential() {return this.getMoveSetType() == Moves.EIGHT? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
 	public MoveSet getMoveSet() {return this.moveset;}
 	public PImage getImg() {return this.image;};

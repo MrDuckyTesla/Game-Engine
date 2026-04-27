@@ -3,16 +3,30 @@ package game.entity.movement;
 import game.entity.Entity;
 import game.util.Point;
 
-public class ObjectAffectedMove extends MoveSet {
+public class InteractionMove extends MoveSet {
 	
 	private float x, y, w, h;
-	
-	public ObjectAffectedMove() {}
-	public ObjectAffectedMove(float x, float y, float w, float h) {this.x = x; this.y = y; this.w = w; this.h = h;}
+	private MoveSet m;
+
+	public InteractionMove(float x, float y, float w, float h, MoveSet m) {
+		this.x = x; this.y = y; this.w = w; this.h = h; this.m = m;
+	}
 
 	@Override
 	public void move(Entity e) {
-		// TODO Make object get moved around
+		float halfW = m.getSW()/2, halfH = m.getSH()/2;
+		int dirInt = m.getDir(); Point xy = new Point();
+		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
+		if (dirInt % 4 != 0) {xy.setY(dirInt < 4? halfH : -halfH);}
+		if (dirInt % 2 == 1) {xy.multpilyXY(0.7071068f);}  // sin 45
+		this.x = m.getX() + xy.getX() + halfW/2;
+		this.y = m.getY() + xy.getY() + halfH/2;
+	}
+
+	@Override
+	public MoveSet get() {
+		// TODO Auto-generated method stub
+		return new InteractionMove(x, y, w, h, m);
 	}
 
 	@Override
@@ -26,37 +40,26 @@ public class ObjectAffectedMove extends MoveSet {
 	@Override
 	public float getS() {return 1;}
 	@Override
-	public float getSW() {return this.getW();}
+	public float getSW() {return this.w;}
 	@Override
-	public float getSH() {return this.getH();}
-	
-	@Override
-	public MoveSet get() {
-		return new ObjectAffectedMove();
-	}
-	
+	public float getSH() {return this.h;}
+
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return new Point(this.x, this.y);
+		return new Point(x, y);
 	}
 
 	@Override
 	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.OBJECT;
+		return Moves.INTERACT;
 	}
 
 	@Override
 	public void setDir(int d) {
 		// TODO Auto-generated method stub
 
-	}
-	
-	@Override
-	public boolean dirChanged() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -69,6 +72,12 @@ public class ObjectAffectedMove extends MoveSet {
 	public int getDir() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean dirChanged() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override

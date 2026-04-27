@@ -7,7 +7,7 @@ import game.util.*;
 
 public class Interact8d extends Ability {
 	
-	private boolean isActive = false;
+	private boolean isActive = false, sent = false;
 	private Trigger currTrig = null;
 
 	public Interact8d() {}
@@ -16,14 +16,22 @@ public class Interact8d extends Ability {
 	
 	@Override
 	public Trigger getTrigger() {return this.currTrig;}
+	@Override
+	public boolean sentTrigger() {return this.sent;}
 
 	@Override
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
-		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
+		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
 			this.isActive = false;
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
-		} this.currTrig = this.isActive? Interaction.createInteraction(e.getRoom(), m, e, Triggers.INTERACT) : null;
+		} 
+		
+		if (this.isActive) {
+			this.currTrig = this.sent? null : Interaction.createInteraction(e.getRoom(), m, e, this, Triggers.INTERACT);
+			this.sent = true;
+		} else {this.currTrig = null; this.sent = false;}
+		
 	}
 	
 	@Override

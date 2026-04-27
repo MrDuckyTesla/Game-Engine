@@ -31,7 +31,7 @@ public class NonPlayerCharacter extends Entity{
 			this.getMoveSet().setIdle(Math.random() > 0.5);
 			for (Ability a : this.getAbilities()) {
 				if (a.getType() == Abilities.SWORD_EIGHT_DIR) {
-//					a.setActive(Math.random() > 0.99);
+					a.setActive(Math.random() > 0.99);
 				} else {
 					a.setActive(Math.random() > 0.8);
 				}

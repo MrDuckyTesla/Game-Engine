@@ -46,7 +46,7 @@ public class BiDirectionalMove extends MoveSet {
 	@Override
 	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.biDirectional;
+		return Moves.DUO;
 	}
 
 	@Override

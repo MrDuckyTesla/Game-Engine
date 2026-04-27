@@ -7,7 +7,7 @@ import game.util.ToolKit;
 
 public class Sword8d extends Ability {
 	
-	private boolean lIsIdle = true, activate = false, isActive = false;;
+	private boolean lIsIdle = true, activate = false, isActive = false, sent = false;
 	private Trigger currTrig = null;
 
 	public Sword8d() {}
@@ -16,10 +16,12 @@ public class Sword8d extends Ability {
 	
 	@Override
 	public Trigger getTrigger() {return this.currTrig;}
+	@Override
+	public boolean sentTrigger() {return this.sent;}
 
 	@Override
 	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
-		if (m.getMoveType() != Moves.eightDirectional) {throw new IllegalArgumentException();}
+		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (!e.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			e.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
@@ -30,7 +32,11 @@ public class Sword8d extends Ability {
 			} else if (this.activate) {e.getAnimator().resetAnim(); this.isActive = true;}
 			this.setSwing(m, true);
 		} this.lIsIdle = m.getIsIdle();
-		this.currTrig = this.isActive? Interaction.createInteraction(e.getRoom(), m, e, Triggers.DELETE) : null;
+		
+		if (this.isActive) {
+			this.currTrig = this.sent? null : Interaction.createInteraction(e.getRoom(), m, e, this, Triggers.DELETE);
+			this.sent = true;
+		} else {this.currTrig = null; this.sent = false;}
 	}
 	
 	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}

@@ -17,7 +17,7 @@ public class Player extends Entity {
 	public void update() {
 		super.update();
 		
-		if (this.getMoveSet().getMoveType() == Moves.eightDirectional) {
+		if (this.getMoveSet().getMoveType() == Moves.EIGHT) {
 		    if (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39) || ToolKit.keyIsDown(83) || ToolKit.keyIsDown(40) || ToolKit.keyIsDown(65) || ToolKit.keyIsDown(37) || ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38)) {this.setOverState(false);}
 		    else {this.setOverState(true);}
 		    // Check direction
