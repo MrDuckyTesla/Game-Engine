@@ -1,19 +1,19 @@
 Start Date:  7/11/2024
-Last Updated:  4/26/2026
+Last Updated:  4/27/2026
 Current Version 0.1.0.0
 
 To view code, navigate to src/game.
 To view assets, navigate to src/Assets.
 
-Why did I decide to make my own game engine? Well I've always loved the processing foundations p5.js and processing4 libraries.
-I liked how simple it was to use, and how I got to write all of the code myself without having to worry about annoying things
-like making a window with a circle or rectangle on it that updates every frame. I really like writing code and knowing how 
-everything works in my head, and I feel like this engine will be more focused to people who rather stare at code than some
-confusing and convoluted UI with a thousand different toggles and boxes. I also like the structure of java and how it forces
-you to at minimum make decent code. I want to make a minimal game engine that can cover a huge basis of game generas. for now
-Im going to focus on 2D games, but if people actually contribute to this repository, then maybe we can delve into 3D. Anyhoo,
-for the time being its all gonna be me doing the work so if you like any of what you read, feel free to get in touch with me to
-contribute. Cheers - MrDuckyTesla
+Why did I decide to make my own game engine? 
+Well I've always loved the processing foundations p5.js and processing4 libraries. I liked how simple it was to use, and 
+how I got to write all of the code myself without having to worry about annoying things like making a window with a circle 
+or rectangle on it that updates every frame. I really like writing code and knowing how everything works in my head, and I 
+feel like this engine will be more focused to people who rather stare at code than some confusing and convoluted UI with a 
+thousand different toggles and boxes. I also like the structure of java and how it forces you to at minimum make decent code. 
+I want to make a minimal game engine that can cover a huge basis of game generas. for now Im going to focus on 2D games, but 
+if people actually contribute to this repository, then maybe we can delve into 3D. Anyhoo, for the time being its all gonna 
+be me doing the work so if you like any of what you read, feel free to get in touch with me to contribute. Cheers - MrDuckyTesla
 
 TODO:
 
