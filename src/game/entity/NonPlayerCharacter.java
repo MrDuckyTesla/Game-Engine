@@ -9,19 +9,18 @@ import processing.core.PImage;
 
 public class NonPlayerCharacter extends Entity{
 	
-	private Trigger trigger;
-	private long timeWander = 0;
-	private int framesDie = 10;
 	private boolean isMarked = false;
+	private int framesDie = 10;
+	private long timeWander = 0;
+	private Trigger trigger;
 
 	public NonPlayerCharacter(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		super(room, img, move, abilities, colorLayers, colorTints, isTangible, isBreakable);
 	}
 
 	public void update() {
-		super.update();
+		super.update(); this.wander(); 
 		if (this.isMarked) {this.framesDie--;}
-		this.wander();
 	}
 	
 	private void wander() {

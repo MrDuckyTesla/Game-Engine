@@ -8,6 +8,7 @@ import processing.core.PApplet;
 public class EightDirectionalMove extends MoveSet {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
+	private long tID = -1;
 	private int dir = 0, ldir = 0, fdir = -1;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
 	private Point totalDist, p;  // The total amount that the object has moved in a frame
@@ -24,10 +25,9 @@ public class EightDirectionalMove extends MoveSet {
 		Trigger t = c.getTrigger();
 		if (t != null && t.getTriggerType() == Triggers.DELETE) {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
-			this.fdir = this.fdir == -1? t.getCastDir() : this.fdir;
-			this.p = this.getPotential(this.fdir);
-		} else {this.p = this.getPotential();}
-		this.totalDist = this.xywh.getPoint();
+			if (this.tID != t.getID()) {this.fdir = t.getCastDir();}
+			this.tID = t.getID(); this.p = this.getPotential(this.fdir);
+		} else {this.p = this.getPotential();} this.totalDist = this.xywh.getPoint();
 		if (ToolKit.nRectRectCollide(this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), 0, 0, c.getRW(), c.getRH())) {
 			if (this.p.getX() < 0) {if (this.setX(0.0001f)) {this.p.resetX();}}
 			else if (this.p.getX() > 0) {if (this.setX(c.getRW() - c.getW() - 0.0001f)) {this.p.resetX();}}

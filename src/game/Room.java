@@ -42,7 +42,7 @@ public class Room {
 	}
 	
 	// HASH ADD
-	private void addHash(Entity e) {e.setHash(); this.hash.computeIfAbsent(e.getHash(),  k -> new ArrayList<>()).add(e);}
+	private void addHash(Entity e) {e.calculateHash(); this.hash.computeIfAbsent(e.getHash(),  k -> new ArrayList<>()).add(e);}
 	private void addHash(Iterable<? extends Entity> l) {for (Entity e : l) {this.addHash(e);}}
 	
 	// HASH REMOVE
@@ -79,7 +79,7 @@ public class Room {
 				}
 			} 
 		}
-		for (Entity e : this.mod) {this.removeHash(e); e.setHash(); this.addHash(e);}
+		for (Entity e : this.mod) {this.removeHash(e); e.calculateHash(); this.addHash(e);}
 		this.moveBackground(); this.see = ToolKit.getNeighborsRender(this.p, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 3);
 		Collections.sort(see); for (Entity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}
 		this.removeHash(sub); this.addHash(add); sub.clear(); add.clear(); mod.clear(); see.clear();
