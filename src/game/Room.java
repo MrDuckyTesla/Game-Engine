@@ -72,23 +72,13 @@ public class Room {
 		} 
 		for (ArrayList<Entity> l : this.hash.values()) {
 			for (Entity e : l) {
-				
-				if (e.isDelete()) {
-					if (e.getType() == Entities.TRIGGER) {e.update();}
-					this.sub.add(e);
-				} 
-				
-				else {
-					e.update(); this.add.addAll(e.getMoveSet().getTriggers()); 
-				}
-				
+				if (e.isDelete()) {this.sub.add(e);} 
+				else {e.update();this.add.addAll(e.getMoveSet().getTriggers());}
 				if (e.getHash() != ToolKit.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE))) {
 					this.mod.add(e);
 				}
-				
 			} 
 		}
-		
 		for (Entity e : this.mod) {this.removeHash(e); e.setHash(); this.addHash(e);}
 		this.moveBackground(); this.see = ToolKit.getNeighborsRender(this.p, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 3);
 		Collections.sort(see); for (Entity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}

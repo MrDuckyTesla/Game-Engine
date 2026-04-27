@@ -16,11 +16,18 @@ public abstract class Ability {
 	
 	public abstract void setActive(boolean activate);
 	public abstract boolean isActive();
+	
 	/**
 	 * Only override this if you want to create an interaction
 	 * @return Returns the trigger being requested
 	 */
 	public Trigger getTrigger() {return null;}
+	
+	/**
+	 * Only override this if you want to create an interaction
+	 * @return Returns if the trigger has been made
+	 */
+	public boolean sentTrigger() {return true;}
 	
 	public abstract Ability get();
 	

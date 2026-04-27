@@ -49,7 +49,7 @@ public final class Main extends PApplet {
 			test[0].add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);
 		}
 		// five hundred teslas
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 500; i++) {
 			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 //			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect(0, 0, 28, 28), 3, 3), new PlatformerSimpleMove()};
 			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};

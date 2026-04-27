@@ -10,7 +10,7 @@ public class EightDirectionalMove extends MoveSet {
 	private boolean isIdle = true, forceWalk = false, canChange = true;
 	private int dir = 0, ldir = 0, fdir = -1;
 	private float maxSpeed, currSpeed, scale = 1;  // How much object is allowed to move in a frame
-	private Point totalDist, p, prevP;  // The total amount that the object has moved in a frame
+	private Point totalDist, p;  // The total amount that the object has moved in a frame
 	private Rect xywh;
 	
 	public EightDirectionalMove() {this.instantiate(new Rect(0, 0, 28, 28), 3, 3);}
@@ -26,7 +26,7 @@ public class EightDirectionalMove extends MoveSet {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
 			this.fdir = this.fdir == -1? t.getCastDir() : this.fdir;
 			this.p = this.getPotential(this.fdir);
-		} else {this.p = this.getPotential();} prevP = this.p.get();
+		} else {this.p = this.getPotential();}
 		this.totalDist = this.xywh.getPoint();
 		if (ToolKit.nRectRectCollide(this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), 0, 0, c.getRW(), c.getRH())) {
 			if (this.p.getX() < 0) {if (this.setX(0.0001f)) {this.p.resetX();}}
@@ -35,27 +35,26 @@ public class EightDirectionalMove extends MoveSet {
 			else if (this.p.getY() > 0) {if (this.setY(c.getRH() - c.getH() - 0.0001f)) {this.p.resetY();}}
 		} for (Entity e : c.getRoomList()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
-				float[] col = ToolKit.rectRectCollideCoords(this.xywh.getX(), this.xywh.getY(), this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH());
-				if (col.length != 0) {
-					switch ((int) col[2]) {
-						case 0:  // Down
-							this.setY(col[1]-0.001f); this.p.setY(0); break;
-						case 1:  // Left
-							this.setX(col[0]+0.001f); this.p.setX(0); break;
-						case 2:  // Up
-							this.setY(col[1]+0.001f); this.p.setY(0); break;
-						case 3:  // Right
-							this.setX(col[0]-0.001f); this.p.setX(0); break;
-					} 
+//				float[] col = ToolKit.rectRectCollideCoords(this.xywh.getX(), this.xywh.getY(), this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH());
+//				if (col.length != 0) {
+//					switch ((int) col[2]) {
+//						case 0:  // Down
+//							this.setY(col[1]-0.001f); this.p.setY(0); break;
+//						case 1:  // Left
+//							this.setX(col[0]+0.001f); this.p.setX(0); break;
+//						case 2:  // Up
+//							this.setY(col[1]+0.001f); this.p.setY(0); break;
+//						case 3:  // Right
+//							this.setX(col[0]-0.001f); this.p.setX(0); break;
+//					} 
 					if (ToolKit.rectRectCollide(this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH())) {  
-						this.p = prevP.get();  // If Above function somehow breaks, we reset everything
+//						this.p = prevP.get();  // If Above function somehow breaks, we reset everything
 						if (this.p.getX() < 0) {if (this.setX(e.getRX() + e.getW() + 0.001f)) {this.p.resetX();}}
 						else if (this.p.getX() > 0) {if (this.setX(e.getRX() - c.getW() - 0.001f)) {this.p.resetX();}}
-						else if (this.p.getY() < 0) {if (this.setY(e.getRY() + e.getH() + 0.001f)) {this.p.resetY();}}
+						if (this.p.getY() < 0) {if (this.setY(e.getRY() + e.getH() + 0.001f)) {this.p.resetY();}}
 						else if (this.p.getY() > 0) {if (this.setY(e.getRY() - c.getH() - 0.001f)) {this.p.resetY();}}
 					}
-				
-				}
+//				}
 			} 
 		}  this.isIdle = this.p.isZero() && !this.forceWalk; this.ldir = this.dir; this.xywh.addXY(this.p); 
 		this.setNormSpeed(); this.totalDist.subXY(this.xywh.getPoint()); this.totalDist.negatePoint();
@@ -81,7 +80,7 @@ public class EightDirectionalMove extends MoveSet {
 	public Point getPoint() {return this.xywh.getPoint();}
 
 	@Override
-	public Moves getMoveType() {return Moves.eightDirectional;}
+	public Moves getMoveType() {return Moves.EIGHT;}
 	
 	private Point getPotential(int dir) {
 		Point s = new Point();

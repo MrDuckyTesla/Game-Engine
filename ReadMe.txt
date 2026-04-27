@@ -1,18 +1,15 @@
 Start Date:  7/11/2024
 Last Updated:  4/26/2026
-Current Version 0.0.9.9
+Current Version 0.1.0.0
 
 To view code, navigate to src/game.
 To view assets, navigate to src/Assets.
 
 TODO:
 
-make interractions last until button is done being pressed
-
 #1: Make working menu system
 #2: Implement tile based background and editor
-#3: THREADS
-#4: EVENTS (dialogue and cutscenes and such)
+#3: EVENTS (dialogue and cutscenes and such)
 #4: UI for making levels
 
 note that theoretically given enough obstacles, player can move infinite amount in one frame

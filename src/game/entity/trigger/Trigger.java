@@ -1,14 +1,14 @@
 package game.entity.trigger;
 
 import game.entity.*;
-import game.entity.movement.ObjectAffectedMove;
+import game.entity.movement.InteractionMove;
 
 public abstract class Trigger extends Entity {
 	
 	private Entity caster;
 	
 	public Trigger(float x, float y, float w, float h, Entity caster) {
-		super(null, null, new ObjectAffectedMove(x, y, w, h), null, null, null, false, false);
+		super(null, null, new InteractionMove(x, y, w, h, caster.getMoveSet()), null, null, null, false, false);
 		this.caster = caster;
 	}
 	
