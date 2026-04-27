@@ -19,7 +19,7 @@ public class NonPlayerCharacter extends Entity{
 	}
 
 	public void update() {
-		super.update(); this.wander();
+		super.update(); this.wander(); 
 		if (this.isMarked) {this.framesDie--;}
 	}
 	

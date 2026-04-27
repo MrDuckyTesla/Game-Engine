@@ -28,8 +28,6 @@ public abstract class Entity implements Comparable<Entity> {
 	private Room currRoom;
 	private Ability[] ability;
 	
-	
-	
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
 	public Entity(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {  // Allow pre-computing color list outside class and using it here in constructor
@@ -56,9 +54,6 @@ public abstract class Entity implements Comparable<Entity> {
 	public void show() {if (this.anim.canAnimate()) {this.anim.update(this.showXY);}}
 	
 	public void calculateHash() {this.hash = ToolKit.hash((int)(this.getRX()/Room.CHUNK_SIZE), (int)(this.getRY()/Room.CHUNK_SIZE));}
-
-	public boolean isTangible() {return this.isTangible;}
-	public boolean isBreakable() {return this.isBreakable;}
 	
 	// Abstract methods
 	public abstract void interact(Trigger t);
@@ -68,6 +63,8 @@ public abstract class Entity implements Comparable<Entity> {
 	public abstract Trigger getTrigger();
 	
 	// Getter methods
+	public boolean isTangible() {return this.isTangible;}
+	public boolean isBreakable() {return this.isBreakable;}
 	public boolean getOverState() {return this.moveset.getIsIdle();}
 	public int getOverDir() {return this.moveset.getDir();}
 	public int getRW() {return this.currRoom.getImageWidth();}
@@ -89,8 +86,9 @@ public abstract class Entity implements Comparable<Entity> {
 	public Point getXY() {return this.getMoveSet().getPoint();}
 	public Room getRoom() {return this.currRoom;}
 	public Ability[] getAbilities() {return this.ability;}
-	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this);} // GET ONLY WHAT IS AROUND ENTITY
 	public ArrayList<Integer> getColorList() {return colorLists;}
+	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this);} // GET ONLY WHAT IS AROUND ENTITY
+	
 	
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.moveset.setIdle(isIdle);}
