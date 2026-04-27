@@ -15,6 +15,10 @@ I want to make a minimal game engine that can cover a huge basis of game generas
 if people actually contribute to this repository, then maybe we can delve into 3D. Anyhoo, for the time being its all gonna 
 be me doing the work so if you like any of what you read, feel free to get in touch with me to contribute. Cheers - MrDuckyTesla
 
+tldr: fully code based game engine -> make tedious code simple and streamlined -> minimal UI if any -> beginner friendly
+(I want to have functions you can call that display a UI that will allow you to edit different things such as a level 
+editor where you can place events, tiles, and entities freely onto a map so that way you can save the code to a text file)
+
 TODO:
 
 #1: Make working menu system
