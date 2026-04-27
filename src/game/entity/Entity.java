@@ -11,22 +11,24 @@ import game.entity.abilities.Ability;
 public abstract class Entity implements Comparable<Entity> {
 	
 	// Static variables
-	public static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
 	private static long id = 0;
+	public static final int[] hurtColor = new int[] {255, 0, 0, 255, 0, 0, 255, 200, 0};
 	
 	// Instance variables
-	private ArrayList<Integer> colorLists;
 	private boolean isTangible, isBreakable;
-	private int[][] colorLayer;
-	private Ability[] ability;
-	private int[] colorTints;
-	private PImage image;
-	private MoveSet moveset;
-	private Animator anim;
-	private Room currRoom;
-	private Point showXY;
-	private long entID;
 	private int hash;
+	private long entID;
+	private int[] colorTints;
+	private int[][] colorLayer;
+	private ArrayList<Integer> colorLists;
+	private Animator anim;
+	private MoveSet moveset;
+	private PImage image;
+	private Point showXY;
+	private Room currRoom;
+	private Ability[] ability;
+	
+	
 	
 	// THIS CLASS WILL BE ABSTRACT AND ONLY CONTAIN NECESSARY VARIABLES AND FUNCTIONS THAT APPLY TO ALL CHARACTERS 
 	
@@ -53,41 +55,42 @@ public abstract class Entity implements Comparable<Entity> {
 	
 	public void show() {if (this.anim.canAnimate()) {this.anim.update(this.showXY);}}
 	
-	public int getHash() {return this.hash;}
-	public void setHash() {this.hash = ToolKit.hash((int)(this.getRX()/Room.CHUNK_SIZE), (int)(this.getRY()/Room.CHUNK_SIZE));}
+	public void calculateHash() {this.hash = ToolKit.hash((int)(this.getRX()/Room.CHUNK_SIZE), (int)(this.getRY()/Room.CHUNK_SIZE));}
 
 	public boolean isTangible() {return this.isTangible;}
 	public boolean isBreakable() {return this.isBreakable;}
 	
 	// Abstract methods
 	public abstract void interact(Trigger t);
-	public abstract Trigger getTrigger();
-	public abstract Entities getType();
 	public abstract boolean isDelete();
 	public abstract boolean isMarked();
+	public abstract Entities getType();
+	public abstract Trigger getTrigger();
 	
 	// Getter methods
 	public boolean getOverState() {return this.moveset.getIsIdle();}
 	public int getOverDir() {return this.moveset.getDir();}
+	public int getRW() {return this.currRoom.getImageWidth();}
+	public int getRH() {return this.currRoom.getImageHeight();}
+	public int getHash() {return this.hash;}
+	public long getID() {return this.entID;}
 	public float getRX() {return this.getMoveSet().getX();}
 	public float getRY() {return this.getMoveSet().getY();}
 	public float getX() {return this.showXY.getX();}
 	public float getY() {return this.showXY.getY();}
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
-	public Room getRoom() {return this.currRoom;}
-	public Animator getAnimator() {return this.anim;}
-	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this);} // GET ONLY WHAT IS AROUND ENTITY
-	public ArrayList<Integer> getColorList() {return colorLists;}
-	public int getRW() {return this.currRoom.getImageWidth();}
-	public int getRH() {return this.currRoom.getImageHeight();}
 	public float[] getXYWH() {return new float[] {this.getRX(), this.getRY(), this.getW(), this.getH()};}
+	public Moves getMoveSetType() {return this.moveset.getMoveType();}
+	public Animator getAnimator() {return this.anim;}
+	public MoveSet getMoveSet() {return this.moveset;}
+	public PImage getImg() {return this.image;}
 	public Point getPotential() {return this.getMoveSetType() == Moves.EIGHT? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
-	public MoveSet getMoveSet() {return this.moveset;}
-	public PImage getImg() {return this.image;};
+	public Room getRoom() {return this.currRoom;}
 	public Ability[] getAbilities() {return this.ability;}
-	public Moves getMoveSetType() {return this.moveset.getMoveType();}
+	public ArrayList<Entity> getRoomList() {return this.currRoom.getRoom(this);} // GET ONLY WHAT IS AROUND ENTITY
+	public ArrayList<Integer> getColorList() {return colorLists;}
 	
 	// Setter methods
 	public void setOverState(boolean isIdle) {this.moveset.setIdle(isIdle);}
@@ -101,13 +104,14 @@ public abstract class Entity implements Comparable<Entity> {
 	public void addY(float y) {this.showXY.addY(y);}
 	public void addXY(float x, float y) {this.showXY.addX(x); this.showXY.addY(y);}
 	
-	// Overridden methods
+	// Implemented methods
 	@Override
 	public int compareTo(Entity e) {return Float.compare(this.getRY() + this.getH(), e.getRY() + e.getH());}
 	
-	@Override
-	public String toString() {return "("+this.getRX()+", "+this.getRY() + ", "+this.getW()+", "+this.getH()+")"+", Type \""+this.getType()+"\"";}
+	// Overridden methods
 	@Override
 	public boolean equals(Object other) {if(other.getClass() != this.getClass()) {return false;} return this.entID == ((Entity) other).entID;}
+	@Override
+	public String toString() {return "("+this.getRX()+", "+this.getRY() + ", "+this.getW()+", "+this.getH()+")"+", Type \""+this.getType()+"\"";}
 
 }
