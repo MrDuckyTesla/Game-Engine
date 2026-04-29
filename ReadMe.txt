@@ -1,5 +1,5 @@
 Start Date:  7/11/2024
-Last Updated:  4/27/2026
+Last Updated:  4/29/2026
 Current Version 0.1.0.1
 
 To view code, navigate to src/game.
@@ -19,25 +19,36 @@ tldr: fully code based game engine -> make tedious code simple and streamlined -
 
 TODO:
 
-#1: Make working menu system
-#2: Implement tile based background and editor
-#3: EVENTS (dialogue and cutscenes and such)
-#4: UI for making levels
-
-note that theoretically given enough obstacles, player can move infinite amount in one frame
-
-I want to have functions you can call that display a UI that will allow you to edit different things such as a level 
-editor where you can place events, tiles, and entities freely onto a map so that way you can save the code to a text file.
-Same thing but with menus too
-
-OLD TODO:
-#01:  Refactor by moving some character code into room code, make the code modular
-#02:  add npc following overworld (this includes pathfinding, so maybe later)
-#03:  add enemy overworld
-#04:  add overworld interacting
-#05:  add overworld and battle dialogue
-#06:  optimize code with this: https://www.w3schools.com/js/js_performance.asp
-#07:  add menu
-#08:  add enemy battle ai
-#09:  add save files
-#11:  Add battle animations (using procedural animation)
+#1:	 Allow MoveSet to change movement types on fly (to make knockback and interractions better)
+#2:	 Instead of entities checking for triggers and storing them, have triggers check for entities
+#3:	 Make ToolKit more "float friendly" with epsilon
+#4:	 Make a "party" system that allows other entities to follow player
+#5:	 Make enemies follow you if you get close enough
+#6:	 Find ways to optimize code and fix existing issues in code such as:
+		a: EightDirectionalMove snapping at corners, allowing you to fit bewteen spaces you shouldnt,
+			and given enough obstacles, without total dist being tracked, entities can move an infinite
+			amount of distance in one frame
+		b: make Animations easier to customize, such as allowing vertical spritesheets, and allowing user
+			to specify what animation should be played with what movements
+		c: some colision code is probably suboptimal as I made most of it from scratch without looking any
+			algorithms up. I am sure there are many issues I have glossed over as well
+#7:	 Implement other movement types
+#8:	 Make working menu system along with text boxes
+#9: Implement saving and loading using new menu
+#10: Implement tile based background and editor
+#11: EVENTS (dialogue and cutscenes and such)
+#12: Implement an UI that can be called upon as a function. I will try to make an outline here:
+		a: UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
+			the user to open a folder of images for said tiles.
+		b: UI allows user to place down entities anywhere (not grid locked). this entity would be a blank
+			rectangle that the user can click on to edit a list of properties. these properties would include
+			x, y, width, height, scale, spritesheet, movement type, list of abilites, and color. The properties 
+			should NOT be bloated and should be as limited as possible for ease of use.
+		c: UI also allows entities to be chosen as Enemies/neutral NPCs, or Triggers. The user should be able
+			to make rooms easily. this includes making rooms inside of entities (this allows triggers to move
+			entities to other rooms or allows players to enter a battle for example)
+		d: The UI should also allow the menu to be edited per room, with dragging elements around and choosing
+			x, y, width, height, ...etc. as well. 
+		e: this UI, upon finishing, should save what the user did to a text file, translating what the user did
+			into its equivalent code counterpart for the user to copy paste into their project.
+#13: Implement PlatformerComplexMove

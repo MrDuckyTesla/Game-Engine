@@ -1,6 +1,6 @@
 package test;
 
-import game.util.ToolKit;
+import engine.util.ToolKit;
 import processing.core.PApplet;
 
 public class Main extends PApplet {

@@ -2,9 +2,9 @@ package test;
 
 import java.util.ArrayList;
 
-import game.util.Point;
-import game.util.Rect;
-import game.util.ToolKit;
+import engine.util.Point;
+import engine.util.Rect;
+import engine.util.ToolKit;
 import processing.core.PApplet;
 
 public class CObstacle {  // Complex Obstacle (basically multiple rectangles stitched together)
