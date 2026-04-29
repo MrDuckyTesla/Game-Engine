@@ -19,10 +19,13 @@ tldr: fully code based game engine -> make tedious code simple and streamlined -
 
 TODO:
 
-#1: Make working menu system
-#2: Implement tile based background and editor
-#3: EVENTS (dialogue and cutscenes and such)
-#4: UI for making levels
+#1: Allow MoveSet to change movement types on fly (to make knockback and interractions better)
+#2: Instead of entites checking for triggers and storing them, have triggers check for entites
+#3: Make ToolKit more "float friendly" with epsilon
+#4: Make working menu system
+#5: Implement tile based background and editor
+#6: EVENTS (dialogue and cutscenes and such)
+#7: UI for making levels
 
 note that theoretically given enough obstacles, player can move infinite amount in one frame
 

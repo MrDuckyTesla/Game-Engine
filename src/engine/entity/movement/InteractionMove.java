@@ -14,6 +14,9 @@ public class InteractionMove extends MoveSet {
 
 	@Override
 	public void move(Entity e) {
+		
+		// ONLY HAVE TO DO THIS MATH ON DIRECTION CHANGES
+		
 		float halfW = m.getSW()/2, halfH = m.getSH()/2;
 		int dirInt = m.getDir(); Point xy = new Point();
 		if (dirInt % 4 != 2) {xy.setX(dirInt % 7 < 2? halfW : -halfW);}
