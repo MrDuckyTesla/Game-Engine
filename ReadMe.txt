@@ -21,10 +21,11 @@ TODO:
 
 #1:	 Allow MoveSet to change movement types on fly (to make knockback and interractions better)
 #2:	 Instead of entities checking for triggers and storing them, have triggers check for entities
-#3:	 Make ToolKit more "float friendly" with epsilon
-#4:	 Make a "party" system that allows other entities to follow player
-#5:	 Make enemies follow you if you get close enough
-#6:	 Find ways to optimize code and fix existing issues in code such as:
+#3:  Change ObjectAffectedMove name to something that reflects better with its function
+#4:	 Make ToolKit more "float friendly" with epsilon
+#5:	 Make a "party" system that allows other entities to follow player
+#6:	 Make enemies follow you if you get close enough
+#7:	 Find ways to optimize code and fix existing issues in code such as:
 		a: EightDirectionalMove snapping at corners, allowing you to fit bewteen spaces you shouldnt,
 			and given enough obstacles, without total dist being tracked, entities can move an infinite
 			amount of distance in one frame
@@ -32,12 +33,15 @@ TODO:
 			to specify what animation should be played with what movements
 		c: some colision code is probably suboptimal as I made most of it from scratch without looking any
 			algorithms up. I am sure there are many issues I have glossed over as well
-#7:	 Implement other movement types
-#8:	 Make working menu system along with text boxes
-#9: Implement saving and loading using new menu
-#10: Implement tile based background and editor
-#11: EVENTS (dialogue and cutscenes and such)
-#12: Implement an UI that can be called upon as a function. I will try to make an outline here:
+#8:	 Implement other movement types excluding PlatformerComplexMove
+#9:	 Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
+#10: Make working menu system along with text boxes
+#11: Implement saving and loading using new menu
+#12: Implement keybinds that are able to be changed and saved
+#13: Implement tile based background and editor
+#14: EVENTS (dialogue and cutscenes and such)
+#15: Make Sounds and Sound Effects easy to call
+#16: Implement an UI that can be called upon as a function. I will try to make an outline here:
 		a: UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
 			the user to open a folder of images for said tiles.
 		b: UI allows user to place down entities anywhere (not grid locked). this entity would be a blank
@@ -51,4 +55,7 @@ TODO:
 			x, y, width, height, ...etc. as well. 
 		e: this UI, upon finishing, should save what the user did to a text file, translating what the user did
 			into its equivalent code counterpart for the user to copy paste into their project.
-#13: Implement PlatformerComplexMove
+#17: Implement PlatformerComplexMove
+#18: Implement Enemy AI for platformer mode
+#19: Implement Neural Network that can learn from other Entities
+#20: Implement multiplayer of some sorts
