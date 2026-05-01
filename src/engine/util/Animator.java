@@ -1,12 +1,12 @@
 package engine.util;
 
-import engine.entity.movement.MoveSet;
+import engine.entity.movement.AbstractMove;
 import processing.core.PImage;
 
 public class Animator {
 	
 	private PImage i;
-	private MoveSet m;
+	private AbstractMove m;
 	private Animation currAnim;
 	private int animSpeed;
 	private int start, frames;
@@ -20,11 +20,11 @@ public class Animator {
 		this.currAnim.animate(ToolKit.getApp(), i, xy.getX(), xy.getY(), (int) m.getW(), (int) m.getH(), m.getS(), this.start, this.start + this.frames - 1, this.animSpeed, false, this.changeAnim);
 	}
 	
-	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed) {
+	public void setAnim (PImage i, AbstractMove m, int start, int frames, int animSpeed) {
 		this.setAnim (i, m, start, frames, animSpeed, false);
 	}
 	
-	public void setAnim (PImage i, MoveSet m, int start, int frames, int animSpeed, boolean change) {
+	public void setAnim (PImage i, AbstractMove m, int start, int frames, int animSpeed, boolean change) {
 		this.i = i; this.m = m; this.animSpeed = animSpeed; this.changeAnim = change;
 		this.frames = frames; this.start = start + m.getDir() * this.frames;
 	}

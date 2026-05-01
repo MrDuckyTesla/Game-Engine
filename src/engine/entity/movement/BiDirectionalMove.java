@@ -1,10 +1,10 @@
 package engine.entity.movement;
 
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 import engine.util.Point;
 import engine.util.Rect;
 
-public class BiDirectionalMove extends MoveSet {
+public class BiDirectionalMove extends AbstractMove {
 	
 	private Rect xywh, bg;
 	
@@ -13,12 +13,12 @@ public class BiDirectionalMove extends MoveSet {
 	}
 
 	@Override
-	public void move(Entity e) {
+	public void move(AbstractEntity e) {
 		// TODO Auto-generated method stub
 	}
 	
 	@Override
-	public MoveSet get() {
+	public AbstractMove get() {
 		return new BiDirectionalMove(this.xywh.get(), this.bg.get());
 	}
 
@@ -44,9 +44,9 @@ public class BiDirectionalMove extends MoveSet {
 	}
 
 	@Override
-	public Moves getMoveType() {
+	public Move getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.DUO;
+		return Move.DUO;
 	}
 
 	@Override

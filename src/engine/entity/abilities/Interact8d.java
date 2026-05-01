@@ -5,7 +5,7 @@ import engine.entity.movement.*;
 import engine.entity.trigger.*;
 import engine.util.*;
 
-public class Interact8d extends Ability {
+public class Interact8d extends AbstractAbility {
 	
 	private boolean isActive = false, sent = false;
 	private Trigger currTrig = null;
@@ -20,8 +20,8 @@ public class Interact8d extends Ability {
 	public boolean sentTrigger() {return this.sent;}
 
 	@Override
-	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
-		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
+	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
+		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
 			this.isActive = false;
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
@@ -39,8 +39,8 @@ public class Interact8d extends Ability {
 	@Override
 	public boolean isActive() {return this.isActive;}
 	@Override
-	public Ability get() {return this.getKeys() == null? new Interact8d() : new Interact8d(this.getKeys());}
+	public AbstractAbility get() {return this.getKeys() == null? new Interact8d() : new Interact8d(this.getKeys());}
 	@Override
-	public Abilities getType() {return Abilities.INTERACT_EIGHT_DIR;}
+	public Ability getType() {return Ability.INTERACT_EIGHT_DIR;}
 
 }

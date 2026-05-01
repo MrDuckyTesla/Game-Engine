@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import engine.Room;
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -616,7 +616,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	
 	public static int hash(int x, int y) {return 31*x+y;} // Apparently 31 is a magic number in hashing
 	
-	public static <E extends Entity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+	public static <E extends AbstractEntity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
 		ArrayList<E> neighbors = new ArrayList<>(); int key;
 		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
 		for (int i = -size; i < 1+size; i++) {
@@ -630,7 +630,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 		} return neighbors;
 	}
 	
-	public static <E extends Entity> ArrayList<E> getNeighborsRender(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+	public static <E extends AbstractEntity> ArrayList<E> getNeighborsRender(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
 		ArrayList<E> neighbors = new ArrayList<>(); int key;
 		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
 		if (x - size < 0) {x = size;} else if (x + size > wid) {x = wid-size;}

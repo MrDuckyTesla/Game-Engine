@@ -12,8 +12,8 @@ public class Room {
 	public static final int CHUNK_SIZE = 200;
 	private int WIDTH_CHUNK, HEIGHT_CHUNK;
 
-	private HashMap<Integer, ArrayList<Entity>> hash = new HashMap<>();
-	private ArrayList<Entity> add, sub, mod, see;  // Lists to keep track of what added, removed, modified and shown
+	private HashMap<Integer, ArrayList<AbstractEntity>> hash = new HashMap<>();
+	private ArrayList<AbstractEntity> add, sub, mod, see;  // Lists to keep track of what added, removed, modified and shown
 	
 	private Player p;
 	// BACKGROUND VARIABLES
@@ -22,13 +22,13 @@ public class Room {
 	
 	public Room(PImage background) {this.instantiate(background, new Point());}
 	public Room(int w, int h) {this.instantiate(new PImage(w, h), new Point());}
-	public Room(Entity o, PImage background) {this.instantiate(background, new Point()); add.add(o);}
-	public Room(Entity[] o, PImage background) {this.instantiate(background, new Point()); this.add(o);}
-	public Room(ArrayList<Entity> o, PImage background) {this.instantiate(background, new Point()); this.add(o);}
+	public Room(AbstractEntity o, PImage background) {this.instantiate(background, new Point()); add.add(o);}
+	public Room(AbstractEntity[] o, PImage background) {this.instantiate(background, new Point()); this.add(o);}
+	public Room(ArrayList<AbstractEntity> o, PImage background) {this.instantiate(background, new Point()); this.add(o);}
 	
-	public void add(Entity e) {add.add(e);}
-	public void add(Entity[] l) {for (Entity e : l) {add.add(e);}}
-	public void add(Iterable<? extends Entity> l) {for (Entity e : l) {add.add(e);}}
+	public void add(AbstractEntity e) {add.add(e);}
+	public void add(AbstractEntity[] l) {for (AbstractEntity e : l) {add.add(e);}}
+	public void add(Iterable<? extends AbstractEntity> l) {for (AbstractEntity e : l) {add.add(e);}}
 	public void add(float x, float y, float w, float h) {add.add(new Wall(x, y, w, h));}
 	public void add(PImage p, float x, float y, float w, float h) {add.add(new Wall(p, x, y, w, h));}
 	public void add(PImage p, float x, float y, float w, float h, float px, float py, int s) {add.add(new Wall(p, x, y, w, h, px, py, s));}
@@ -43,14 +43,14 @@ public class Room {
 	}
 	
 	// HASH ADD
-	private void addHash(Entity e) {e.calculateHash(); this.hash.computeIfAbsent(e.getHash(),  k -> new ArrayList<>()).add(e);}
-	private void addHash(Iterable<? extends Entity> l) {for (Entity e : l) {this.addHash(e);}}
+	private void addHash(AbstractEntity e) {e.calculateHash(); this.hash.computeIfAbsent(e.getHash(),  k -> new ArrayList<>()).add(e);}
+	private void addHash(Iterable<? extends AbstractEntity> l) {for (AbstractEntity e : l) {this.addHash(e);}}
 	
 	// HASH REMOVE
-	private void removeHash(Entity e, int key) {
-		ArrayList<Entity> chunk = hash.get(key); if (chunk != null) {chunk.remove(e); if (chunk.isEmpty()) {hash.remove(key);}}
-	} private void removeHash(Entity e) {this.removeHash(e, e.getHash());}
-	private void removeHash(Iterable<? extends Entity> l) {for (Entity e : l) {this.removeHash(e);}}
+	private void removeHash(AbstractEntity e, int key) {
+		ArrayList<AbstractEntity> chunk = hash.get(key); if (chunk != null) {chunk.remove(e); if (chunk.isEmpty()) {hash.remove(key);}}
+	} private void removeHash(AbstractEntity e) {this.removeHash(e, e.getHash());}
+	private void removeHash(Iterable<? extends AbstractEntity> l) {for (AbstractEntity e : l) {this.removeHash(e);}}
 	
 //	public boolean setPlayer(Player p) {if (this.p == null) {this.p = p; room.add(this.p); return true;} return false;}
 	
@@ -71,8 +71,8 @@ public class Room {
 		if (this.background != null) {
 //			ToolKit.getApp().image(this.background, this.backCoords.getX(), this.backCoords.getY());
 		} 
-		for (ArrayList<Entity> l : this.hash.values()) {
-			for (Entity e : l) {
+		for (ArrayList<AbstractEntity> l : this.hash.values()) {
+			for (AbstractEntity e : l) {
 				if (e.isDelete()) {this.sub.add(e);} 
 				else {e.update();this.add.addAll(e.getMoveSet().getTriggers());}
 				if (e.getHash() != ToolKit.hash((int)(e.getRX()/CHUNK_SIZE), (int)(e.getRY()/CHUNK_SIZE))) {
@@ -80,9 +80,9 @@ public class Room {
 				}
 			} 
 		}
-		for (Entity e : this.mod) {this.removeHash(e); e.calculateHash(); this.addHash(e);}
+		for (AbstractEntity e : this.mod) {this.removeHash(e); e.calculateHash(); this.addHash(e);}
 		this.moveBackground(); this.see = ToolKit.getNeighborsRender(this.p, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 3);
-		Collections.sort(see); for (Entity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}
+		Collections.sort(see); for (AbstractEntity e : see) {e.setXY(e.getRX()+this.backCoords.getX(), e.getRY()+this.backCoords.getY()); e.show();}
 		this.removeHash(sub); this.addHash(add); sub.clear(); add.clear(); mod.clear(); see.clear();
 	}
 
@@ -98,7 +98,7 @@ public class Room {
 		} else {this.backCoords.setY(up? -this.background.height + ToolKit.getAppHeight(): 0);}
 	}
 	
-	public ArrayList<Entity> getRoom(Entity e) {return ToolKit.getNeighbors(e, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 1);}
+	public ArrayList<AbstractEntity> getRoom(AbstractEntity e) {return ToolKit.getNeighbors(e, this.hash, this.WIDTH_CHUNK, this.HEIGHT_CHUNK, 1);}
 	public Player getPlayer() {return this.p;}
 	public Point getBackCoords() {return this.backCoords == null? new Point() : this.backCoords;}
 	public int getImageWidth() {return this.background == null? ToolKit.getAppWidth() : this.background.width;}

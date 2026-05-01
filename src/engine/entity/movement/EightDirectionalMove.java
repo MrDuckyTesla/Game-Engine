@@ -5,7 +5,7 @@ import engine.entity.trigger.*;
 import engine.util.*;
 import processing.core.PApplet;
 
-public class EightDirectionalMove extends MoveSet {
+public class EightDirectionalMove extends AbstractMove {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
 	private long tID = -1;
@@ -21,7 +21,7 @@ public class EightDirectionalMove extends MoveSet {
 	private void instantiate(Rect xywh, float speed, float scale) {this.xywh = xywh; this.totalDist = new Point(); this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
 
 	@Override
-	public void move(Entity c) {
+	public void move(AbstractEntity c) {
 		Trigger t = c.getTrigger();
 		if (t != null && t.getTriggerType() == Triggers.DELETE) {
 			setForceWalk(true); setCanChange(false); this.setDoubSpeed(); 
@@ -33,7 +33,7 @@ public class EightDirectionalMove extends MoveSet {
 			else if (this.p.getX() > 0) {if (this.setX(c.getRW() - c.getW() - 0.0001f)) {this.p.resetX();}}
 			if (this.p.getY() < 0) {if (this.setY(0.0001f)) {this.p.resetY();}}
 			else if (this.p.getY() > 0) {if (this.setY(c.getRH() - c.getH() - 0.0001f)) {this.p.resetY();}}
-		} for (Entity e : c.getRoomList()) {
+		} for (AbstractEntity e : c.getRoomList()) {
 			if (e != c && e.isTangible()) {  // If o isn't c and o is tangible, then if c collides with o
 //				float[] col = ToolKit.rectRectCollideCoords(this.xywh.getX(), this.xywh.getY(), this.xywh.getX()+this.p.getX(), this.xywh.getY() + this.p.getY(), this.getSW(), this.getSH(), e.getRX(), e.getRY(), e.getW(), e.getH());
 //				if (col.length != 0) {
@@ -61,7 +61,7 @@ public class EightDirectionalMove extends MoveSet {
 	}
 	
 	@Override
-	public MoveSet get() {return new EightDirectionalMove(this.xywh.get(), this.maxSpeed/2, this.scale);}
+	public AbstractMove get() {return new EightDirectionalMove(this.xywh.get(), this.maxSpeed/2, this.scale);}
 	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override
@@ -80,7 +80,7 @@ public class EightDirectionalMove extends MoveSet {
 	public Point getPoint() {return this.xywh.getPoint();}
 
 	@Override
-	public Moves getMoveType() {return Moves.EIGHT;}
+	public Move getMoveType() {return Move.EIGHT;}
 	
 	private Point getPotential(int dir) {
 		Point s = new Point();

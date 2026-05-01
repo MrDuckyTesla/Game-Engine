@@ -1,16 +1,16 @@
 package engine.entity.abilities;
 
-import engine.entity.Entity;
-import engine.entity.movement.MoveSet;
-import engine.entity.movement.Moves;
+import engine.entity.AbstractEntity;
+import engine.entity.movement.AbstractMove;
+import engine.entity.movement.Move;
 
-public class Walk8d extends Ability {
+public class Walk8d extends AbstractAbility {
 	
 	private boolean lIsIdle = true;
 
 	@Override
-	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
-		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
+	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
+		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
 		if (m.getIsIdle()) {e.getAnimator().setAnim(e.getImg(), m, 0, 2, 12);}
 		else {e.getAnimator().setAnim(e.getImg(), m, 16, 4, 12, this.lIsIdle != m.getIsIdle());}
 		this.lIsIdle = m.getIsIdle();
@@ -23,8 +23,8 @@ public class Walk8d extends Ability {
 	public boolean isActive() {return true;}
 	
 	@Override
-	public Ability get() {return new Walk8d();}
+	public AbstractAbility get() {return new Walk8d();}
 	@Override
-	public Abilities getType() {return Abilities.WALK_EIGHT_DIR;}
+	public Ability getType() {return Ability.WALK_EIGHT_DIR;}
 
 }

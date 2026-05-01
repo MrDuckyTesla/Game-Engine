@@ -1,13 +1,13 @@
 package engine.entity.trigger;
 
 import engine.Room;
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 
 public final class Door extends Trigger {
 	
 	Room next;
 	
-	public Door(float x, float y, float w, float h, Entity i) {
+	public Door(float x, float y, float w, float h, AbstractEntity i) {
 		super(x, y, w, h, i);
 		// TODO Auto-generated constructor stub
 	}

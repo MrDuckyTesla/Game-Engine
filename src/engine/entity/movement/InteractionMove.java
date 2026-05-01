@@ -1,19 +1,19 @@
 package engine.entity.movement;
 
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 import engine.util.Point;
 
-public class InteractionMove extends MoveSet {
+public class InteractionMove extends AbstractMove {
 	
 	private float x, y, w, h;
-	private MoveSet m;
+	private AbstractMove m;
 
-	public InteractionMove(float x, float y, float w, float h, MoveSet m) {
+	public InteractionMove(float x, float y, float w, float h, AbstractMove m) {
 		this.x = x; this.y = y; this.w = w; this.h = h; this.m = m;
 	}
 
 	@Override
-	public void move(Entity e) {
+	public void move(AbstractEntity e) {
 		
 		// ONLY HAVE TO DO THIS MATH ON DIRECTION CHANGES
 		
@@ -27,7 +27,7 @@ public class InteractionMove extends MoveSet {
 	}
 
 	@Override
-	public MoveSet get() {
+	public AbstractMove get() {
 		// TODO Auto-generated method stub
 		return new InteractionMove(x, y, w, h, m);
 	}
@@ -54,9 +54,9 @@ public class InteractionMove extends MoveSet {
 	}
 
 	@Override
-	public Moves getMoveType() {
+	public Move getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.INTERACT;
+		return Move.INTERACT;
 	}
 
 	@Override

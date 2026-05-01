@@ -1,7 +1,7 @@
 package engine.entity;
 
 import engine.Room;
-import engine.entity.abilities.Ability;
+import engine.entity.abilities.AbstractAbility;
 import engine.entity.movement.*;
 import engine.entity.trigger.Trigger;
 import engine.util.ToolKit;
@@ -12,11 +12,11 @@ public class Wall extends NonPlayerCharacter{
 	private float imgX, imgY;
 	private int imgS;
 
-	public Wall(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+	public Wall(Room room, PImage img, AbstractMove move, AbstractAbility[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		super(room, img, move, abilities, colorLayers, colorTints, isTangible, isBreakable);
 	} public Wall(PImage img, float x, float y, float w, float h, float imgX, float imgY, int imgS) {
-		super(null, img, new ObjectAffectedMove(x, y, w, h), new Ability[0], null, null, true, true); this.imgX = imgX; this.imgY = imgY; this.imgS = imgS;
-	} public Wall(PImage img, float x, float y, float w, float h) {super(null, img, new ObjectAffectedMove(x, y, w, h), new Ability[0], null, null, true, true);}
+		super(null, img, new ObjectAffectedMove(x, y, w, h), new AbstractAbility[0], null, null, true, true); this.imgX = imgX; this.imgY = imgY; this.imgS = imgS;
+	} public Wall(PImage img, float x, float y, float w, float h) {super(null, img, new ObjectAffectedMove(x, y, w, h), new AbstractAbility[0], null, null, true, true);}
 	public Wall(float x, float y, float w, float h) {super(null, null, new ObjectAffectedMove(x, y, w, h), null, null, null, true, true);}
 	
 	public void show() {
@@ -31,7 +31,7 @@ public class Wall extends NonPlayerCharacter{
 	}
 	
 	@Override
-	public Entities getType() {return Entities.NON_PLAYER_CHARACTER;}
+	public Entity getType() {return Entity.NON_PLAYER_CHARACTER;}
 
 	@Override
 	public boolean isDelete() {return false;}
