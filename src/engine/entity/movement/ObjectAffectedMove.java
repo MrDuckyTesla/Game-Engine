@@ -1,16 +1,16 @@
 package engine.entity.movement;
 
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 import engine.util.Point;
 
-public class ObjectAffectedMove extends MoveSet {
+public class ObjectAffectedMove extends AbstractMove {
 	
 	private float x, y, w, h;
 	
 	public ObjectAffectedMove(float x, float y, float w, float h) {this.x = x; this.y = y; this.w = w; this.h = h;}
 
 	@Override
-	public void move(Entity e) {
+	public void move(AbstractEntity e) {
 		// TODO Make object get moved around
 	}
 
@@ -30,7 +30,7 @@ public class ObjectAffectedMove extends MoveSet {
 	public float getSH() {return this.getH();}
 	
 	@Override
-	public MoveSet get() {
+	public AbstractMove get() {
 		return new ObjectAffectedMove(x, y, w, h);
 	}
 	
@@ -41,9 +41,9 @@ public class ObjectAffectedMove extends MoveSet {
 	}
 
 	@Override
-	public Moves getMoveType() {
+	public Move getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.OBJECT;
+		return Move.OBJECT;
 	}
 
 	@Override

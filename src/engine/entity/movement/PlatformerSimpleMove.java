@@ -4,7 +4,7 @@ import engine.entity.*;
 import engine.util.*;
 
 // Legacy version without procedural animation
-public class PlatformerSimpleMove extends MoveSet {
+public class PlatformerSimpleMove extends AbstractMove {
 	
 	Point coords = new Point();
 	private Rect xywh;
@@ -22,12 +22,12 @@ public class PlatformerSimpleMove extends MoveSet {
 //	}
 
 	@Override
-	public void move(Entity c) {
+	public void move(AbstractEntity c) {
 		// TODO Auto-generated method stub
 	}
 	
 	@Override
-	public MoveSet get() {
+	public AbstractMove get() {
 		// TODO Auto-generated method stub
 		return new PlatformerSimpleMove();
 	}
@@ -53,9 +53,9 @@ public class PlatformerSimpleMove extends MoveSet {
 	}
 
 	@Override
-	public Moves getMoveType() {
+	public Move getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.PLATFORM;
+		return Move.PLATFORM;
 	}
 
 	@Override

@@ -1,11 +1,11 @@
 package engine.entity.abilities;
 
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 import engine.entity.movement.*;
 import engine.entity.trigger.*;
 import engine.util.ToolKit;
 
-public class Sword8d extends Ability {
+public class Sword8d extends AbstractAbility {
 	
 	private boolean lIsIdle = true, activate = false, isActive = false, sent = false;
 	private Trigger currTrig = null;
@@ -20,8 +20,8 @@ public class Sword8d extends Ability {
 	public boolean sentTrigger() {return this.sent;}
 
 	@Override
-	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
-		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
+	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
+		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
 		if (!e.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			e.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
@@ -39,15 +39,15 @@ public class Sword8d extends Ability {
 		} else {this.currTrig = null; this.sent = false;}
 	}
 	
-	private void setSwing(MoveSet m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}
+	private void setSwing(AbstractMove m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}
 
 	@Override
 	public boolean isActive() {return this.isActive;}
 	@Override
 	public void setActive(boolean activate) {this.activate = activate;}
 	@Override
-	public Ability get() {return this.getKeys() == null? new Sword8d() : new Sword8d(this.getKeys());}
+	public AbstractAbility get() {return this.getKeys() == null? new Sword8d() : new Sword8d(this.getKeys());}
 	@Override
-	public Abilities getType() {return Abilities.SWORD_EIGHT_DIR;}
+	public Ability getType() {return Ability.SWORD_EIGHT_DIR;}
 
 }

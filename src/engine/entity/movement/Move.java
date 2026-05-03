@@ -1,5 +1,5 @@
 package engine.entity.movement;
 
-public enum Moves {
+public enum Move {
 	DUO, EIGHT, PLATFORM, OBJECT, INTERACT
 }

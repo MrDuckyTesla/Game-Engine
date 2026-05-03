@@ -2,31 +2,31 @@ package engine.entity.movement;
 
 import java.util.ArrayList;
 
-import engine.entity.Entity;
-import engine.entity.abilities.Ability;
+import engine.entity.AbstractEntity;
+import engine.entity.abilities.AbstractAbility;
 import engine.entity.trigger.Trigger;
 import engine.util.Point;
 
-public abstract class MoveSet {
+public abstract class AbstractMove {
 	
 	private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
 	
 //	public abstract void moveAs(Moves e);
-	public abstract void move(Entity e);
+	public abstract void move(AbstractEntity e);
 	
-	public final void move(Entity e, Ability ab) {this.reset(e); ab.update(e, this); this.check(ab);}
-	public final void move(Entity e, Ability[] ab) {this.reset(e); for (Ability a : ab) {a.update(e, this); this.check(a);}}
+	public final void move(AbstractEntity e, AbstractAbility ab) {this.reset(e); ab.update(e, this); this.check(ab);}
+	public final void move(AbstractEntity e, AbstractAbility[] ab) {this.reset(e); for (AbstractAbility a : ab) {a.update(e, this); this.check(a);}}
 	
-	private void reset(Entity e) {this.triggers.clear(); this.move(e);}
+	private void reset(AbstractEntity e) {this.triggers.clear(); this.move(e);}
 	
-	private void check(Ability ab) {
+	private void check(AbstractAbility ab) {
 		Trigger t = ab.getTrigger();
 		if (t != null) {triggers.add(t);}
 	}
 	
 	public final ArrayList<Trigger> getTriggers() {return this.triggers;}
 	
-	public abstract MoveSet get();
+	public abstract AbstractMove get();
 	public abstract float getX();
 	public abstract float getY();
 	public abstract float getW();
@@ -35,7 +35,7 @@ public abstract class MoveSet {
 	public abstract float getSW();
 	public abstract float getSH();
 	public abstract Point getPoint();
-	public abstract Moves getMoveType();
+	public abstract Move getMoveType();
 	
 	public abstract void setDir(int d);
 	public abstract void setIdle(boolean i);

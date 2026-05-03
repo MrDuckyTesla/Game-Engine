@@ -1,15 +1,15 @@
 package engine.entity;
 
 import engine.Room;
-import engine.entity.abilities.Ability;
+import engine.entity.abilities.AbstractAbility;
 import engine.entity.movement.*;
 import engine.entity.trigger.Trigger;
 import engine.util.ToolKit;
 import processing.core.PImage;
 
-public class Player extends Entity {
+public class Player extends AbstractEntity {
 	
-	public Player(Room room, PImage img, MoveSet move, Ability[] abilities, int[][] colorLayers, int[] colorTints) {
+	public Player(Room room, PImage img, AbstractMove move, AbstractAbility[] abilities, int[][] colorLayers, int[] colorTints) {
 		super(room, img, move, abilities, colorLayers, colorTints, false, false); room.setPlayer(this);
 	}
 
@@ -17,7 +17,7 @@ public class Player extends Entity {
 	public void update() {
 		super.update();
 		
-		if (this.getMoveSet().getMoveType() == Moves.EIGHT) {
+		if (this.getMoveSet().getMoveType() == Move.EIGHT) {
 		    if (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39) || ToolKit.keyIsDown(83) || ToolKit.keyIsDown(40) || ToolKit.keyIsDown(65) || ToolKit.keyIsDown(37) || ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38)) {this.setOverState(false);}
 		    else {this.setOverState(true);}
 		    // Check direction
@@ -39,7 +39,7 @@ public class Player extends Entity {
 	}
 	
 	@Override
-	public Entities getType() {return Entities.PLAYER;}
+	public Entity getType() {return Entity.PLAYER;}
 
 	@Override
 	public boolean isDelete() {

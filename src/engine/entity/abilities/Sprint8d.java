@@ -1,13 +1,13 @@
 package engine.entity.abilities;
 
-import engine.entity.Entity;
+import engine.entity.AbstractEntity;
 import engine.entity.movement.EightDirectionalMove;
-import engine.entity.movement.MoveSet;
-import engine.entity.movement.Moves;
+import engine.entity.movement.AbstractMove;
+import engine.entity.movement.Move;
 import engine.util.ToolKit;
 
 //this class ONLY works on objects using EightDirectionalMove()
-public class Sprint8d extends Ability {
+public class Sprint8d extends AbstractAbility {
 	
 	private boolean activate, isActive = false;
 	
@@ -16,8 +16,8 @@ public class Sprint8d extends Ability {
 	public Sprint8d(int[] keys) {super(keys);}
 
 	@Override
-	public void update(Entity e, MoveSet m) throws IllegalArgumentException {
-		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
+	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
+		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
 			this.isActive = false;
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
@@ -33,8 +33,8 @@ public class Sprint8d extends Ability {
 	@Override
 	public boolean isActive() {return this.isActive;}
 	@Override
-	public Ability get() {return this.getKeys() == null? new Sprint8d() : new Sprint8d(this.getKeys());}
+	public AbstractAbility get() {return this.getKeys() == null? new Sprint8d() : new Sprint8d(this.getKeys());}
 	@Override
-	public Abilities getType() {return Abilities.SPRINT_EIGHT_DIR;}
+	public Ability getType() {return Ability.SPRINT_EIGHT_DIR;}
 	
 }

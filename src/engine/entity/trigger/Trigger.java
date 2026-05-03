@@ -3,11 +3,11 @@ package engine.entity.trigger;
 import engine.entity.*;
 import engine.entity.movement.InteractionMove;
 
-public abstract class Trigger extends Entity {
+public abstract class Trigger extends AbstractEntity {
 	
-	private Entity caster;
+	private AbstractEntity caster;
 	
-	public Trigger(float x, float y, float w, float h, Entity caster) {
+	public Trigger(float x, float y, float w, float h, AbstractEntity caster) {
 		super(null, null, new InteractionMove(x, y, w, h, caster.getMoveSet()), null, null, null, false, false);
 		this.caster = caster;
 	}
@@ -16,7 +16,7 @@ public abstract class Trigger extends Entity {
 	
 	public long getCastID() {return this.caster.getID();}
 	
-	public Entity getCaster() {return this.caster;}
+	public AbstractEntity getCaster() {return this.caster;}
 	
 	public abstract Triggers getTriggerType();
 	
@@ -30,6 +30,6 @@ public abstract class Trigger extends Entity {
 	public final void interact(Trigger t) {}
 	
 	@Override
-	public final Entities getType() {return Entities.TRIGGER;}
+	public final Entity getType() {return Entity.TRIGGER;}
 
 }
