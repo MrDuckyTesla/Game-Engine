@@ -1,6 +1,6 @@
 Start Date:  7/11/2024
-Last Updated:  4/29/2026
-Current Version 0.1.0.1
+Last Updated:  5/3/2026
+Current Version 0.1.0.2
 
 To view code, navigate to src/engine.
 To view assets, navigate to src/Assets.
@@ -22,10 +22,11 @@ TODO:
 #1:	 Allow MoveSet to change movement types on fly (to make knockback and interractions better)
 #2:	 Instead of entities checking for triggers and storing them, have triggers check for entities
 #3:  Change ObjectAffectedMove name to something that reflects better with its function
-#4:	 Make ToolKit more "float friendly" with epsilon
-#5:	 Make a "party" system that allows other entities to follow player
-#6:	 Make enemies follow you if you get close enough
-#7:	 Find ways to optimize code and fix existing issues in code such as:
+#4:	 Move away from processing and use built in java functions. its just extra weight at this point
+#5:	 Make ToolKit more "float friendly" with epsilon
+#6:	 Make a "party" system that allows other entities to follow player
+#7:	 Make enemies follow you if you get close enough
+#8:	 Find ways to optimize code and fix existing issues in code such as:
 		a: EightDirectionalMove snapping at corners, allowing you to fit bewteen spaces you shouldnt,
 			and given enough obstacles, without total dist being tracked, entities can move an infinite
 			amount of distance in one frame
@@ -33,15 +34,15 @@ TODO:
 			to specify what animation should be played with what movements
 		c: some colision code is probably suboptimal as I made most of it from scratch without looking any
 			algorithms up. I am sure there are many issues I have glossed over as well
-#8:	 Implement other movement types excluding PlatformerComplexMove
-#9:	 Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
-#10: Make working menu system along with text boxes
-#11: Implement saving and loading using new menu
-#12: Implement keybinds that are able to be changed and saved
-#13: Implement tile based background and editor
-#14: EVENTS (dialogue and cutscenes and such)
-#15: Make Sounds and Sound Effects easy to call
-#16: Implement an UI that can be called upon as a function. I will try to make an outline here:
+#9:	 Implement other movement types excluding PlatformerComplexMove
+#10: Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
+#11: Make working menu system along with text boxes
+#12: Implement saving and loading using new menu
+#13: Implement keybinds that are able to be changed and saved
+#14: Implement tile based background and editor
+#15: EVENTS (dialogue and cutscenes and such)
+#16: Make Sounds and Sound Effects easy to call
+#17: Implement an UI that can be called upon as a function. I will try to make an outline here:
 		a: UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
 			the user to open a folder of images for said tiles.
 		b: UI allows user to place down entities anywhere (not grid locked). this entity would be a blank
@@ -55,7 +56,7 @@ TODO:
 			x, y, width, height, ...etc. as well. 
 		e: this UI, upon finishing, should save what the user did to a text file, translating what the user did
 			into its equivalent code counterpart for the user to copy paste into their project.
-#17: Implement PlatformerComplexMove
-#18: Implement Enemy AI for platformer mode
-#19: Implement Neural Network that can learn from other Entities
-#20: Implement multiplayer of some sorts
+#18: Implement PlatformerComplexMove
+#19: Implement Enemy AI for platformer mode
+#20: Implement Neural Network that can learn from other Entities
+#21: Implement multiplayer of some sorts
