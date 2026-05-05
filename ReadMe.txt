@@ -1,9 +1,11 @@
 Start Date:  7/11/2024
-Last Updated:  5/3/2026
-Current Version 0.1.0.2
+Last Updated:  5/5/2026
+Current Version 0.1.0.3
 
 To view code, navigate to src/engine.
 To view assets, navigate to src/Assets.
+
+Current build contains a main class that runs a test "game"
 
 Why did I decide to make my own game engine? 
 Well I've always loved the processing foundations p5.js and processing4 libraries. I liked how simple it was to use, and 
@@ -17,16 +19,26 @@ be me doing the work so if you like any of what you read, feel free to get in to
 
 tldr: fully code based game engine -> make tedious code simple and streamlined -> minimal UI if any -> beginner friendly
 
-TODO:
+I also want this library to pair well with processing4 and not have any external jar files and NO AI GENERATED CODE PLEASE!
+	I'm fine with using AI to find bugs for instance or give ideas to improve/optimize code, but a human better be the one 
+	intrepreting that idea and writing that code themselves. I don't want this engine to be vibe coded slop, if I was fine
+	with that, I wouldnt be writing this game engine from the ground up now would I?
 
+TODO (JAVADOCS AND COMMENTS SHOULD ALWAYS BE PRIORITY):
+
+I'm aware that some of these TODOs are a bit ambitious, but I won't stop working on this until theyre all implemented
 #1:	 Allow MoveSet to change movement types on fly (to make knockback and interractions better)
 #2:	 Instead of entities checking for triggers and storing them, have triggers check for entities
-#3:  Change ObjectAffectedMove name to something that reflects better with its function
-#4:	 Move away from processing and use built in java functions. its just extra weight at this point
+#3:	 Make basic physics engine to expand upon, make all MoveSet classes implement physics class and use
+		vectors instead of what im currently doing to allow angled movement and collisions. I want to
+		also add soft bodies at some point along with springs. basically, replace ToolKits collisions
+		with new physics class based collisions
+#4:	 Move away from processing and use built in java functions. I dont want any external jars
 #5:	 Make ToolKit more "float friendly" with epsilon
-#6:	 Make a "party" system that allows other entities to follow player
-#7:	 Make enemies follow you if you get close enough
-#8:	 Find ways to optimize code and fix existing issues in code such as:
+#6:	 While at it, finish javadocs for ToolKit
+#7:	 Make a "party" system that allows other entities to follow player (allow all members to fight in battles)
+#8:	 Make enemies follow you if you get close enough
+#9:	 Find ways to optimize code and fix existing issues in code such as:
 		a: EightDirectionalMove snapping at corners, allowing you to fit bewteen spaces you shouldnt,
 			and given enough obstacles, without total dist being tracked, entities can move an infinite
 			amount of distance in one frame
@@ -34,15 +46,15 @@ TODO:
 			to specify what animation should be played with what movements
 		c: some colision code is probably suboptimal as I made most of it from scratch without looking any
 			algorithms up. I am sure there are many issues I have glossed over as well
-#9:	 Implement other movement types excluding PlatformerComplexMove
-#10: Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
-#11: Make working menu system along with text boxes
-#12: Implement saving and loading using new menu
-#13: Implement keybinds that are able to be changed and saved
-#14: Implement tile based background and editor
-#15: EVENTS (dialogue and cutscenes and such)
-#16: Make Sounds and Sound Effects easy to call
-#17: Implement an UI that can be called upon as a function. I will try to make an outline here:
+#10:	 Implement other movement types excluding PlatformerComplexMove
+#11: Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
+#12: Make working menu system along with text boxes
+#13: Implement saving and loading using new menu
+#14: Implement keybinds that are able to be changed and saved
+#15: Implement tile based background and editor
+#16: EVENTS (dialogue and cutscenes and such)
+#17: Make Sounds and Sound Effects easy to call and analyze
+#18: Implement an UI that can be called upon as a function. I will try to make an outline here:
 		a: UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
 			the user to open a folder of images for said tiles.
 		b: UI allows user to place down entities anywhere (not grid locked). this entity would be a blank
@@ -56,7 +68,10 @@ TODO:
 			x, y, width, height, ...etc. as well. 
 		e: this UI, upon finishing, should save what the user did to a text file, translating what the user did
 			into its equivalent code counterpart for the user to copy paste into their project.
-#18: Implement PlatformerComplexMove
-#19: Implement Enemy AI for platformer mode
-#20: Implement Neural Network that can learn from other Entities
-#21: Implement multiplayer of some sorts
+#19: Implement PlatformerComplexMove (Maybe do me sooner because I'll be easy with physics implemented!)
+#20: Implement Enemy AI for platformer mode
+#21: Implement Neural Network that can learn from other Entities (implement matrix and fraction class too) this
+		Neural Net should be more general and easy to customize as user sees fit
+#22: Implement multiplayer of some sorts (server vs client)
+#23: Find some way to get steamworks integrated (maybe have built in achievements and features that are easy to
+	 	connect to steam somehow? I might be forced to use steamworks4j)

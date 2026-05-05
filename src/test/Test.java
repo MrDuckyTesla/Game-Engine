@@ -3,12 +3,12 @@ package test;
 import engine.util.ToolKit;
 import processing.core.PApplet;
 
-public class Main extends PApplet {
+public class Test extends PApplet {
 	
 	public System test = new System();
 
 	public static void main(String[] args) {
-		PApplet.main(Main.class);
+		PApplet.main(Test.class);
 	}
 	
 	// Only used for the size of the canvas
@@ -21,7 +21,7 @@ public class Main extends PApplet {
 	@Override
 	public void setup() {
 		surface.setTitle("3 Body System Test");
-		textFont(createFont("game/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
+		textFont(createFont("src/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
 		noCursor(); noStroke(); textSize(20); // frameRate(10);
 	}
 	
