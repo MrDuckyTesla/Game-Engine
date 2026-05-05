@@ -11,7 +11,10 @@ import processing.core.PImage;
  * Static class of util functions along with collision and image manipulation
  * @author Nico L. (MrDuckyTesla)
  */
-public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT BEING EXPANDED TO MORE OF A GAME ENGINE" - Old Nico <= I also took out all the animation functions and made it into its own class - Nico. yeah so its more of a toolkit, renamed
+public final class ToolKit {  
+	// "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT BEING EXPANDED TO MORE OF A GAME ENGINE" - Older Nico
+	// "I also took out all the animation functions and made it into its own class" - Old Nico. 
+	// "yeah so its more of a toolkit, renamed" - Nico
 	
 	/**
 	 * Stores all keys that are being held down
