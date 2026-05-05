@@ -1,8 +1,12 @@
 package engine.util;
 
-
 import processing.core.PApplet;
 
+/**
+ * THIS CLASS IS JUST A CONTAINER WITH SOME HELPER FUNCTIONS
+ * @see engine.util.physics.Rectangle
+ * @author Nico L. (MrDuckyTesla)
+ */
 public class Rect extends Point {
 	
 	private float w, h;

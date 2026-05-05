@@ -7,15 +7,24 @@ import engine.Room;
 import engine.entity.AbstractEntity;
 import processing.core.PApplet;
 import processing.core.PImage;
-
+/**
+ * Static class of util functions along with collision and image manipulation
+ * @author Nico L. (MrDuckyTesla)
+ */
 public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT BEING EXPANDED TO MORE OF A GAME ENGINE" - Old Nico <= I also took out all the animation functions and made it into its own class - Nico. yeah so its more of a toolkit, renamed
 	
 	/**
 	 * Stores all keys that are being held down
+	 * @see #keyIsDown(int)
+	 * @see #setKey(int, boolean)
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	private static HashMap<Integer, Boolean> keys = new HashMap<>();
+	
 	/**
 	 * Stores the PApplet being used by all classes
+	 * @see processing.core.PApplet
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	private static PApplet app = null;
 	
@@ -25,6 +34,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param image The (presumably greyscale) spritesheet being compiled
 	 * @param layerList An array separated by layer holding greyscale colors (EX: [ [a, b, c], [d, e], [f] ], 
 	 * @return Returns a 1d ArrayList thats formatted with the index of color, the layer it belongs to, and the color
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static ArrayList<Integer> PreCompile(PApplet app, PImage image, int[][] layerList) {  // PreCompile to avoid lag
 		HashMap<Integer, Integer> layer = new HashMap<>(layerList.length);
@@ -47,6 +57,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param image The (presumably greyscale) spritesheet being recolored
 	 * @param colorList List returned from PreCompile()
 	 * @param tintList The color you want to tint the image with in [R, G, B] format
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void changeColor(PApplet app, PImage image, ArrayList<Integer> colorList, int[] tintList) {
 		image.loadPixels();  // Load pixels for changing
@@ -66,6 +77,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param image The image that is getting changed
 	 * @param ogColorRGB
 	 * @param newColorRGB
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void changeSingleColor(PApplet app, PImage image, int[] ogColorRGB, int[] newColorRGB) {
 		image.loadPixels();  // Load pixels for changing
@@ -83,6 +95,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param app PApplet instance that is being used
 	 * @param image The image that is getting changed
 	 * @param colorList List returned from PreCompile()
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void resetColor(PApplet app, PImage image, ArrayList<Integer> colorList) {  // Resets all pixels in image based on pre-compile list
 		image.loadPixels();  // Load pixels for changing
@@ -95,6 +108,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * Takes an image and sets its alpha value to 0, making the image completely transparent
 	 * @param app PApplet instance that is being used
 	 * @param image The image that is getting changed
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void clearImage(PApplet app, PImage image) {
 		image.loadPixels();  // Load pixels for changing
@@ -110,6 +124,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param y Y coordinate indicating where to pixelate
 	 * @param w Width of pixelated area
 	 * @param h Height of pixelated area
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void pixelate(PApplet app, int res, float x, float y, float w, float h) {
 		PImage image = app.get(); // Get canvas
@@ -126,6 +141,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param y Y coordinate indicating where to pixelate
 	 * @param w Width of pixelated area
 	 * @param h Height of pixelated area
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void pixelate(PApplet app, PImage image, int res, float x, float y, float w, float h) {
 		image.resize(app.width/res, app.height/res);  // Resize image to wanted size
@@ -141,6 +157,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param radius Radius that line must stay within
 	 * @param forceRadius Boolean that dictates if the line length will be the radius
 	 * @return Set of coordinates in form [X, Y] that should be used instead of endpoint
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static float[] lineRadius(float centerX, float centerY, float endX, float endY, float radius, boolean forceRadius) {  // Returns coords to keep a line within a radius
 		if (forceRadius || PApplet.dist(centerX, centerY, endX, endY) > radius) {  // If the line is outside the radius
@@ -163,6 +180,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param endY Y coordinate of where the arm wants to end
 	 * @param bendRight Boolean that dictates if the arms joint bends to the left or right
 	 * @return Set of coordinates in form [X1, Y1, X2, Y2] that should be used as such: line(centerX, centerY, X1, Y1); line(X1, Y1, X2, Y2)
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static float[] getLimbCoords(float centerX, float centerY, float length1, float length2, float endX, float endY, boolean bendRight) {
 		float dist = PApplet.dist(centerX, centerY, endX, endY);
@@ -190,6 +208,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param app PApplet instance that is being used
 	 * @param image1 Image that is being overridden
 	 * @param image2 Source image being used to copy from
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void copy(PApplet app, PImage image1, PImage image2) {
 		image1.loadPixels(); image2.loadPixels();
@@ -211,6 +230,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param x4 One of the two X coordinates belonging to line2
 	 * @param y4 One of the two Y coordinates belonging to line2
 	 * @return Returns the set of coordinates in form [X, Y] if there is a collision. If there is no collision, returns empty array
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static float[] lineLineCollide(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {  // Collision for two lines, very important function
 		float d1 = PApplet.dist(x1, y1, x2, y2), d2 = PApplet.dist(x3, y3, x4, y4);  // Get lengths of line segments
@@ -237,6 +257,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param y2 One of the two Y coordinates belonging to line
 	 * @param rounded boolean that dictates if points towards the end of a line form sharp corners or not
 	 * @return Returns the set of coordinates in form [X, Y] of the nearest point on the line
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static float[] closestPointLine(float px, float py, float x1, float y1, float x2, float y2, boolean rounded) {
 		float m1, m2, b1, b2, iX, iY;
@@ -268,6 +289,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param sizeDisplay Size to display line at
 	 * @param color Color of line in [R, G, B, A] format
 	 * @return image that contains pixelated line
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static PImage lineImage(PApplet app, float x1, float y1, float x2, float y2, int res, float thickness, float sizeDisplay, int[] color) {  //creates an image of a pixelated line
 		PImage image = app.createImage(res, res, PApplet.ARGB);
@@ -298,6 +320,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param y1 One of the two Y coordinates belonging to line
 	 * @param x2 One of the two X coordinates belonging to line
 	 * @param y2 One of the two Y coordinates belonging to line
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void lineDraw(PApplet app, float x1, float y1, float x2, float y2) {
 		app.image(ToolKit.lineImage(app, x1, y1, x2, y2), 0, 0, app.width, app.height);
@@ -315,6 +338,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param gradient Boolean that dictated if there is a gradient
 	 * @param color2 Color of circle gradient in [R, G, B, A] format
 	 * @return image that contains pixelated circle
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static PImage circleImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay, int[] color1, boolean gradient, int[] color2) {
 		float scaleWidth = sizeDisplay / res, halfScaleWidth = scaleWidth / 2, c1, c2; int row = 0;
@@ -350,6 +374,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param gradient Boolean that dictated if there is a gradient
 	 * @param color2 Color of square gradient in [R, G, B, A] format
 	 * @return image of squared dimensions with a nice gradient
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static PImage squareImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay, int[] color1, boolean gradient, int[] color2) {
 		float scaleWidth = sizeDisplay / res, halfScaleWidth = scaleWidth / 2, c1, c2; int row = 0;
@@ -378,6 +403,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param color1 Color of background in [R, G, B, A] format
 	 * @param color2 Color of outline in [R, G, B, A] format
 	 * @return Image with outline
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static PImage outline(PApplet app, PImage image, int[] color1, int[] color2) {
 		image.loadPixels();  // Load pixels
@@ -399,6 +425,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param color1 Color of background in [R, G, B, A] format
 	 * @param color2 Color of outline in [R, G, B, A] format
 	 * @return Image with outline
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static PImage outlineThin(PApplet app, PImage image, int[] color1, int[] color2) {
 		image.loadPixels();  // Load pixels
@@ -419,6 +446,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param image Image that is getting changed
 	 * @param backgroundColor Color of background in [R, G, B, A] format
 	 * @param replacementColor Color of replacement in [R, G, B, A] format
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static void sharpen(PApplet app, PImage image, int[] backgroundColor, int[] replacementColor) {  // "Change in order to allow less colors, and more replacement colors" - Old Nico
 		image.loadPixels();  // Load pixels
@@ -442,6 +470,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param w2 Width of non-moving rectangle
 	 * @param h2 Height of non-moving rectangle
 	 * @return Coordinates in form of [X, Y, SIDE] with SIDE being which side the moving rectangle collided with (0 is top, 1 is right, 2 is bottom, 3 is left)
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static float[] rectRectCollideCoords(float px, float py, float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2) {
 	    float[][] coordCollide = ToolKit.lineRectCollide(px+w1/2, py+h1/2, x1+w1/2, y1+h1/2, x2-w1/2, y2-h1/2, w2+w1, h2+h1);  // Find coordinates where moving rectangle touches the base rectangle
@@ -463,6 +492,7 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	 * @param w2 Width of non-moving rectangle
 	 * @param h2 Height of non-moving rectangle
 	 * @return Coordinates in form of [X, Y, SIDE] with SIDE being which side the moving rectangle collided with (0 is top, 1 is right, 2 is bottom, 3 is left)
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static float[] nRectRectCollideCoords(float px, float py, float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2) {
 		float[][] coordCollide = ToolKit.lineRectCollide(px+w1/2, py+h1/2, x1+w1/2, y1+h1/2, x2+w1/2, y2+h1/2, w2-w1, h2-h1);  // Find coordinates where moving rectangle touches the base rectangle
@@ -473,27 +503,48 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	
 	/**
 	 * Checks if rectangle is fully inside another rectangle
-	 * @param r1x Smaller rectangles X coordinate
-	 * @param r1y Smaller rectangles Y coordinate
-	 * @param r1w Smaller rectangles Width
-	 * @param r1h Smaller rectangles Height
-	 * @param r2x Larger rectangles X coordinate
-	 * @param r2y Larger rectangles Y coordinate
-	 * @param r2w Larger rectangles Width
-	 * @param r2h Larger rectangles Height
+	 * @param r1x First rectangles X coordinate
+	 * @param r1y First rectangles Y coordinate
+	 * @param r1w First rectangles Width
+	 * @param r1h First rectangles Height
+	 * @param r2x Second rectangles X coordinate
+	 * @param r2y Second rectangles Y coordinate
+	 * @param r2w Second rectangles Width
+	 * @param r2h Second rectangles Height
 	 * @return Boolean that represents if rectangle is fully inside another rectangle
+	 * @author Nico L. (MrDuckyTesla)
 	 */
 	public static boolean nRectRectCollide(float r1x, float r1y, float r1w, float r1h, float r2x, float r2y, float r2w, float r2h) {  // opposite of rectRectCollide
 	    if (r1w * r1h > r2w * r2h) {return r1x >= r2x || r1x+r1w  <= r2x+r2w || r1y >= r2y || r1y+r1h <= r2y+r2h;}  // Smaller rectangle goes FIRST
 	    return r1x <= r2x || r1x+r1w >= r2x+r2w || r1y <= r2y || r1y+r1h >= r2y+r2h;
 	}
 	
+	/**
+	 * Checks if two parallel lines are colliding (useful for rectangle collision)
+	 * @param x1 One of the two X coordinates belonging to first line
+	 * @param y1 One of the two Y coordinates belonging to first line
+	 * @param x2 One of the two X coordinates belonging to first line
+	 * @param y2 One of the two Y coordinates belonging to first line
+	 * @param x3 One of the two X coordinates belonging to second line
+	 * @param y3 One of the two Y coordinates belonging to second line
+	 * @param x4 One of the two X coordinates belonging to second line
+	 * @param y4 One of the two Y coordinates belonging to second line
+	 * @return Boolean representing if colliding with other line
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean pLineCollide(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {  // Parallel Lines
 	    if (x1 - x2 == 0 && x3 - x4 == 0 && PApplet.dist(x1, 0, x3, 0) == 0) {return true;}  // Deal with double vertical or double horizontal lines
 	    else if (y1 - y2 == 0 && y3 - y4 == 0 && PApplet.dist(0, y1, 0, y3) == 0) {return true;}
 	    return false;
 	}
 	
+	/**
+	 * Checks if two lines are identical
+	 * @param list1 First list to compare
+	 * @param list2 Second list  to compare
+	 * @return Boolean representing if lists are same
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean compareListList(float[] list1, float[] list2) {
 		// Checks if two lists are identical
 	    if (list1.length != list2.length) return false;
@@ -502,6 +553,13 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	    } return true;
 	}
 	
+	/**
+	 * Takes rectRectCollideCoords() list output in and returns a point that can wont get stuck
+	 * @param c rectRectCollideCoords() output
+	 * @return New unstuck point
+	 * @see #rectRectCollideCoords
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static Point unstick(float[] c) {  // Takes rectRectCollideCoords() list as input
 		switch ((int) c[2]) {
 			case 0:  // Down
@@ -520,6 +578,19 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	// Basic collision utilizing other collision methods 
 	// =======================================================================================================================================================================================================
 	
+	/**
+	 * Checks if a line and rectangle collide
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param rx
+	 * @param ry
+	 * @param rw
+	 * @param rh
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static float[][] lineRectCollide(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh) {
 		return new float[][] {  // Rectangle is just four lines, so we return a list of line vs line collisions
 			ToolKit.lineLineCollide(x1, y1, x2, y2, rx, ry, rx+rw, ry), 
@@ -529,6 +600,19 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 		};
 	}  
 	
+	/**
+	 * 
+	 * @param rx1
+	 * @param ry1
+	 * @param rw1
+	 * @param rh1
+	 * @param rx2
+	 * @param ry2
+	 * @param rw2
+	 * @param rh2
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean[] lRectRectCollide(float rx1, float ry1, float rw1, float rh1, float rx2, float ry2, float rw2, float rh2) {
 		return new boolean[] {  // Used to find which sides two rectangles are touching.. A rectangle is just four lines, so we return a list of line vs line collisions
 			ToolKit.pLineCollide(rx1+rw1, ry1, rx1+rw1, ry1+rh1, rx2+rw2, ry2, rx2+rw2, ry2+rh2), 
@@ -538,84 +622,432 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 		};
 	} 
 	
+	/**
+	 * 
+	 * @param r1x
+	 * @param r1y
+	 * @param r1w
+	 * @param r1h
+	 * @param r2x
+	 * @param r2y
+	 * @param r2w
+	 * @param r2h
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean rectRectCollide(float r1x, float r1y, float r1w, float r1h, float r2x, float r2y, float r2w, float r2h) {return r1x + r1w >= r2x && r1x <= r2x+r2w && r1y + r1h >= r2y && r1y <= r2y+r2h;}
 	
+	/**
+	 * 
+	 * @param r1x
+	 * @param r1y
+	 * @param r1w
+	 * @param r1h
+	 * @param r2x
+	 * @param r2y
+	 * @param r2w
+	 * @param r2h
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean rectRectCollideNotExact(float r1x, float r1y, float r1w, float r1h, float r2x, float r2y, float r2w, float r2h) {return r1x + r1w > r2x && r1x < r2x+r2w && r1y + r1h > r2y && r1y < r2y+r2h;}
 	
+	/**
+	 * 
+	 * @param cx
+	 * @param cy
+	 * @param cr
+	 * @param rx
+	 * @param ry
+	 * @param rw
+	 * @param rh
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean circRectCollide(float cx, float cy, float cr, float rx, float ry, float rw, float rh) {return cx + cr/2 >= rx && rx + rw >= cx - cr/2 && cy + cr/2 >= ry && ry + rh >= cy - cr/2;}
 	
+	/**
+	 * 
+	 * @param px
+	 * @param py
+	 * @param rx
+	 * @param ry
+	 * @param rw
+	 * @param rh
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean pointRectCollide(float px, float py, float rx, float ry, float rw, float rh) {return px >= rx && px <= rx + rw && py >= ry && py <= ry + rh;}
 	
+	/**
+	 * 
+	 * @param px
+	 * @param py
+	 * @param rx
+	 * @param ry
+	 * @param rw
+	 * @param rh
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean pointRectCollideNotExact(float px, float py, float rx, float ry, float rw, float rh) {return px > rx && px < rx + rw && py > ry && py < ry + rh;}
 	
+	/**
+	 * 
+	 * @param px
+	 * @param py
+	 * @param cx
+	 * @param cy
+	 * @param cr
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean pointCircCollide(float px, float py, float cx, float cy, float cr) {return (PApplet.dist(px, py, cx, cy) <= cr);}
 	
 	// Basic color and list methods
 	// =======================================================================================================================================================================================================
 	
+	/**
+	 * 
+	 * @param app
+	 * @param color1
+	 * @param color2
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean compareProcessingColorList(PApplet app, int color1, int[] color2) {return app.red(color1) == color2[0] && app.green(color1) == color2[1] && app.blue(color1) == color2[2] && app.alpha(color1) == color2[3];}
+	
+	/**
+	 * 
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @param a
+	 * @param col
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean compareColorList(int r, int g, int b, int a, int[] col) {return r == col[0] && g == col[1] && b == col[2] && a == col[3];}  // Checks if two colors are not different
+	
+	/**
+	 * 
+	 * @param col1
+	 * @param col2
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean compareColorColor(int[] col1, int[] col2) {return col1[0] == col2[0] && col1[1] == col2[1] && col1[2] == col2[2] && col1[3] == col2[3];}  // Checks if two colors are the same
+	
+	/**
+	 * 
+	 * @param p
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static Point getImageWH(PImage p) {return new Point(p.width, p.height);}
 	
 	// Alternate versions of functions (I really like default parameters, so sad that java doesn't have those)
 	// =======================================================================================================================================================================================================
 	
+	/**
+	 * 
+	 * @param app
+	 * @param res
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static void pixelate(PApplet app, int res) {ToolKit.pixelate(app, res, 0, 0, app.width, app.height);}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param image
+	 * @param res
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static void pixelate(PApplet app, PImage image, int res) {ToolKit.pixelate(app, image, res, 0, 0, app.width, app.height);}
 	
+	/**
+	 * 
+	 * @param centerX
+	 * @param centerY
+	 * @param endX
+	 * @param endY
+	 * @param radius
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static float[] lineRadius(float centerX, float centerY, float endX, float endY, float radius) {return ToolKit.lineRadius(centerX, centerY, endX, endY, radius, true);}
 	
+	/**
+	 * 
+	 * @param centerX
+	 * @param centerY
+	 * @param length1
+	 * @param length2
+	 * @param endX
+	 * @param endY
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static float[] getLimbCoords(float centerX, float centerY, float length1, float length2, float endX, float endY) {return ToolKit.getLimbCoords(centerX, centerY, length1, length2, endX, endY, false);}
 	
+	/**
+	 * 
+	 * @param px
+	 * @param py
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static float[] closestPointLine(float px, float py, float x1, float y1, float x2, float y2) {return ToolKit.closestPointLine(px, py, x1, y1, x2, y2, true);}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage lineImage(PApplet app, float x1, float y1, float x2, float y2, int res, float thickness, float sizeDisplay) {return ToolKit.lineImage(app, x1, y1, x2, y2, res, thickness, sizeDisplay, new int[] {0, 0, 0, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage lineImage(PApplet app, float x1, float y1, float x2, float y2) {return ToolKit.lineImage(app, x1, y1, x2, y2, app.width/4, 4, app.width, new int[] {0, 0, 0, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x
+	 * @param y
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @param color1
+	 * @param gradient
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage circleImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay, int[] color1, boolean gradient) {return ToolKit.circleImage(app, x, y, res, thickness, sizeDisplay, new int[] {255, 111, 111, 255}, gradient, color1);}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x
+	 * @param y
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @param color1
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage circleImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay, int[] color1) {return ToolKit.circleImage(app, x, y, res, thickness, sizeDisplay, new int[] {255, 111, 111, 255}, false, color1);}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x
+	 * @param y
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage circleImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay) {return ToolKit.circleImage(app, x, y, res, thickness, sizeDisplay, new int[] {255, 111, 111, 255}, false, new int[] {111, 111, 255, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x
+	 * @param y
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @param color1
+	 * @param gradient
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage squareImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay, int[] color1, boolean gradient) {return ToolKit.squareImage(app, x, y, res, thickness, sizeDisplay, new int[] {255, 111, 111, 255}, gradient, color1);}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x
+	 * @param y
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @param color1
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage squareImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay, int[] color1) {return ToolKit.squareImage(app, x, y, res, thickness, sizeDisplay, new int[] {255, 111, 111, 255}, false, color1);}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param x
+	 * @param y
+	 * @param res
+	 * @param thickness
+	 * @param sizeDisplay
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage squareImage(PApplet app, float x, float y, int res, float thickness, float sizeDisplay) {return ToolKit.squareImage(app, x, y, res, thickness, sizeDisplay, new int[] {255, 111, 111, 255}, false, new int[] {111, 111, 255, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param image
+	 * @param color1
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage outline(PApplet app, PImage image, int[] color1) {return ToolKit.outline(app, image, color1, new int[] {255, 255, 255, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param image
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage outline(PApplet app, PImage image) {return ToolKit.outline(app, image, new int[] {0, 0, 0, 0}, new int[] {255, 255, 255, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param image
+	 * @param color1
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage outlineThin(PApplet app, PImage image, int[] color1) {return ToolKit.outline(app, image, color1, new int[] {255, 255, 255, 255});}
 	
+	/**
+	 * 
+	 * @param app
+	 * @param image
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PImage outlineThin(PApplet app, PImage image) {return ToolKit.outline(app, image, new int[] {0, 0, 0, 0}, new int[] {255, 255, 255, 255});}
 	
 	// Random util functions
 	// =======================================================================================================================================================================================================
 	
+	/**
+	 * 
+	 * @param <T>
+	 * @param val
+	 * @param arr
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static <T> ArrayList<T> removeAll(T val, ArrayList<T> arr) {for (int i = 0; i < arr.size(); i++) {if (arr.get(i).equals(val)) {arr.remove(i); i--;}} return arr;}
 	
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean keyIsDown(int key) {if (keys.containsKey(key)) {return keys.get(key);} keys.put(key, false); return false;}
 	
+	/**
+	 * 
+	 * @param key
+	 * @param state
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static void setKey(int key, boolean state) {keys.put(key, state);}
 	
+	/**
+	 * 
+	 * @param <T>
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static <T> T[] pushBack(T[] a, T b) {for (int i = a.length-1; i > 0; i--) {a[i] = a[i-1];} a[0] = b; return a;}
 	
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static int[] pushBack(int[] a, int b) {for (int i = a.length-1; i > 0; i--) {a[i] = a[i-1];} a[0] = b; return a;}
 	
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean notInArray(ArrayList<Integer> a, int[] b) {for (int i = 0; i < a.size(); i++) {for (int j = 0; j < b.length; j++) {if (a.get(i) == b[j]) {return false;}}} return true;}
 	
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static ArrayList<Integer> addNotInArray(ArrayList<Integer> a, int[] b) {for (int i = 0; i < b.length; i++) {if (!a.contains(b[i])) {a.add(b[i]);}} return a;}
 	
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static ArrayList<Integer> add(ArrayList<Integer> a, int[] b) {for (int i = 0; i < b.length; i++) {a.add(b[i]);} return a;}
 	
-	public static int hash(int x, int y) {return 31*x+y;} // Apparently 31 is a magic number in hashing
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
+	public static int hash(int x, int y) {return 31*x+y;} // 31 is a Mersenne prime, and apparently good in hashing
 	
+	/**
+	 * 
+	 * @param <E>
+	 * @param obj
+	 * @param h
+	 * @param wid
+	 * @param hgt
+	 * @param size
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static <E extends AbstractEntity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
 		ArrayList<E> neighbors = new ArrayList<>(); int key;
 		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
@@ -630,6 +1062,17 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 		} return neighbors;
 	}
 	
+	/**
+	 * 
+	 * @param <E>
+	 * @param obj
+	 * @param h
+	 * @param wid
+	 * @param hgt
+	 * @param size
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static <E extends AbstractEntity> ArrayList<E> getNeighborsRender(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
 		ArrayList<E> neighbors = new ArrayList<>(); int key;
 		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
@@ -647,14 +1090,75 @@ public final class ToolKit {  // "USED TO BE THE MEDIA CLASS, CHANGED DUE TO IT 
 	}
 		
 	// PApplet methods
+	/**
+	 * 
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static PApplet getApp() {if (ToolKit.app == null) {return new PApplet();} return ToolKit.app;}
+	
+	/**
+	 * 
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static int getAppWidth() {if (ToolKit.app == null) {return -1;} return ToolKit.app.width;}
+	
+	/**
+	 * 
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static int getAppHeight() {if (ToolKit.app == null) {return -1;} return ToolKit.app.height;}
+	
+	/**
+	 * 
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean getHasApp() {return ToolKit.app == null;}
+	
+	/**
+	 * 
+	 * @param app
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean setApp(PApplet app) {if (ToolKit.app != null) {return false;} ToolKit.app = app; return true;}
+	
+	/**
+	 * 
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean pushApp() {if (ToolKit.app == null) {return false;} ToolKit.app.push(); return true;}
+	
+	/**
+	 * 
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean popApp() {if (ToolKit.app == null) {return false;} ToolKit.app.pop(); return true;}
+	
+	/**
+	 * 
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean fillApp(int r, int g, int b) {if (ToolKit.app == null) {return false;} ToolKit.app.fill(ToolKit.app.color(r, g, b)); return true;}
+	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @return
+	 * @author Nico L. (MrDuckyTesla)
+	 */
 	public static boolean rectApp(float x, float y, float w, float h) {if (ToolKit.app == null) {return false;} ToolKit.app.rect(x, y, w, h); return true;}
 	
 }
