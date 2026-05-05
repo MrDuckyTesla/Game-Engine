@@ -5,6 +5,8 @@ Current Version 0.1.0.3
 To view code, navigate to src/engine.
 To view assets, navigate to src/Assets.
 
+Current build contains a main class that runs a test "game"
+
 Why did I decide to make my own game engine? 
 Well I've always loved the processing foundations p5.js and processing4 libraries. I liked how simple it was to use, and 
 how I got to write all of the code myself without having to worry about annoying things like making a window with a circle 
