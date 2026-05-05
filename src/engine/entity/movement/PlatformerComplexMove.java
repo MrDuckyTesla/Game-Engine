@@ -2,7 +2,7 @@ package engine.entity.movement;
 
 import engine.entity.AbstractEntity;
 
-// Version with Inverse Kinematics, and procedural Animation
+// Version with Inverse Kinematics, and procedural Animation (basically it will actually just use the physics engine)
 public class PlatformerComplexMove extends PlatformerSimpleMove {
 	
 	@Override
