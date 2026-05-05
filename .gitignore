@@ -1,3 +1,6 @@
 /bin
 dictionary.txt
 /.settings
+.classpath
+.gitattributes
+.project
