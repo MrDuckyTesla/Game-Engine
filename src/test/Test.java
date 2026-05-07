@@ -1,14 +1,21 @@
 package test;
 
 import engine.util.ToolKit;
+import engine.util.math.Matrix;
 import processing.core.PApplet;
 
 public class Test extends PApplet {
 	
-	public System test = new System();
+	public PSystem test = new PSystem();
 
 	public static void main(String[] args) {
-		PApplet.main(Test.class);
+//		PApplet.main(Test.class);
+		Matrix m = new Matrix(10, 6);
+		m.propigate();
+		m.set(1, 1, 400);
+//		m.set(9, 1, 4);
+		m.set(5, 5, 400);
+		System.out.println(m);
 	}
 	
 	// Only used for the size of the canvas

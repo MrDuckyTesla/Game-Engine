@@ -2,15 +2,15 @@ package test;
 
 import processing.core.PApplet;
 
-public class System {
+public class PSystem {
 	
 	private Particle[] body;
 	
-	public System(Particle[] body) {
+	public PSystem(Particle[] body) {
 		this.body = body;
 	}
 	
-	public System() {
+	public PSystem() {
 		this.body = new Particle[] {new Particle(300, 200, 40), new Particle(200, 400, 40), new Particle(400, 400, 40)};
 	}
 	
