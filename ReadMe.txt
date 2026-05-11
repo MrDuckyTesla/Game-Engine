@@ -1,6 +1,6 @@
 Start Date:  7/11/2024
-Last Updated:  5/5/2026
-Current Version 0.1.0.3
+Last Updated:  5/11/2026
+Current Version 0.1.0.5
 
 To view code, navigate to src/engine.
 To view assets, navigate to src/Assets.
@@ -29,16 +29,17 @@ TODO (JAVADOCS AND COMMENTS SHOULD ALWAYS BE PRIORITY):
 I'm aware that some of these TODOs are a bit ambitious, but I won't stop working on this until theyre all implemented
 #1:	 Allow MoveSet to change movement types on fly (to make knockback and interractions better)
 #2:	 Instead of entities checking for triggers and storing them, have triggers check for entities
-#3:	 Make basic physics engine to expand upon, make all MoveSet classes implement physics class and use
+#3:	 Go through ToolKit and create new dist function that doesnt take square root and replace with that function
+#4:	 Make basic physics engine to expand upon, make all MoveSet classes implement physics class and use
 		vectors instead of what im currently doing to allow angled movement and collisions. I want to
 		also add soft bodies at some point along with springs. basically, replace ToolKits collisions
 		with new physics class based collisions
-#4:	 Move away from processing and use built in java functions. I dont want any external jars
-#5:	 Make ToolKit more "float friendly" with epsilon
-#6:	 While at it, finish javadocs for ToolKit
-#7:	 Make a "party" system that allows other entities to follow player (allow all members to fight in battles)
-#8:	 Make enemies follow you if you get close enough
-#9:	 Find ways to optimize code and fix existing issues in code such as:
+#5:	 Move away from processing and use built in java functions. I dont want any external jars
+#6:	 Make ToolKit more "float friendly" with epsilon
+#7:	 While at it, finish javadocs for ToolKit
+#8:	 Make a "party" system that allows other entities to follow player (allow all members to fight in battles)
+#9:	 Make enemies follow you if you get close enough
+#10: Find ways to optimize code and fix existing issues in code such as:
 		a: EightDirectionalMove snapping at corners, allowing you to fit bewteen spaces you shouldnt,
 			and given enough obstacles, without total dist being tracked, entities can move an infinite
 			amount of distance in one frame
@@ -46,15 +47,15 @@ I'm aware that some of these TODOs are a bit ambitious, but I won't stop working
 			to specify what animation should be played with what movements
 		c: some colision code is probably suboptimal as I made most of it from scratch without looking any
 			algorithms up. I am sure there are many issues I have glossed over as well
-#10:	 Implement other movement types excluding PlatformerComplexMove
-#11: Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
-#12: Make working menu system along with text boxes
-#13: Implement saving and loading using new menu
-#14: Implement keybinds that are able to be changed and saved
-#15: Implement tile based background and editor
-#16: EVENTS (dialogue and cutscenes and such)
-#17: Make Sounds and Sound Effects easy to call and analyze
-#18: Implement an UI that can be called upon as a function. I will try to make an outline here:
+#11:	 Implement other movement types excluding PlatformerComplexMove
+#12: Create engine.entity.attack package along with Attack class for NPCs (or make it an ability)
+#13: Make working menu system along with text boxes
+#14: Implement saving and loading using new menu
+#15: Implement keybinds that are able to be changed and saved
+#16: Implement tile based background and editor
+#17: EVENTS (dialogue and cutscenes and such)
+#18: Make Sounds and Sound Effects easy to call and analyze
+#19: Implement an UI that can be called upon as a function. I will try to make an outline here:
 		a: UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
 			the user to open a folder of images for said tiles.
 		b: UI allows user to place down entities anywhere (not grid locked). this entity would be a blank
@@ -68,10 +69,10 @@ I'm aware that some of these TODOs are a bit ambitious, but I won't stop working
 			x, y, width, height, ...etc. as well. 
 		e: this UI, upon finishing, should save what the user did to a text file, translating what the user did
 			into its equivalent code counterpart for the user to copy paste into their project.
-#19: Implement PlatformerComplexMove (Maybe do me sooner because I'll be easy with physics implemented!)
-#20: Implement Enemy AI for platformer mode
-#21: Implement Neural Network that can learn from other Entities (implement matrix and fraction class too) this
+#20: Implement PlatformerComplexMove (Maybe do me sooner because I'll be easy with physics implemented!)
+#21: Implement Enemy AI for platformer mode
+#22: Implement Neural Network that can learn from other Entities (implement matrix and fraction class too) this
 		Neural Net should be more general and easy to customize as user sees fit
-#22: Implement multiplayer of some sorts (server vs client)
-#23: Find some way to get steamworks integrated (maybe have built in achievements and features that are easy to
+#23: Implement multiplayer of some sorts (server vs client)
+#24: Find some way to get steamworks integrated (maybe have built in achievements and features that are easy to
 	 	connect to steam somehow? I might be forced to use steamworks4j)

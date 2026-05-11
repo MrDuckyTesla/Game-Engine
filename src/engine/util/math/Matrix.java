@@ -72,7 +72,7 @@ public class Matrix {
 		String numS = String.format("%.5f", num);
 		int len = Math.max(13-numS.length(), 0);
 		numS = String.format("%."+len+"f", num);
-		return len == 0? numS + " \t" : numS + "\t";
+		return len == 0? numS + "\t" : numS + "\t";
 	}
 
 }
