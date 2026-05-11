@@ -10,11 +10,14 @@ public class Test extends PApplet {
 
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
-		Matrix m = new Matrix(10, 6);
-		m.propigate();
-		m.set(1, 1, 400);
+		Matrix m = new Matrix(3, 3);
+//		m.propigate();
+		m.set(1, 1, 10);
+		m.set(0, 1, 10);
+		m.set(0, 0, 10);
+		m.set(1, 0, 10);
 //		m.set(9, 1, 4);
-		m.set(5, 5, 400);
+//		m.set(5, 5, 400);
 		System.out.println(m);
 	}
 	
