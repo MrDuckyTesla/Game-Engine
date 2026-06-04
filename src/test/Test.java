@@ -1,7 +1,7 @@
 package test;
 
 import engine.util.ToolKit;
-import engine.util.math.Matrix;
+import engine.util.neuralnet.Matrix;
 import processing.core.PApplet;
 
 public class Test extends PApplet {

@@ -1,4 +1,4 @@
-package engine.util.math;
+package engine.util.neuralnet;
 
 public class Network {
 	

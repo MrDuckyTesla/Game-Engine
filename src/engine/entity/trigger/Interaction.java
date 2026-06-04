@@ -28,7 +28,7 @@ public class Interaction extends Trigger {
 	public void update() {
 		this.getMoveSet().move(null);
 		for (AbstractEntity e : this.getCaster().getRoomList()) {
-			if (e.getType() != Entity.TRIGGER && !this.getCaster().equals(e)) {
+			if (e.getType() != Entities.TRIGGER && !this.getCaster().equals(e)) {
 				if (ToolKit.rectRectCollide (
 						this.getRX(), this.getRY(), this.getW(), this.getH(), 
 						e.getRX(), e.getRY(), e.getW(), e.getH()

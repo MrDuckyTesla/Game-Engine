@@ -60,7 +60,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity> {
 	public abstract void interact(Trigger t);
 	public abstract boolean isDelete();  // Make This MoveSet Exclusive
 	public abstract boolean isMarked();  // Make This MoveSet Exclusive
-	public abstract Entity getType();
+	public abstract Entities getType();
 	public abstract Trigger getTrigger();
 	
 	// Getter methods
@@ -79,11 +79,11 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity> {
 	public float getW() {return this.getMoveSet().getSW();}
 	public float getH() {return this.getMoveSet().getSH();}
 	public float[] getXYWH() {return new float[] {this.getRX(), this.getRY(), this.getW(), this.getH()};}
-	public Move getMoveSetType() {return this.moveset.getMoveType();}
+	public Moves getMoveSetType() {return this.moveset.getMoveType();}
 	public Animator getAnimator() {return this.anim;}
 	public AbstractMove getMoveSet() {return this.moveset;}
 	public PImage getImg() {return this.image;}
-	public Point getPotential() {return this.getMoveSetType() == Move.EIGHT? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
+	public Point getPotential() {return this.getMoveSetType() == Moves.EIGHT? ((EightDirectionalMove) this.getMoveSet()).getMoveDist() : new Point();}
 	public Point getXY() {return this.getMoveSet().getPoint();}
 	public Room getRoom() {return this.currRoom;}
 	public AbstractAbility[] getAbilities() {return this.ability;}

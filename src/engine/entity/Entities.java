@@ -1,5 +1,5 @@
 package engine.entity;
 
-public enum Entity {
+public enum Entities {
 	PLAYER, NON_PLAYER_CHARACTER, ENEMY, PROJECTILE, TRIGGER
 }

@@ -80,7 +80,7 @@ public class EightDirectionalMove extends AbstractMove {
 	public Point getPoint() {return this.xywh.getPoint();}
 
 	@Override
-	public Move getMoveType() {return Move.EIGHT;}
+	public Moves getMoveType() {return Moves.EIGHT;}
 	
 	private Point getPotential(int dir) {
 		Point s = new Point();

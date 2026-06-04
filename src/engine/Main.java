@@ -43,7 +43,7 @@ public final class Main extends PApplet {
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 		ToolKit.setApp(this);
 		test[0] = new Room(bck1); test[1] = new Room(bck1);
-		p = new MultiStateEntity(new Entity[] {Entity.PLAYER, Entity.PLAYER}, test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints, false, false);
+		p = new MultiStateEntity(new Entities[] {Entities.PLAYER, Entities.PLAYER}, test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints, false, false);
 		
 		for (int i = 0; i < 40; i++) {
 			test[0].add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);

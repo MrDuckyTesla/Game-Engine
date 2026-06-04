@@ -29,7 +29,7 @@ public class NonPlayerCharacter extends AbstractEntity{
 			this.getMoveSet().setDir((int)(Math.random() * 8));
 			this.getMoveSet().setIdle(Math.random() > 0.5);
 			for (AbstractAbility a : this.getAbilities()) {
-				if (a.getType() == Ability.SWORD_EIGHT_DIR) {
+				if (a.getType() == Abilities.SWORD_EIGHT_DIR) {
 					a.setActive(Math.random() > 0.99);
 				} else {
 					a.setActive(Math.random() > 0.8);
@@ -58,7 +58,7 @@ public class NonPlayerCharacter extends AbstractEntity{
 	}
 	
 	@Override
-	public Entity getType() {return Entity.NON_PLAYER_CHARACTER;}
+	public Entities getType() {return Entities.NON_PLAYER_CHARACTER;}
 	@Override
 	public boolean isDelete() {return this.framesDie < 0;}
 	@Override

@@ -53,9 +53,9 @@ public class PlatformerSimpleMove extends AbstractMove {
 	}
 
 	@Override
-	public Move getMoveType() {
+	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Move.PLATFORM;
+		return Moves.PLATFORM;
 	}
 
 	@Override

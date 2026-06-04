@@ -1,6 +1,6 @@
 Start Date:  7/11/2024
-Last Updated:  5/11/2026
-Current Version 0.1.0.5
+Last Updated:  6/4/2026
+Current Version 0.1.0.6
 
 To view code, navigate to src/engine.
 To view assets, navigate to src/Assets.
@@ -76,3 +76,16 @@ I'm aware that some of these TODOs are a bit ambitious, but I won't stop working
 #23: Implement multiplayer of some sorts (server vs client)
 #24: Find some way to get steamworks integrated (maybe have built in achievements and features that are easy to
 	 	connect to steam somehow? I might be forced to use steamworks4j)
+	 	
+Small demos that I wanna make to prove that the engine works:
+	RPG (menu + 8d + 2d)
+		Overworld 8d, 4d, 2d
+		Battle menu, 8d
+	platformer
+	tower defense
+	idle game
+	chess
+	arrow key rhythm game
+	snake
+	tank movement game
+

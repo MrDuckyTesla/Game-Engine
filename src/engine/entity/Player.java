@@ -17,7 +17,7 @@ public class Player extends AbstractEntity {
 	public void update() {
 		super.update();
 		
-		if (this.getMoveSet().getMoveType() == Move.EIGHT) {
+		if (this.getMoveSet().getMoveType() == Moves.EIGHT) {
 		    if (ToolKit.keyIsDown(68) || ToolKit.keyIsDown(39) || ToolKit.keyIsDown(83) || ToolKit.keyIsDown(40) || ToolKit.keyIsDown(65) || ToolKit.keyIsDown(37) || ToolKit.keyIsDown(87) || ToolKit.keyIsDown(38)) {this.setOverState(false);}
 		    else {this.setOverState(true);}
 		    // Check direction
@@ -39,7 +39,7 @@ public class Player extends AbstractEntity {
 	}
 	
 	@Override
-	public Entity getType() {return Entity.PLAYER;}
+	public Entities getType() {return Entities.PLAYER;}
 
 	@Override
 	public boolean isDelete() {

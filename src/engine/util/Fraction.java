@@ -1,4 +1,4 @@
-package engine.util.math;
+package engine.util;
 
 public class Fraction {
 
