@@ -2,7 +2,7 @@ package engine.entity.abilities;
 
 import engine.entity.AbstractEntity;
 import engine.entity.movement.AbstractMove;
-import engine.entity.movement.Move;
+import engine.entity.movement.Moves;
 
 public class Walk8d extends AbstractAbility {
 	
@@ -10,7 +10,7 @@ public class Walk8d extends AbstractAbility {
 
 	@Override
 	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
-		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
+		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (m.getIsIdle()) {e.getAnimator().setAnim(e.getImg(), m, 0, 2, 12);}
 		else {e.getAnimator().setAnim(e.getImg(), m, 16, 4, 12, this.lIsIdle != m.getIsIdle());}
 		this.lIsIdle = m.getIsIdle();
@@ -25,6 +25,6 @@ public class Walk8d extends AbstractAbility {
 	@Override
 	public AbstractAbility get() {return new Walk8d();}
 	@Override
-	public Ability getType() {return Ability.WALK_EIGHT_DIR;}
+	public Abilities getType() {return Abilities.WALK_EIGHT_DIR;}
 
 }

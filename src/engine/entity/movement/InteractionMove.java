@@ -54,9 +54,9 @@ public class InteractionMove extends AbstractMove {
 	}
 
 	@Override
-	public Move getMoveType() {
+	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Move.INTERACT;
+		return Moves.INTERACT;
 	}
 
 	@Override

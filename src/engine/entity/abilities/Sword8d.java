@@ -21,7 +21,7 @@ public class Sword8d extends AbstractAbility {
 
 	@Override
 	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
-		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
+		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (!e.getAnimator().getDoneAnimation(4) && this.isActive) {
 			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
 			e.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
@@ -48,6 +48,6 @@ public class Sword8d extends AbstractAbility {
 	@Override
 	public AbstractAbility get() {return this.getKeys() == null? new Sword8d() : new Sword8d(this.getKeys());}
 	@Override
-	public Ability getType() {return Ability.SWORD_EIGHT_DIR;}
+	public Abilities getType() {return Abilities.SWORD_EIGHT_DIR;}
 
 }

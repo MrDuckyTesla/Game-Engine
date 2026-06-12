@@ -11,14 +11,14 @@ public class MultiStateEntity {
 	private AbstractEntity[] entities;
 	private int state = 0;
 
-	public MultiStateEntity(Entity[] types, Room room[], PImage[] img, AbstractMove[] move, AbstractAbility[][] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+	public MultiStateEntity(Entities[] types, Room room[], PImage[] img, AbstractMove[] move, AbstractAbility[][] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		entities = new AbstractEntity[types.length];
 		try {
 			for (int i = 0; i < types.length; i++) {entities[i] = getType(types[i], room[i], img[i], move[i], abilities[i], colorLayers[i], colorTints, isTangible, isBreakable);}
 		} catch (IndexOutOfBoundsException e) {throw new IllegalArgumentException();}
 	}
 	
-	private AbstractEntity getType(Entity type, Room room, PImage img, AbstractMove move, AbstractAbility[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+	private AbstractEntity getType(Entities type, Room room, PImage img, AbstractMove move, AbstractAbility[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		switch (type) {
 			case ENEMY:
 				return new Enemy(room, img, move, abilities, colorLayers, colorTints);

@@ -3,7 +3,7 @@ package engine.entity.abilities;
 import engine.entity.AbstractEntity;
 import engine.entity.movement.EightDirectionalMove;
 import engine.entity.movement.AbstractMove;
-import engine.entity.movement.Move;
+import engine.entity.movement.Moves;
 import engine.util.ToolKit;
 
 //this class ONLY works on objects using EightDirectionalMove()
@@ -17,7 +17,7 @@ public class Sprint8d extends AbstractAbility {
 
 	@Override
 	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
-		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
+		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
 			this.isActive = false;
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
@@ -35,6 +35,6 @@ public class Sprint8d extends AbstractAbility {
 	@Override
 	public AbstractAbility get() {return this.getKeys() == null? new Sprint8d() : new Sprint8d(this.getKeys());}
 	@Override
-	public Ability getType() {return Ability.SPRINT_EIGHT_DIR;}
+	public Abilities getType() {return Abilities.SPRINT_EIGHT_DIR;}
 	
 }

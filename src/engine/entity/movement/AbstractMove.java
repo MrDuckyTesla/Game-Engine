@@ -35,7 +35,7 @@ public abstract class AbstractMove {
 	public abstract float getSW();
 	public abstract float getSH();
 	public abstract Point getPoint();
-	public abstract Move getMoveType();
+	public abstract Moves getMoveType();
 	
 	public abstract void setDir(int d);
 	public abstract void setIdle(boolean i);

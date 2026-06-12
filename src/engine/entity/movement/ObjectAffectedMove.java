@@ -41,9 +41,9 @@ public class ObjectAffectedMove extends AbstractMove {
 	}
 
 	@Override
-	public Move getMoveType() {
+	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Move.OBJECT;
+		return Moves.OBJECT;
 	}
 
 	@Override

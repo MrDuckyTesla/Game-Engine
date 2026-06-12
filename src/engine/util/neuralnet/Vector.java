@@ -1,7 +1,12 @@
-package engine.util.math;
+package engine.util.neuralnet;
 
 public class Vector extends Matrix {
-
+	
+	public Vector(float[] v) {
+		super(1, v.length);
+		super.set(v);
+	}
+	
 	public Vector(int hgt) {
 		super(1, hgt);
 	}
@@ -13,8 +18,5 @@ public class Vector extends Matrix {
 	public void normalize() {
 		
 	}
-	
-	@Override
-	public void transpose() {}
 
 }

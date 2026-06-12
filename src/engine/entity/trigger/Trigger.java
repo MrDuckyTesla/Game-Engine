@@ -30,6 +30,6 @@ public abstract class Trigger extends AbstractEntity {
 	public final void interact(Trigger t) {}
 	
 	@Override
-	public final Entity getType() {return Entity.TRIGGER;}
+	public final Entities getType() {return Entities.TRIGGER;}
 
 }

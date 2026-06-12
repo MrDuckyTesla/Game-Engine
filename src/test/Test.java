@@ -1,7 +1,7 @@
 package test;
 
 import engine.util.ToolKit;
-import engine.util.math.Matrix;
+import engine.util.neuralnet.Matrix;
 import processing.core.PApplet;
 
 public class Test extends PApplet {
@@ -10,15 +10,25 @@ public class Test extends PApplet {
 
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
-		Matrix m = new Matrix(3, 3);
-//		m.propigate();
-		m.set(1, 1, 10);
-		m.set(0, 1, 10);
-		m.set(0, 0, 10);
-		m.set(1, 0, 10);
+		Matrix m = new Matrix(2, 3);
+		m.propigate();
+//		m.set(1, 1, 1);
+//		m.set(0, 1, 2);
+//		m.set(0, 0, 3);
+//		m.set(1, 0, 4);
 //		m.set(9, 1, 4);
 //		m.set(5, 5, 400);
 		System.out.println(m);
+		
+		Matrix n = new Matrix(3, 2);
+		n.propigate();
+//		n.set(1, 1, 4);
+//		n.set(0, 1, 3);
+//		n.set(0, 0, 2);
+//		n.set(1, 0, 1);
+		System.out.println(n);
+		
+		System.out.println(Matrix.multiply(m, n));
 	}
 	
 	// Only used for the size of the canvas

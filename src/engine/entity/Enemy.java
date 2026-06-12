@@ -26,6 +26,6 @@ public class Enemy extends NonPlayerCharacter {
 //	}
 	
 	@Override
-	public Entity getType() {return Entity.ENEMY;}
+	public Entities getType() {return Entities.ENEMY;}
 
 }

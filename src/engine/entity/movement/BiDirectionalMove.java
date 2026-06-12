@@ -44,9 +44,9 @@ public class BiDirectionalMove extends AbstractMove {
 	}
 
 	@Override
-	public Move getMoveType() {
+	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Move.DUO;
+		return Moves.DUO;
 	}
 
 	@Override

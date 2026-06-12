@@ -21,7 +21,7 @@ public class Interact8d extends AbstractAbility {
 
 	@Override
 	public void update(AbstractEntity e, AbstractMove m) throws IllegalArgumentException {
-		if (m.getMoveType() != Move.EIGHT) {throw new IllegalArgumentException();}
+		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (this.getKeys() != null) {
 			this.isActive = false;
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
@@ -41,6 +41,6 @@ public class Interact8d extends AbstractAbility {
 	@Override
 	public AbstractAbility get() {return this.getKeys() == null? new Interact8d() : new Interact8d(this.getKeys());}
 	@Override
-	public Ability getType() {return Ability.INTERACT_EIGHT_DIR;}
+	public Abilities getType() {return Abilities.INTERACT_EIGHT_DIR;}
 
 }

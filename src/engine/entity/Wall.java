@@ -31,7 +31,7 @@ public class Wall extends NonPlayerCharacter{
 	}
 	
 	@Override
-	public Entity getType() {return Entity.NON_PLAYER_CHARACTER;}
+	public Entities getType() {return Entities.NON_PLAYER_CHARACTER;}
 
 	@Override
 	public boolean isDelete() {return false;}
