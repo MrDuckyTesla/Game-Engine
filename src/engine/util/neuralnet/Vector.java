@@ -2,9 +2,9 @@ package engine.util.neuralnet;
 
 public class Vector extends Matrix {
 	
-	public Vector(float[] ohYeah) {
-		super(1, ohYeah.length);
-		
+	public Vector(float[] v) {
+		super(1, v.length);
+		super.set(v);
 	}
 	
 	public Vector(int hgt) {

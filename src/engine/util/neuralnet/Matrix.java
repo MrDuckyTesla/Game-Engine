@@ -16,6 +16,10 @@ public class Matrix {
 	}
 	
 	public static Matrix transpose(Matrix a) {
+		Matrix trans = new Matrix(a.getHgt(), a.getWid());
+		for (int i = 0; i < a.getWid(); i++) {
+			trans.setCol(a.getRow(i));
+		}
 		return null;
 	}
 	
@@ -48,7 +52,19 @@ public class Matrix {
 		}
 	}
 	
-	public void swap(int rowA, int rowB) {
+	public void scaleRow(float scale) {
+		
+	}
+	
+	public void scaleCol(float scale) {
+		
+	}
+	
+	public void swapRow(int rowA, int rowB) {
+		
+	}
+	
+	public void swapCol(int colA, int colB) {
 		
 	}
 	
@@ -62,18 +78,37 @@ public class Matrix {
 		return null;
 	}
 	
-	public void setRow() {
-		
+	public boolean setRow(float[] row) {
+		if (row.length == this.wid) {
+			
+		}
+		return false;
 	}
 	
-	public void setCol() {
-		
+	public boolean setRow(Vector row) {
+		if (row.getHgt() == this.wid) {
+			
+		}
+		return false;
 	}
 	
-	public int getHgt() {return this.hgt;}
+	public boolean setCol(float[] col) {
+		return false;
+	}
+	
+	public boolean setCol(Vector col) {
+		return false;
+	}
+	
+	public boolean set(float[] matrix) {
+		return false;
+	}
+	
 	public int getWid() {return this.wid;}
-	public float get(int row, int col) {return this.matrix[col + row*this.wid];}
+	public int getHgt() {return this.hgt;}
 	public float[] getMatrix() {return this.matrix;}
+	
+	public float get(int row, int col) {return this.matrix[col + row*this.wid];}
 	
 	public void set(int row, int col, float payload) {this.matrix[col + row*this.wid] = payload;}
 	public void add(int row, int col, float payload) {this.matrix[col + row*this.wid] += payload;}
