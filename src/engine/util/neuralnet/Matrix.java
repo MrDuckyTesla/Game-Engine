@@ -4,7 +4,7 @@ public class Matrix {
 	
 	// Static functions
 	
-	public static Matrix multiply(Matrix a, Matrix b) throws IllegalArgumentException {
+	public static Matrix multiply(Matrix a, Matrix b) {
 		float[] prod = new float[a.getHgt() * b.getWid()];
 		if (b.getHgt() == a.getWid()) {
 			for (int i = 0; i < a.getWid(); i++) {
@@ -14,7 +14,7 @@ public class Matrix {
 					}
 				}
 			} return new Matrix(prod, b.getWid(), a.getHgt());
-		} throw new IllegalArgumentException();
+		} return null;
 	}
 	
 	public static Matrix transpose(Matrix a) {
