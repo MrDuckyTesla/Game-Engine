@@ -2,7 +2,9 @@ package engine.util.neuralnet;
 
 public class Matrix {
 	
-	public static Matrix multiply(Matrix a, Matrix b) throws IllegalArgumentException {
+	// Static functions
+	
+	public static Matrix multiply(Matrix a, Matrix b) {
 		float[] prod = new float[a.getHgt() * b.getWid()];
 		if (b.getHgt() == a.getWid()) {
 			for (int i = 0; i < a.getWid(); i++) {
@@ -12,12 +14,12 @@ public class Matrix {
 					}
 				}
 			} return new Matrix(prod, b.getWid(), a.getHgt());
-		} throw new IllegalArgumentException();
+		} return null;
 	}
 	
 	public static Matrix transpose(Matrix a) {
 		Matrix trans = new Matrix(a.getHgt(), a.getWid());
-		for (int i = 0; i < a.getWid(); i++) {
+		for (int i = 0; i < a.getHgt(); i++) {
 			trans.setCol(i, a.getRow(i).getMatrix());
 		} return trans;
 	}
@@ -57,37 +59,46 @@ public class Matrix {
 		}
 	}
 	
-	public void scaleRow(int row, float[] scale) {
-		for (int i = 0; i < this.wid; i++) {
-			this.matrix[row*this.wid + i] *= scale[i];
-		}
-	}
-	
 	public void scaleCol(int col, float scale) {
-		for (int i = 0; i < this.wid; i++) {
+		for (int i = 0; i < this.hgt; i++) {
 			this.matrix[i*this.wid + col] *= scale;
 		}
 	}
 	
-	public void scaleCol(int col, float[] scale) {
-		for (int i = 0; i < this.wid; i++) {
-			this.matrix[i*this.wid + col] *= scale[i];
-		}
+	public boolean scaleRow(int row, float[] scale) {
+		if (scale.length == this.wid) {
+			for (int i = 0; i < this.wid; i++) {
+				this.matrix[row*this.wid + i] *= scale[i];
+			} return true;
+		} return false;
 	}
 	
-	public void swapRow(int rowA, int rowB) {
-		float[] row1 = this.getRow(rowA).getMatrix();
-		this.setRow(rowA, this.getRow(rowB).getMatrix());
-		this.setRow(rowB, row1);
+	
+	public boolean scaleCol(int col, float[] scale) {
+		if (scale.length == this.hgt) {
+			for (int i = 0; i < this.hgt; i++) {
+				this.matrix[i*this.wid + col] *= scale[i];
+			} return true;
+		} return false;
 	}
 	
-	public void swapCol(int colA, int colB) {
-		float[] row1 = this.getCol(colA).getMatrix();
-		this.setCol(colA, this.getCol(colB).getMatrix());
-		this.setCol(colB, row1);
+	public boolean swapRow(int rowA, int rowB) {
+		if (rowA+1 < this.wid && rowB+1 < this.wid) {
+			float[] row1 = this.getRow(rowA).getMatrix();
+			this.setRow(rowA, this.getRow(rowB).getMatrix());
+			this.setRow(rowB, row1); return true;
+		} return false;
 	}
 	
-	// Getters and setters
+	public boolean swapCol(int colA, int colB) {
+		if (colA+1 < this.hgt && colB+1 < this.hgt) {
+			float[] col1 = this.getCol(colA).getMatrix();
+			this.setCol(colA, this.getCol(colB).getMatrix());
+			this.setCol(colB, col1); return true;
+		} return false;
+	}
+	
+	// Get
 	
 	public float get(int row, int col) {return this.matrix[col + row*this.wid];}
 	
@@ -99,8 +110,8 @@ public class Matrix {
 	}
 	
 	public Vector getCol(int col) {
-		float[] colL = new float[this.wid];
-		for (int i = 0; i < this.wid; i++) {
+		float[] colL = new float[this.hgt];
+		for (int i = 0; i < this.hgt; i++) {
 			colL[i] = this.matrix[i*this.wid + col];
 		} return new Vector(colL);
 	}
@@ -109,13 +120,9 @@ public class Matrix {
 	public int getWid() {return this.wid;}
 	public int getHgt() {return this.hgt;}
 	
-	public void set(int row, int col, float payload) {this.matrix[col + row*this.wid] = payload;}
+	// Set
 	
-	public boolean set(float[] matrix) {
-		if (matrix.length == this.matrix.length) {
-			this.matrix = matrix; return true;
-		} return false;
-	}
+	public void set(int row, int col, float payload) {this.matrix[col + row*this.wid] = payload;}
 	
 	public boolean setRow(int row, float[] set) {
 		if (set.length == this.wid) {
@@ -133,10 +140,79 @@ public class Matrix {
 		} return false;
 	}
 	
+	public void setRow(int row, float set) {
+		for (int i = 0; i < this.wid; i++) {
+			this.matrix[row*this.wid + i] = set;
+		}
+	}
+	
+	public void setCol(int col, float set) {
+		for (int i = 0; i < this.hgt; i++) {
+			this.matrix[i*this.wid + col] = set;
+		}
+	}
+	
+	public boolean setMatrix(float[] set) {
+		if (set.length == this.matrix.length) {
+			this.matrix = set; return true;
+		} return false;
+	}
+	
+	public void setMatrix(float set) {
+		for (int i = 0; i < this.matrix.length; i++) {
+			this.matrix[i] = set;
+		}
+	}
+	
+	// Add
+	
+	public boolean addRow(int row, float[] add) {
+		if (add.length == this.wid) {
+			for (int i = 0; i < this.wid; i++) {
+				this.matrix[row*this.wid + i] += add[i];
+			} return true;
+		} return false;
+	}
+	
+	public boolean addCol(int col, float[] add) {
+		if (add.length == this.hgt) {
+			for (int i = 0; i < this.hgt; i++) {
+				this.matrix[i*this.wid + col] += add[i];
+			} return true;
+		} return false;
+	}
+	
+	public void addRow(int row, float add) {
+		for (int i = 0; i < this.wid; i++) {
+			this.matrix[row*this.wid + i] += add;
+		} 
+	}
+	
+	public void addCol(int col, float add) {
+		for (int i = 0; i < this.hgt; i++) {
+			this.matrix[i*this.wid + col] += add;
+		}
+	}
+	
+	public boolean addMatrix(float[] add) {
+		if (add.length == this.matrix.length) {
+			for (int i = 0; i < this.matrix.length; i++) {
+				this.matrix[i] += add[i];
+			} return true;
+		} return false;
+	}
+	
+	public void addMatrix(float add) {
+		for (int i = 0; i < this.matrix.length; i++) {
+			this.matrix[i] += add;
+		}
+	}
+	
 	public void add(int row, int col, float payload) {this.matrix[col + row*this.wid] += payload;}
 	
 	// To string and helper function
 	
+	@Override
 	public String toString() {
 		String self = "";
 		for (int i = 0; i < this.matrix.length; i++) {
