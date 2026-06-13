@@ -4,7 +4,7 @@ public class Vector extends Matrix {
 	
 	public Vector(float[] v) {
 		super(1, v.length);
-		super.set(v);
+		super.setMatrix(v);
 	}
 	
 	public Vector(int hgt) {
