@@ -10,4 +10,12 @@ public class Network {
 		this.inputs = new Vector(inputs);
 		this.outputs = new Vector(outputs);
 	}
+	
+	public void loadWeights() {
+		
+	}
+	
+	public void saveWeightd() {
+		
+	}
 }
