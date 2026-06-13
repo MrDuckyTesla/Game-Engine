@@ -19,8 +19,7 @@ public class Matrix {
 		Matrix trans = new Matrix(a.getHgt(), a.getWid());
 		for (int i = 0; i < a.getWid(); i++) {
 			trans.setCol(i, a.getRow(i).getMatrix());
-		}
-		return null;
+		} return trans;
 	}
 	
 	private float[] matrix;
