@@ -18,9 +18,8 @@ public class Matrix {
 	public static Matrix transpose(Matrix a) {
 		Matrix trans = new Matrix(a.getHgt(), a.getWid());
 		for (int i = 0; i < a.getWid(); i++) {
-			trans.setCol(a.getRow(i));
-		}
-		return null;
+			trans.setCol(i, a.getRow(i).getMatrix());
+		} return trans;
 	}
 	
 	private float[] matrix;
@@ -52,65 +51,88 @@ public class Matrix {
 		}
 	}
 	
-	public void scaleRow(float scale) {
-		
+	public void scaleRow(int row, float scale) {
+		for (int i = 0; i < this.wid; i++) {
+			this.matrix[row*this.wid + i] *= scale;
+		}
 	}
 	
-	public void scaleCol(float scale) {
-		
+	public void scaleRow(int row, float[] scale) {
+		for (int i = 0; i < this.wid; i++) {
+			this.matrix[row*this.wid + i] *= scale[i];
+		}
+	}
+	
+	public void scaleCol(int col, float scale) {
+		for (int i = 0; i < this.wid; i++) {
+			this.matrix[i*this.wid + col] *= scale;
+		}
+	}
+	
+	public void scaleCol(int col, float[] scale) {
+		for (int i = 0; i < this.wid; i++) {
+			this.matrix[i*this.wid + col] *= scale[i];
+		}
 	}
 	
 	public void swapRow(int rowA, int rowB) {
-		
+		float[] row1 = this.getRow(rowA).getMatrix();
+		this.setRow(rowA, this.getRow(rowB).getMatrix());
+		this.setRow(rowB, row1);
 	}
 	
 	public void swapCol(int colA, int colB) {
-		
+		float[] row1 = this.getCol(colA).getMatrix();
+		this.setCol(colA, this.getCol(colB).getMatrix());
+		this.setCol(colB, row1);
 	}
 	
 	// Getters and setters
 	
+	public float get(int row, int col) {return this.matrix[col + row*this.wid];}
+	
 	public Vector getRow(int row) {
-		return null;
+		float[] rowL = new float[this.wid];
+		for (int i = 0; i < this.wid; i++) {
+			rowL[i] = this.matrix[row*this.wid + i];
+		} return new Vector(rowL);
 	}
 	
 	public Vector getCol(int col) {
-		return null;
+		float[] colL = new float[this.wid];
+		for (int i = 0; i < this.wid; i++) {
+			colL[i] = this.matrix[i*this.wid + col];
+		} return new Vector(colL);
 	}
 	
-	public boolean setRow(float[] row) {
-		if (row.length == this.wid) {
-			
-		}
-		return false;
-	}
-	
-	public boolean setRow(Vector row) {
-		if (row.getHgt() == this.wid) {
-			
-		}
-		return false;
-	}
-	
-	public boolean setCol(float[] col) {
-		return false;
-	}
-	
-	public boolean setCol(Vector col) {
-		return false;
-	}
-	
-	public boolean set(float[] matrix) {
-		return false;
-	}
-	
+	public float[] getMatrix() {return this.matrix;}
 	public int getWid() {return this.wid;}
 	public int getHgt() {return this.hgt;}
-	public float[] getMatrix() {return this.matrix;}
-	
-	public float get(int row, int col) {return this.matrix[col + row*this.wid];}
 	
 	public void set(int row, int col, float payload) {this.matrix[col + row*this.wid] = payload;}
+	
+	public boolean set(float[] matrix) {
+		if (matrix.length == this.matrix.length) {
+			this.matrix = matrix; return true;
+		} return false;
+	}
+	
+	public boolean setRow(int row, float[] set) {
+		if (set.length == this.wid) {
+			for (int i = 0; i < this.wid; i++) {
+				this.matrix[row*this.wid + i] = set[i];
+			} return true;
+		} return false;
+	}
+	
+	public boolean setCol(int col, float[] set) {
+		if (set.length == this.hgt) {
+			for (int i = 0; i < this.hgt; i++) {
+				this.matrix[i*this.wid + col] = set[i];
+			} return true;
+		} return false;
+	}
+	
 	public void add(int row, int col, float payload) {this.matrix[col + row*this.wid] += payload;}
 	
 	// To string and helper function
