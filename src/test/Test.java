@@ -28,10 +28,10 @@ public class Test extends PApplet {
 //		n.set(1, 0, 1);
 		System.out.println(n);
 		
-//		n.addMatrix(2);
-//		System.out.println(n);
+//		m.swapRow(0, 2);
+//		System.out.println(m);
 		
-		System.out.println(Matrix.multiply(m, n).getCol(2));
+		System.out.println(m.multiply(n));
 	}
 	
 	// Only used for the size of the canvas

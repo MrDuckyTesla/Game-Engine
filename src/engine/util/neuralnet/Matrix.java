@@ -2,28 +2,6 @@ package engine.util.neuralnet;
 
 public class Matrix {
 	
-	// Static functions
-	
-	public static Matrix multiply(Matrix a, Matrix b) {
-		float[] prod = new float[a.getHgt() * b.getWid()];
-		if (b.getHgt() == a.getWid()) {
-			for (int i = 0; i < a.getWid(); i++) {
-				for (int j = 0; j < a.getHgt(); j++) {
-					for (int k = 0; k < b.wid; k++) {
-						prod[j*b.getWid() + k] += a.get(j, i) * b.get(i, k);
-					}
-				}
-			} return new Matrix(prod, b.getWid(), a.getHgt());
-		} return null;
-	}
-	
-	public static Matrix transpose(Matrix a) {
-		Matrix trans = new Matrix(a.getHgt(), a.getWid());
-		for (int i = 0; i < a.getHgt(); i++) {
-			trans.setCol(i, a.getRow(i).getMatrix());
-		} return trans;
-	}
-	
 	private float[] matrix;
 	private int wid, hgt;
 	
@@ -39,10 +17,48 @@ public class Matrix {
 		this.wid = wid; this.hgt = hgt;
 	}
 	
-	public void propigate() {
+	public void propagate() {
 		for (int i = 0; i < this.matrix.length; i++) {
 			this.matrix[i] = (float) (Math.random() * 2 - 1);
 		}
+	}
+	
+	public Matrix multiply(Matrix b) {
+		float[] prod = new float[this.hgt * b.getWid()];
+		if (b.getHgt() == this.wid) {
+			for (int i = 0; i < this.wid; i++) {
+				for (int j = 0; j < this.hgt; j++) {
+					for (int k = 0; k < b.wid; k++) {
+						prod[j*b.getWid() + k] += this.matrix[i + j*this.wid] * b.get(i, k);
+					}
+				}
+			} return new Matrix(prod, b.getWid(), this.hgt);
+		} return null;
+	}
+	
+	public Matrix elementWise(Matrix b) {
+		if (this.wid == b.getWid() && this.hgt == b.getHgt()) {
+			float[] prod = new float[this.matrix.length];
+			for (int i = 0; i < this.matrix.length; i++) {
+				prod[i] = this.matrix[i]*b.getMatrix()[i];
+			} return new Matrix(prod, this.wid, this.hgt);
+		} return null;
+	}
+	
+	public Matrix elementWise(float[] b) {
+		if (this.matrix.length == b.length) {
+			float[] prod = new float[this.matrix.length];
+			for (int i = 0; i < this.matrix.length; i++) {
+				prod[i] = this.matrix[i]*b[i];
+			} return new Matrix(prod, this.wid, this.hgt);
+		} return null;
+	}
+	
+	public Matrix getTranspose() {
+		Matrix trans = new Matrix(this.hgt, this.wid);
+		for (int i = 0; i < this.hgt; i++) {
+			trans.setCol(i, this.getRow(i).getMatrix());
+		} return trans;
 	}
 	
 	// Basic operations
@@ -73,7 +89,6 @@ public class Matrix {
 		} return false;
 	}
 	
-	
 	public boolean scaleCol(int col, float[] scale) {
 		if (scale.length == this.hgt) {
 			for (int i = 0; i < this.hgt; i++) {
@@ -83,7 +98,7 @@ public class Matrix {
 	}
 	
 	public boolean swapRow(int rowA, int rowB) {
-		if (rowA+1 < this.wid && rowB+1 < this.wid) {
+		if (rowA < this.hgt && rowB < this.hgt) {
 			float[] row1 = this.getRow(rowA).getMatrix();
 			this.setRow(rowA, this.getRow(rowB).getMatrix());
 			this.setRow(rowB, row1); return true;
@@ -91,7 +106,7 @@ public class Matrix {
 	}
 	
 	public boolean swapCol(int colA, int colB) {
-		if (colA+1 < this.hgt && colB+1 < this.hgt) {
+		if (colA < this.wid && colB < this.wid) {
 			float[] col1 = this.getCol(colA).getMatrix();
 			this.setCol(colA, this.getCol(colB).getMatrix());
 			this.setCol(colB, col1); return true;
@@ -206,6 +221,16 @@ public class Matrix {
 		for (int i = 0; i < this.matrix.length; i++) {
 			this.matrix[i] += add;
 		}
+	}
+	
+	public boolean broadcast(float[] b) {
+		if (this.hgt == b.length) {
+			for (int i = 0; i < this.hgt; i++) {
+				for (int j = 0; j < this.wid; j++) {
+					this.matrix[j + i*this.wid] += b[i];
+				}
+			} return true;
+		} return false;
 	}
 	
 	public void add(int row, int col, float payload) {this.matrix[col + row*this.wid] += payload;}
