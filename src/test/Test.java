@@ -11,7 +11,7 @@ public class Test extends PApplet {
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
 		Matrix m = new Matrix(2, 3);
-		m.propigate();
+		m.propagate();
 //		m.set(1, 1, 1);
 //		m.set(0, 1, 2);
 //		m.set(0, 0, 3);
@@ -21,7 +21,7 @@ public class Test extends PApplet {
 		System.out.println(m);
 		
 		Matrix n = new Matrix(3, 2);
-		n.propigate();
+		n.propagate();
 //		n.set(1, 1, 4);
 //		n.set(0, 1, 3);
 //		n.set(0, 0, 2);
