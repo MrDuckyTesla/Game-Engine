@@ -7,7 +7,7 @@ public class Network {
 	private Matrix[] weights;
 	
 	public Network(int[] networkSizes) {
-		this.networkSizes = networkSizes;
+		this.networkSizes = networkSizes.clone();
 		this.weights = new Matrix[networkSizes.length-1];
 		this.biases = new Vector[networkSizes.length-1];
 		for (int i = 1; i < networkSizes.length; i++) {
