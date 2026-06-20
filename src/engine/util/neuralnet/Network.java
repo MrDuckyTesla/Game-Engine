@@ -17,6 +17,18 @@ public class Network {
 		}
 	}
 	
+	public Vector forward() {
+		return null;
+	}
+	
+	private void backward() {
+		
+	}
+	
+	public void train() {
+		
+	}
+	
 	public void loadWeights() {
 		
 	}
