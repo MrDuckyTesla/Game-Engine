@@ -1,5 +1,5 @@
 package engine.util.neuralnet.activations;
 
 public enum Activations {
-	RELU, SIGMOID
+	RELU, SIGMOID, GELU, TANH
 }
