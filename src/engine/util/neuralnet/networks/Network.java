@@ -1,4 +1,7 @@
-package engine.util.neuralnet;
+package engine.util.neuralnet.networks;
+
+import engine.util.neuralnet.Matrix;
+import engine.util.neuralnet.Vector;
 
 public class Network {
 	
@@ -17,8 +20,10 @@ public class Network {
 		}
 	}
 	
-	public Vector forward() {
-		return null;
+	public Vector forward(Vector input) {
+		if (input.getHgt() == weights[0].getHgt()) {
+			
+		} return null;
 	}
 	
 	private void backward() {
