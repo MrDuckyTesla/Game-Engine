@@ -23,7 +23,7 @@ public class Network {
 	}
 	
 	// new = W*i + b
-	public Vector forward(Vector input, AbstractActivation activation) {
+	private Vector forward(Vector input, AbstractActivation activation) {
 		if (input.getHgt() == weights[0].getHgt()) {
 			for (int i = 0; i < this.weights.length; i++) {
 				input = (Vector) this.weights[i].multiply(input);
@@ -41,6 +41,10 @@ public class Network {
 	
 	public void train() {
 		
+	}
+	
+	public Vector getPrediction(Vector input) {
+		return null;
 	}
 	
 	public void loadWeights() {
