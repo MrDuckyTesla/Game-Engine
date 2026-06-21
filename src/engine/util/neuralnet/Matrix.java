@@ -13,7 +13,7 @@ public class Matrix {
 	}
 	
 	private Matrix(float[] matrix, int wid, int hgt) {
-		this.matrix = matrix;
+		this.matrix = matrix.length == wid * hgt? matrix : new float[wid*hgt];
 		this.wid = wid; this.hgt = hgt;
 	}
 	
