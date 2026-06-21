@@ -33,5 +33,7 @@ public class Vector extends Matrix {
 	}
 	
 	public float get(int num) {return this.getMatrix()[num];}
+	
+	public void set(int num, float payload) {this.getMatrix()[num] = payload;}
 
 }

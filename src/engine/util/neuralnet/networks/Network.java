@@ -2,6 +2,7 @@ package engine.util.neuralnet.networks;
 
 import engine.util.neuralnet.Matrix;
 import engine.util.neuralnet.Vector;
+import engine.util.neuralnet.activations.*;
 
 public class Network {
 	
@@ -10,20 +11,28 @@ public class Network {
 	private Matrix[] weights;
 	
 	public Network(int[] networkSizes) {
+		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
 		this.networkSizes = networkSizes;
-		this.weights = new Matrix[networkSizes.length-1];
-		this.biases = new Vector[networkSizes.length-1];
-		for (int i = 1; i < networkSizes.length; i++) {
-			this.weights[i-1] = new Matrix(networkSizes[i-1], networkSizes[i]);
-			this.biases[i-1] = new Vector(networkSizes[i]);
+		this.weights = new Matrix[this.networkSizes.length-1];
+		this.biases = new Vector[this.networkSizes.length-1];
+		for (int i = 1; i < this.networkSizes.length; i++) {
+			this.weights[i-1] = new Matrix(this.networkSizes[i-1], this.networkSizes[i]);
+			this.biases[i-1] = new Vector(this.networkSizes[i]);
 			this.weights[i-1].propagate();
 		}
 	}
 	
-	public Vector forward(Vector input) {
+	// new = W*i + b
+	public Vector forward(Vector input, AbstractActivation activation) {
 		if (input.getHgt() == weights[0].getHgt()) {
-			
-		} return null;
+			for (int i = 0; i < this.weights.length; i++) {
+				input = (Vector) this.weights[i].multiply(input);
+				input.addMatrix(this.biases[i].getMatrix());
+				for (int j = 0; j < input.getHgt(); j++) {
+					input.set(j, activation.function(input.get(j)));
+				}
+			}
+		} return input;
 	}
 	
 	private void backward() {
