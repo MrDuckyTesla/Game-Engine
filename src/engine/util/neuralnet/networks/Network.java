@@ -7,14 +7,16 @@ import engine.util.neuralnet.activations.*;
 public class Network {
 	
 	private int[] networkSizes;
-	private Vector[] biases;
+	private Vector[] biases, activations, preActivations;
 	private Matrix[] weights;
 	
 	public Network(int[] networkSizes) {
 		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
 		this.networkSizes = networkSizes;
-		this.weights = new Matrix[this.networkSizes.length-1];
+		this.activations = new Vector[this.networkSizes.length];
 		this.biases = new Vector[this.networkSizes.length-1];
+		this.preActivations = new Vector[this.networkSizes.length-1];
+		this.weights = new Matrix[this.networkSizes.length-1];
 		for (int i = 1; i < this.networkSizes.length; i++) {
 			this.weights[i-1] = new Matrix(this.networkSizes[i-1], this.networkSizes[i]);
 			this.biases[i-1] = new Vector(this.networkSizes[i]);
@@ -29,6 +31,7 @@ public class Network {
 				input = (Vector) this.weights[i].multiply(input);
 				input.addMatrix(this.biases[i].getMatrix());
 				for (int j = 0; j < input.getHgt(); j++) {
+					this.preActivations[i] = input;
 					input.set(j, activation.function(input.get(j)));
 				}
 			}

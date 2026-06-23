@@ -4,7 +4,7 @@ public class Sigmoid extends AbstractActivation {
 
 	@Override
 	public float function(float x) {
-		return 1 / (float) (1 + Math.exp(x));
+		return 1 / (float) (1 + Math.exp(-x));
 	}
 
 	@Override
