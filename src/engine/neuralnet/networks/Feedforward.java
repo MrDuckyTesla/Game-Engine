@@ -98,7 +98,7 @@ public class Feedforward implements Network {
 			// make sure not updating input layer
 			if (i != 0) {
 				// Update the next delta to be used
-				delta = (Vector) preWeight.getTranspose().multiply(delta);
+				delta = preWeight.getTranspose().multiply(delta);
 				for (int j = 0; j < delta.getHgt(); j++) {
 					delta.set(j, delta.get(j) * this.activation.derivative(this.preActivations[i-1].get(j)));
 				}
