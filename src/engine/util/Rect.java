@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 /**
  * THIS CLASS IS JUST A CONTAINER WITH SOME HELPER FUNCTIONS
- * @see engine.util.physics.Rectangle
+ * @see engine.physics.Rectangle
  * @author Nico L. (MrDuckyTesla)
  */
 public class Rect extends Point {

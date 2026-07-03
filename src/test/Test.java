@@ -1,7 +1,11 @@
 package test;
 
+import engine.neuralnet.*;
+import engine.neuralnet.activations.GELU;
+import engine.neuralnet.costs.MeanSquaredError;
+import engine.neuralnet.networks.Feedforward;
+import engine.util.Timer;
 import engine.util.ToolKit;
-import engine.util.neuralnet.Matrix;
 import processing.core.PApplet;
 
 public class Test extends PApplet {
@@ -10,6 +14,7 @@ public class Test extends PApplet {
 
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
+//		Timer.start(false);
 		Matrix m = new Matrix(2, 3);
 		m.propagate();
 //		m.set(1, 1, 1);
@@ -32,6 +37,29 @@ public class Test extends PApplet {
 //		System.out.println(m);
 		
 		System.out.println(m.multiply(n));
+		
+		Vector[] inputs = {
+		    new Vector(new float[]{0, 0}),
+		    new Vector(new float[]{0, 1}),
+		    new Vector(new float[]{1, 0}),
+		    new Vector(new float[]{1, 1})
+		};
+
+		Vector[] expected = {
+		    new Vector(new float[]{0}),
+		    new Vector(new float[]{1}),
+		    new Vector(new float[]{1}),
+		    new Vector(new float[]{0})
+		};
+		
+		Network test = new Feedforward(new int[] {2, 3, 3, 1}, new GELU(), new MeanSquaredError());
+		test.train(inputs, expected, 4000);
+		
+		System.out.println("F F -> " + test.predict(new Vector(new float[] {0, 0})));
+		System.out.println("F T -> " + test.predict(new Vector(new float[] {0, 1})));
+		System.out.println("T F -> " + test.predict(new Vector(new float[] {1, 0})));
+		System.out.println("T T -> " + test.predict(new Vector(new float[] {1, 1})));
+		
 	}
 	
 	// Only used for the size of the canvas

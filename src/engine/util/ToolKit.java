@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import engine.Room;
-import engine.entity.AbstractEntity;
+import engine.entity.Entity;
 import processing.core.PApplet;
 import processing.core.PImage;
 /**
@@ -1051,7 +1051,7 @@ public final class ToolKit {
 	 * @return
 	 * @author Nico L. (MrDuckyTesla)
 	 */
-	public static <E extends AbstractEntity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+	public static <E extends Entity> ArrayList<E> getNeighbors(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
 		ArrayList<E> neighbors = new ArrayList<>(); int key;
 		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
 		for (int i = -size; i < 1+size; i++) {
@@ -1076,7 +1076,7 @@ public final class ToolKit {
 	 * @return
 	 * @author Nico L. (MrDuckyTesla)
 	 */
-	public static <E extends AbstractEntity> ArrayList<E> getNeighborsRender(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
+	public static <E extends Entity> ArrayList<E> getNeighborsRender(E obj, HashMap<Integer, ArrayList<E>> h, int wid, int hgt, int size) {
 		ArrayList<E> neighbors = new ArrayList<>(); int key;
 		int x = (int) (obj.getRX()/Room.CHUNK_SIZE), y = (int) (obj.getRY()/Room.CHUNK_SIZE);
 		if (x - size < 0) {x = size;} else if (x + size > wid) {x = wid-size;}
