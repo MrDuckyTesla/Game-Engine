@@ -23,6 +23,12 @@ public class Matrix {
 		}
 	}
 	
+	public void propagate(float scale) {
+		for (int i = 0; i < this.matrix.length; i++) {
+			this.matrix[i] = (float) ((Math.random() * 2 - 1) * scale);
+		}
+	}
+	
 	public Matrix multiply(Matrix b) {
 		float[] prod = new float[this.hgt * b.getWid()];
 		if (b.getHgt() == this.wid) {
@@ -33,6 +39,17 @@ public class Matrix {
 					}
 				}
 			} return new Matrix(prod, b.getWid(), this.hgt);
+		} return null;
+	}
+	
+	public Vector multiply(Vector b) {
+		float[] prod = new float[this.hgt];
+		if (b.getHgt() == this.wid) {
+			for (int i = 0; i < this.wid; i++) {
+				for (int j = 0; j < this.hgt; j++) {
+					prod[j] += this.matrix[i + j*this.wid] * b.get(i);
+				}
+			} return new Vector(prod);
 		} return null;
 	}
 	
@@ -63,7 +80,14 @@ public class Matrix {
 	
 	// Basic operations
 	
-	public void scale(float scale) {
+	public Matrix scaleMatrixReturn(float scale) {
+		Matrix copy = new Matrix(this.wid, this.hgt);
+		for (int i = 0; i < this.matrix.length; i++) {
+			copy.set(i, this.matrix[i] * scale);
+		} return copy;
+	}
+	
+	public void scaleMatrix(float scale) {
 		for (int i = 0; i < this.matrix.length; i++) {
 			this.matrix[i] *= scale;
 		}
@@ -95,6 +119,14 @@ public class Matrix {
 				this.matrix[i*this.wid + col] *= scale[i];
 			} return true;
 		} return false;
+	}
+	
+	public void scale(int row, int col, float scale) {
+		this.matrix[col + row*this.wid] *= scale;
+	}
+	
+	public void scale(int num, float scale) {
+		this.matrix[num] *= scale;
 	}
 	
 	public boolean swapRow(int rowA, int rowB) {
@@ -140,6 +172,8 @@ public class Matrix {
 	// Set
 	
 	public void set(int row, int col, float payload) {this.matrix[col + row*this.wid] = payload;}
+	
+	public void set(int num, float payload) {this.matrix[num] = payload;}
 	
 	public boolean setRow(int row, float[] set) {
 		if (set.length == this.wid) {
@@ -236,6 +270,36 @@ public class Matrix {
 	}
 	
 	public void add(int row, int col, float payload) {this.matrix[col + row*this.wid] += payload;}
+	
+	// Sub
+	
+	public boolean subRow(int row, float[] sub) {
+		if (sub.length == this.wid) {
+			for (int i = 0; i < this.wid; i++) {
+				this.matrix[row*this.wid + i] -= sub[i];
+			} return true;
+		} return false;
+	}
+	
+	public boolean subCol(int col, float[] sub) {
+		if (sub.length == this.hgt) {
+			for (int i = 0; i < this.hgt; i++) {
+				this.matrix[i*this.wid + col] -= sub[i];
+			} return true;
+		} return false;
+	}
+	
+	public boolean subMatrix(float[] sub) {
+		if (sub.length == this.matrix.length) {
+			for (int i = 0; i < this.matrix.length; i++) {
+				this.matrix[i] -= sub[i];
+			} return true;
+		} return false;
+	}
+	
+	public Matrix copy() {
+		return new Matrix(this.matrix.clone(), this.wid, this.hgt);
+	}
 	
 	// To string and helper function
 	

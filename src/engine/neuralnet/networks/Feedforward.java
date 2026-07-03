@@ -48,28 +48,28 @@ public class Feedforward implements Network {
 		for (int i = 1; i < this.networkSizes.length; i++) {
 			this.weights[i-1] = new Matrix(this.networkSizes[i-1], this.networkSizes[i]);
 			this.biases[i-1] = new Vector(this.networkSizes[i]);
-			this.weights[i-1].propagate();
+			this.weights[i-1].propagate(0.5f);
 		}
 	}
-	
+
 	// z = f(W*a + b)
 	// a = f(z)
 	private Vector forward(Vector input) {
-		if (input.getHgt() == weights[0].getHgt()) {  // Gatekeep
-			// Activations has length + 1 compared to other arrays
-			this.activations[0] = new Vector(input.getMatrix().clone());
-			for (int i = 0; i < this.weights.length; i++) {
-				// multiply by weights and add bias
-				input = (Vector) this.weights[i].multiply(input);
-				input.addMatrix(this.biases[i].getMatrix());
-				// Store the input before applying activation function
-				this.preActivations[i] = new Vector(input.getMatrix().clone());
-				// Apply activation function throughout input vector
-				for (int j = 0; j < input.getHgt(); j++) {
-					input.set(j, this.activation.function(input.get(j)));
-				} // Store inputs before applying addition and multiplication
-				this.activations[i+1] = new Vector(input.getMatrix().clone());
-			}
+		if (input.getHgt() != this.weights[0].getWid()) {
+			throw new IllegalArgumentException("Input size mismatch");
+		} // Activations has length + 1 compared to other arrays
+		this.activations[0] = new Vector(input.getMatrix().clone());
+		for (int i = 0; i < this.weights.length; i++) {
+			// multiply by weights and add bias
+			input = this.weights[i].multiply(input);
+			input.addMatrix(this.biases[i].getMatrix());
+			// Store the input before applying activation function
+			this.preActivations[i] = new Vector(input.getMatrix().clone());
+			// Apply activation function throughout input vector
+			for (int j = 0; j < input.getHgt(); j++) {
+				input.set(j, this.activation.function(input.get(j)));
+			} // Store inputs before applying addition and multiplication
+			this.activations[i+1] = new Vector(input.getMatrix().clone());
 		} return input;
 	}
 	
@@ -80,11 +80,28 @@ public class Feedforward implements Network {
 	// calculate initial delta
 	// Propagate backwards
 	private void backward(Vector output, Vector expected) {
-		Vector error; 
-		for (int i = weights.length - 1; i > 0; i--) {
-			for (int j = 0; j > this.preActivations[i].getHgt(); j++) {
-				error = this.cost.derivative(output, expected);
-				error.set(j, this.activation.derivative(this.preActivations[i].get(j)));
+		// Initialize delta with error vector
+		Vector delta = new Vector(this.cost.derivative(output, expected).getMatrix());
+		// Element wise multiplication of the activation derivative
+		for (int i = 0; i < delta.getHgt(); i++) {
+			delta.scale(i, this.activation.derivative(this.preActivations[this.weights.length-1].get(i)));
+		} Matrix grad, preWeight;
+		// Loop though weights backwards
+		for (int i = this.weights.length - 1; i >= 0; i--) {
+			// Get gradient of current layer
+			grad = this.activations[i].multiply(delta.getTranspose());
+			// Store weights before updating
+			preWeight = this.weights[i].copy();
+			// Update weights and biases
+			this.weights[i].subMatrix(grad.scaleMatrixReturn(0.05f).getMatrix());
+			this.biases[i].subMatrix(delta.scaleMatrixReturn(0.05f).getMatrix());
+			// make sure not updating input layer
+			if (i != 0) {
+				// Update the next delta to be used
+				delta = (Vector) preWeight.getTranspose().multiply(delta);
+				for (int j = 0; j < delta.getHgt(); j++) {
+					delta.set(j, delta.get(j) * this.activation.derivative(this.preActivations[i-1].get(j)));
+				}
 			}
 		}
 	}
@@ -92,13 +109,18 @@ public class Feedforward implements Network {
 	@Override
 	public void train(Vector[] inputs, Vector[] expected, int epochs) {
 		for (int i = 0; i < epochs; i++) {
-			this.forward(inputs[i]);
-		} // Calculate the current cost using the last output of the network
+			for (int j = 0; j < inputs.length; j++) {
+				this.backward(this.forward(inputs[j]), expected[j]);
+			}
+		} 
+		// Calculate the current cost using the last output of the network
 		this.currCost = cost.calculate(this.activations[this.activations.length-1], expected[expected.length-1]);
+		System.out.println(this.currCost);
 	}
 	
 	@Override
 	public void step(Vector input, Vector expected) {
+		this.backward(this.forward(input), expected);
 		// Calculate the current cost using the output of the network
 		this.currCost = cost.calculate(this.activations[this.activations.length-1], expected);
 	}
