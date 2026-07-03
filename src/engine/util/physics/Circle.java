@@ -1,9 +1,0 @@
-package engine.util.physics;
-
-public class Circle {
-
-	public Circle() {
-		// TODO Auto-generated constructor stub
-	}
-
-}

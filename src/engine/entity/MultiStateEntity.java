@@ -1,24 +1,26 @@
 package engine.entity;
 
 import engine.Room;
-import engine.entity.abilities.AbstractAbility;
-import engine.entity.movement.AbstractMove;
-import engine.entity.trigger.Trigger;
+import engine.entity.abilities.Ability;
+import engine.entity.impl.Enemy;
+import engine.entity.impl.NonPlayerCharacter;
+import engine.entity.impl.Player;
+import engine.entity.movement.Move;
 import processing.core.PImage;
 
 public class MultiStateEntity {
 	
-	private AbstractEntity[] entities;
+	private Entity[] entities;
 	private int state = 0;
 
-	public MultiStateEntity(Entities[] types, Room room[], PImage[] img, AbstractMove[] move, AbstractAbility[][] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
-		entities = new AbstractEntity[types.length];
+	public MultiStateEntity(Entities[] types, Room room[], PImage[] img, Move[] move, Ability[][] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+		entities = new Entity[types.length];
 		try {
 			for (int i = 0; i < types.length; i++) {entities[i] = getType(types[i], room[i], img[i], move[i], abilities[i], colorLayers[i], colorTints, isTangible, isBreakable);}
 		} catch (IndexOutOfBoundsException e) {throw new IllegalArgumentException();}
 	}
 	
-	private AbstractEntity getType(Entities type, Room room, PImage img, AbstractMove move, AbstractAbility[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+	private Entity getType(Entities type, Room room, PImage img, Move move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		switch (type) {
 			case ENEMY:
 				return new Enemy(room, img, move, abilities, colorLayers, colorTints);
@@ -31,7 +33,7 @@ public class MultiStateEntity {
 		}
 	}
 	
-	public AbstractEntity get() {return entities[this.state];}
+	public Entity get() {return entities[this.state];}
 	
 	public void changeState(Trigger t) {this.state++;}
 

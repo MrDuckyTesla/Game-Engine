@@ -1,7 +1,8 @@
 package test;
 
+import engine.neuralnet.Matrix;
+import engine.util.Timer;
 import engine.util.ToolKit;
-import engine.util.neuralnet.Matrix;
 import processing.core.PApplet;
 
 public class Test extends PApplet {
@@ -10,6 +11,7 @@ public class Test extends PApplet {
 
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
+//		Timer.start(false);
 		Matrix m = new Matrix(2, 3);
 		m.propagate();
 //		m.set(1, 1, 1);

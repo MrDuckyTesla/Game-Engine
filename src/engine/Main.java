@@ -2,7 +2,14 @@ package engine;
 
 import engine.entity.*;
 import engine.entity.abilities.*;
+import engine.entity.abilities.impl.Interact8d;
+import engine.entity.abilities.impl.Sprint8d;
+import engine.entity.abilities.impl.Sword8d;
+import engine.entity.abilities.impl.Walk8d;
+import engine.entity.impl.Enemy;
 import engine.entity.movement.*;
+import engine.entity.movement.impl.EightDirectionalMove;
+import engine.entity.movement.impl.PlatformerSimpleMove;
 import engine.util.*;
 import processing.core.*;
 
@@ -12,9 +19,9 @@ public final class Main extends PApplet {
 	private final int[][][] PlayerSpriteLayers = {{{180, 157, 130, 31}, {187, 171}, {190, 163, 140}}, {{105, 85, 34}, {104}}};
 	private int[] PlayerColorTints = {111, 111, 255, 255, 111, 111, 255, 200, 0};
 	private PImage[] tesla = new PImage[2];
-	private AbstractMove[] moves = new AbstractMove[] {new EightDirectionalMove(new Rect(400-14*3, 400-14*3, 28, 28), 3, 3), new PlatformerSimpleMove()};
-	private AbstractAbility[][] abilities = new AbstractAbility[][] {{new Walk8d(), new Sword8d(88), new Sprint8d(16), new Interact8d(90)}, {}};
-	private AbstractAbility[] abilities2 = new AbstractAbility[] {new Walk8d(), new Sword8d(), new Sprint8d()};
+	private Move[] moves = new Move[] {new EightDirectionalMove(new Rect(400-14*3, 400-14*3, 28, 28), 3, 3), new PlatformerSimpleMove()};
+	private Ability[][] abilities = new Ability[][] {{new Walk8d(), new Sword8d(88), new Sprint8d(16), new Interact8d(90)}, {}};
+	private Ability[] abilities2 = new Ability[] {new Walk8d(), new Sword8d(), new Sprint8d()};
 	PImage bck1, tile1;
 	Level tutorial;
 	Room[] test = new Room[2];
@@ -50,7 +57,7 @@ public final class Main extends PApplet {
 		}
 		// five hundred teslas
 		for (int i = 0; i < 500; i++) {
-			AbstractMove[] moves = new AbstractMove[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
+			Move[] moves = new Move[] {new EightDirectionalMove(new Rect((float)Math.random()*(bck1.width-28*3), (float)Math.random()*(bck1.height-28*3), 28, 28), 3, 3), new PlatformerSimpleMove()};
 //			MoveSet[] moves = new MoveSet[] {new EightDirectionalMove(new Rect(0, 0, 28, 28), 3, 3), new PlatformerSimpleMove()};
 			int[] EnemyColorTints = {255, 111, 111, 111, 111, 255, 255, 200, 0};
 			for (int j = 0; j < EnemyColorTints.length; j++) {EnemyColorTints[j] = (int) (Math.random() * 256);}
