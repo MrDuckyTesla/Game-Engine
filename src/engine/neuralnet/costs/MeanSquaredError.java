@@ -6,7 +6,7 @@ import engine.neuralnet.Vector;
 public class MeanSquaredError implements Cost {
 
 	@Override
-	public float cost(Vector output, Vector target) {
+	public float calculate(Vector output, Vector target) {
 		if (output.getHgt() == target.getHgt()) {
 			float cost = 0; float sum;
 			for (int i = 0; i < output.getHgt(); i++) {

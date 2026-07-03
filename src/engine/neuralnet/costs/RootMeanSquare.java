@@ -10,7 +10,7 @@ public class RootMeanSquare implements Cost {
 	}
 
 	@Override
-	public float cost(Vector output, Vector target) {
+	public float calculate(Vector output, Vector target) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
