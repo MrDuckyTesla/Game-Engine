@@ -128,7 +128,7 @@ public class Feedforward implements Network {
 	@Override
 	// Literally just a forward pass but without all the storing
 	public Vector predict(Vector input) {
-		if (input.getHgt() == weights[0].getHgt()) {  // Gatekeep
+		if (input.getHgt() == weights[0].getWid()) {  // Gatekeep
 			for (int i = 0; i < this.weights.length; i++) {
 				// multiply by weights and add bias
 				input = (Vector) this.weights[i].multiply(input);

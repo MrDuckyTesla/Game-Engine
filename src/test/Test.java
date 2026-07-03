@@ -52,8 +52,8 @@ public class Test extends PApplet {
 		    new Vector(new float[]{0})
 		};
 		
-		Network test = new Feedforward(new int[] {2, 3, 1}, new GELU(), new MeanSquaredError());
-		test.train(inputs, expected, 2);
+		Network test = new Feedforward(new int[] {2, 3, 3, 1}, new GELU(), new MeanSquaredError());
+		test.train(inputs, expected, 4000);
 		
 		System.out.println("F F -> " + test.predict(new Vector(new float[] {0, 0})));
 		System.out.println("F T -> " + test.predict(new Vector(new float[] {0, 1})));
