@@ -78,24 +78,27 @@ public class Test extends PApplet {
 			float y = (float) (Math.random() * 2 - 1);
 			
 			inputs[i] = new Vector(new float[] {x, y});
-			expected[i] = new Vector(new float[] {x+y});
+			expected[i] = new Vector(new float[] {x*y});
 		}
 		
 		Initializer initializer = new SymmetricUniform(0.5f);
-		Activation activation = new Linear();
+		Activation activation = new GELU();
 		Cost cost = new MeanSquaredError();
 		Optimizer optimizer = new SGD(0.05f);
 		
-		Network test = new Feedforward(new int[] {2, 4, 4, 1}, initializer, activation, cost, optimizer);
+		Network test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
 		
-		test.train(inputs, expected, 10000);
+		test.train(inputs, expected, 1000);
 
-		System.out.println("0 + 1 = "+test.predict(new Vector(new float[] {0, 1})));
-		System.out.println("0.5 + 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
-		System.out.println("0.5 + 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
-		System.out.println("0 + 0 = "+test.predict(new Vector(new float[] {0, 0})));
-		System.out.println("2 + 0 = "+test.predict(new Vector(new float[] {2, 0})));
-		System.out.println("2 + 0 = "+test.predict(new Vector(new float[] {2, 10})));
+		System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
+		System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
+		System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
+		System.out.println("0 * 0 = "+test.predict(new Vector(new float[] {0, 0})));
+		System.out.println("1 * 1 = "+test.predict(new Vector(new float[] {1, 1})));
+		System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
+		System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
+		
+		test.saveNetwork("Multiply");
 		
 	}
 	

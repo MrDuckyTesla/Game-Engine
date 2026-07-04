@@ -4,6 +4,7 @@
 package engine.neural.networks;
 
 import engine.neural.*;
+import java.io.*;
 
 /**
  * "Simple" multi-layer neural network
@@ -13,36 +14,45 @@ public class Feedforward implements Network {
 	/**
 	 * Keeps track of the network geometry
 	 */
-	private final int[] networkSizes;
+	private int[] networkSizes;
 	
-	/**
-	 * Variable that tracks the activation function being used
-	 */
-	private final Activation activation;
-	
-	/**
-	 * Variable that tracks the cost function being used
-	 */
-	private final Cost cost;
-	
-	/**
-	 * Variable that tracks the optimizer being used
-	 */
-	private final Optimizer optimizer;
+	private Vector[] biases, activations, preActivations;
+	private Matrix[] weights;
 	
 	/**
 	 * Variable that tracks the initializer being used
 	 */
-	private final Initializer initializer;
+	private Initializer initializer;
+	
+	/**
+	 * Variable that tracks the activation function being used
+	 */
+	private Activation activation;
+	
+	/**
+	 * Variable that tracks the cost function being used
+	 */
+	private Cost cost;
+	
+	/**
+	 * Variable that tracks the optimizer being used
+	 */
+	private Optimizer optimizer;
 	
 	/**
 	 * Variable that keeps track of the last cost of the network
 	 */
 	private float currCost;
 	
-	private Vector[] biases, activations, preActivations;
-	private Matrix[] weights;
-	
+	/**
+	 * Constructs a new multilayer neural network
+	 * @param networkSizes The size of each layer of the network, for instance, [2, 4, 4, 1] 
+	 * has an input of size 2, 2 hidden layers of size 4, and an output of size 1
+	 * @param initializer The specific way you want to populate the weights at creation
+	 * @param activation The specific way you want neurons to fire
+	 * @param cost The specific way you want to show how wrong the network is
+	 * @param optimizer The specific way you want to push the network towards minima
+	 */
 	public Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer) {
 		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
 		for (int i : networkSizes) {if (i <= 0) {throw new IllegalArgumentException();}}
@@ -157,8 +167,65 @@ public class Feedforward implements Network {
 	}
 	
 	@Override
-	public void saveNetwork(String name) {
-		
+	public void saveNetwork(String name) {	
+		BufferedWriter writer;
+		try {
+			File file = new File("net");
+			
+	        file.mkdirs();
+
+	        writer = new BufferedWriter(new FileWriter(new File(file, name + ".txt")));
+
+			writer.write("Network Sizes:\n\n[\n"+this.networkSizes[0]);
+			for (int i = 1; i < this.networkSizes.length; i++) {
+				writer.write(" "+this.networkSizes[i]);
+			} writer.write("\n]\n\n");
+			
+			writer.write("Initializer Information:\n\n");
+			writer.write(this.initializer.getClassInfo()+"\n\n");
+			
+			writer.write("Activation Information:\n\n");
+			writer.write(this.activation.getClassInfo()+"\n\n");
+			
+			writer.write("Cost Information:\n\n");
+			writer.write(this.cost.getClassInfo()+"\n\n");
+			
+			writer.write("Optimizer Information:\n\n");
+			writer.write(this.optimizer.getClassInfo()+"\n\n");
+			
+			writer.write("Last Cost:\n\n");
+			writer.write(this.currCost+"\n\n"); 
+			
+			writer.write("Weights:\n");
+			writer.write(this.printMatricies(this.weights)+"\n\n");
+			
+			writer.write("Biases:\n");
+			writer.write(this.printMatricies(this.biases)+"\n\n");
+			
+			writer.write("Activations:\n");
+			writer.write(this.printMatricies(this.activations)+"\n\n");
+			
+			writer.write("Pre Activations:\n");
+			writer.write(this.printMatricies(this.preActivations)+"\n\n");
+			
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	private String printMatricies(Matrix[] m) {
+		String s = "";
+		for (int k = 0; k < m.length; k++) {
+			s += "\nLayer " + k + ":\n[\n";
+			for (int i = 0; i < m[k].getHgt(); i++) {
+				for (int j = 0; j< m[k].getWid(); j++) {
+					s += m[k].get(i, j) + " ";
+				} s += "\n";
+			} s += "]\n";
+		} return s;
+	}
+	
 	
 }

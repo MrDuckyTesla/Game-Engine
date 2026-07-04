@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Activation {
+import engine.util.Reconstructable;
+
+public interface Activation extends Reconstructable {
 	
 	public abstract float function(float x);
 	

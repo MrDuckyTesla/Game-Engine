@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Initializer {
+import engine.util.Reconstructable;
+
+public interface Initializer extends Reconstructable {
 	
 	public abstract void initialize(Matrix weights);
 

@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Cost {
+import engine.util.Reconstructable;
+
+public interface Cost extends Reconstructable {
 	
 	public abstract float calculate(Vector output, Vector target);
 	

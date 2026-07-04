@@ -19,5 +19,10 @@ public class RandomUniform implements Initializer {
 			}
 		}
 	}
+	
+	@Override
+	public String getClassInfo() {
+		return this.getClass().getName() + "\n" + this.min + "\n" + this.max;
+	}
 
 }
