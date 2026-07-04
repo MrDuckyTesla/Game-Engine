@@ -1,6 +1,6 @@
 package engine.util;
 
-import engine.entity.movement.Move;
+import engine.entity.Move;
 import processing.core.PImage;
 
 public class Animator {

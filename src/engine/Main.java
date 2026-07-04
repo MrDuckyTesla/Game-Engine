@@ -2,14 +2,10 @@ package engine;
 
 import engine.entity.*;
 import engine.entity.abilities.*;
-import engine.entity.abilities.impl.Interact8d;
-import engine.entity.abilities.impl.Sprint8d;
-import engine.entity.abilities.impl.Sword8d;
-import engine.entity.abilities.impl.Walk8d;
-import engine.entity.impl.Enemy;
+import engine.entity.entities.Enemy;
+import engine.entity.entities.MultiState;
+import engine.entity.enums.Entities;
 import engine.entity.movement.*;
-import engine.entity.movement.impl.EightDirectionalMove;
-import engine.entity.movement.impl.PlatformerSimpleMove;
 import engine.util.*;
 import processing.core.*;
 
@@ -25,7 +21,7 @@ public final class Main extends PApplet {
 	PImage bck1, tile1;
 	Level tutorial;
 	Room[] test = new Room[2];
-	MultiStateEntity p;
+	MultiState p;
 
 	public static void main(String[] args) {
 		PApplet.main(Main.class);
@@ -50,7 +46,7 @@ public final class Main extends PApplet {
 		bck1 = loadImage("src/Assets/Sprites/Background/background1.png");
 		ToolKit.setApp(this);
 		test[0] = new Room(bck1); test[1] = new Room(bck1);
-		p = new MultiStateEntity(new Entities[] {Entities.PLAYER, Entities.PLAYER}, test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints, false, false);
+		p = new MultiState(new Entities[] {Entities.PLAYER, Entities.PLAYER}, test, tesla, moves, abilities, PlayerSpriteLayers, PlayerColorTints, false, false);
 		
 		for (int i = 0; i < 40; i++) {
 			test[0].add((float) Math.random() * (bck1.width-28*3), (float) Math.random() * (bck1.height-28*3), (float) (Math.random() * 190)+10, (float) (Math.random() * 190)+10);

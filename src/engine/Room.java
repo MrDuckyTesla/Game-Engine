@@ -3,8 +3,8 @@ package engine;
 import java.util.*;
 
 import engine.entity.*;
-import engine.entity.impl.Player;
-import engine.entity.impl.Wall;
+import engine.entity.entities.Player;
+import engine.entity.entities.Wall;
 import engine.util.*;
 import processing.core.PImage;
 

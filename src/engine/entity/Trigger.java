@@ -1,6 +1,8 @@
 package engine.entity;
 
-import engine.entity.movement.impl.InteractionMove;
+import engine.entity.enums.Entities;
+import engine.entity.enums.Triggers;
+import engine.entity.movement.InteractionMove;
 
 public abstract class Trigger extends Entity {
 	

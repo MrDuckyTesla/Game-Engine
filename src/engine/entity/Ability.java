@@ -1,0 +1,38 @@
+package engine.entity;
+
+import engine.entity.enums.Abilities;
+
+public abstract class Ability {
+	
+	private int[] keys;
+
+	public Ability() {this.keys = null;}
+	public Ability(int key) {this.keys = new int[] {key};}
+	public Ability(int[] keys) {this.keys = keys;}
+	
+	public abstract void update(Entity e, Move m) throws IllegalArgumentException;
+	
+	public abstract void setActive(boolean activate);
+	public abstract boolean isActive();
+	
+	/**
+	 * Only override this if you want to create an interaction
+	 * @return Returns the trigger being requested
+	 */
+	public Trigger getTrigger() {return null;}
+	
+	/**
+	 * Only override this if you want to create an interaction
+	 * @return Returns if the trigger has been made
+	 */
+	public boolean sentTrigger() {return true;}
+	
+	public abstract Ability get();
+	
+	public int[] getKeys() {return this.keys;}
+	
+	public void setKeys(int key) {this.keys = new int[] {key};}
+	public void setKeys(int[] keys) {this.keys = keys;}
+	
+	public abstract Abilities getType();
+}

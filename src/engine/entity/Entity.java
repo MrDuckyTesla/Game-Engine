@@ -3,10 +3,9 @@ package engine.entity;
 import java.util.ArrayList;
 
 import engine.Room;
-import engine.entity.abilities.Ability;
+import engine.entity.enums.Entities;
+import engine.entity.enums.Moves;
 import engine.entity.movement.*;
-import engine.entity.movement.impl.EightDirectionalMove;
-import engine.entity.movement.impl.ObjectAffectedMove;
 import engine.util.*;
 import processing.core.PImage;
 

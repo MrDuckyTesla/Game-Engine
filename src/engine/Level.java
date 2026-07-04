@@ -2,7 +2,7 @@ package engine;
 
 import java.util.ArrayList;
 
-import engine.entity.impl.Player;
+import engine.entity.entities.Player;
 
 // A level holds many Rooms
 public class Level {
