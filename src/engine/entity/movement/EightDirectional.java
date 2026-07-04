@@ -6,7 +6,7 @@ import engine.entity.enums.Triggers;
 import engine.util.*;
 import processing.core.PApplet;
 
-public class EightDirectionalMove extends Move {
+public class EightDirectional extends Move {
 	
 	private boolean isIdle = true, forceWalk = false, canChange = true;
 	private long tID = -1;
@@ -15,9 +15,9 @@ public class EightDirectionalMove extends Move {
 	private Point totalDist, p;  // The total amount that the object has moved in a frame
 	private Rect xywh;
 	
-	public EightDirectionalMove() {this.instantiate(new Rect(0, 0, 28, 28), 3, 3);}
-	public EightDirectionalMove(Rect xywh, float speed) {this.instantiate(xywh, speed, 1);}
-	public EightDirectionalMove(Rect xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
+	public EightDirectional() {this.instantiate(new Rect(0, 0, 28, 28), 3, 3);}
+	public EightDirectional(Rect xywh, float speed) {this.instantiate(xywh, speed, 1);}
+	public EightDirectional(Rect xywh, float speed, float scale) {this.instantiate(xywh, speed, scale);}
 	
 	private void instantiate(Rect xywh, float speed, float scale) {this.xywh = xywh; this.totalDist = new Point(); this.maxSpeed = speed*2; this.currSpeed = speed; this.scale = scale;}
 
@@ -62,7 +62,7 @@ public class EightDirectionalMove extends Move {
 	}
 	
 	@Override
-	public Move get() {return new EightDirectionalMove(this.xywh.get(), this.maxSpeed/2, this.scale);}
+	public Move get() {return new EightDirectional(this.xywh.get(), this.maxSpeed/2, this.scale);}
 	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override

@@ -5,12 +5,12 @@ import engine.entity.Move;
 import engine.entity.enums.Moves;
 import engine.util.Point;
 
-public class InteractionMove extends Move {
+public class Interaction extends Move {
 	
 	private float x, y, w, h;
 	private Move m;
 
-	public InteractionMove(float x, float y, float w, float h, Move m) {
+	public Interaction(float x, float y, float w, float h, Move m) {
 		this.x = x; this.y = y; this.w = w; this.h = h; this.m = m;
 	}
 
@@ -31,7 +31,7 @@ public class InteractionMove extends Move {
 	@Override
 	public Move get() {
 		// TODO Auto-generated method stub
-		return new InteractionMove(x, y, w, h, m);
+		return new Interaction(x, y, w, h, m);
 	}
 
 	@Override

@@ -17,9 +17,9 @@ public class Wall extends NPC{
 	public Wall(Room room, PImage img, Move move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
 		super(room, img, move, abilities, colorLayers, colorTints, isTangible, isBreakable);
 	} public Wall(PImage img, float x, float y, float w, float h, float imgX, float imgY, int imgS) {
-		super(null, img, new ObjectAffectedMove(x, y, w, h), new Ability[0], null, null, true, true); this.imgX = imgX; this.imgY = imgY; this.imgS = imgS;
-	} public Wall(PImage img, float x, float y, float w, float h) {super(null, img, new ObjectAffectedMove(x, y, w, h), new Ability[0], null, null, true, true);}
-	public Wall(float x, float y, float w, float h) {super(null, null, new ObjectAffectedMove(x, y, w, h), null, null, null, true, true);}
+		super(null, img, new ObjectAffected(x, y, w, h), new Ability[0], null, null, true, true); this.imgX = imgX; this.imgY = imgY; this.imgS = imgS;
+	} public Wall(PImage img, float x, float y, float w, float h) {super(null, img, new ObjectAffected(x, y, w, h), new Ability[0], null, null, true, true);}
+	public Wall(float x, float y, float w, float h) {super(null, null, new ObjectAffected(x, y, w, h), null, null, null, true, true);}
 	
 	public void show() {
 		if (this.getImg() == null) {

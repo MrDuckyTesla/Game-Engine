@@ -1,29 +1,37 @@
 package engine.entity.movement;
 
-import engine.entity.Entity;
-import engine.entity.Move;
+import engine.entity.*;
 import engine.entity.enums.Moves;
-import engine.util.Point;
-import engine.util.Rect;
+import engine.util.*;
 
-public class BiDirectionalMove extends Move {
+// Legacy version without procedural animation
+public class PlatformerSimple extends Move {
 	
-	private Rect xywh, bg;
+	Point coords = new Point();
+	private Rect xywh;
+	private float impulse, friction, speed, accelerationY;
 	
-	public BiDirectionalMove(Rect xywh, Rect bg) {
-		this.xywh = xywh; this.bg = bg;
+	public PlatformerSimple() {
+		this.xywh = new Rect(0, 0, 9, 13);
+		this.impulse = 17; this.friction = 0.8f;
+		this.speed = 2.5f; this.accelerationY = 1;
+		// FOR WHEN ANIMATION IS NEEDED, battAnimSpeed = 5;
 	}
+	
+//	public PlatformerMove(Obstacle xywh, Obstacle bg) {
+//		this.xywh = xywh; this.bg = bg;
+//	}
 
 	@Override
-	public void move(Entity e) {
+	public void move(Entity c) {
 		// TODO Auto-generated method stub
 	}
 	
 	@Override
 	public Move get() {
-		return new BiDirectionalMove(this.xywh.get(), this.bg.get());
+		// TODO Auto-generated method stub
+		return new PlatformerSimple();
 	}
-
 	@Override
 	public float getX() {return this.xywh.getX();}
 	@Override
@@ -38,17 +46,17 @@ public class BiDirectionalMove extends Move {
 	public float getSW() {return this.xywh.getW();}
 	@Override
 	public float getSH() {return this.xywh.getH();}
-	
+
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Point();
 	}
 
 	@Override
 	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.DUO;
+		return Moves.PLATFORM;
 	}
 
 	@Override
@@ -80,5 +88,6 @@ public class BiDirectionalMove extends Move {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 }

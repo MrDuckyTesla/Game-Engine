@@ -24,7 +24,7 @@ public class Sword8d extends Ability {
 	public void update(Entity e, Move m) throws IllegalArgumentException {
 		if (m.getMoveType() != Moves.EIGHT) {throw new IllegalArgumentException();}
 		if (!e.getAnimator().getDoneAnimation(4) && this.isActive) {
-			((EightDirectionalMove) m).halfSpeed(); this.setSwing(m, false); 
+			((EightDirectional) m).halfSpeed(); this.setSwing(m, false); 
 			e.getAnimator().setAnim(e.getImg(), m, 48, 4, 12, this.lIsIdle == m.getIsIdle() && m.getIsIdle()); 
 		} else {
 			this.isActive = false;
@@ -40,7 +40,7 @@ public class Sword8d extends Ability {
 		} else {this.currTrig = null; this.sent = false;}
 	}
 	
-	private void setSwing(Move m, boolean swing) {((EightDirectionalMove) m).setForceWalk(!swing); ((EightDirectionalMove) m).setCanChange(swing);}
+	private void setSwing(Move m, boolean swing) {((EightDirectional) m).setForceWalk(!swing); ((EightDirectional) m).setCanChange(swing);}
 
 	@Override
 	public boolean isActive() {return this.isActive;}
