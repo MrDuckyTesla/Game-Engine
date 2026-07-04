@@ -1,11 +1,11 @@
 package test;
 
-import engine.neuralnet.*;
-import engine.neuralnet.networks.*;
-import engine.neuralnet.initializers.*;
-import engine.neuralnet.activations.*;
-import engine.neuralnet.costs.*;
-import engine.neuralnet.optimizers.*;
+import engine.neural.*;
+import engine.neural.activations.*;
+import engine.neural.costs.*;
+import engine.neural.initializers.*;
+import engine.neural.networks.*;
+import engine.neural.optimizers.*;
 import engine.util.Timer;
 import engine.util.ToolKit;
 import processing.core.PApplet;

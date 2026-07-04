@@ -1,0 +1,40 @@
+package engine.entity.entities;
+
+import engine.Room;
+import engine.entity.Ability;
+import engine.entity.Entity;
+import engine.entity.Move;
+import engine.entity.Trigger;
+import engine.entity.enums.Entities;
+import processing.core.PImage;
+
+public class MultiState {
+	
+	private Entity[] entities;
+	private int state = 0;
+
+	public MultiState(Entities[] types, Room room[], PImage[] img, Move[] move, Ability[][] abilities, int[][][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+		entities = new Entity[types.length];
+		try {
+			for (int i = 0; i < types.length; i++) {entities[i] = getType(types[i], room[i], img[i], move[i], abilities[i], colorLayers[i], colorTints, isTangible, isBreakable);}
+		} catch (IndexOutOfBoundsException e) {throw new IllegalArgumentException();}
+	}
+	
+	private Entity getType(Entities type, Room room, PImage img, Move move, Ability[] abilities, int[][] colorLayers, int[] colorTints, boolean isTangible, boolean isBreakable) {
+		switch (type) {
+			case ENEMY:
+				return new Enemy(room, img, move, abilities, colorLayers, colorTints);
+			case NON_PLAYER_CHARACTER:
+				return new NPC(room, img, move, abilities, colorLayers, colorTints, isTangible, isBreakable);
+			case PLAYER:
+				return new Player(room, img, move, abilities, colorLayers, colorTints);
+			default:
+				return null;
+		}
+	}
+	
+	public Entity get() {return entities[this.state];}
+	
+	public void changeState(Trigger t) {this.state++;}
+
+}
