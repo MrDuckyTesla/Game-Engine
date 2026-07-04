@@ -2,8 +2,8 @@ package engine.neuralnet;
 
 public interface Optimizer {
 	
-	public abstract Matrix updateWeights();
+	public abstract void updateWeights(Matrix weights, Matrix gradient);
 	
-	public abstract Matrix updateBiases();
+	public abstract void updateBiases(Vector biases, Vector delta);
 	
 }

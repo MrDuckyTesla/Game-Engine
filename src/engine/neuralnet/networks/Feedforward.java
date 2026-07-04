@@ -13,17 +13,27 @@ public class Feedforward implements Network {
 	/**
 	 * Keeps track of the network geometry
 	 */
-	private int[] networkSizes;
+	private final int[] networkSizes;
 	
 	/**
-	 * Variable that keeps the activation function being used
+	 * Variable that tracks the activation function being used
 	 */
-	private Activation activation;
+	private final Activation activation;
 	
 	/**
-	 * Variable that keeps the cost function being used
+	 * Variable that tracks the cost function being used
 	 */
-	private Cost cost;
+	private final Cost cost;
+	
+	/**
+	 * Variable that tracks the optimizer being used
+	 */
+	private final Optimizer optimizer;
+	
+	/**
+	 * Variable that tracks the initializer being used
+	 */
+	private final Initializer initializer;
 	
 	/**
 	 * Variable that keeps track of the last cost of the network
@@ -33,12 +43,15 @@ public class Feedforward implements Network {
 	private Vector[] biases, activations, preActivations;
 	private Matrix[] weights;
 	
-	public Feedforward(int[] networkSizes, Activation activation, Cost cost) {
+	public Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer) {
 		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
-		// Store network, activation, and cost type
+		// Store network geometry
 		this.networkSizes = networkSizes; 
+		// Store network, activation, cost type, and optimizer
+		this.initializer = initializer;
 		this.activation = activation; 
 		this.cost = cost;
+		this.optimizer = optimizer;
 		// Initialize vectors and matrices
 		this.activations = 	  new Vector[this.networkSizes.length];
 		this.biases = 		  new Vector[this.networkSizes.length-1];
@@ -48,7 +61,7 @@ public class Feedforward implements Network {
 		for (int i = 1; i < this.networkSizes.length; i++) {
 			this.weights[i-1] = new Matrix(this.networkSizes[i-1], this.networkSizes[i]);
 			this.biases[i-1] = new Vector(this.networkSizes[i]);
-			this.weights[i-1].propagate(0.5f);
+			this.initializer.initialize(this.weights[i-1]);
 		}
 	}
 
@@ -93,8 +106,8 @@ public class Feedforward implements Network {
 			// Store weights before updating
 			preWeight = this.weights[i].copy();
 			// Update weights and biases
-			this.weights[i].subMatrix(grad.scaleMatrixReturn(0.05f).getMatrix());
-			this.biases[i].subMatrix(delta.scaleMatrixReturn(0.05f).getMatrix());
+			this.optimizer.updateWeights(this.weights[i], grad);
+			this.optimizer.updateBiases(this.biases[i], delta);
 			// make sure not updating input layer
 			if (i != 0) {
 				// Update the next delta to be used

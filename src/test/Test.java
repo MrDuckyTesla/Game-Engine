@@ -1,9 +1,11 @@
 package test;
 
 import engine.neuralnet.*;
-import engine.neuralnet.activations.GELU;
-import engine.neuralnet.costs.MeanSquaredError;
-import engine.neuralnet.networks.Feedforward;
+import engine.neuralnet.networks.*;
+import engine.neuralnet.initializers.*;
+import engine.neuralnet.activations.*;
+import engine.neuralnet.costs.*;
+import engine.neuralnet.optimizers.*;
 import engine.util.Timer;
 import engine.util.ToolKit;
 import processing.core.PApplet;
@@ -49,28 +51,34 @@ public class Test extends PApplet {
 //		}
 		
 		Vector[] inputs = {
-			    new Vector(new float[]{0, 0, 0}),
-			    new Vector(new float[]{1, 0, 0}),
-			    new Vector(new float[]{0, 1, 0}),
-			    new Vector(new float[]{0, 0, 1}),
-			    new Vector(new float[]{1, 1, 0}),
-			    new Vector(new float[]{0, 1, 1}),
-			    new Vector(new float[]{1, 0, 1}),
-			    new Vector(new float[]{1, 1, 1})
-			};
+		    new Vector(new float[]{0, 0, 0}),
+		    new Vector(new float[]{1, 0, 0}),
+		    new Vector(new float[]{0, 1, 0}),
+		    new Vector(new float[]{0, 0, 1}),
+		    new Vector(new float[]{1, 1, 0}),
+		    new Vector(new float[]{0, 1, 1}),
+		    new Vector(new float[]{1, 0, 1}),
+		    new Vector(new float[]{1, 1, 1})
+		};
 
-			Vector[] expected = {
-			    new Vector(new float[]{0}),
-			    new Vector(new float[]{1}),
-			    new Vector(new float[]{1}),
-			    new Vector(new float[]{1}),
-			    new Vector(new float[]{0}),
-			    new Vector(new float[]{0}),
-			    new Vector(new float[]{0}),
-			    new Vector(new float[]{1})
-			};
+		Vector[] expected = {
+		    new Vector(new float[]{0}),
+		    new Vector(new float[]{1}),
+		    new Vector(new float[]{1}),
+		    new Vector(new float[]{1}),
+		    new Vector(new float[]{0}),
+		    new Vector(new float[]{0}),
+		    new Vector(new float[]{0}),
+		    new Vector(new float[]{1})
+		};
 		
-		Network test = new Feedforward(new int[] {3, 4, 4, 1}, new GELU(), new MeanSquaredError());
+		Initializer initializer = new SymmetricUniform(0.5f);
+		Activation activation = new GELU();
+		Cost cost = new MeanSquaredError();
+		Optimizer optimizer = new SGD(0.05f);
+		
+		Network test = new Feedforward(new int[] {3, 4, 4, 1}, initializer, activation, cost, optimizer);
+		
 		test.train(inputs, expected, 10000);
 		
 		System.out.println(test.predict(new Vector(new float[] {0, 0, 0})));
