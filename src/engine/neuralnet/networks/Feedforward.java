@@ -98,15 +98,15 @@ public class Feedforward implements Network {
 		// Element wise multiplication of the activation derivative
 		for (int i = 0; i < delta.getHgt(); i++) {
 			delta.scale(i, this.activation.derivative(this.preActivations[this.weights.length-1].get(i)));
-		} Matrix grad, preWeight;
+		} Matrix gradient, preWeight;
 		// Loop though weights backwards
 		for (int i = this.weights.length - 1; i >= 0; i--) {
 			// Get gradient of current layer
-			grad = this.activations[i].multiply(delta.getTranspose());
+			gradient = this.activations[i].multiply(delta.getTranspose());
 			// Store weights before updating
 			preWeight = this.weights[i].copy();
 			// Update weights and biases
-			this.optimizer.updateWeights(this.weights[i], grad);
+			this.optimizer.updateWeights(this.weights[i], gradient);
 			this.optimizer.updateBiases(this.biases[i], delta);
 			// make sure not updating input layer
 			if (i != 0) {
