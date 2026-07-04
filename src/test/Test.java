@@ -40,52 +40,62 @@ public class Test extends PApplet {
 		
 		System.out.println(m.multiply(n));
 		
-//		Vector[] inputs = new Vector[1000], expected = new Vector[1000];
-//		
-//		for (int i = 0; i < 1000; i++) {
-//			float x = (float) (Math.random() - 2)*100;
-//			float y = (float) (Math.random() - 2)*100;
-//			
-//			inputs[i] = new Vector(new float[] {x, y});
-//			expected[i] = new Vector(new float[] {x});
-//		}
+//		Vector[] inputs = {
+//		    new Vector(new float[]{0, 0, 0}),
+//		    new Vector(new float[]{1, 0, 0}),
+//		    new Vector(new float[]{0, 1, 0}),
+//		    new Vector(new float[]{0, 0, 1}),
+//		    new Vector(new float[]{1, 1, 0}),
+//		    new Vector(new float[]{0, 1, 1}),
+//		    new Vector(new float[]{1, 0, 1}),
+//		    new Vector(new float[]{1, 1, 1})
+//		};
+//
+//		Vector[] expected = {
+//		    new Vector(new float[]{0}),
+//		    new Vector(new float[]{1}),
+//		    new Vector(new float[]{1}),
+//		    new Vector(new float[]{1}),
+//		    new Vector(new float[]{0}),
+//		    new Vector(new float[]{0}),
+//		    new Vector(new float[]{0}),
+//		    new Vector(new float[]{1})
+//		};
 		
-		Vector[] inputs = {
-		    new Vector(new float[]{0, 0, 0}),
-		    new Vector(new float[]{1, 0, 0}),
-		    new Vector(new float[]{0, 1, 0}),
-		    new Vector(new float[]{0, 0, 1}),
-		    new Vector(new float[]{1, 1, 0}),
-		    new Vector(new float[]{0, 1, 1}),
-		    new Vector(new float[]{1, 0, 1}),
-		    new Vector(new float[]{1, 1, 1})
-		};
-
-		Vector[] expected = {
-		    new Vector(new float[]{0}),
-		    new Vector(new float[]{1}),
-		    new Vector(new float[]{1}),
-		    new Vector(new float[]{1}),
-		    new Vector(new float[]{0}),
-		    new Vector(new float[]{0}),
-		    new Vector(new float[]{0}),
-		    new Vector(new float[]{1})
-		};
+//		System.out.println(test.predict(new Vector(new float[] {0, 0, 0})));
+//		System.out.println(test.predict(new Vector(new float[] {0, 0, 1})));
+//		System.out.println(test.predict(new Vector(new float[] {0, 1, 0})));
+//		System.out.println(test.predict(new Vector(new float[] {1, 0, 0})));
+//		System.out.println(test.predict(new Vector(new float[] {1, 1, 0})));
+//		System.out.println(test.predict(new Vector(new float[] {0, 1, 1})));
+//		System.out.println(test.predict(new Vector(new float[] {1, 0, 1})));
+//		System.out.println(test.predict(new Vector(new float[] {1, 1, 1})));
+		
+		Vector[] inputs = new Vector[1000], expected = new Vector[1000];
+		
+		for (int i = 0; i < 1000; i++) {
+			float x = (float) (Math.random() * 2 - 1);
+			float y = (float) (Math.random() * 2 - 1);
+			
+			inputs[i] = new Vector(new float[] {x, y});
+			expected[i] = new Vector(new float[] {x+y});
+		}
 		
 		Initializer initializer = new SymmetricUniform(0.5f);
-		Activation activation = new GELU();
+		Activation activation = new Linear();
 		Cost cost = new MeanSquaredError();
 		Optimizer optimizer = new SGD(0.05f);
 		
-		Network test = new Feedforward(new int[] {3, 4, 4, 1}, initializer, activation, cost, optimizer);
+		Network test = new Feedforward(new int[] {2, 4, 4, 1}, initializer, activation, cost, optimizer);
 		
 		test.train(inputs, expected, 10000);
-		
-		System.out.println(test.predict(new Vector(new float[] {0, 0, 0})));
-		System.out.println(test.predict(new Vector(new float[] {0, 0, 1})));
-		System.out.println(test.predict(new Vector(new float[] {0, 1, 0})));
-		System.out.println(test.predict(new Vector(new float[] {1, 0, 1})));
 
+		System.out.println("0 + 1 = "+test.predict(new Vector(new float[] {0, 1})));
+		System.out.println("0.5 + 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
+		System.out.println("0.5 + 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
+		System.out.println("0 + 0 = "+test.predict(new Vector(new float[] {0, 0})));
+		System.out.println("2 + 0 = "+test.predict(new Vector(new float[] {2, 0})));
+		System.out.println("2 + 0 = "+test.predict(new Vector(new float[] {2, 10})));
 		
 	}
 	

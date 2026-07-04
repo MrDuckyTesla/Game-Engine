@@ -2,14 +2,14 @@ package engine.entity;
 
 import engine.entity.enums.Entities;
 import engine.entity.enums.Triggers;
-import engine.entity.movement.InteractionMove;
+import engine.entity.movement.Interaction;
 
 public abstract class Trigger extends Entity {
 	
 	private Entity caster;
 	
 	public Trigger(float x, float y, float w, float h, Entity caster) {
-		super(null, null, new InteractionMove(x, y, w, h, caster.getMoveSet()), null, null, null, false, false);
+		super(null, null, new Interaction(x, y, w, h, caster.getMoveSet()), null, null, null, false, false);
 		this.caster = caster;
 	}
 	

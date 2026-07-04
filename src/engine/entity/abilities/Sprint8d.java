@@ -2,7 +2,7 @@ package engine.entity.abilities;
 
 import engine.entity.*;
 import engine.entity.enums.*;
-import engine.entity.movement.EightDirectionalMove;
+import engine.entity.movement.EightDirectional;
 import engine.util.ToolKit;
 
 //this class ONLY works on objects using EightDirectionalMove()
@@ -22,7 +22,7 @@ public class Sprint8d extends Ability {
 			for (int key : this.getKeys()) {if (ToolKit.keyIsDown(key)) {this.isActive = true;}}
 		} else {this.isActive = this.activate;}
 		if (this.isActive) {
-			((EightDirectionalMove) m).doubSpeed();
+			((EightDirectional) m).doubSpeed();
 			e.getAnimator().setAnimSpeed(6);
 		}
 	}

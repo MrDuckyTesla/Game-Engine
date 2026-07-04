@@ -45,6 +45,7 @@ public class Feedforward implements Network {
 	
 	public Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer) {
 		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
+		for (int i : networkSizes) {if (i <= 0) {throw new IllegalArgumentException();}}
 		// Store network geometry
 		this.networkSizes = networkSizes; 
 		// Store network, activation, cost type, and optimizer
@@ -64,56 +65,48 @@ public class Feedforward implements Network {
 			this.initializer.initialize(this.weights[i-1]);
 		}
 	}
-
-	// z = f(W*a + b)
-	// a = f(z)
+	
 	private Vector forward(Vector input) {
 		if (input.getHgt() != this.weights[0].getWid()) {
 			throw new IllegalArgumentException("Input size mismatch");
 		} // Activations has length + 1 compared to other arrays
 		this.activations[0] = new Vector(input.getMatrix().clone());
 		for (int i = 0; i < this.weights.length; i++) {
-			// multiply by weights and add bias
+			// multiply by weights and add bias, z = f(W*a + b)
 			input = this.weights[i].multiply(input);
-			input.addMatrix(this.biases[i].getMatrix());
+			input.addMatrix(this.biases[i].getMatrix()); 
 			// Store the input before applying activation function
 			this.preActivations[i] = new Vector(input.getMatrix().clone());
 			// Apply activation function throughout input vector
-			for (int j = 0; j < input.getHgt(); j++) {
+			for (int j = 0; j < input.getHgt(); j++) { // a = f(z)
 				input.set(j, this.activation.function(input.get(j)));
 			} // Store inputs before applying addition and multiplication
 			this.activations[i+1] = new Vector(input.getMatrix().clone());
 		} return input;  // Return prediction
 	}
 	
-	// cost derivative of output and expected
-	// activation derivative of preactivation
-	// element wise both together
-	
-	// calculate initial delta
-	// Propagate backwards
 	private void backward(Vector output, Vector expected) {
 		// Initialize delta with error vector
-		Vector delta = new Vector(this.cost.derivative(output, expected).getMatrix());
+		Vector delta = this.cost.derivative(output, expected);
 		// Element wise multiplication of the activation derivative of last preactivation
 		for (int i = 0; i < delta.getHgt(); i++) {
 			delta.scale(i, this.activation.derivative(this.preActivations[this.weights.length-1].get(i)));
-		} Matrix gradient, preWeight;
+		} Matrix gradient, weight;  // Store gradient and weight before change
 		// Loop though weights backwards
-		for (int i = this.weights.length - 1; i >= 0; i--) {
-			// Get gradient of current layer (activations * delta Transpose)
-			gradient = this.activations[i].multiply(delta.getTranspose());
+		for (int i = this.weights.length-1; i >= 0 ; i--) {
+			// Get gradient of current layer (delta * activations Transpose)
+			gradient = delta.multiply(this.activations[i].getTranspose());
 			// Store weights before changing them in update
-			preWeight = this.weights[i].copy();
+			weight = this.weights[i].copy();
 			// Update weights and biases
 			this.optimizer.updateWeights(this.weights[i], gradient);
 			this.optimizer.updateBiases(this.biases[i], delta);
 			// make sure not updating input layer
-			if (i != 0) {
-				// Get the next delta to be used 
-				delta = preWeight.getTranspose().multiply(delta);
+			if (i != 0) {  // Multiply delta by weights (weight Transpose * delta)
+				delta = weight.getTranspose().multiply(delta);
 				for (int j = 0; j < delta.getHgt(); j++) {
-					delta.set(j, delta.get(j) * this.activation.derivative(this.preActivations[i-1].get(j)));
+					// Multiply delta by activation derivative of last preactivation
+					delta.scale(j, this.activation.derivative(this.preActivations[i-1].get(j)));
 				}
 			}
 		}
@@ -125,8 +118,7 @@ public class Feedforward implements Network {
 			for (int j = 0; j < inputs.length; j++) {
 				this.backward(this.forward(inputs[j]), expected[j]);
 			}
-		} 
-		// Calculate the current cost using the last output of the network
+		}  // Calculate the current cost using the last output of the network
 		this.currCost = cost.calculate(this.activations[this.activations.length-1], expected[expected.length-1]);
 		System.out.println(this.currCost);
 	}
@@ -168,4 +160,5 @@ public class Feedforward implements Network {
 	public void saveNetwork(String name) {
 		
 	}
+	
 }

@@ -4,72 +4,75 @@ import engine.entity.Entity;
 import engine.entity.Move;
 import engine.entity.enums.Moves;
 import engine.util.Point;
+import engine.util.Rect;
 
-public class ObjectAffectedMove extends Move {
+public class BiDirectional extends Move {
 	
-	private float x, y, w, h;
+	private Rect xywh, bg;
 	
-	public ObjectAffectedMove(float x, float y, float w, float h) {this.x = x; this.y = y; this.w = w; this.h = h;}
+	public BiDirectional(Rect xywh, Rect bg) {
+		this.xywh = xywh; this.bg = bg;
+	}
 
 	@Override
 	public void move(Entity e) {
-		// TODO Make object get moved around
+		// TODO Auto-generated method stub
 	}
-
-	@Override
-	public float getX() {return this.x;}
-	@Override
-	public float getY() {return this.y;}
-	@Override
-	public float getW() {return this.w;}
-	@Override
-	public float getH() {return this.h;}
-	@Override
-	public float getS() {return 1;}
-	@Override
-	public float getSW() {return this.getW();}
-	@Override
-	public float getSH() {return this.getH();}
 	
 	@Override
 	public Move get() {
-		return new ObjectAffectedMove(x, y, w, h);
+		return new BiDirectional(this.xywh.get(), this.bg.get());
 	}
+
+	@Override
+	public float getX() {return this.xywh.getX();}
+	@Override
+	public float getY() {return this.xywh.getY();}
+	@Override
+	public float getW() {return this.xywh.getW();}
+	@Override
+	public float getH() {return this.xywh.getH();}
+	@Override
+	public float getS() {return 0;}
+	@Override
+	public float getSW() {return this.xywh.getW();}
+	@Override
+	public float getSH() {return this.xywh.getH();}
 	
 	@Override
 	public Point getPoint() {
 		// TODO Auto-generated method stub
-		return new Point(this.x, this.y);
+		return null;
 	}
 
 	@Override
 	public Moves getMoveType() {
 		// TODO Auto-generated method stub
-		return Moves.OBJECT;
+		return Moves.DUO;
 	}
 
 	@Override
 	public void setDir(int d) {
 		// TODO Auto-generated method stub
-
-	}
-	
-	@Override
-	public boolean dirChanged() {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
 	public void setIdle(boolean i) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public int getDir() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public boolean dirChanged() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
