@@ -1,8 +1,8 @@
 package engine.neural;
 
-import engine.util.Reconstructable;
+import engine.util.Reconstructible;
 
-public interface Optimizer extends Reconstructable {
+public interface Optimizer extends Reconstructible {
 	
 	public abstract void updateWeights(Matrix weights, Matrix gradient);
 	

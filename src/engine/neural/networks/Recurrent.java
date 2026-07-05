@@ -34,12 +34,6 @@ public class Recurrent implements Network{
 	}
 
 	@Override
-	public void loadNetwork(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void saveNetwork(String name) {
 		// TODO Auto-generated method stub
 		

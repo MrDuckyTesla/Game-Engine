@@ -1,5 +1,7 @@
 package test;
 
+import java.io.IOException;
+
 import engine.neural.*;
 import engine.neural.activations.*;
 import engine.neural.costs.*;
@@ -86,9 +88,15 @@ public class Test extends PApplet {
 		Cost cost = new MeanSquaredError();
 		Optimizer optimizer = new SGD(0.05f);
 		
-		Network test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
+//		Network test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
+		Network test = null;
+		try {
+			test = new Feedforward("Multiply");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		test.train(inputs, expected, 1000);
+//		test.train(inputs, expected, 10000);
 
 		System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
 		System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
@@ -98,7 +106,7 @@ public class Test extends PApplet {
 		System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
 		System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
 		
-		test.saveNetwork("Multiply");
+//		test.saveNetwork("Multiply");
 		
 	}
 	

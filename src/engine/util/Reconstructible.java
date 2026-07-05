@@ -1,6 +1,6 @@
 package engine.util;
 
-public interface Reconstructable {
+public interface Reconstructible {
 	
 	/**
 	 * This interface is used to save objects as strings and to reconstruct them later

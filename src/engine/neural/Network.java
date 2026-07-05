@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Network {
+import engine.util.Reconstructible;
+
+public interface Network extends Reconstructible {
 	
 	public abstract void train(Vector[] inputs, Vector[] expected, int epochs);
 	
@@ -9,8 +11,6 @@ public interface Network {
 	public abstract Vector predict(Vector input);
 	
 	public abstract float getCost();
-	
-	public abstract void loadNetwork(String name);
 	
 	public abstract void saveNetwork(String name);
 

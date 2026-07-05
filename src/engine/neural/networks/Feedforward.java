@@ -5,6 +5,7 @@ package engine.neural.networks;
 
 import engine.neural.*;
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * "Simple" multi-layer neural network
@@ -14,7 +15,7 @@ public class Feedforward implements Network {
 	/**
 	 * Keeps track of the network geometry
 	 */
-	private int[] networkSizes;
+	private final int[] networkSizes;
 	
 	private Vector[] biases, activations, preActivations;
 	private Matrix[] weights;
@@ -22,22 +23,22 @@ public class Feedforward implements Network {
 	/**
 	 * Variable that tracks the initializer being used
 	 */
-	private Initializer initializer;
+	private final Initializer initializer;
 	
 	/**
 	 * Variable that tracks the activation function being used
 	 */
-	private Activation activation;
+	private final Activation activation;
 	
 	/**
 	 * Variable that tracks the cost function being used
 	 */
-	private Cost cost;
+	private final Cost cost;
 	
 	/**
 	 * Variable that tracks the optimizer being used
 	 */
-	private Optimizer optimizer;
+	private final Optimizer optimizer;
 	
 	/**
 	 * Variable that keeps track of the last cost of the network
@@ -74,6 +75,67 @@ public class Feedforward implements Network {
 			this.biases[i-1] = new Vector(this.networkSizes[i]);
 			this.initializer.initialize(this.weights[i-1]);
 		}
+	}
+	
+	public Feedforward(String name) throws Exception {
+		File file = new File("net"); file.mkdirs();
+	    Scanner scan = new Scanner(new File(file, name + ".txt"));
+	    
+	    // Look for NetworkSizes
+	    while (!scan.next().equals("[")) {}
+	    int[] netSize = new int[] {};
+	    while (scan.hasNextInt()) {
+	    	int[] temp = new int[netSize.length+1];
+	    	for (int i = 0; i < netSize.length; i++) {temp[i] = netSize[i];}
+	    	temp[netSize.length] = scan.nextInt(); netSize = temp;
+	    } this.networkSizes = netSize;
+
+	    this.initializer = (Initializer) this.search("Initializer Information:", scan);
+	    this.activation = (Activation) this.search("Activation Information:", scan);
+	    this.cost = (Cost) this.search("Cost Information:", scan);
+	    this.optimizer = (Optimizer) this.search("Optimizer Information:", scan);
+	    
+
+	    
+	    scan.close();
+	        
+	}
+	
+	/**
+	 * Function for finding and initializing network params
+	 * @param str Header information
+	 * @param scan Scanner object
+	 * @return Class within text file
+	 * @throws Exception If text can't be found in file
+	 */
+	private Object search(String str, Scanner scan) throws Exception {
+		while (!scan.nextLine().equals(str)) {} scan.nextLine();
+	    String className = scan.nextLine(); String[] args = new String[] {};
+	    String next = scan.nextLine();
+	    while (!next.isBlank() && !next.contains(":")) {
+	    	String[] temp = new String[args.length+1];
+	    	for (int i = 0; i < args.length; i++) {temp[i] = args[i];}
+	    	temp[args.length] = next; args = temp;
+	    	next = scan.nextLine();
+	    } Class<?> t, c = Class.forName(className);  // Get class from string and make temp
+		Class<?>[] p = new Class<?>[args.length];  // Create container for params
+		Object[] argsReal = new Object[args.length];
+		// Iterate through arguments provided
+		for (int i = 0; i < args.length; i++) {
+			// Assign temp to arguments class
+			try {argsReal[i] = Float.parseFloat(args[i]); t = float.class;} 
+			catch (NumberFormatException e) {
+				try {argsReal[i] = Integer.parseInt(args[i]); t = int.class;} 
+				catch(NumberFormatException f) {
+					argsReal[i] = Boolean.parseBoolean(args[i]); t = boolean.class;
+				}
+			} p[i] = t;  // Assign  temp to param
+		} System.out.print("Found " + className);
+		if (args.length > 0) { // Check if parameters were found
+			System.out.print(" with params: ");
+			for (String i : args) {System.out.print(i + " ");} 
+		} System.out.println();  // Create new instance of described class
+		return c.getDeclaredConstructor(p).newInstance(argsReal);
 	}
 	
 	private Vector forward(Vector input) {
@@ -162,24 +224,21 @@ public class Feedforward implements Network {
 	}
 	
 	@Override
-	public void loadNetwork(String name) {
-		
-	}
-	
-	@Override
 	public void saveNetwork(String name) {	
 		BufferedWriter writer;
 		try {
 			File file = new File("net");
-			
 	        file.mkdirs();
-
+	        
 	        writer = new BufferedWriter(new FileWriter(new File(file, name + ".txt")));
 
 			writer.write("Network Sizes:\n\n[\n"+this.networkSizes[0]);
 			for (int i = 1; i < this.networkSizes.length; i++) {
 				writer.write(" "+this.networkSizes[i]);
 			} writer.write("\n]\n\n");
+			
+			writer.write("Network Information:\n\n");
+			writer.write(this.getClassInfo()+"\n\n");
 			
 			writer.write("Initializer Information:\n\n");
 			writer.write(this.initializer.getClassInfo()+"\n\n");
@@ -197,35 +256,34 @@ public class Feedforward implements Network {
 			writer.write(this.currCost+"\n\n"); 
 			
 			writer.write("Weights:\n");
-			writer.write(this.printMatricies(this.weights)+"\n\n");
+			writer.write(this.printMatrices(this.weights)+"\n\n");
 			
 			writer.write("Biases:\n");
-			writer.write(this.printMatricies(this.biases)+"\n\n");
+			writer.write(this.printMatrices(this.biases)+"\n\n");
 			
 			writer.write("Activations:\n");
-			writer.write(this.printMatricies(this.activations)+"\n\n");
+			writer.write(this.printMatrices(this.activations)+"\n\n");
 			
 			writer.write("Pre Activations:\n");
-			writer.write(this.printMatricies(this.preActivations)+"\n\n");
+			writer.write(this.printMatrices(this.preActivations)+"\n\n");
 			
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Save Failed.");
 			e.printStackTrace();
 		}
 	}
 	
-	private String printMatricies(Matrix[] m) {
-		String s = "";
+	private String printMatrices(Matrix[] m) {
+		StringBuilder s = new StringBuilder();
 		for (int k = 0; k < m.length; k++) {
-			s += "\nLayer " + k + ":\n[\n";
+			s.append("\nLayer " + k + ":\n[\n");
 			for (int i = 0; i < m[k].getHgt(); i++) {
 				for (int j = 0; j< m[k].getWid(); j++) {
-					s += m[k].get(i, j) + " ";
-				} s += "\n";
-			} s += "]\n";
-		} return s;
+					s.append(m[k].get(i, j) + " ");
+				} s.append("\n");
+			} s.append("]\n");
+		} return s.toString();
 	}
-	
 	
 }
