@@ -17,28 +17,28 @@ public class Test extends PApplet {
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
 //		Timer.start(false);
-		Matrix m = new Matrix(2, 3);
-		m.propagate();
+//		Matrix m = new Matrix(2, 3);
+//		m.propagate();
 //		m.set(1, 1, 1);
 //		m.set(0, 1, 2);
 //		m.set(0, 0, 3);
 //		m.set(1, 0, 4);
 //		m.set(9, 1, 4);
 //		m.set(5, 5, 400);
-		System.out.println(m);
+//		System.out.println(m);
 		
-		Matrix n = new Matrix(3, 2);
-		n.propagate();
+//		Matrix n = new Matrix(3, 2);
+//		n.propagate();
 //		n.set(1, 1, 4);
 //		n.set(0, 1, 3);
 //		n.set(0, 0, 2);
 //		n.set(1, 0, 1);
-		System.out.println(n);
+//		System.out.println(n);
 		
 //		m.swapRow(0, 2);
 //		System.out.println(m);
 		
-		System.out.println(m.multiply(n));
+//		System.out.println(m.multiply(n));
 		
 //		Vector[] inputs = {
 //		    new Vector(new float[]{0, 0, 0}),
@@ -80,21 +80,22 @@ public class Test extends PApplet {
 		
 //		Network test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
 		
-		Network test = null; int batches = 0;
+		Network test = null; 
+		int batches = 1;
 		try {test = new Feedforward("Multiply");} 
 		catch (Exception e) {e.printStackTrace();}
 		
-		while (true) {
+//		while (true) {
 		
 			for (int i = 0; i < 1000; i++) {
-				float x = (float) (Math.random() * 2 - 1) * batches;
-				float y = (float) (Math.random() * 2 - 1) * batches;
+				float x = (float) (Math.random() * 2 - 1)*2;
+				float y = (float) (Math.random() * 2 - 1)*2;
 				
 				inputs[i] = new Vector(new float[] {x, y});
 				expected[i] = new Vector(new float[] {x*y});
 			}
 			
-			test.train(inputs, expected, 10000);
+//			test.train(inputs, expected, 100);
 	
 			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
 			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
@@ -106,9 +107,9 @@ public class Test extends PApplet {
 			System.out.println("2 * 1 = "+test.predict(new Vector(new float[] {2, 1})));
 			System.out.println("5 * 10 = "+test.predict(new Vector(new float[] {2, 1})));
 			
-			test.saveNetwork("Multiply");
+//			test.saveNetwork("Multiply");
 			batches++;
-		}
+//		}
 		
 	}
 	

@@ -1,6 +1,6 @@
 Start Date:  7/11/2024
-Last Updated:  7/4/2026
-Current Version 0.1.1.6
+Last Updated:  7/5/2026
+Current Version 0.1.1.7
 
 To view code, navigate to src/engine.
 To view assets, navigate to src/Assets.
