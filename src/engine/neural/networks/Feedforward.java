@@ -80,7 +80,6 @@ public class Feedforward implements Network {
 	public Feedforward(String name) throws Exception {
 		File file = new File("net"); file.mkdirs();
 	    Scanner scan = new Scanner(new File(file, name + ".txt"));
-	    
 	    // Look for NetworkSizes
 	    while (!scan.next().equals("[")) {}
 	    int[] netSize = new int[] {};
@@ -89,16 +88,37 @@ public class Feedforward implements Network {
 	    	for (int i = 0; i < netSize.length; i++) {temp[i] = netSize[i];}
 	    	temp[netSize.length] = scan.nextInt(); netSize = temp;
 	    } this.networkSizes = netSize;
-
+	    // Find network parameters
 	    this.initializer = (Initializer) this.search("Initializer Information:", scan);
 	    this.activation = (Activation) this.search("Activation Information:", scan);
 	    this.cost = (Cost) this.search("Cost Information:", scan);
 	    this.optimizer = (Optimizer) this.search("Optimizer Information:", scan);
-	    
-
-	    
+	    // Get cost
+	    scan.nextLine(); this.currCost = scan.nextFloat();
+	    // Initialize vectors and matrices
+	    this.activations = 	  new Vector[this.networkSizes.length];
+	 	this.biases = 		  new Vector[this.networkSizes.length-1];
+	 	this.preActivations = new Vector[this.networkSizes.length-1];
+	 	this.weights =		  new Matrix[this.networkSizes.length-1];
+	 	// Loop through and propagate arrays
+	 	for (int i = 1; i < this.networkSizes.length; i++) {
+	 		this.weights[i-1] = new Matrix(this.networkSizes[i-1], this.networkSizes[i]);
+	 		this.biases[i-1] = new Vector(this.networkSizes[i]);
+	 	} // Propagate weights and biases
+	 	this.textToMatrix(scan, this.weights);
+	 	this.textToMatrix(scan, this.biases);
 	    scan.close();
-	        
+	}
+	
+	private void textToMatrix(Scanner scan, Matrix[] m) {
+		for (int k = 0; k < this.biases.length; k++) {
+		 	while (!scan.hasNextFloat()) {scan.nextLine();}
+		 	for (int i = 0; i < m[k].getHgt(); i++) {
+		 		for (int j = 0; j < m[k].getWid(); j++) {
+		 			m[k].set(i, j, scan.nextFloat());
+		 		}
+		 	}
+	 	}
 	}
 	
 	/**
@@ -106,7 +126,7 @@ public class Feedforward implements Network {
 	 * @param str Header information
 	 * @param scan Scanner object
 	 * @return Class within text file
-	 * @throws Exception If text can't be found in file
+	 * @throws Exception
 	 */
 	private Object search(String str, Scanner scan) throws Exception {
 		while (!scan.nextLine().equals(str)) {} scan.nextLine();

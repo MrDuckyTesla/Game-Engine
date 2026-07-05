@@ -1,7 +1,5 @@
 package test;
 
-import java.io.IOException;
-
 import engine.neural.*;
 import engine.neural.activations.*;
 import engine.neural.costs.*;
@@ -75,38 +73,42 @@ public class Test extends PApplet {
 		
 		Vector[] inputs = new Vector[1000], expected = new Vector[1000];
 		
-		for (int i = 0; i < 1000; i++) {
-			float x = (float) (Math.random() * 2 - 1);
-			float y = (float) (Math.random() * 2 - 1);
-			
-			inputs[i] = new Vector(new float[] {x, y});
-			expected[i] = new Vector(new float[] {x*y});
-		}
-		
 		Initializer initializer = new SymmetricUniform(0.5f);
 		Activation activation = new GELU();
 		Cost cost = new MeanSquaredError();
 		Optimizer optimizer = new SGD(0.05f);
 		
 //		Network test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
-		Network test = null;
-		try {
-			test = new Feedforward("Multiply");
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		Network test = null; int batches = 0;
+		try {test = new Feedforward("Multiply");} 
+		catch (Exception e) {e.printStackTrace();}
+		
+		while (true) {
+		
+			for (int i = 0; i < 1000; i++) {
+				float x = (float) (Math.random() * 2 - 1) * batches;
+				float y = (float) (Math.random() * 2 - 1) * batches;
+				
+				inputs[i] = new Vector(new float[] {x, y});
+				expected[i] = new Vector(new float[] {x*y});
+			}
+			
+			test.train(inputs, expected, 10000);
+	
+			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
+			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
+			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
+			System.out.println("0 * 0 = "+test.predict(new Vector(new float[] {0, 0})));
+			System.out.println("1 * 1 = "+test.predict(new Vector(new float[] {1, 1})));
+			System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
+			System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
+			System.out.println("2 * 1 = "+test.predict(new Vector(new float[] {2, 1})));
+			System.out.println("5 * 10 = "+test.predict(new Vector(new float[] {2, 1})));
+			
+			test.saveNetwork("Multiply");
+			batches++;
 		}
-		
-//		test.train(inputs, expected, 10000);
-
-		System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
-		System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
-		System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
-		System.out.println("0 * 0 = "+test.predict(new Vector(new float[] {0, 0})));
-		System.out.println("1 * 1 = "+test.predict(new Vector(new float[] {1, 1})));
-		System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
-		System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
-		
-//		test.saveNetwork("Multiply");
 		
 	}
 	
