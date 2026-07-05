@@ -19,5 +19,10 @@ public class SGD implements Optimizer {
 	public void updateBiases(Vector biases, Vector delta) {
 		biases.subMatrix(delta.scaleMatrixReturn(this.learningRate).getMatrix());
 	}
+	
+	@Override
+	public String getClassInfo() {
+		return this.getClass().getName() + "\n" + this.learningRate;
+	}
 
 }

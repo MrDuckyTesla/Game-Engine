@@ -15,5 +15,10 @@ public class SymmetricUniform implements Initializer {
 	public void initialize(Matrix weights) {
 		weights.propagate(this.num);
 	}
+	
+	@Override
+	public String getClassInfo() {
+		return this.getClass().getName() + "\n" + this.num;
+	}
 
 }
