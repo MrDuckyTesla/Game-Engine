@@ -82,33 +82,41 @@ public class Test extends PApplet {
 		int batches = 1;
 //		try {test = new Feedforward("Test");} 
 //		catch (Exception e) {
-			test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
+			test = new Feedforward(new int[] {1, 10, 20, 30, 3}, initializer, activation, cost, optimizer);
 //		}
 		
 		for (int j = 0; j < 1000; j++) {
 		
 			for (int i = 0; i < 1000; i++) {
-				float x = (float) (Math.random() * 2 - 1);
-				float y = (float) (Math.random() * 2 - 1);
+				float x = (float) (Math.random() * 2 - 1) * 10;
+				float y = (float) (Math.random() * 2 - 1) * 10;
 				
-				inputs[i] = new Vector(new float[] {x, y});
-				expected[i] = new Vector(new float[] {(x*y)});
+				inputs[i] = new Vector(new float[] {x});
+				expected[i] = new Vector(new float[] {(float)Math.sin(x), (float)Math.cos(x), (float)Math.tan(x)});
 			}
 			
 			test.train(inputs, expected, 100);
 			
-			System.out.println("Batch " + batches);
-			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
-			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
-			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
-			System.out.println("0 * 0 = "+test.predict(new Vector(new float[] {0, 0})));
-			System.out.println("1 * 1 = "+test.predict(new Vector(new float[] {1, 1})));
-			System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
-			System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
-			System.out.println("2 * 1 = "+test.predict(new Vector(new float[] {2, 1})));
-			System.out.println("0.2 * 1 = "+test.predict(new Vector(new float[] {0.2f, 1})));
-			System.out.println("10 * 1 = "+test.predict(new Vector(new float[] {10, 1})));
-			System.out.println("2 * 10 = "+test.predict(new Vector(new float[] {2, 10})));
+			System.out.println("\nBatch " + batches +"\n");
+			System.out.println("Cosine of 1 is " + test.predict(new Vector(new float[] {1})));
+			System.out.println("Sin of 1 is actually " +Math.sin(1));
+			System.out.println("Cosine of 1 is actually " +Math.cos(1));
+			System.out.println("Tangent of 1 is actually " +Math.tan(1));
+			System.out.println("Cosine of 0 is " + test.predict(new Vector(new float[] {0})));
+			System.out.println("Sin of 0 is actually " +Math.sin(0));
+			System.out.println("Cosine of 0 is actually " +Math.cos(0));
+			System.out.println("Tangent of 0 is actually " +Math.tan(0));
+//			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
+//			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
+//			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
+//			System.out.println("0 * 0 = "+test.predict(new Vector(new float[] {0, 0})));
+//			System.out.println("1 * 1 = "+test.predict(new Vector(new float[] {1, 1})));
+//			System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
+//			System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
+//			System.out.println("2 * 1 = "+test.predict(new Vector(new float[] {2, 1})));
+//			System.out.println("0.2 * 1 = "+test.predict(new Vector(new float[] {0.2f, 1})));
+//			System.out.println("10 * 1 = "+test.predict(new Vector(new float[] {10, 1})));
+//			System.out.println("2 * 10 = "+test.predict(new Vector(new float[] {2, 10})));
 			
 			batches++;
 		} test.saveNetwork("Test");

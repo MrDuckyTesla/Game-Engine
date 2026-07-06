@@ -6,14 +6,14 @@ import engine.neural.Vector;
 public class BinaryCrossEntropy implements Cost {
 
 	@Override
-	// -(y log(y-hat) + (1 - y)log(1 - y-hat)) -> y-hat is prediction
+	// -(actual * log(prediction) + (1 - actual) * log(1 - prediction))
 	public float calculate(Vector output, Vector target) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	// y-hat - y
+	// prediction - actual
 	public Vector derivative(Vector output, Vector target) {
 		// TODO Auto-generated method stub
 		return null;
