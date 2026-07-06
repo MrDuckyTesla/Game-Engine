@@ -73,29 +73,29 @@ public class Test extends PApplet {
 		
 		Vector[] inputs = new Vector[1000], expected = new Vector[1000];
 		
-		Initializer initializer = new SymmetricUniform(0.5f);
+		Initializer initializer = new Kaiming(false);
 		Activation activation = new GELU();
 		Cost cost = new MeanSquaredError();
-		Optimizer optimizer = new SGDMomentum(0.05f, 0.8f);
+		Optimizer optimizer = new SGDMomentum(0.005f, 0.8f);
 		
 		Network test = null; 
 		int batches = 1;
-		try {test = new Feedforward("Test");} 
-		catch (Exception e) {
+//		try {test = new Feedforward("Test");} 
+//		catch (Exception e) {
 			test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
-		}
+//		}
 		
-		for (int j = 0; j < 100; j++) {
+		for (int j = 0; j < 1000; j++) {
 		
 			for (int i = 0; i < 1000; i++) {
-				float x = (float) (Math.random() * 2 - 1) * 2;
-				float y = (float) (Math.random() * 2 - 1) * 2;
+				float x = (float) (Math.random() * 2 - 1);
+				float y = (float) (Math.random() * 2 - 1);
 				
 				inputs[i] = new Vector(new float[] {x, y});
-				expected[i] = new Vector(new float[] {x*y});
+				expected[i] = new Vector(new float[] {(x*y)});
 			}
 			
-			test.train(inputs, expected, 10);
+			test.train(inputs, expected, 100);
 			
 			System.out.println("Batch " + batches);
 			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
@@ -107,10 +107,11 @@ public class Test extends PApplet {
 			System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
 			System.out.println("2 * 1 = "+test.predict(new Vector(new float[] {2, 1})));
 			System.out.println("0.2 * 1 = "+test.predict(new Vector(new float[] {0.2f, 1})));
+			System.out.println("10 * 1 = "+test.predict(new Vector(new float[] {10, 1})));
+			System.out.println("2 * 10 = "+test.predict(new Vector(new float[] {2, 10})));
 			
 			batches++;
-		}
-		test.saveNetwork("Test");
+		} test.saveNetwork("Test");
 		
 	}
 	

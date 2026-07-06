@@ -33,8 +33,8 @@ public class SGDMomentum implements Optimizer {
 		velocity.scaleMatrix(this.momentum);
 		// Scale gradient by learning rate
 		Matrix temp = gradient.copy();
-		temp.scaleMatrix(learningRate);
-		// Subtract gradients from velocity
+		temp.scaleMatrix(this.learningRate);
+		// Subtract gradient from velocity
 		velocity.subMatrix(temp.getMatrix());
 		// Add velocity to weights
 		weights.addMatrix(velocity.getMatrix());
@@ -44,15 +44,15 @@ public class SGDMomentum implements Optimizer {
 	// momentum * velocity - learningRate * delta
 	public void updateBiases(Vector biases, Vector delta) {
 		Vector velocity = this.velocityBiases
-				.computeIfAbsent(delta, v -> new Vector(biases.getHgt()));
-		// Scale velocity matrix by momentum
+				.computeIfAbsent(biases, v -> new Vector(biases.getHgt()));
+		// Scale velocity vector by momentum
 		velocity.scaleMatrix(this.momentum);
-		// Scale gradient by learning rate
+		// Scale delta by learning rate
 		Vector temp = delta.copy();
-		temp.scaleMatrix(learningRate);
-		// Subtract gradients from velocity
+		temp.scaleMatrix(this.learningRate);
+		// Subtract delta from velocity
 		velocity.subMatrix(temp.getMatrix());
-		// Add velocity to weights
+		// Add velocity to biases
 		biases.addMatrix(velocity.getMatrix());
 	}
 	
