@@ -8,7 +8,6 @@ public class Dynamic implements Activation {
 	private int layerNum = 0;
 
 	public Dynamic(Activation[] layer) {this.layer = layer;}
-	public Dynamic(Activation[] layer, int layerNum) {this.layer = layer; this.layerNum = layerNum;}
 	
 	public void next() {
 		this.layerNum = this.layerNum == this.layer.length? 0 : this.layerNum++;
@@ -26,7 +25,7 @@ public class Dynamic implements Activation {
 	
 	@Override
 	public String getClassInfo() {
-		return this.getClass().getName() + "\n" + this.layer + "\n" + this.layerNum;
+		return this.getClass().getName() + "\n" + this.layer;
 	}
 
 }

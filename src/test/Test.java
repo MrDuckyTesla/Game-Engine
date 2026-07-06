@@ -76,27 +76,28 @@ public class Test extends PApplet {
 		Initializer initializer = new SymmetricUniform(0.5f);
 		Activation activation = new GELU();
 		Cost cost = new MeanSquaredError();
-		Optimizer optimizer = new SGD(0.05f);
-		
-//		Network test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
+		Optimizer optimizer = new SGDMomentum(0.05f, 0.8f);
 		
 		Network test = null; 
 		int batches = 1;
-		try {test = new Feedforward("Multiply");} 
-		catch (Exception e) {e.printStackTrace();}
+		try {test = new Feedforward("Test");} 
+		catch (Exception e) {
+			test = new Feedforward(new int[] {2, 20, 30, 1}, initializer, activation, cost, optimizer);
+		}
 		
-//		while (true) {
+		for (int j = 0; j < 100; j++) {
 		
 			for (int i = 0; i < 1000; i++) {
-				float x = (float) (Math.random() * 2 - 1)*2;
-				float y = (float) (Math.random() * 2 - 1)*2;
+				float x = (float) (Math.random() * 2 - 1) * 2;
+				float y = (float) (Math.random() * 2 - 1) * 2;
 				
 				inputs[i] = new Vector(new float[] {x, y});
 				expected[i] = new Vector(new float[] {x*y});
 			}
 			
-//			test.train(inputs, expected, 100);
-	
+			test.train(inputs, expected, 10);
+			
+			System.out.println("Batch " + batches);
 			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
 			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
 			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
@@ -105,11 +106,11 @@ public class Test extends PApplet {
 			System.out.println("1 * 0.99 = "+test.predict(new Vector(new float[] {1, 0.99f})));
 			System.out.println("0.333333 * 0.666666 = "+test.predict(new Vector(new float[] {0.333333f, 0.666666f})));
 			System.out.println("2 * 1 = "+test.predict(new Vector(new float[] {2, 1})));
-			System.out.println("5 * 10 = "+test.predict(new Vector(new float[] {2, 1})));
+			System.out.println("0.2 * 1 = "+test.predict(new Vector(new float[] {0.2f, 1})));
 			
-//			test.saveNetwork("Multiply");
 			batches++;
-//		}
+		}
+		test.saveNetwork("Test");
 		
 	}
 	

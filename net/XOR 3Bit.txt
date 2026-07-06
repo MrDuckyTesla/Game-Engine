@@ -1,0 +1,123 @@
+Network Sizes:
+
+[
+3 2 3 1
+]
+
+Network Information:
+
+engine.neural.networks.Feedforward
+
+Initializer Information:
+
+engine.neural.initializers.SymmetricUniform
+0.5
+
+Activation Information:
+
+engine.neural.activations.GELU
+
+Cost Information:
+
+engine.neural.costs.MeanSquaredError
+
+Optimizer Information:
+
+engine.neural.optimizers.SGD
+0.05
+
+Last Cost:
+
+6.3948846E-14
+
+Weights:
+
+Layer 0:
+[
+-0.18557316 0.18557577 -0.18557341 
+-1.7636898 1.7636814 -1.7636899 
+]
+
+Layer 1:
+[
+0.22398828 0.9156814 
+-0.1895715 -0.4188976 
+0.34880313 -3.3720815 
+]
+
+Layer 2:
+[
+0.585258 0.16257198 2.617872 
+]
+
+
+Biases:
+
+Layer 0:
+[
+0.013287291 
+0.98340523 
+]
+
+Layer 1:
+[
+-0.2815884 
+-0.107158095 
+0.14549512 
+]
+
+Layer 2:
+[
+-0.13686813 
+]
+
+
+Activations:
+
+Layer 0:
+[
+1.0 
+1.0 
+1.0 
+]
+
+Layer 1:
+[
+-0.07435911 
+-0.16987683 
+]
+
+Layer 2:
+[
+-0.14749041 
+-0.01075903 
+0.52316046 
+]
+
+Layer 3:
+[
+0.99999964 
+]
+
+
+Pre Activations:
+
+Layer 0:
+[
+-0.17228352 
+-0.780293 
+]
+
+Layer 1:
+[
+-0.45379704 
+-0.021900728 
+0.6923969 
+]
+
+Layer 2:
+[
+1.14463 
+]
+
+
