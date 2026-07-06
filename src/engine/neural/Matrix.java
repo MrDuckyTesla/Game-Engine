@@ -1,6 +1,8 @@
 package engine.neural;
 
-public class Matrix {
+import java.util.Iterator;
+
+public class Matrix implements Iterable<Float> {
 	
 	private float[] matrix;
 	private int wid, hgt;
@@ -297,11 +299,11 @@ public class Matrix {
 		} return false;
 	}
 	
+	// To string and helper function
+	
 	public Matrix copy() {
 		return new Matrix(this.matrix.clone(), this.wid, this.hgt);
 	}
-	
-	// To string and helper function
 	
 	@Override
 	public String toString() {
@@ -319,6 +321,23 @@ public class Matrix {
 		int len = Math.max(13-numS.length(), 0);
 		numS = String.format("%."+len+"f", num);
 		return len == 0? numS + "\t" : numS + "\t";
+	}
+
+	@Override
+	public Iterator<Float> iterator() {
+		return new Iterator<Float>() {
+			
+			private int index = 0;
+
+			@Override
+			public boolean hasNext() {return index < matrix.length;}
+
+			@Override
+			public Float next() {
+				if (!this.hasNext()) {throw new IndexOutOfBoundsException();}
+				return matrix[this.index++];
+			}
+		};
 	}
 
 }

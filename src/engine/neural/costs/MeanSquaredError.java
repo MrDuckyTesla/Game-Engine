@@ -12,7 +12,7 @@ public class MeanSquaredError implements Cost {
 			for (int i = 0; i < output.getHgt(); i++) {
 				sum = output.get(i) - target.get(i);
 				cost += sum * sum;
-			} return cost / (2*output.getHgt());
+			} return (float) (cost / (2.0*output.getHgt()));
 		} return 0;
 	}
 

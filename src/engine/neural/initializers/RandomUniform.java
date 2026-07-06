@@ -1,14 +1,14 @@
 package engine.neural.initializers;
 
-import engine.neural.Initializer;
-import engine.neural.Matrix;
+import engine.neural.*;
 
 public class RandomUniform implements Initializer {
 
 	private final float min, max;
 	
-	public RandomUniform(float min, float max) {
-		this.min = min; this.max = max;
+	public RandomUniform() {this.min = 0; this.max = 1;}
+	public RandomUniform(float num) {this.min = -num; this.max = num;}
+	public RandomUniform(float min, float max) {this.min = min; this.max = max;
 	}
 
 	@Override

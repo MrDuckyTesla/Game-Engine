@@ -247,46 +247,28 @@ public class Feedforward implements Network {
 	public void saveNetwork(String name) {	
 		BufferedWriter writer;
 		try {
-			File file = new File("net");
-	        file.mkdirs();
-	        
+			File file = new File("net"); file.mkdirs();
 	        writer = new BufferedWriter(new FileWriter(new File(file, name + ".txt")));
-
+	        // Save network geometry
 			writer.write("Network Sizes:\n\n[\n"+this.networkSizes[0]);
 			for (int i = 1; i < this.networkSizes.length; i++) {
 				writer.write(" "+this.networkSizes[i]);
 			} writer.write("\n]\n\n");
-			
-			writer.write("Network Information:\n\n");
-			writer.write(this.getClassInfo()+"\n\n");
-			
-			writer.write("Initializer Information:\n\n");
-			writer.write(this.initializer.getClassInfo()+"\n\n");
-			
-			writer.write("Activation Information:\n\n");
-			writer.write(this.activation.getClassInfo()+"\n\n");
-			
-			writer.write("Cost Information:\n\n");
-			writer.write(this.cost.getClassInfo()+"\n\n");
-			
-			writer.write("Optimizer Information:\n\n");
-			writer.write(this.optimizer.getClassInfo()+"\n\n");
-			
-			writer.write("Last Cost:\n\n");
-			writer.write(this.currCost+"\n\n"); 
-			
-			writer.write("Weights:\n");
-			writer.write(this.printMatrices(this.weights)+"\n\n");
-			
-			writer.write("Biases:\n");
-			writer.write(this.printMatrices(this.biases)+"\n\n");
-			
-			writer.write("Activations:\n");
-			writer.write(this.printMatrices(this.activations)+"\n\n");
-			
-			writer.write("Pre Activations:\n");
-			writer.write(this.printMatrices(this.preActivations)+"\n\n");
-			
+			// Technically unneeded as network is made as constructor
+			writer.write("Network Information:\n\n"+this.getClassInfo()+"\n\n");
+			// Save important network info
+			writer.write("Initializer Information:\n\n"+this.initializer.getClassInfo()+"\n\n");
+			writer.write("Activation Information:\n\n"+this.activation.getClassInfo()+"\n\n");
+			writer.write("Cost Information:\n\n"+this.cost.getClassInfo()+"\n\n");
+			writer.write("Optimizer Information:\n\n"+this.optimizer.getClassInfo()+"\n\n");
+			// Recomputed at backprop, but if i move this ill have to change my load function
+			writer.write("Last Cost:\n\n"+this.currCost+"\n\n");
+			// Save weights and biases
+			writer.write("Weights:\n"+this.printMatrices(this.weights)+"\n\n");
+			writer.write("Biases:\n"+this.printMatrices(this.biases)+"\n\n");
+			// Also unneeded as these are recomputed in backprop
+			writer.write("Activations:\n"+this.printMatrices(this.activations)+"\n\n");
+			writer.write("Pre Activations:\n"+this.printMatrices(this.preActivations)+"\n\n");
 			writer.close();
 		} catch (IOException e) {
 			System.out.println("Save Failed.");
