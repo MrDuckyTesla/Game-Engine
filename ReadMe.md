@@ -3,16 +3,10 @@
 Start Date:  7/11/2024 <br>
 Last Updated:  7/8/2026 <br>
 Current Version 0.1.1.9 <br>
-![Commits](https://img.shields.io/github/commit-activity/t/MrDuckyTesla/Game-Engine)
-![Commits](https://img.shields.io/github/commit-activity/y/MrDuckyTesla/Game-Engine)
-![Contributors](https://img.shields.io/github/contributors/MrDuckyTesla/Game-Engine)
-![Stars](https://img.shields.io/github/stars/MrDuckyTesla/Game-Engine)
-![Forks](https://img.shields.io/github/forks/MrDuckyTesla/Game-Engine)
-![Watchers](https://img.shields.io/github/watchers/MrDuckyTesla/Game-Engine)
-![Repo Size](https://img.shields.io/github/repo-size/MrDuckyTesla/Game-Engine)
-![Release](https://img.shields.io/github/v/release/MrDuckyTesla/Game-Engine)
-![Last Commit](https://img.shields.io/github/last-commit/MrDuckyTesla/Game-Engine)
 
+![Repo Size](https://img.shields.io/github/repo-size/MrDuckyTesla/Game-Engine)
+![Commits](https://img.shields.io/github/commit-activity/t/MrDuckyTesla/Game-Engine)
+![Last Commit](https://img.shields.io/github/last-commit/MrDuckyTesla/Game-Engine)
 
 Current features: <br>
 >	- Modular entities with decoupled abilities, movement, and animation. <br>
