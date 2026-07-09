@@ -44,9 +44,10 @@ improve or optimize code, BUT I want a human to interpret that idea and write th
 be used as a tool, not as a replacement for humans. If I somehow catch a contributor using AI against these
 rules, I will IMMEDIATELY remove them from the repository.
 
-If you are interested in learning more or helping with my project, feel free to get in touch with me or contribute. Cheers - MrDuckyTesla <br>
+## If you are interested in learning more or helping with my project, feel free to get in touch with me or contribute. Cheers - MrDuckyTesla <br>
 
->> TO-DO (JAVADOCS AND COMMENTS SHOULD ALWAYS BE PRIORITY): <br>
+## TO-DO 
+# JAVADOCS AND COMMENTS SHOULD ALWAYS BE PRIORITY
 
 I'm aware that some of these TO-DOs are a bit ambitious, but I won't stop working on this until they're all implemented. <br>
 
