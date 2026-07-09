@@ -1,4 +1,4 @@
-## Quick Statistics
+# Quick Statistics
 
 Start Date:  7/11/2024 <br>
 Last Updated:  7/8/2026 <br>
@@ -47,9 +47,10 @@ rules, I will IMMEDIATELY remove them from the repository.
 ## If you are interested in learning more or helping with my project, feel free to get in touch with me or contribute. Cheers - MrDuckyTesla <br>
 
 # TO-DO 
-## JAVADOCS AND COMMENTS SHOULD ALWAYS BE PRIORITY
 
 I'm aware that some of these TO-DOs are a bit ambitious, but I won't stop working on this until they're all implemented. <br>
+
+JAVADOCS AND COMMENTS SHOULD ALWAYS BE A TOP PRIORITY
 
 #1:	 Allow MoveSet to change movement types on the fly (to make knockback and interactions better).
 #2:  Get rid of as many enums as possible, along with replacing abstract classes with interfaces to make the code simpler.
