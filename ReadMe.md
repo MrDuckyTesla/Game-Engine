@@ -8,9 +8,6 @@ Current Version 0.1.1.9 <br>
 ![Commits](https://img.shields.io/github/commit-activity/t/MrDuckyTesla/Game-Engine)
 ![Last Commit](https://img.shields.io/github/last-commit/MrDuckyTesla/Game-Engine)
 
-Java Files: {{JAVA_FILES}}
-Lines of Code: {{LOC}}
-
 Current features: <br>
 >	- Modular entities with decoupled abilities, movement, and animation. <br>
 >	- Modular neural network with a custom matrix class, and all components separated. <br>
