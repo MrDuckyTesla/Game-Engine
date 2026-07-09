@@ -1,23 +1,25 @@
+## Quick Statistics
+
 Start Date:  7/11/2024 <br>
 Last Updated:  7/8/2026 <br>
 Current Version 0.1.1.9 <br>
 
 Current features: <br>
->	- Modular entities with decoupled abilities, movement, and animation. <br>
+	- Modular entities with decoupled abilities, movement, and animation. <br>
 	- Modular neural network with a custom matrix class, and all components separated. <br>
 	- Tons of custom graphics and utility code (found in engine.util.ToolKit.java) <br>
 
-Q & A: <br>
+## Q & A <br>
 
-Why did I create this game engine? <br>
+Why did you create this game engine? <br>
 >	Personally, I've always found other game engines with UIs to be convoluted and confusing, with the 
-hundreds of boxes and toggles for every little thing I drag onto the screen. I could never
-figure out how to use them. While practice could have remedied that eventually, I much prefer using code to describe what I want. 
-It's important to me to know how every piece of code works in the background rather than being hidden behind
-some UI. I also wanted a general game engine that was very modular and could meet all my needs, 
-growing with me as I learn more about computer science at college.
+ hundreds of boxes and toggles for every little thing I drag onto the screen. I could never figure out
+how to use them. While practice could have remedied that eventually, I much prefer using code to
+describe what I want. It's important to me to know how every piece of code works in the background
+rather than being hidden behind some UI. I also wanted a general game engine that was simple, clean,
+and modular so that it could grow with me as I learn more about computer science at college.
 
-Inspiration behind this game engine? <br>
+What was your inspiration behind this game engine? <br>
 >	I've always loved how simple and easy the Processing Foundation p5.js and Processing4 libraries are to 
 use. Specifically, I liked how I got to write graphical code myself without having to worry about the nuances 
 of programming shapes to appear on a window, or having to worry about programming the deceivingly complicated 
@@ -26,7 +28,7 @@ features of the graphics. I really like writing code and knowing how everything 
 that be an option creates an amazing user experience for programming something as small as an animation to
 even making a small game. 
 
-Focus behind the game engine? <br>
+What was your main focus behind the game engine? <br>
 >	This engine will focus on compatibility with other graphics libraries (specifically p5.js and Processing4)
 while also being a standalone engine. I also don't want to use any external JAR files or libraries whatsoever 
 to keep the engine clean and simple. While I'm also not a huge fan of UI, I think some sort of editor
@@ -36,7 +38,7 @@ make refactoring parts of the engine easy. This engine, for now, will focus on 2
 finished state or until I get more contributors. This library should be beginner-friendly, but also 
 accommodating towards advanced users.
 
-AI stance? <br>
+What is your stance on AI? <br>
 >	NO VIBE CODING PLEASE! I am completely ok with AI debugging code to find bugs or to give ideas on how to 
 improve or optimize code, BUT I want a human to interpret that idea and write that code themselves. AI should 
 be used as a tool, not as a replacement for humans. If I somehow catch a contributor using AI against these
