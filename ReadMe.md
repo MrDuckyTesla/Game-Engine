@@ -42,11 +42,11 @@ make refactoring parts of the engine easy. This engine, for now, will focus on 2
 finished state or until I get more contributors. This library should be beginner-friendly, but also 
 accommodating towards advanced users.
 
-## What is your stance on AI? <br>
+## What is your stance on AI generated code? <br>
 >	NO VIBE CODING PLEASE! I am completely ok with AI debugging code to find bugs or to give ideas on how to 
 improve or optimize code, BUT I want a human to interpret that idea and write that code themselves. AI should 
-be used as a tool, not as a replacement for humans. If I somehow catch a contributor using AI against these
-rules, I will IMMEDIATELY remove them from the repository.
+be used as a tool, not as a replacement for humans. I feel like these rules are reasonable, and I'd greatly
+appreciate compliance with these rules, or else I will remove you from the repository.
 
 ## If you are interested in learning more or helping with my project, feel free to get in touch with me or contribute. Cheers - MrDuckyTesla <br>
 
