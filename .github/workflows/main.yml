@@ -1,0 +1,37 @@
+name: Update README Stats
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count Java files
+        id: java
+        run: |
+          echo "JAVA_FILES=$(find . -name '*.java' | wc -l)" >> $GITHUB_ENV
+
+      - name: Count LOC
+        run: |
+          sudo apt-get update
+          sudo apt-get install cloc -y
+          echo "LOC=$(cloc . --json | jq '.SUM.code')" >> $GITHUB_ENV
+
+      - name: Replace README values
+        run: |
+          sed -i "s/{{JAVA_FILES}}/$JAVA_FILES/g" README.md
+          sed -i "s/{{LOC}}/$LOC/g" README.md
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update README statistics
