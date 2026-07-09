@@ -5,9 +5,9 @@ Last Updated:  7/8/2026 <br>
 Current Version 0.1.1.9 <br>
 
 Current features: <br>
-	- Modular entities with decoupled abilities, movement, and animation. <br>
-	- Modular neural network with a custom matrix class, and all components separated. <br>
-	- Tons of custom graphics and utility code (found in engine.util.ToolKit.java) <br>
+>	- Modular entities with decoupled abilities, movement, and animation. <br>
+>	- Modular neural network with a custom matrix class, and all components separated. <br>
+>	- Tons of custom graphics and utility code (found in engine.util.ToolKit.java) <br>
 
 ## Q & A <br>
 
