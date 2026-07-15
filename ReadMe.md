@@ -52,70 +52,67 @@ appreciate compliance with these rules, or else I will remove you from the repos
 
 # TO-DO 
 
-I'm aware that some of these TO-DOs are a bit ambitious, but I won't stop working on this until they're all implemented. <br>
-
-JAVADOCS AND COMMENTS SHOULD ALWAYS BE A TOP PRIORITY
-
-#1:	 Allow MoveSet to change movement types on the fly (to make knockback and interactions better).
-#2:  Get rid of as many enums as possible, along with replacing abstract classes with interfaces to make the code simpler.
-#3:	 Instead of entities checking for triggers and storing them, have triggers check for entities.
-#4:	 Go through Toolkit and create a new dist function that doesn't take the square root for just checking what's closer.
-#5:	 Make a basic physics engine to expand upon, make all MoveSet classes utilize physics classes, and use
-		vectors instead of what I'm currently doing to allow angled movement and collisions. I want to
-		also add soft bodies at some point along with springs. Basically, replace Toolkit's collisions
-		with new physics class-based collisions.
-#6:	 Move away from processing and use built-in Java functions. I don't want any external jars.
-#7:	 Make ToolKit more "float friendly" with epsilon.
-#8:	 Finish javadocs for ToolKit.
-#9:	 Make a "party" system that allows other entities to follow the player (and allows all members to fight in battles).
-#10: Make enemies follow you if you get close enough.
-#11: Find ways to optimize code and fix existing issues in code such as:
-		a: EightDirectionalMove snapping at corners, allowing you to fit between spaces you shouldn't,
-			and given enough obstacles, without total dist being tracked, entities can move an infinite
-			amount of distance in one frame.
-		b: Make Animations easier to customize, such as allowing vertical spritesheets, and allowing user
-			to specify what animation should be played with what movements.
-		c: Some collision code is probably suboptimal as I made most of it from scratch without looking any
-			algorithms up. I am sure I have missed some issues as well.
-#12: Implement other movement types excluding PlatformerComplexMove.
-#13: Create engine.entity.attack package along with Attack class for NPCs (or make it an ability).
-#14: Make a working menu system along with text boxes.
-#15: Implement saving and loading using a new menu.
-#16: Implement keybinds that can be changed and saved.
-#17: Implement tile-based background and editor.
-#18: EVENTS (dialogue and cutscenes and such).
-#19: Make Sounds and Sound Effects easy to call and analyze.
-#20: Implement a UI that can be called upon as a function. I will try to outline here:
-		a: UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
-			the user to open a folder of images for said tiles.
-		b: UI allows user to place down entities anywhere (not grid locked). This entity would be a blank
+## High effort
+> - Implement basic but modular physics engine to expand upon using vectors, make all MoveSet implementations 
+utilize these physics classes, and allow angled movement and collisions. Add soft bodies at some point along with 
+springs. Basically, replace Toolkit's collisions with new physics class-based collisions. <br>
+> - Remove external jars, move away from processing and use built-in Java functions. <br>
+> - Implement pathfinding and allow enemies to follow entities if you get close enough. <br>
+> - Rework animations class to be more customizable such as allowing vertical spritesheets, irregularly sized sprites,
+and customizing animations to be for different things such as movements. This might be best done by creating an 
+animation interface. <br>
+> - Implement PlatformerComplexMove. <br>
+> - Look into creating engine.entity.attack package along with Attack class for NPCs (or make it an ability). <br>
+> - Implement a working UI/menu system. <br>
+> - EVENTS (dialogue and cutscenes and such). <br>
+> - Implement sound system for creating and calling sounds. <br>
+> - Implement a UI that can be called upon as a function. I will try to outline here: <br>
+		- UI allows user to click on tiles and edit said tiles to contain whatever tile they want, allowing
+			the user to open a folder of images for said tiles. <br>
+		- UI allows user to place down entities anywhere (not grid locked). This entity would be a blank
 			rectangle that the user can click on to edit a list of properties. These properties would include
 			x, y, width, height, scale, spritesheet, movement type, list of abilities, and color. The properties 
-			should NOT be bloated and should be as limited as possible for ease of use.
-		c: UI also allows entities to be chosen as Enemies/neutral NPCs, or Triggers. The user should be able
+			should NOT be bloated and should be as limited as possible for ease of use. <br>
+		- UI also allows entities to be chosen as Enemies/neutral NPCs, or Triggers. The user should be able
 			to make rooms easily. This includes making rooms inside of entities (this allows triggers to move
-			entities to other rooms or allows players to enter a battle, for example).
-		d: The UI should also allow the menu to be edited per room, with dragging elements around and choosing
-			x, y, width, height, ...etc. as well. 
-		e: This UI, upon finishing, should save what the user did to a text file, translating what the user did
-			into its equivalent code for the user to copy and paste into their project.
-#21: Implement PlatformerComplexMove (Maybe do me sooner, since I'll be easy with the physics implemented!).
-#22: Implement Enemy AI for platformer mode.
-#23: Implement a Neural Network that can learn from other Entities (implement matrix and fraction class too).
-		- Neural Net should be more general and easy to customize as user sees fit.
-#24: Implement multiplayer of some sort (server vs client).
-#25: Find some way to get Steamworks integrated (maybe have built-in achievements and features that are easy to
-	 	connect to Steam somehow? I might be forced to use steamworks4j)
+			entities to other rooms or allows players to enter a battle, for example). <br>
+		- The UI should also allow the menu to be edited per room, with dragging elements around and choosing
+			x, y, width, height, ...etc. as well. <br>
+		- This UI, upon finishing, should save what the user did to a text file, translating what the user did
+			into its equivalent code for the user to copy and paste into their project. <br>
+> Implement multiplayer of some sort. <br>
+> Implement a better save and load function/class to encode data such as save files or a neural networks weights. <br>
+
+
+## medium effort
+> - Allow MoveSet to change movement types on the fly (to make knockback and interactions better). <br>
+> - Get rid of as many enums as possible, along with replacing abstract classes with interfaces to make the code simpler.<br>
+> - Instead of entities checking for triggers and storing them, have triggers check for entities. <br>
+> - Given enough obstacles, without total dist being tracked, entities can move an infinite amount of distance in one frame.<br>
+> - EightDirectionalMove snaps at corners, allowing you to fit between spaces you shouldn't. <br>
+> - Implement other movement types excluding PlatformerComplexMove. <br>
+> - Make a "party" system that allows other entities to follow the player (and allows all members to fight in battles). <br>
+> - keybinds that can be changed and saved. <br>
+> - Implement tile-based background system. <br>
+> - Implement Enemy AI for platformer mode. <br>
+> - Implement empty TODO classes such as other network classes. <br>
+
+## low effort
+> - Writing Javadocs and commenting code <br>
+> - Go through Toolkit and create a new dist function that doesn't take the square root for just checking what's closer. <br>
+> - Make ToolKit more "float friendly" by removing exact with epsilon. <br>
+> - Majority of code is most likely suboptimal as most was made from scratch, so rewriting certain algorithms to be 
+faster is welcome. <br>
+
 	 	
->> Small demos that I wanna make to prove that the engine works:
-	> RPG (menu + 8d + 2d)
-		- Overworld 8d, 4d, 2d
-		- Battle menu, 8d
-	> Platformer
-	> Tower Defense
-	> Idle game
-	> Chess
-	> Arrow-key Rhythm Game
-	> Snake
-	> Tank Movement game
+## Small demos that I wanna make to prove that the engine works: <br>
+> -	RPG overworld 8d, 4d, 2d <br>
+> -	RPG battle menu, 8d <br>
+> -	Platformer <br>
+> -	Tower Defense <br>
+> -	Idle game <br>
+> -	Chess <br>
+> -	Arrow-key Rhythm Game <br>
+> -	Snake <br>
+> -	Tank Movement game <br>
 
