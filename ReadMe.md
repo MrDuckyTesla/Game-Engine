@@ -1,7 +1,7 @@
 # Quick Statistics
 
 Start Date:  7/11/2024 <br>
-Last Updated:  7/9/2026 <br>
+Last Updated:  7/17/2026 <br>
 Current Version 0.1.2.0 <br>
 
 ![Repo Size](https://img.shields.io/github/repo-size/MrDuckyTesla/Game-Engine)
@@ -62,7 +62,6 @@ springs. Basically, replace Toolkit's collisions with new physics class-based co
 and customizing animations to be for different things such as movements. This might be best done by creating an 
 animation interface. <br>
 > - Implement PlatformerComplexMove. <br>
-> - Look into creating engine.entity.attack package along with Attack class for NPCs (or make it an ability). <br>
 > - Implement a working UI/menu system. <br>
 > - EVENTS (dialogue and cutscenes and such). <br>
 > - Implement sound system for creating and calling sounds. <br>
@@ -81,10 +80,9 @@ animation interface. <br>
 		- This UI, upon finishing, should save what the user did to a text file, translating what the user did
 			into its equivalent code for the user to copy and paste into their project. <br>
 > Implement multiplayer of some sort. <br>
-> Implement a better save and load function/class to encode data such as save files or a neural networks weights. <br>
 
 
-## medium effort
+## Medium effort
 > - Allow MoveSet to change movement types on the fly (to make knockback and interactions better). <br>
 > - Get rid of as many enums as possible, along with replacing abstract classes with interfaces to make the code simpler.<br>
 > - Instead of entities checking for triggers and storing them, have triggers check for entities. <br>
@@ -95,9 +93,11 @@ animation interface. <br>
 > - keybinds that can be changed and saved. <br>
 > - Implement tile-based background system. <br>
 > - Implement Enemy AI for platformer mode. <br>
-> - Implement empty TODO classes such as other network classes. <br>
+> - Look into creating engine.entity.attack package along with Attack class for NPCs (or make it an ability). <br>
+> - Implement other empty network classes. <br>
+> Implement a better save and load function/class to encode data such as save files or a neural networks weights. <br>
 
-## low effort
+## Low effort
 > - Writing Javadocs and commenting code <br>
 > - Go through Toolkit and create a new dist function that doesn't take the square root for just checking what's closer. <br>
 > - Make ToolKit more "float friendly" by removing exact with epsilon. <br>
