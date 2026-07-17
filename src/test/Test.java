@@ -96,16 +96,6 @@ public class Test extends PApplet {
 			}
 			
 			test.train(inputs, expected, 100);
-			
-			System.out.println("\nBatch " + batches +"\n");
-			System.out.println("Cosine of 1 is " + test.predict(new Vector(new float[] {1})));
-			System.out.println("Sin of 1 is actually " +Math.sin(1));
-			System.out.println("Cosine of 1 is actually " +Math.cos(1));
-			System.out.println("Tangent of 1 is actually " +Math.tan(1));
-			System.out.println("Cosine of 0 is " + test.predict(new Vector(new float[] {0})));
-			System.out.println("Sin of 0 is actually " +Math.sin(0));
-			System.out.println("Cosine of 0 is actually " +Math.cos(0));
-			System.out.println("Tangent of 0 is actually " +Math.tan(0));
 //			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
 //			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
 //			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
