@@ -25,11 +25,11 @@ and modular so that it could grow with me as I learn more about computer science
 
 ## What was your inspiration behind this game engine? <br>
 >	I've always loved how simple and easy the Processing Foundation p5.js and Processing4 libraries are to 
-use. Specifically, I liked how I got to write graphical code myself without having to worry about the nuances 
+use. Specifically, I liked how I was able to write graphical code myself without having to worry about the nuances 
 of programming shapes to appear on a window, or having to worry about programming the deceivingly complicated 
-aspects of a graphics library. But I also liked how, if you wanted to, you could modify those more complex
-features of the graphics. I really like writing code and knowing how everything works in my head, so having 
-that be an option creates an amazing user experience for programming something as small as an animation to
+aspects of a graphics library. But I also liked how you could modify those more complex features of the graphics.
+I really like writing code and knowing how everything works in my head, so having 
+that as an option creates an amazing user experience for programming something as small as an animation to
 even making a small game. 
 
 ## What was your main focus behind the game engine? <br>
