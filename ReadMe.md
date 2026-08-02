@@ -4,9 +4,9 @@
 >	- The engine currently requires heavy insider knowledge to use. <br>
 >	- The engine is currently unstable and requires modification to use. <br>
 
-Also, please use the beta branch to make push requests as I will remove it otherwise.
+# Please use the beta branch to make push requests as I will remove it otherwise. <br>
 
-# Quick Statistics
+# Quick Statistics <br>
 
 Start Date:  7/11/2024 <br>
 Last Updated:  8/2/2026 <br>
