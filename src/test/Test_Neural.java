@@ -10,7 +10,7 @@ import engine.util.Timer;
 import engine.util.ToolKit;
 import processing.core.PApplet;
 
-public class Test extends PApplet {
+public class Test_Neural extends PApplet {
 	
 	public PSystem test = new PSystem();
 
