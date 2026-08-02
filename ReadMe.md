@@ -1,6 +1,6 @@
 # Please use the beta branch to make push requests as I will remove it otherwise. <br>
 
-# I do not recommend using the game engine to make games in its current state. <br>
+## I do not recommend using the game engine to make games in its current state. <br>
 >	- The engine is currently unfinished. <br>
 >	- The engine is constantly being worked on and changed. <br>
 >	- The engine currently requires heavy insider knowledge to use. <br>
