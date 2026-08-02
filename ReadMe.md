@@ -8,6 +8,12 @@ Current Version 0.1.2.0 <br>
 ![Commits](https://img.shields.io/github/commit-activity/y/MrDuckyTesla/Game-Engine)
 ![Last Commit](https://img.shields.io/github/last-commit/MrDuckyTesla/Game-Engine)
 
+I do not recommend using the game engine to make games in its current state. <br>
+>	- The engine is currently unfinished. <br>
+>	- The engine is constantly being worked on and changed. <br>
+>	- The engine currently requires heavy insider knowledge to use. <br>
+>	- The engine is currently unstable and requires modification to use. <br>
+
 Current features: <br>
 >	- Modular entities with decoupled abilities, movement, and animation. <br>
 >	- Modular neural network with a custom matrix class, and all components separated. <br>
