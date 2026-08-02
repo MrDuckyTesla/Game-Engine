@@ -1,4 +1,6 @@
-# Quick Statistics
+# Please use the beta branch to make push requests as I will remove it otherwise. <br>
+
+# Quick Statistics <br>
 
 Start Date:  7/11/2024 <br>
 Last Updated:  8/2/2026 <br>
@@ -12,6 +14,12 @@ Current features: <br>
 >	- Modular entities with decoupled abilities, movement, and animation. <br>
 >	- Modular neural network with a custom matrix class, and all components separated. <br>
 >	- Tons of custom graphics and utility code (found in engine.util.ToolKit.java) <br>
+
+I do not recommend using the game engine to make games in its current state. <br>
+>	- The engine is currently unfinished. <br>
+>	- The engine is constantly being worked on and changed. <br>
+>	- The engine currently requires heavy insider knowledge to use. <br>
+>	- The engine is currently unstable and requires modification to use. <br>
 
 # Q & A <br>
 
