@@ -24,10 +24,10 @@ jobs:
 
       - name: Package JAR
         run: |
-          jar cf repo.jar -C out .
+          jar cf engine.jar -C out .
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
-          name: repo
-          path: repo.jar
+          name: Game Engine
+          path: engine.jar
