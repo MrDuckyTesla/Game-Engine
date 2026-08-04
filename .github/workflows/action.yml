@@ -21,6 +21,7 @@ jobs:
         run: |
           mkdir out
           javac -d out $(find src -name "*.java")
+          javac -d out $(find src -name "*.jar")
 
       - name: Package JAR
         run: |
