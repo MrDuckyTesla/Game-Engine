@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir out
           javac -d out $(find src -name "*.java")
-          javac -d out $(find src -name "*.jar")
+          javac -cp ".jar/processing 4.5.1.jar" Main.java
 
       - name: Package JAR
         run: |
