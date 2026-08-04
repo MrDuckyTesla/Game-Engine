@@ -247,7 +247,7 @@ public class Feedforward implements Network {
 	public void saveNetwork(String name) {	
 		BufferedWriter writer;
 		try {
-			File file = new File("net"); file.mkdirs();
+			File file = new File("data"); file.mkdirs();
 	        writer = new BufferedWriter(new FileWriter(new File(file, name + ".txt")));
 	        // Save network geometry
 			writer.write("Network Sizes:\n\n[\n"+this.networkSizes[0]);
