@@ -1,15 +1,16 @@
 package engine.data;
 
-public class Data<T extends Serializable> {
+import java.io.IOException;
+
+public class Data<T extends Serializable<?>> {
 	
 	private final T object;
 	
 	private Storage storage = null;
 	private Compression compression = null;
 	private Encryption encryption = null;
-	private Format format = null;
 	
-	public Data(T object, Storage s, Compression c, Encryption e, Format f) {
+	public Data(T object, Storage s, Compression c, Encryption e) {
 		this.object = object;
 	}
 
@@ -17,29 +18,27 @@ public class Data<T extends Serializable> {
 		this.object = object;
 	}
 	
-	public Data(Class<T> type) {
-		this.object = this.load(type);
+	public Data() throws IOException {
+		this.object = this.load();
 	}
 	
 	public Data<T> setStorage(Storage s) {this.storage = s; return this;}
-	public Data<T> setFormat(Format s) {this.format = s; return this;}
 	public Data<T> setCompression(Compression s) {this.compression = s; return this;}
 	public Data<T> setEncryption(Encryption s) {this.encryption = s; return this;}
 	
-	public void save() {
-		if (this.storage == null) {this.storage = new engine.data.storages.Local("file location");}
+	public void save() throws IOException {
+		if (this.storage == null) {this.storage = new engine.data.storages.Local("data/test.txt");}
 		if (this.compression == null) {this.compression = new engine.data.compressions.Raw();}
 		if (this.encryption == null) {this.encryption = new engine.data.encryptions.Raw();}
-		if (this.format == null) {this.format = new engine.data.formats.Raw();}
 		
-		byte[] bytes = object.serialize(this.object);
+		byte[] bytes = object.serialize();
 		bytes = this.compression.compress(bytes);
 		bytes = this.encryption.encrypt(bytes);
 		this.storage.save(bytes);
 	}
 	
-	public T load(Class<T> type) {
-		return null;
+	public T load() throws IOException {
+		return (T) this.object.deserialize(new ByteHelper(this.storage.load()));
 	}
 
 }
