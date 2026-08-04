@@ -20,8 +20,8 @@ jobs:
       - name: Compile
         run: |
           mkdir out
+          javac -cp ".jar/processing 4.5.1.jar"
           javac -d out $(find src -name "*.java")
-          javac -cp ".jar/processing 4.5.1.jar" Main.java
 
       - name: Package JAR
         run: |
