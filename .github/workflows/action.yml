@@ -16,6 +16,13 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+          
+      - name: Debug
+        run: |
+          pwd
+          ls -la
+          ls -la .jar
+          jar tf ".jar/processing 4.5.1.jar" | grep "processing/core/PApplet.class"
 
       - name: Compile
         run: |
