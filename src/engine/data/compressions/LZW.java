@@ -2,9 +2,9 @@ package engine.data.compressions;
 
 import engine.data.Compression;
 
-public class Huffman implements Compression {
+public class LZW implements Compression {
 
-	public Huffman() {
+	public LZW() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,6 +25,5 @@ public class Huffman implements Compression {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 
 }
