@@ -1,5 +1,6 @@
 package engine.neural.activations;
 
+import engine.data.ByteHelper;
 import engine.neural.Activation;
 
 public class Sigmoid implements Activation {
@@ -13,6 +14,16 @@ public class Sigmoid implements Activation {
 	public float derivative(float x) {
 		float sig = this.function(x);
 		return sig * (1 - sig);
+	}
+	
+	@Override
+	public byte[] serialize() {
+		return new byte[] {};
+	}
+
+	@Override
+	public Activation deserialize(ByteHelper bytes) {
+		return new Sigmoid();
 	}
 
 }

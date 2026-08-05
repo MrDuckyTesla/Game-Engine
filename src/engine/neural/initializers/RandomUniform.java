@@ -1,5 +1,6 @@
 package engine.neural.initializers;
 
+import engine.data.ByteHelper;
 import engine.neural.*;
 
 public class RandomUniform implements Initializer {
@@ -21,8 +22,18 @@ public class RandomUniform implements Initializer {
 	}
 	
 	@Override
-	public String getClassInfo() {
-		return this.getClass().getName() + "\n" + this.min + "\n" + this.max;
+	public byte[] serialize() {
+		return ByteHelper.mergeBytes(
+			ByteHelper.toBytes(min),
+			ByteHelper.toBytes(max)
+		);
+	}
+	@Override
+	public Initializer deserialize(ByteHelper bytes) {
+		return new RandomUniform(
+			bytes.readFloat(),
+			bytes.readFloat()
+		);
 	}
 
 }

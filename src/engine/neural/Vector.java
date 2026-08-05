@@ -1,5 +1,7 @@
 package engine.neural;
 
+import engine.data.ByteHelper;
+
 public class Vector extends Matrix {
 	
 	public Vector(float[] v) {
@@ -41,5 +43,16 @@ public class Vector extends Matrix {
 	public Vector copy() {
 		return new Vector(this.getMatrix().clone());
 	}
-
+	
+	@Override
+	public byte[] serialize() {
+		return ByteHelper.toBytes(super.getMatrix());
+	}
+	
+	@Override
+	public Vector deserialize(ByteHelper bytes) {
+		return new Vector(bytes.readFloatArr());
+	}
+	
+	
 }

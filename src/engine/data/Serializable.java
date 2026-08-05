@@ -1,9 +1,9 @@
 package engine.data;
 
-public interface Serializable <T> {
+public interface Serializable<T> {
 	
-	public byte[] serialize(T o);
+	public byte[] serialize();
 	
-	public T deserialize(byte[] bytes, Class<?> type);
+	public T deserialize(ByteHelper bytes);
 
 }

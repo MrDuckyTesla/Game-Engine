@@ -1,5 +1,6 @@
 package engine.neural.costs;
 
+import engine.data.ByteHelper;
 import engine.neural.Cost;
 import engine.neural.Vector;
 
@@ -24,6 +25,16 @@ public class MeanSquaredError implements Cost {
 				cost.set(i, (output.get(i) - target.get(i))/output.getHgt());
 			} return cost;
 		} return new Vector(0);
+	}
+
+	@Override
+	public byte[] serialize() {
+		return new byte[] {};
+	}
+
+	@Override
+	public Cost deserialize(ByteHelper bytes) {
+		return new MeanSquaredError();
 	}
 
 }

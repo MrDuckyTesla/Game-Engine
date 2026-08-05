@@ -1,13 +1,15 @@
 package test;
 
-import java.nio.ByteBuffer;
+import java.io.IOException;
 
 import engine.data.*;
 
 import engine.data.storages.*;
 import engine.data.compressions.*;
-import engine.data.formats.*;
 import engine.data.encryptions.*;
+
+import engine.neural.Matrix;
+import engine.neural.Vector;
 
 public class Test_Data {
 
@@ -16,8 +18,23 @@ public class Test_Data {
 		Test1 test = new Test1();
 		
 		Data<Test1> d = new Data<>(test);  //.setCompression(null).setEncryption(null).setFormat(null).setStorage(null);
-		d.save();
+		try {
+			d.save();
+			Test1 test2 = d.load();
+			System.out.println(test2);
+		} catch (IOException e) {e.printStackTrace();}
 		
+		Matrix m = new Vector(7);
+		m.propagate();
+		System.out.println(m);
+//		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
+//		try {
+//			a.save();
+//			System.out.println(a.load());
+//		} 
+//		catch (IOException e) {e.printStackTrace();}
+		
+//		System.out.println(test.deserialize(new ByteHelper(test.serialize())));
 		
 	}
 	
@@ -28,36 +45,42 @@ public class Test_Data {
 		private int i = 79134;
 		@Override
 		public String toString() {
-			String s2 = s + i;
-			for (float j : f) {s2 += j;}
-			return s2 + this.test;
+			String s2 = s + " ";
+			for (float j : f) {s2 += j + " ";}
+			return this.test + s2 + i + " ";
 		}
 		@Override
-		public byte[] serialize(Test1 o) {
+		public byte[] serialize() {
 			return ByteHelper.mergeBytes(
+				this.test.serialize(),
 				ByteHelper.toBytes(s),
 				ByteHelper.toBytes(f), 
 				ByteHelper.toBytes(i)
 			);
 		}
 		@Override
-		public Test1 deserialize(byte[] bytes, Class<?> type) {
-			// TODO Auto-generated method stub
-			return null;
+		public Test1 deserialize(ByteHelper b) {
+			Test1 t = new Test1();
+			t.test = test.deserialize(b);
+			t.s = b.readString();
+			t.f = b.readFloatArr();
+			t.i = b.readInt();
+			return t;
 		}
 	} 
+	
 	private static class Test2 implements Serializable<Test2> {
 		private String s = "Im recursive";
 		private float[] f = new float[] {0, 1, 2};
 		private int i = 999;
 		@Override
 		public String toString() {
-			String s2 = s + i;
-			for (float j : f) {s2 += j;}
-			return s2;
+			String s2 = s + " ";
+			for (float j : f) {s2 += j + " ";}
+			return s2 + i + " ";
 		}
 		@Override
-		public byte[] serialize(Test2 o) {
+		public byte[] serialize() {
 			return ByteHelper.mergeBytes(
 				ByteHelper.toBytes(s),
 				ByteHelper.toBytes(f), 
@@ -65,9 +88,12 @@ public class Test_Data {
 			);
 		}
 		@Override
-		public Test2 deserialize(byte[] bytes, Class<?> type) {
-			// TODO Auto-generated method stub
-			return null;
+		public Test2 deserialize(ByteHelper b) {
+			Test2 t = new Test2();
+			t.s = b.readString();
+			t.f = b.readFloatArr();
+			t.i = b.readInt();
+			return t;
 		}
 	}
 	

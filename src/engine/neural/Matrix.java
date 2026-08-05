@@ -2,7 +2,10 @@ package engine.neural;
 
 import java.util.Iterator;
 
-public class Matrix implements Iterable<Float> {
+import engine.data.ByteHelper;
+import engine.data.Serializable;
+
+public class Matrix implements Iterable<Float>, Serializable<Matrix> {
 	
 	private float[] matrix;
 	private int wid, hgt;
@@ -305,6 +308,10 @@ public class Matrix implements Iterable<Float> {
 		return new Matrix(this.matrix.clone(), this.wid, this.hgt);
 	}
 	
+	public Vector toVector() {
+		return new Vector(this.matrix);
+	}
+	
 	@Override
 	public String toString() {
 		String self = "";
@@ -338,6 +345,24 @@ public class Matrix implements Iterable<Float> {
 				return matrix[this.index++];
 			}
 		};
+	}
+
+	@Override
+	public byte[] serialize() {
+		return ByteHelper.mergeBytes(
+			ByteHelper.toBytes(this.matrix),
+			ByteHelper.toBytes(this.wid),
+			ByteHelper.toBytes(this.hgt)
+		);
+	}
+
+	@Override
+	public Matrix deserialize(ByteHelper bytes) {
+		Matrix m = new Matrix(
+			bytes.readFloatArr(),
+			bytes.readInt(),
+			bytes.readInt()
+		); return m;
 	}
 
 }

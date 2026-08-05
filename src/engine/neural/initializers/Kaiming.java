@@ -1,5 +1,6 @@
 package engine.neural.initializers;
 
+import engine.data.ByteHelper;
 import engine.neural.*;
 
 public class Kaiming implements Initializer {
@@ -23,6 +24,15 @@ public class Kaiming implements Initializer {
 	
 	public String getClassInfo() {
 		return this.getClass().getName() + "\n" + this.uniform;
+	}
+	
+	@Override
+	public byte[] serialize() {
+		return new byte[] {ByteHelper.toBytes(this.uniform)};
+	}
+	@Override
+	public Initializer deserialize(ByteHelper bytes) {
+		return new Kaiming(bytes.readBool());
 	}
 
 }

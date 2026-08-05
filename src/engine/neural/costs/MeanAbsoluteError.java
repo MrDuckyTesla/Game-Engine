@@ -1,7 +1,10 @@
 package engine.neural.costs;
 
+import engine.data.ByteHelper;
+import engine.neural.Activation;
 import engine.neural.Cost;
 import engine.neural.Vector;
+import engine.neural.activations.Linear;
 
 public class MeanAbsoluteError implements Cost {
 
@@ -23,6 +26,16 @@ public class MeanAbsoluteError implements Cost {
 				cost.set(i, (output.get(i) - target.get(i) > 0? 1 : -1) / output.getHgt());
 			} return cost;
 		} return new Vector(0);
+	}
+	
+	@Override
+	public byte[] serialize() {
+		return new byte[] {};
+	}
+
+	@Override
+	public Cost deserialize(ByteHelper bytes) {
+		return new MeanAbsoluteError();
 	}
 
 }

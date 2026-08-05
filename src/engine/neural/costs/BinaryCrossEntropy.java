@@ -1,5 +1,6 @@
 package engine.neural.costs;
 
+import engine.data.ByteHelper;
 import engine.neural.Cost;
 import engine.neural.Vector;
 
@@ -17,6 +18,18 @@ public class BinaryCrossEntropy implements Cost {
 	public Vector derivative(Vector output, Vector target) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public byte[] serialize() {
+		// TODO Auto-generated method stub
+		return new byte[] {};
+	}
+
+	@Override
+	public Cost deserialize(ByteHelper bytes) {
+		// TODO Auto-generated method stub
+		return new BinaryCrossEntropy();
 	}
 
 }

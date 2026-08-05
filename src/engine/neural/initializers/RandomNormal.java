@@ -1,5 +1,6 @@
 package engine.neural.initializers;
 
+import engine.data.ByteHelper;
 import engine.neural.Initializer;
 import engine.neural.Matrix;
 
@@ -21,8 +22,16 @@ public class RandomNormal implements Initializer {
 	}
 	
 	@Override
-	public String getClassInfo() {
-		return this.getClass().getName() + "\n" + this.mean + "\n" + this.stdDev;
+	public byte[] serialize() {
+		return ByteHelper.mergeBytes(
+			ByteHelper.toBytes(mean),
+			ByteHelper.toBytes(stdDev)
+		);
+	}
+	
+	@Override
+	public Initializer deserialize(ByteHelper bytes) {
+		return new RandomNormal(bytes.readFloat(), bytes.readFloat());
 	}
 
 }
