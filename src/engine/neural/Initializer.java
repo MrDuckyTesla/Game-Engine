@@ -1,6 +1,7 @@
 package engine.neural;
 
-import engine.data.Serializable;
+import engine.util.Matrix;
+import engine.util.data.Serializable;
 
 public interface Initializer extends Serializable<Initializer> {
 	

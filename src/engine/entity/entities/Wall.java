@@ -6,7 +6,7 @@ import engine.entity.Move;
 import engine.entity.Trigger;
 import engine.entity.enums.Entities;
 import engine.entity.movement.*;
-import engine.util.ToolKit;
+import obsolete.ToolKit;
 import processing.core.PImage;
 
 public class Wall extends NPC{

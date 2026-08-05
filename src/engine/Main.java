@@ -7,6 +7,8 @@ import engine.entity.entities.MultiState;
 import engine.entity.enums.Entities;
 import engine.entity.movement.*;
 import engine.util.*;
+import obsolete.Rect;
+import obsolete.ToolKit;
 import processing.core.*;
 
 public final class Main extends PApplet {

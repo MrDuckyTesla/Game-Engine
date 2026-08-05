@@ -1,8 +1,8 @@
 package engine.neural.costs;
 
-import engine.data.ByteHelper;
 import engine.neural.Cost;
-import engine.neural.Vector;
+import engine.util.ByteHelper;
+import engine.util.Vector;
 
 public class RootMeanSquare implements Cost {
 

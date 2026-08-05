@@ -1,8 +1,8 @@
 package engine.neural.initializers;
 
-import engine.data.ByteHelper;
 import engine.neural.Initializer;
-import engine.neural.Matrix;
+import engine.util.ByteHelper;
+import engine.util.Matrix;
 
 public class RandomNormal implements Initializer {
 

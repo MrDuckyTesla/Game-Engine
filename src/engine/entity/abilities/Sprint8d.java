@@ -3,7 +3,7 @@ package engine.entity.abilities;
 import engine.entity.*;
 import engine.entity.enums.*;
 import engine.entity.movement.EightDirectional;
-import engine.util.ToolKit;
+import obsolete.ToolKit;
 
 //this class ONLY works on objects using EightDirectionalMove()
 public class Sprint8d extends Ability {

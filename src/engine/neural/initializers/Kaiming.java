@@ -1,7 +1,8 @@
 package engine.neural.initializers;
 
-import engine.data.ByteHelper;
 import engine.neural.*;
+import engine.util.ByteHelper;
+import engine.util.Matrix;
 
 public class Kaiming implements Initializer {
 

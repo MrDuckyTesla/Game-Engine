@@ -5,6 +5,8 @@ import engine.entity.*;
 import engine.entity.enums.Entities;
 import engine.entity.enums.Triggers;
 import engine.util.*;
+import obsolete.Point;
+import obsolete.ToolKit;
 
 public class Interaction extends Trigger {
 	

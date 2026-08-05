@@ -2,14 +2,13 @@ package test;
 
 import java.io.IOException;
 
-import engine.data.*;
-
-import engine.data.storages.*;
-import engine.data.compressions.*;
-import engine.data.encryptions.*;
-
-import engine.neural.Matrix;
-import engine.neural.Vector;
+import engine.util.ByteHelper;
+import engine.util.Matrix;
+import engine.util.Vector;
+import engine.util.data.*;
+import engine.util.data.compressions.*;
+import engine.util.data.encryptions.*;
+import engine.util.data.storages.*;
 
 public class Test_Data {
 

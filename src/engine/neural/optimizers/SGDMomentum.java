@@ -2,10 +2,9 @@ package engine.neural.optimizers;
 
 import java.util.*;
 
-import engine.data.*;
 import engine.neural.*;
-
-import engine.neural.Vector;
+import engine.util.*;
+import engine.util.Vector;
 
 
 public class SGDMomentum implements Optimizer {
