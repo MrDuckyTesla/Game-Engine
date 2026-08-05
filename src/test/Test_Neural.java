@@ -2,23 +2,22 @@ package test;
 
 import java.io.IOException;
 
-import engine.data.ByteHelper;
-import engine.data.Data;
-import engine.data.compressions.RLE;
-import engine.data.storages.Local;
 import engine.neural.*;
 import engine.neural.activations.*;
 import engine.neural.costs.*;
 import engine.neural.initializers.*;
 import engine.neural.networks.*;
 import engine.neural.optimizers.*;
+import engine.util.ByteHelper;
 import engine.util.Timer;
-import engine.util.ToolKit;
+import engine.util.Vector;
+import engine.util.data.Data;
+import engine.util.data.compressions.RLE;
+import engine.util.data.storages.Local;
+import obsolete.ToolKit;
 import processing.core.PApplet;
 
-public class Test_Neural extends PApplet {
-	
-	public PSystem test = new PSystem();
+public class Test_Neural {
 
 	public static void main(String[] args) {
 //		PApplet.main(Test.class);
@@ -142,31 +141,6 @@ public class Test_Neural extends PApplet {
 		}
 		
 //		test.saveNetwork("Test");
-		
-	}
-	
-	// Only used for the size of the canvas
-	@Override
-	public void settings() {
-		size(800, 800);
-		noSmooth();
-	}
-	
-	@Override
-	public void setup() {
-		surface.setTitle("3 Body System Test");
-		textFont(createFont("src/Assets/Fonts/TeslaCrashToFont.ttf", 36, false));
-		noCursor(); noStroke(); textSize(20); // frameRate(10);
-	}
-	
-	@Override
-	public void draw() {
-		background(50);
-		this.image(ToolKit.squareImage(this, this.width, this.height, 40, this.width, this.width), 0, 0, this.width, this.height);
-		
-		test.update(this);
-		
-		textSize(36); text(Math.round(this.frameRate)+"fps", 10, 30);
 		
 	}
 }

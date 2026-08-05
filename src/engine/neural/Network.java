@@ -1,6 +1,7 @@
 package engine.neural;
 
-import engine.data.Serializable;
+import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public interface Network extends Serializable<Network> {
 	

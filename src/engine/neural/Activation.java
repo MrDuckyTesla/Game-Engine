@@ -1,6 +1,6 @@
 package engine.neural;
 
-import engine.data.Serializable;
+import engine.util.data.Serializable;
 
 public interface Activation extends Serializable<Activation> {
 	

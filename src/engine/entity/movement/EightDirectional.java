@@ -4,6 +4,9 @@ import engine.entity.*;
 import engine.entity.enums.Moves;
 import engine.entity.enums.Triggers;
 import engine.util.*;
+import obsolete.Point;
+import obsolete.Rect;
+import obsolete.ToolKit;
 import processing.core.PApplet;
 
 public class EightDirectional extends Move {

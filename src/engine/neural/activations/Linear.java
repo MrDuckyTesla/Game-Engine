@@ -1,7 +1,7 @@
 package engine.neural.activations;
 
-import engine.data.ByteHelper;
 import engine.neural.Activation;
+import engine.util.ByteHelper;
 
 public class Linear implements Activation {
 

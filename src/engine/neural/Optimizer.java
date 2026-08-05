@@ -1,6 +1,8 @@
 package engine.neural;
 
-import engine.data.Serializable;
+import engine.util.Matrix;
+import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public interface Optimizer extends Serializable<Optimizer> {
 	

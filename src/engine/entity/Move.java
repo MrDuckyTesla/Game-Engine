@@ -3,7 +3,7 @@ package engine.entity;
 import java.util.ArrayList;
 
 import engine.entity.enums.Moves;
-import engine.util.Point;
+import obsolete.Point;
 
 public abstract class Move {
 	

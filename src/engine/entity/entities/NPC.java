@@ -10,7 +10,7 @@ import engine.entity.enums.Abilities;
 import engine.entity.enums.Entities;
 import engine.entity.enums.Triggers;
 import engine.entity.movement.*;
-import engine.util.ToolKit;
+import obsolete.ToolKit;
 import processing.core.PImage;
 
 public class NPC extends Entity{

@@ -1,9 +1,9 @@
 package engine.neural.optimizers;
 
-import engine.data.ByteHelper;
-import engine.neural.Matrix;
 import engine.neural.Optimizer;
-import engine.neural.Vector;
+import engine.util.ByteHelper;
+import engine.util.Matrix;
+import engine.util.Vector;
 
 public class Adam implements Optimizer {
 

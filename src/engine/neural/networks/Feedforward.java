@@ -3,8 +3,10 @@
 
 package engine.neural.networks;
 
-import engine.data.ByteHelper;
 import engine.neural.*;
+import engine.util.ByteHelper;
+import engine.util.Matrix;
+import engine.util.Vector;
 
 /**
  * "Simple" multi-layer neural network

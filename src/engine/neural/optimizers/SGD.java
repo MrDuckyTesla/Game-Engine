@@ -1,7 +1,9 @@
 package engine.neural.optimizers;
 
-import engine.data.ByteHelper;
 import engine.neural.*;
+import engine.util.ByteHelper;
+import engine.util.Matrix;
+import engine.util.Vector;
 
 public class SGD implements Optimizer {
 	

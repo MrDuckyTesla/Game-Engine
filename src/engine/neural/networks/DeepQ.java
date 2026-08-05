@@ -1,8 +1,8 @@
 package engine.neural.networks;
 
-import engine.data.ByteHelper;
 import engine.neural.Network;
-import engine.neural.Vector;
+import engine.util.ByteHelper;
+import engine.util.Vector;
 
 public class DeepQ implements Network {
 

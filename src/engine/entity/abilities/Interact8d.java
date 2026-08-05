@@ -2,8 +2,8 @@ package engine.entity.abilities;
 
 import engine.entity.*;
 import engine.entity.enums.*;
+import obsolete.ToolKit;
 import engine.entity.entities.Interaction;
-import engine.util.ToolKit;
 
 public class Interact8d extends Ability {
 	

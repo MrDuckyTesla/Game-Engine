@@ -3,8 +3,8 @@ package engine.entity.abilities;
 import engine.entity.*;
 import engine.entity.enums.*;
 import engine.entity.movement.*;
+import obsolete.ToolKit;
 import engine.entity.entities.Interaction;
-import engine.util.ToolKit;
 
 public class Sword8d extends Ability {
 	

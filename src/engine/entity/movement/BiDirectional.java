@@ -3,8 +3,8 @@ package engine.entity.movement;
 import engine.entity.Entity;
 import engine.entity.Move;
 import engine.entity.enums.Moves;
-import engine.util.Point;
-import engine.util.Rect;
+import obsolete.Point;
+import obsolete.Rect;
 
 public class BiDirectional extends Move {
 	

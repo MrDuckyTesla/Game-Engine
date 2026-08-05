@@ -8,7 +8,7 @@ import engine.entity.Trigger;
 import engine.entity.enums.Entities;
 import engine.entity.enums.Moves;
 import engine.entity.movement.*;
-import engine.util.ToolKit;
+import obsolete.ToolKit;
 import processing.core.PImage;
 
 public class Player extends Entity {

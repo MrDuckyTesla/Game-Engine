@@ -3,7 +3,7 @@ package engine.entity.movement;
 import engine.entity.Entity;
 import engine.entity.Move;
 import engine.entity.enums.Moves;
-import engine.util.Point;
+import obsolete.Point;
 
 public class ObjectAffected extends Move {
 	

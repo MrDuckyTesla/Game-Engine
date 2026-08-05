@@ -7,6 +7,9 @@ import engine.entity.enums.Entities;
 import engine.entity.enums.Moves;
 import engine.entity.movement.*;
 import engine.util.*;
+import obsolete.Animator;
+import obsolete.Point;
+import obsolete.ToolKit;
 import processing.core.PImage;
 
 public abstract class Entity implements Comparable<Entity> {

@@ -6,6 +6,8 @@ import engine.entity.*;
 import engine.entity.entities.Player;
 import engine.entity.entities.Wall;
 import engine.util.*;
+import obsolete.Point;
+import obsolete.ToolKit;
 import processing.core.PImage;
 
 // A Room holds obstacles and by extension characters

@@ -1,10 +1,8 @@
 package engine.neural.costs;
 
-import engine.data.ByteHelper;
-import engine.neural.Activation;
+import engine.util.*;
+
 import engine.neural.Cost;
-import engine.neural.Vector;
-import engine.neural.activations.Linear;
 
 public class MeanAbsoluteError implements Cost {
 
