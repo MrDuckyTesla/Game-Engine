@@ -8,5 +8,7 @@ public class Raw implements Compression {
 	public byte[] compress(byte[] bytes) {return bytes;}
 	@Override
 	public byte[] decompress(byte[] bytes) {return bytes;}
+	@Override
+	public int getSavedSpace() {return 0;}
 
 }
