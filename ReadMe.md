@@ -13,6 +13,8 @@ Current Version 0.1.2.5 <br>
 Current features: <br>
 >	- Modular entities with decoupled abilities, movement, and animation. <br>
 >	- Modular neural network with a custom matrix class, and all components separated. <br>
+>	- Modular serialization pipeline with encryption, compression, and storage separated. <br>
+>	- Custom ByteHelper class to convert bytes to objects/primitives and vice versa. <br>
 >	- Tons of custom graphics and utility code (found in engine.util.ToolKit.java) <br>
 
 I do not recommend using the game engine to make games in its current state. <br>

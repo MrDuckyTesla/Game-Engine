@@ -4,7 +4,6 @@
 package engine.neural.networks;
 
 import engine.data.ByteHelper;
-import engine.data.Data;
 import engine.neural.*;
 
 /**
@@ -185,8 +184,7 @@ public class Feedforward implements Network {
 			bytes.readObj(this.activation),
 			bytes.readObj(this.cost),
 			bytes.readObj(this.optimizer)
-		);
-		f.biases = (Vector[]) bytes.readObjArr(new Vector(0));
+		); f.biases = (Vector[]) bytes.readObjArr(new Vector(0));
 		f.activations = (Vector[]) bytes.readObjArr(new Vector(0));
 		f.preActivations = (Vector[]) bytes.readObjArr(new Vector(0));
 		f.weights = bytes.readObjArr(new Matrix(0, 0));
