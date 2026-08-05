@@ -1,5 +1,6 @@
 package engine.neural.activations;
 
+import engine.data.ByteHelper;
 import engine.neural.Activation;
 
 public class Tanh implements Activation {
@@ -13,6 +14,16 @@ public class Tanh implements Activation {
 	public float derivative(float x) {
 		float tan = (float) Math.tanh(x);
 		return 1 - tan*tan;
+	}
+	
+	@Override
+	public byte[] serialize() {
+		return new byte[] {};
+	}
+
+	@Override
+	public Activation deserialize(ByteHelper bytes) {
+		return new Tanh();
 	}
 
 }

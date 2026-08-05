@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Cost extends Reconstructible {
+import engine.data.Serializable;
+
+public interface Cost extends Serializable<Cost> {
 	
 	public abstract float calculate(Vector output, Vector target);
 	

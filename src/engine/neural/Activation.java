@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Activation extends Reconstructible {
+import engine.data.Serializable;
+
+public interface Activation extends Serializable<Activation> {
 	
 	public abstract float function(float x);
 	

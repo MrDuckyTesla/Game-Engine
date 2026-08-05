@@ -1,6 +1,8 @@
 package engine.neural;
 
-public interface Optimizer extends Reconstructible {
+import engine.data.Serializable;
+
+public interface Optimizer extends Serializable<Optimizer> {
 	
 	public abstract void updateWeights(Matrix weights, Matrix gradient);
 	

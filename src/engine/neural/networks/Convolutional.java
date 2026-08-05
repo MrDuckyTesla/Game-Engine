@@ -1,5 +1,6 @@
 package engine.neural.networks;
 
+import engine.data.ByteHelper;
 import engine.neural.Network;
 import engine.neural.Vector;
 
@@ -34,9 +35,15 @@ public class Convolutional implements Network {
 	}
 
 	@Override
-	public void saveNetwork(String name) {
+	public byte[] serialize() {
 		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public Network deserialize(ByteHelper bytes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

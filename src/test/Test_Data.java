@@ -8,6 +8,9 @@ import engine.data.storages.*;
 import engine.data.compressions.*;
 import engine.data.encryptions.*;
 
+import engine.neural.Matrix;
+import engine.neural.Vector;
+
 public class Test_Data {
 
 	public static void main(String[] args) {
@@ -20,6 +23,16 @@ public class Test_Data {
 			Test1 test2 = d.load();
 			System.out.println(test2);
 		} catch (IOException e) {e.printStackTrace();}
+		
+		Matrix m = new Vector(7);
+		m.propagate();
+		System.out.println(m);
+//		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
+//		try {
+//			a.save();
+//			System.out.println(a.load());
+//		} 
+//		catch (IOException e) {e.printStackTrace();}
 		
 //		System.out.println(test.deserialize(new ByteHelper(test.serialize())));
 		

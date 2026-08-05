@@ -1,5 +1,10 @@
 package test;
 
+import java.io.IOException;
+
+import engine.data.ByteHelper;
+import engine.data.Data;
+import engine.data.storages.Local;
 import engine.neural.*;
 import engine.neural.activations.*;
 import engine.neural.costs.*;
@@ -70,8 +75,8 @@ public class Test_Neural extends PApplet {
 //		System.out.println(test.predict(new Vector(new float[] {0, 1, 1})));
 //		System.out.println(test.predict(new Vector(new float[] {1, 0, 1})));
 //		System.out.println(test.predict(new Vector(new float[] {1, 1, 1})));
-		
-		Vector[] inputs = new Vector[1000], expected = new Vector[1000];
+		int trainingSize = 1000;
+		Vector[] inputs = new Vector[trainingSize], expected = new Vector[trainingSize];
 		
 		Initializer initializer = new Kaiming(false);
 		Activation activation = new GELU();
@@ -82,20 +87,20 @@ public class Test_Neural extends PApplet {
 		int batches = 1;
 //		try {test = new Feedforward("Test");} 
 //		catch (Exception e) {
-			test = new Feedforward(new int[] {1, 10, 20, 30, 3}, initializer, activation, cost, optimizer);
+			test = new Feedforward(new int[] {2, 10, 20, 30, 1}, initializer, activation, cost, optimizer);
 //		}
 		
-		for (int j = 0; j < 1000; j++) {
-		
-			for (int i = 0; i < 1000; i++) {
-				float x = (float) (Math.random() * 2 - 1) * 10;
-				float y = (float) (Math.random() * 2 - 1) * 10;
-				
-				inputs[i] = new Vector(new float[] {x});
-				expected[i] = new Vector(new float[] {(float)Math.sin(x), (float)Math.cos(x), (float)Math.tan(x)});
-			}
-			
-			test.train(inputs, expected, 100);
+//		for (int j = 0; j < 10; j++) {
+//		
+//			for (int i = 0; i < inputs.length; i++) {
+//				float x = (float) (Math.random() * 2 - 1);
+//				float y = (float) (Math.random() * 2 - 1);
+//
+//				inputs[i] = new Vector(new float[] {x, y});
+//				expected[i] = new Vector(new float[] {x*y});
+//			}
+//			
+//			test.train(inputs, expected, 100);
 //			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
 //			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
 //			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
@@ -107,9 +112,34 @@ public class Test_Neural extends PApplet {
 //			System.out.println("0.2 * 1 = "+test.predict(new Vector(new float[] {0.2f, 1})));
 //			System.out.println("10 * 1 = "+test.predict(new Vector(new float[] {10, 1})));
 //			System.out.println("2 * 10 = "+test.predict(new Vector(new float[] {2, 10})));
-			
-			batches++;
-		} test.saveNetwork("Test");
+//			
+//			batches++;
+//		} 
+//		test.deserialize(new ByteHelper(test.serialize()));
+		Data<Network> d = new Data<>(test);
+		try {
+			d.setStorage(new Local("data/network.mdt"));
+//			d.save();
+			Feedforward f = (Feedforward) d.load();
+			System.out.println("TEST");
+//			f.train(inputs, expected, 2);
+			System.out.println("0 * 1 = "+f.predict(new Vector(new float[] {0, 1})));
+			System.out.println("0.5 * 0.5 = "+f.predict(new Vector(new float[] {0.5f, 0.5f})));
+			System.out.println("0.5 * 1 = "+f.predict(new Vector(new float[] {0.5f, 1})));
+			System.out.println("0 * 0 = "+f.predict(new Vector(new float[] {0, 0})));
+			System.out.println("1 * 1 = "+f.predict(new Vector(new float[] {1, 1})));
+			System.out.println("1 * 0.99 = "+f.predict(new Vector(new float[] {1, 0.99f})));
+			System.out.println("0.333333 * 0.666666 = "+f.predict(new Vector(new float[] {0.333333f, 0.666666f})));
+			System.out.println("2 * 1 = "+f.predict(new Vector(new float[] {2, 1})));
+			System.out.println("0.2 * 1 = "+f.predict(new Vector(new float[] {0.2f, 1})));
+			System.out.println("10 * 1 = "+f.predict(new Vector(new float[] {10, 1})));
+			System.out.println("2 * 10 = "+f.predict(new Vector(new float[] {2, 10})));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		test.saveNetwork("Test");
 		
 	}
 	

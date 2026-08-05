@@ -15,6 +15,14 @@ public class ByteHelper {
 		} return rtrn;
 	}
 	
+	public static <T extends Serializable<T>> byte[] toBytes(T[] o) {
+		byte[][] bytes = new byte[o.length+1][];
+		bytes[0] = ByteHelper.toBytes(o.length);
+		for (int i = 0; i < o.length; i++) {
+			bytes[i+1] = ByteHelper.toBytes(o[i]);
+		} return ByteHelper.mergeBytes(bytes);
+	}
+	
 	public static byte[] toBytes(String[] s) {
 		byte[][] bytes = new byte[s.length+1][];
 		bytes[0] = ByteHelper.toBytes(s.length);
@@ -47,6 +55,11 @@ public class ByteHelper {
 		for (boolean o : b) {y.put((byte) (o ? 1 : 0));} 
 		return y.array();
 	}
+	
+	public static <T extends Serializable<T>> byte[] toBytes(T object) {
+		byte[] bytes = object.serialize();
+		return ByteHelper.mergeBytes(ByteBuffer.allocate(4).putInt(bytes.length).array(), bytes);
+	}
 
 	public static byte[] toBytes(String s) {
 		byte[] b = s.getBytes(StandardCharsets.UTF_8);
@@ -73,6 +86,15 @@ public class ByteHelper {
 	
 	public ByteHelper(byte[] byteStream) {
 		this.byteStream = ByteBuffer.wrap(byteStream);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable<T>> T[] readObjArr(T prototype) {
+		T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(
+			prototype.getClass(), this.byteStream.getInt()
+		); for (int i = 0; i < rtrn.length; i++) {
+			rtrn[i] = this.readObj(prototype);
+		} return rtrn;
 	}
 	
 	public String[] readStringArr() {
@@ -108,6 +130,12 @@ public class ByteHelper {
 		for (int i = 0; i < rtrn.length; i++) {
 			rtrn[i] = this.readBool();
 		} return rtrn;
+	}
+	
+	public <T extends Serializable<T>> T readObj(T prototype) {
+		byte[] bytes = new byte[this.byteStream.getInt()];
+		this.byteStream.get(bytes);
+		return prototype.deserialize(new ByteHelper(bytes));
 	}
 	
 	public String readString() {

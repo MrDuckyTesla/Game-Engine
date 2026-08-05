@@ -1,5 +1,6 @@
 package engine.neural.optimizers;
 
+import engine.data.ByteHelper;
 import engine.neural.*;
 
 public class SGD implements Optimizer {
@@ -19,10 +20,15 @@ public class SGD implements Optimizer {
 	public void updateBiases(Vector biases, Vector delta) {
 		biases.subMatrix(delta.scaleMatrixReturn(this.learningRate).getMatrix());
 	}
-	
+
 	@Override
-	public String getClassInfo() {
-		return this.getClass().getName() + "\n" + this.learningRate;
+	public byte[] serialize() {
+		return ByteHelper.toBytes(this.learningRate);
+	}
+
+	@Override
+	public Optimizer deserialize(ByteHelper bytes) {
+		return new SGD(bytes.readFloat());
 	}
 
 }
