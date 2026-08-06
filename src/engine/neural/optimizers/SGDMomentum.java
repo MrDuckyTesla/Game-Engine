@@ -75,24 +75,34 @@ public class SGDMomentum implements Optimizer {
 		return ByteHelper.mergeBytes(
 			ByteHelper.toBytes(this.learningRate),
 			ByteHelper.toBytes(this.momentum),
-			this.toBytes(this.velocityWeights),
-			this.toBytes(this.velocityBiases)
+			this.toBytes(this.velocityWeights, Matrix.class),
+			this.toBytes(this.velocityBiases, Vector.class)
 		);
 	}
 	
-	public <T extends Matrix> byte[] toBytes(IdentityHashMap<T, T> i) {
-		byte[] bytes = ByteHelper.toBytes(i.size());
+	@SuppressWarnings("unchecked")
+	private <T extends Matrix> byte[] toBytes(IdentityHashMap<T, T> i, Class<T> type) {
+		T[] a = (T[]) java.lang.reflect.Array.newInstance(type, i.size());
+		int j = 0;
 		for (Map.Entry<T, T> entry : i.entrySet()) {
-			bytes = ByteHelper.mergeBytes(bytes, ByteHelper.toBytes(entry.getValue()));
-		} return bytes;
+			a[j++] = entry.getValue();
+		} return ByteHelper.toBytes(a); 
+		
 	}
 
 	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
+	public Optimizer deserialize(ByteHelper bytes) throws ReflectiveOperationException {
 		SGDMomentum s = new SGDMomentum(bytes.readFloat(), bytes.readFloat());
-		s.tempWeights = new ArrayDeque<>(Arrays.asList(bytes.readObjArr(new Matrix(0, 0))));
-		s.tempBiases = new ArrayDeque<>(Arrays.asList((Vector[]) bytes.readObjArr(new Vector(0))));
+		s.tempWeights = new ArrayDeque<Matrix>(Arrays.asList(bytes.readObjArr()));
+		s.tempBiases = new ArrayDeque<Vector>(Arrays.asList((Vector[]) bytes.readObjArr()));
 		return s;
 	}
 
 }
+
+//public <T extends Matrix> byte[] toBytes(IdentityHashMap<T, T> i) {
+//byte[] bytes = ByteHelper.toBytes(i.size());
+//for (Map.Entry<T, T> entry : i.entrySet()) {
+//	bytes = ByteHelper.mergeBytes(bytes, ByteHelper.toBytes(entry.getValue()));
+//} return bytes;
+//}

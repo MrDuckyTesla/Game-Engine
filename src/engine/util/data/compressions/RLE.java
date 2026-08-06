@@ -2,6 +2,7 @@ package engine.util.data.compressions;
 
 import java.io.ByteArrayOutputStream;
 
+import engine.util.ByteHelper;
 import engine.util.data.Compression;
 
 public class RLE implements Compression {
@@ -35,5 +36,18 @@ public class RLE implements Compression {
 
 	@Override
 	public int getSavedSpace() {return this.before - this.after;}
+
+	@Override
+	public byte[] serialize() {
+		return ByteHelper.mergeBytes(
+			ByteHelper.toBytes(this.before),
+			ByteHelper.toBytes(this.after)
+		);
+	}
+
+	@Override
+	public Compression deserialize(ByteHelper bytes) throws ReflectiveOperationException {
+		RLE r = new RLE(); r.before = bytes.readInt(); r.after = bytes.readInt(); return r;
+	}
 
 }

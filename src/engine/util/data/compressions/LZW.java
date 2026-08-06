@@ -1,5 +1,6 @@
 package engine.util.data.compressions;
 
+import engine.util.ByteHelper;
 import engine.util.data.Compression;
 
 public class LZW implements Compression {
@@ -24,6 +25,16 @@ public class LZW implements Compression {
 	public int getSavedSpace() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public byte[] serialize() {
+		return new byte[] {};
+	}
+
+	@Override
+	public Compression deserialize(ByteHelper bytes) throws ReflectiveOperationException {
+		return new LZW();
 	}
 
 }

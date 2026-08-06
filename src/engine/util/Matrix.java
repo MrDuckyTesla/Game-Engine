@@ -10,6 +10,11 @@ public class Matrix implements Iterable<Float>, Serializable<Matrix> {
 	private int wid, hgt;
 	
 	// Constructors
+	
+	public Matrix() {
+		this.matrix = new float[] {};
+		this.wid = 0; this.hgt = 0;
+	}
 
 	public Matrix(int wid, int hgt) {
 		this.matrix = new float[wid*hgt];
@@ -357,11 +362,11 @@ public class Matrix implements Iterable<Float>, Serializable<Matrix> {
 
 	@Override
 	public Matrix deserialize(ByteHelper bytes) {
-		Matrix m = new Matrix(
+		return new Matrix(
 			bytes.readFloatArr(),
 			bytes.readInt(),
 			bytes.readInt()
-		); return m;
+		);
 	}
 
 }

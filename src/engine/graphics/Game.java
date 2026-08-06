@@ -10,6 +10,7 @@ public abstract class Game {
 	
 	private Stack<Graphics2D> stack = new Stack<>();
 	private Graphics2D g;
+	private JFrame j = new JFrame("Game");
 	private final Settings s = new Settings();
 	private boolean isOpen = true;
 	
@@ -31,17 +32,16 @@ public abstract class Game {
 	}
 	
 	public void main() {
-		JFrame j = new JFrame(s.winName);
 		Canvas c = new Canvas();
 		
 		c.setSize(s.wid, s.hgt);
 		
-		j.add(c);
-		j.pack();
+		this.j.add(c);
+		this.j.pack();
 		
-		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		j.setLocationRelativeTo(null);  // Centered window
-		j.setVisible(true);
+		this.j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.j.setLocationRelativeTo(null);  // Centered window
+		this.j.setVisible(true);
 		
 		c.createBufferStrategy(2);
 		BufferStrategy bs = c.getBufferStrategy();

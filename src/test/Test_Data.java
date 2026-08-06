@@ -21,7 +21,8 @@ public class Test_Data {
 			d.save();
 			Test1 test2 = d.load();
 			System.out.println(test2);
-		} catch (IOException e) {e.printStackTrace();}
+		} catch (IOException e) {e.printStackTrace();} 
+		catch (ReflectiveOperationException e) {e.printStackTrace();}
 		
 		Matrix m = new Vector(7);
 		m.propagate();

@@ -1,6 +1,10 @@
 package engine;
 
+import java.io.IOException;
+
 import engine.graphics.Game;
+import engine.neural.Network;
+import engine.util.data.Data;
 
 public class Main extends Game {
 	
@@ -17,6 +21,14 @@ public class Main extends Game {
 	public void loop() {
 		game.rect(x, 400, 20, 20); x+=add;
 		if (x > 800 || x< 0) {add *= -1;}
+		
+		try {
+			Data<Network> d = new Data<>();
+		} 
+		catch (IOException e) {e.printStackTrace();} 
+		catch (ReflectiveOperationException e) {e.printStackTrace();}
+		
+		
 	}
 
 }

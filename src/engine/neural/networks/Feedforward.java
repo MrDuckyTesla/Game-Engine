@@ -179,18 +179,17 @@ public class Feedforward implements Network {
 	}
 
 	@Override
-	public Network deserialize(ByteHelper bytes) {
+	public Network deserialize(ByteHelper bytes) throws ReflectiveOperationException {
 		Feedforward f = new Feedforward(
 			bytes.readIntArr(),
 			bytes.readObj(this.initializer),
 			bytes.readObj(this.activation),
 			bytes.readObj(this.cost),
 			bytes.readObj(this.optimizer)
-		); f.biases = (Vector[]) bytes.readObjArr(new Vector(0));
-		f.activations = (Vector[]) bytes.readObjArr(new Vector(0));
-		f.preActivations = (Vector[]) bytes.readObjArr(new Vector(0));
-		f.weights = bytes.readObjArr(new Matrix(0, 0));
-		return f;
+		); f.biases = (Vector[]) bytes.readObjArr();
+		f.activations = (Vector[]) bytes.readObjArr();
+		f.preActivations = (Vector[]) bytes.readObjArr();
+		f.weights = bytes.readObjArr(); return f;
 	}
 	
 }

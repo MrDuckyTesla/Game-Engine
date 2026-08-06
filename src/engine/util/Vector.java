@@ -2,6 +2,8 @@ package engine.util;
 
 public class Vector extends Matrix {
 	
+	public Vector() {}
+	
 	public Vector(float[] v) {
 		super(1, v.length);
 		super.setMatrix(v);

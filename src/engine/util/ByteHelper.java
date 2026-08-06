@@ -18,11 +18,19 @@ public class ByteHelper {
 	}
 	
 	public static <T extends Serializable<T>> byte[] toBytes(T[] o) {
-		byte[][] bytes = new byte[o.length+1][];
-		bytes[0] = ByteHelper.toBytes(o.length);
+		if (o.length == 0) {throw new IllegalArgumentException("Array length of 0");}
+		byte[][] bytes = new byte[o.length+2][];
+		bytes[0] = ByteHelper.objNameToBytes(o[0]);
+		bytes[1] = ByteHelper.toBytes(o.length);
 		for (int i = 0; i < o.length; i++) {
-			bytes[i+1] = ByteHelper.toBytes(o[i]);
+			bytes[i+2] = ByteHelper.objToBytes(o[i]);
 		} return ByteHelper.mergeBytes(bytes);
+	}
+	
+	private static <T extends Serializable<T>> byte[] objToBytes(T object) {
+		byte[] bytes = object.serialize(); return ByteHelper.mergeBytes(
+			ByteBuffer.allocate(4).putInt(bytes.length).array(), bytes
+		);
 	}
 	
 	public static byte[] toBytes(String[] s) {
@@ -60,7 +68,14 @@ public class ByteHelper {
 	
 	public static <T extends Serializable<T>> byte[] toBytes(T object) {
 		byte[] bytes = object.serialize();
-		return ByteHelper.mergeBytes(ByteBuffer.allocate(4).putInt(bytes.length).array(), bytes);
+		return ByteHelper.mergeBytes(
+				ByteBuffer.allocate(4).putInt(bytes.length).array(), 
+				bytes, ByteHelper.objNameToBytes(object)
+		);
+	}
+	
+	private static <T extends Serializable<T>> byte[] objNameToBytes(T object) {
+		return ByteHelper.toBytes(object.getClass().getName());
 	}
 
 	public static byte[] toBytes(String s) {
@@ -91,9 +106,11 @@ public class ByteHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T extends Serializable<T>> T[] readObjArr(T prototype) {
+	public <T extends Serializable<T>> T[] readObjArr() throws ReflectiveOperationException {
+		T prototype = ((Class<T>) Class.forName(this.readString())).getDeclaredConstructor().newInstance();
 		T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(
-			prototype.getClass(), this.byteStream.getInt()
+				prototype.getClass(), 
+				this.byteStream.getInt()
 		); for (int i = 0; i < rtrn.length; i++) {
 			rtrn[i] = this.readObj(prototype);
 		} return rtrn;
@@ -134,9 +151,11 @@ public class ByteHelper {
 		} return rtrn;
 	}
 	
-	public <T extends Serializable<T>> T readObj(T prototype) {
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable<T>> T readObj() throws ReflectiveOperationException {
 		byte[] bytes = new byte[this.byteStream.getInt()];
-		this.byteStream.get(bytes);
+		this.byteStream.get(bytes); String type = this.readString();
+		T prototype = ((Class<T>) Class.forName(type)).getDeclaredConstructor().newInstance();
 		return prototype.deserialize(new ByteHelper(bytes));
 	}
 	
@@ -160,6 +179,32 @@ public class ByteHelper {
 	
 	public boolean readBool() {
 		return this.byteStream.get() == 1;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable<T>> T[] readObjArr(T prototype) throws ReflectiveOperationException {
+		this.readString();
+		T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(
+			prototype.getClass(), this.byteStream.getInt()
+		); for (int i = 0; i < rtrn.length; i++) {
+			rtrn[i] = this.readObj(prototype);
+		} return rtrn;
+	}
+	
+	public <T extends Serializable<T>> T readObj(
+		Class<T> type, Class<?>[] constructorParams,  Object...params) throws ReflectiveOperationException {
+		return type.getDeclaredConstructor(constructorParams)
+			.newInstance(params).deserialize(new ByteHelper(this.objHelper()));
+	}
+		
+	public <T extends Serializable<T>> T readObj(T prototype) throws ReflectiveOperationException {
+		return prototype.deserialize(new ByteHelper(this.objHelper()));
+	}
+		
+	private byte[] objHelper() {
+		byte[] bytes = new byte[this.byteStream.getInt()];
+		this.byteStream.get(bytes);
+		return bytes;
 	}
 
 }
