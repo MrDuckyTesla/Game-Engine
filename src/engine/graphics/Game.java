@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 import java.awt.image.BufferStrategy;
+import java.util.Stack;
 
 public abstract class Game {
 	
-	private Graphics g;
+	private Stack<Graphics2D> stack = new Stack<>();
+	private Graphics2D g;
 	private final Settings s = new Settings();
 	private boolean isOpen = true;
 	
@@ -45,7 +47,7 @@ public abstract class Game {
 		BufferStrategy bs = c.getBufferStrategy();
 		
 		while (this.isOpen) {
-			this.g = bs.getDrawGraphics();
+			this.g = (Graphics2D) bs.getDrawGraphics();
 			
 			Color clr = this.g.getColor();
 			
@@ -62,6 +64,16 @@ public abstract class Game {
 		}
 	}
 	
+	public void push() {
+		this.stack.push(this.g);
+		this.g = (Graphics2D) this.g.create();
+	}
+	
+	public void pop() {
+		this.g.dispose();
+		this.g = this.stack.pop();
+	}
+	
 	public void rect(int x, int y, int wid, int hgt) {
 		if (this.s.fillShape) {this.g.fillRect(x, y, wid, hgt);}
 		else {this.g.fillRect(x, y, wid, hgt);}
@@ -69,6 +81,10 @@ public abstract class Game {
 	
 	public void clearRect(int x, int y, int wid, int hgt) {
 		this.g.clearRect(x, y, wid, hgt);
+	}
+	
+	public void copy(int x, int y, int wid, int hgt, int dx, int dy) {
+		this.g.copyArea(x, y, wid, hgt, dx, dy);
 	}
 	
 	public void fill(Color c) {this.g.setColor(c);}
