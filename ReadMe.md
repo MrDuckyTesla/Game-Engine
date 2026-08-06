@@ -1,5 +1,3 @@
-# Please use the beta branch to make push requests as I will remove it otherwise. <br>
-
 # Quick Statistics <br>
 
 Start Date:  7/11/2024 <br>
