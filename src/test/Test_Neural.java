@@ -100,7 +100,7 @@ public class Test_Neural {
 				expected[i] = new Vector(new float[] {x*y});
 			}
 			
-			test.train(inputs, expected, 100);
+			test.train(inputs, expected, 10);
 			System.out.println("0 * 1 = "+test.predict(new Vector(new float[] {0, 1})));
 			System.out.println("0.5 * 0.5 = "+test.predict(new Vector(new float[] {0.5f, 0.5f})));
 			System.out.println("0.5 * 1 = "+test.predict(new Vector(new float[] {0.5f, 1})));
