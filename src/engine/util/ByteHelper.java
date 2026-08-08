@@ -22,10 +22,10 @@ public class ByteHelper {
 	 * @param <T> Class being serialized
 	 * @param o Object array being serialized
 	 * @return The object in byte form, the bytes are ordered as so:
-	 * [Object Type][Array Length][[Byte length of Object][Object], ...[Byte Length of Object][Object]]
+	 * [Object Type][Array Length][[Byte Length][Object], ...[Byte Length][Object]]
 	 */
 	public static <T extends Serializable<T>> byte[] toBytes(T[] o) {
-		if (o.length == 0) {throw new IllegalArgumentException("Array length of 0");}
+		if (o.length < 3) {throw new IllegalArgumentException("Array length less than 3");}
 		byte[][] bytes = new byte[o.length+2][];
 		bytes[0] = ByteHelper.objNameToBytes(o[0]);
 		bytes[1] = ByteHelper.toBytes(o.length);
@@ -44,7 +44,7 @@ public class ByteHelper {
 	 * Function that serializes an array of strings
 	 * @param s String array being serialized
 	 * @return The String in byte form, the bytes are ordered as so:
-	 * [Array Length][[Length of String][String], ...[Length of String][String]]
+	 * [Array Length][[String Length][String], ...[String Length][String]]
 	 */
 	public static byte[] toBytes(String[] s) {
 		byte[][] bytes = new byte[s.length+1][];
@@ -79,11 +79,13 @@ public class ByteHelper {
 		return y.array();
 	}
 	
+	// [Object Type][Byte Length][Object]
 	public static <T extends Serializable<T>> byte[] toBytes(T object) {
 		byte[] bytes = object.serialize();
 		return ByteHelper.mergeBytes(
+				ByteHelper.objNameToBytes(object),
 				ByteBuffer.allocate(4).putInt(bytes.length).array(), 
-				bytes, ByteHelper.objNameToBytes(object)
+				bytes
 		);
 	}
 	
@@ -118,15 +120,28 @@ public class ByteHelper {
 		this.byteStream = ByteBuffer.wrap(byteStream);
 	}
 	
+	// [Object Type][Array Length][[Byte Length][Object], ...[Byte Length][Object]]
+	// [Object Type][Byte Length][Object]
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable<T>> T[] readObjArr() throws ReflectiveOperationException {
-		T prototype = ((Class<T>) Class.forName(this.readString())).getDeclaredConstructor().newInstance();
-		T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(
-				prototype.getClass(), 
-				this.byteStream.getInt()
-		); for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readObj(prototype);
-		} return rtrn;
+		Class<T> type = ((Class<T>) Class.forName(this.readString())); try {
+			T prototype = type.getDeclaredConstructor().newInstance();
+			T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(prototype.getClass(), this.byteStream.getInt()); 
+			for (int i = 0; i < rtrn.length; i++) {
+				rtrn[i] = prototype.deserialize(new ByteHelper(this.objHelper()));
+			} return rtrn;
+		} catch (NoSuchMethodException e) {
+			throw new ReflectiveOperationException(
+				"To use readObj() without parameters, please create an empty constructor for " 
+				+ type.getName()
+			);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable<T>> T[] readObjArr(T prototype) throws ReflectiveOperationException {
+		this.readString(); T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(prototype.getClass(), this.byteStream.getInt()); 
+		for (int i = 0; i < rtrn.length; i++) {rtrn[i] = this.readObj(prototype);} return rtrn;
 	}
 	
 	public String[] readStringArr() {
@@ -166,10 +181,31 @@ public class ByteHelper {
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable<T>> T readObj() throws ReflectiveOperationException {
+		Class<T> type = (Class<T>) Class.forName(this.readString()); try {
+			T prototype = type.getDeclaredConstructor().newInstance();
+			byte[] bytes = new byte[this.byteStream.getInt()]; this.byteStream.get(bytes);
+			return prototype.deserialize(new ByteHelper(bytes));
+		}  catch (NoSuchMethodException e) {
+			throw new ReflectiveOperationException(
+				"To use readObj() without parameters, please create an empty constructor for " 
+				+ type.getName()
+			);
+		}
+	}
+	
+	public <T extends Serializable<T>> T readObj(
+		Class<T> type, Class<?>[] constructorParams,  Object...params) throws ReflectiveOperationException {
+		this.readString(); return type.getDeclaredConstructor(constructorParams)
+			.newInstance(params).deserialize(new ByteHelper(this.objHelper()));
+	}
+		
+	public <T extends Serializable<T>> T readObj(T prototype) throws ReflectiveOperationException {
+		this.readString(); T rtrn = prototype.deserialize(new ByteHelper(this.objHelper())); return rtrn;
+	}
+		
+	private byte[] objHelper() {
 		byte[] bytes = new byte[this.byteStream.getInt()];
-		this.byteStream.get(bytes); String type = this.readString();
-		T prototype = ((Class<T>) Class.forName(type)).getDeclaredConstructor().newInstance();
-		return prototype.deserialize(new ByteHelper(bytes));
+		this.byteStream.get(bytes); return bytes;
 	}
 	
 	public String readString() {
@@ -192,31 +228,6 @@ public class ByteHelper {
 	
 	public boolean readBool() {
 		return this.byteStream.get() == 1;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public <T extends Serializable<T>> T[] readObjArr(T prototype) throws ReflectiveOperationException {
-		this.readString(); T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(
-			prototype.getClass(), this.byteStream.getInt()
-		); for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readObj(prototype);
-		} return rtrn;
-	}
-	
-	public <T extends Serializable<T>> T readObj(
-		Class<T> type, Class<?>[] constructorParams,  Object...params) throws ReflectiveOperationException {
-		return type.getDeclaredConstructor(constructorParams)
-			.newInstance(params).deserialize(new ByteHelper(this.objHelper()));
-	}
-		
-	public <T extends Serializable<T>> T readObj(T prototype) throws ReflectiveOperationException {
-		T rtrn = prototype.deserialize(new ByteHelper(this.objHelper())); return rtrn;
-	}
-		
-	private byte[] objHelper() {
-		byte[] bytes = new byte[this.byteStream.getInt()];
-		this.byteStream.get(bytes);
-		return bytes;
 	}
 
 }

@@ -45,7 +45,7 @@ public class Data<T extends Serializable<T>> implements Serializable<Data<T>> {
 	
 	public void save() throws IOException {
 		this.checkNullExists();
-		byte[] bytes = object.serialize();
+		byte[] bytes = this.serialize();
 		bytes = this.compression.compress(bytes);
 		bytes = this.encryption.encrypt(bytes);
 		this.storage.save(bytes);
@@ -57,7 +57,7 @@ public class Data<T extends Serializable<T>> implements Serializable<Data<T>> {
 		bytes = this.encryption.decrypt(bytes);
 		bytes = this.compression.decompress(bytes);
 		
-		return this.object.deserialize(new ByteHelper(bytes));
+		return this.deserialize(new ByteHelper(bytes)).object;
 	}
 	
 	public T get() {return this.object;}

@@ -118,7 +118,7 @@ public class Test_Neural {
 //		test.deserialize(new ByteHelper(test.serialize()));
 		Data<Network> d = new Data<>(test);
 		try {
-			d.setStorage(new Local("data/network.mdt"));
+//			d.setStorage(new Local("data/network.mdt"));
 			d.save();
 			Feedforward f = (Feedforward) d.load();
 			System.out.println("TEST");

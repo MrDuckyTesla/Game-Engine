@@ -78,6 +78,18 @@ public class Feedforward implements Network {
 		}
 	}
 	
+	public Feedforward(ByteHelper bytes) throws ReflectiveOperationException {
+		this.networkSizes = 			 bytes.readIntArr();
+		this.initializer = 				 bytes.readObj();
+		this.activation = 				 bytes.readObj();
+		this.cost = 					 bytes.readObj();
+		this.optimizer = 				 bytes.readObj();
+		this.biases = 		  (Vector[]) bytes.readObjArr();
+		this.activations = 	  (Vector[]) bytes.readObjArr();
+		this.preActivations = (Vector[]) bytes.readObjArr();
+		this.weights = 					 bytes.readObjArr();
+	}
+	
 	private Vector forward(Vector input) {
 		if (input.getHgt() != this.weights[0].getWid()) {
 			throw new IllegalArgumentException("Input size mismatch");

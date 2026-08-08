@@ -9,6 +9,10 @@ import engine.util.data.Storage;
 public class Local implements Storage {
 	
 	private final Path path;
+	
+	public Local() {
+		this.path = Paths.get("data/unnamed.mdt");
+	}
 
 	public Local(String fileLocation) {
 		this.path = Paths.get(fileLocation);
