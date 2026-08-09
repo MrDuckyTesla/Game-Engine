@@ -111,6 +111,7 @@ animation interface. <br>
 > - Make ToolKit more "float friendly" by removing exact with epsilon. <br>
 > - Majority of code is most likely suboptimal as most was made from scratch, so rewriting certain algorithms to be 
 faster is welcome. <br>
+> - Write missing ByteHelper primitive read and write functions. <br>
 
 	 	
 ## Small demos that I wanna make to prove that the engine works: <br>

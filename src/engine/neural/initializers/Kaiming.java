@@ -29,7 +29,7 @@ public class Kaiming implements Initializer {
 	
 	@Override
 	public byte[] serialize() {
-		return new byte[] {ByteHelper.toBytes(this.uniform)};
+		return ByteHelper.toBytes(this.uniform);
 	}
 	@Override
 	public Initializer deserialize(ByteHelper bytes) {

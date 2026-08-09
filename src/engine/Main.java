@@ -16,9 +16,9 @@ public class Main extends Game {
 	
 	public static void main(String[] args) {
 		try {
-//			Data<Network> d = new Data<>();
-//			Feedforward f = (Feedforward) d.load();
-			Feedforward f = new Feedforward(new ByteHelper(new Local().load()));
+			Data<Network> d = new Data<>();
+			Feedforward f = (Feedforward) d.load();
+			f = new Feedforward(new ByteHelper(new Local().load()));
 		} 
 		catch (IOException e) {e.printStackTrace();} 
 		catch (ReflectiveOperationException e) {e.printStackTrace();}
