@@ -15,16 +15,16 @@ public class Main extends Game {
 	public int x = 0, add = 1;
 	
 	public static void main(String[] args) {
-		try {
-			Data<Network> d = new Data<>();
-			Feedforward f = (Feedforward) d.load();
-			f = new Feedforward(new ByteHelper(new Local().load()));
-		} 
-		catch (IOException e) {e.printStackTrace();} 
-		catch (ReflectiveOperationException e) {e.printStackTrace();}
+//		try {
+//			Data<Network> d = new Data<>();
+//			Feedforward f = (Feedforward) d.load();
+//			f = new Feedforward(new ByteHelper(new Local().load()));
+//		} 
+//		catch (IOException e) {e.printStackTrace();} 
+//		catch (ReflectiveOperationException e) {e.printStackTrace();}
 		
-//		game.getSettings().setWindowName("Game Engine Test!");
-//		game.main();
+		game.getSettings().setWindowName("Game Engine Test!");
+		game.main();
 		
 	}
 

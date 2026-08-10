@@ -20,9 +20,4 @@ public class ReLU implements Activation {
 		return new byte[] {};
 	}
 
-	@Override
-	public Activation deserialize(ByteHelper bytes) {
-		return new ReLU();
-	}
-
 }

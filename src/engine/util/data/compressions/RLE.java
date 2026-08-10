@@ -45,9 +45,4 @@ public class RLE implements Compression {
 		);
 	}
 
-	@Override
-	public Compression deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		RLE r = new RLE(); r.before = bytes.readInt(); r.after = bytes.readInt(); return r;
-	}
-
 }

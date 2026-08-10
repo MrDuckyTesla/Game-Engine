@@ -13,9 +13,5 @@ public class Raw implements Encryption {
 	public byte[] serialize() {
 		return new byte[] {};
 	}
-	@Override
-	public Encryption deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		return new Raw();
-	}
 
 }

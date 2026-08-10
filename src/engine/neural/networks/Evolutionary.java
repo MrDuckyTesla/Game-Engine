@@ -40,10 +40,4 @@ public class Evolutionary implements Network {
 		return null;
 	}
 
-	@Override
-	public Network deserialize(ByteHelper bytes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

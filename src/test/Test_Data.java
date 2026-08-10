@@ -16,13 +16,13 @@ public class Test_Data {
 		
 		Test1 test = new Test1();
 		
-		Data<Test1> d = new Data<>(test);  //.setCompression(null).setEncryption(null).setFormat(null).setStorage(null);
+		Data<Test1> d = new Data<>(test);
 		try {
 			d.save();
 			Test1 test2 = d.load();
 			System.out.println(test2);
 		} catch (IOException e) {e.printStackTrace();} 
-		catch (ReflectiveOperationException e) {e.printStackTrace();}
+		catch (ClassNotFoundException e) {e.printStackTrace();} 
 		
 		Matrix m = new Vector(7);
 		m.propagate();
@@ -52,21 +52,21 @@ public class Test_Data {
 		@Override
 		public byte[] serialize() {
 			return ByteHelper.mergeBytes(
-				this.test.serialize(),
+				ByteHelper.toBytes(test),
 				ByteHelper.toBytes(s),
 				ByteHelper.toBytes(f), 
 				ByteHelper.toBytes(i)
 			);
 		}
-		@Override
-		public Test1 deserialize(ByteHelper b) {
-			Test1 t = new Test1();
-			t.test = test.deserialize(b);
-			t.s = b.readString();
-			t.f = b.readFloatArr();
-			t.i = b.readInt();
-			return t;
-		}
+//		@Override
+//		public Test1 deserialize(ByteHelper b) {
+//			Test1 t = new Test1();
+//			t.test = test.deserialize(b);
+//			t.s = b.readString();
+//			t.f = b.readFloatArr();
+//			t.i = b.readInt();
+//			return t;
+//		}
 	} 
 	
 	private static class Test2 implements Serializable<Test2> {
@@ -87,14 +87,14 @@ public class Test_Data {
 				ByteHelper.toBytes(i)
 			);
 		}
-		@Override
-		public Test2 deserialize(ByteHelper b) {
-			Test2 t = new Test2();
-			t.s = b.readString();
-			t.f = b.readFloatArr();
-			t.i = b.readInt();
-			return t;
-		}
+//		@Override
+//		public Test2 deserialize(ByteHelper b) {
+//			Test2 t = new Test2();
+//			t.s = b.readString();
+//			t.f = b.readFloatArr();
+//			t.i = b.readInt();
+//			return t;
+//		}
 	}
 	
 	

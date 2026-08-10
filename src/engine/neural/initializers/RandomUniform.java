@@ -29,12 +29,5 @@ public class RandomUniform implements Initializer {
 			ByteHelper.toBytes(max)
 		);
 	}
-	@Override
-	public Initializer deserialize(ByteHelper bytes) {
-		return new RandomUniform(
-			bytes.readFloat(),
-			bytes.readFloat()
-		);
-	}
 
 }

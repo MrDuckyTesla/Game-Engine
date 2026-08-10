@@ -27,9 +27,4 @@ public class RootMeanSquare implements Cost {
 		return new byte[] {};
 	}
 
-	@Override
-	public Cost deserialize(ByteHelper bytes) {
-		return new RootMeanSquare();
-	}
-
 }

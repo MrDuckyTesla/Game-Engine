@@ -78,17 +78,17 @@ public class Feedforward implements Network {
 		}
 	}
 	
-	public Feedforward(ByteHelper bytes) throws ReflectiveOperationException {
-		this.networkSizes = 			 bytes.readIntArr();
-		this.initializer = 				 bytes.readObj();
-		this.activation = 				 bytes.readObj();
-		this.cost = 					 bytes.readObj();
-		this.optimizer = 				 bytes.readObj();
-		this.biases = 		  (Vector[]) bytes.readObjArr();
-		this.activations = 	  (Vector[]) bytes.readObjArr();
-		this.preActivations = (Vector[]) bytes.readObjArr();
-		this.weights = 					 bytes.readObjArr();
-	}
+//	public Feedforward(ByteHelper bytes) throws ReflectiveOperationException {
+//		this.networkSizes = 			 bytes.readIntArr();
+//		this.initializer = 				 bytes.readObj();
+//		this.activation = 				 bytes.readObj();
+//		this.cost = 					 bytes.readObj();
+//		this.optimizer = 				 bytes.readObj();
+//		this.biases = 		  (Vector[]) bytes.readObjArr();
+//		this.activations = 	  (Vector[]) bytes.readObjArr();
+//		this.preActivations = (Vector[]) bytes.readObjArr();
+//		this.weights = 					 bytes.readObjArr();
+//	}
 	
 	private Vector forward(Vector input) {
 		if (input.getHgt() != this.weights[0].getWid()) {
@@ -188,20 +188,6 @@ public class Feedforward implements Network {
 			ByteHelper.toBytes(this.preActivations),
 			ByteHelper.toBytes(this.weights)
 		);
-	}
-
-	@Override
-	public Network deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		Feedforward f = new Feedforward(
-			bytes.readIntArr(),
-			bytes.readObj(this.initializer),
-			bytes.readObj(this.activation),
-			bytes.readObj(this.cost),
-			bytes.readObj(this.optimizer)
-		); f.biases = (Vector[]) bytes.readObjArr();
-		f.activations = (Vector[]) bytes.readObjArr();
-		f.preActivations = (Vector[]) bytes.readObjArr();
-		f.weights = bytes.readObjArr(); return f;
 	}
 	
 }

@@ -26,9 +26,4 @@ public class RMSProp implements Optimizer {
 		return new byte[] {};
 	}
 
-	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
-		return new RMSProp();
-	}
-
 }

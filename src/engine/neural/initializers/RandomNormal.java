@@ -28,10 +28,5 @@ public class RandomNormal implements Initializer {
 			ByteHelper.toBytes(stdDev)
 		);
 	}
-	
-	@Override
-	public Initializer deserialize(ByteHelper bytes) {
-		return new RandomNormal(bytes.readFloat(), bytes.readFloat());
-	}
 
 }

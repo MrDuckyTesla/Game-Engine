@@ -33,9 +33,8 @@ public class Local implements Storage {
 		return ByteHelper.toBytes(this.path.toString());
 	}
 
-	@Override
-	public Storage deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		return new Local(bytes.readString());
+	public static Local createPrototype() {
+		return new Local();
 	}
 
 }

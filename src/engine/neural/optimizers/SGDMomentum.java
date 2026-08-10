@@ -19,14 +19,6 @@ public class SGDMomentum implements Optimizer {
 	 * Store velocity matrix based off of which vector is given
 	 */
 	private IdentityHashMap<Vector, Vector> velocityBiases = new IdentityHashMap<>();
-	/**
-	 * Stores deserialized weights
-	 */
-	private Queue<Matrix> tempWeights = new ArrayDeque<>();
-	/**
-	 * Stores deserialized biases
-	 */
-	private Queue<Vector> tempBiases = new ArrayDeque<>();
 
 	public SGDMomentum(float learningRate, float momentum) {
 		this.learningRate = learningRate;
@@ -38,9 +30,7 @@ public class SGDMomentum implements Optimizer {
 	public void updateWeights(Matrix weights, Matrix gradient) {
 		// Adds old weights if they exist or makes new ones
 		 Matrix velocity = this.velocityWeights.computeIfAbsent(
-			weights, m -> this.tempWeights.isEmpty()? 
-				new Matrix(weights.getWid(), weights.getHgt()) :
-				this.tempWeights.poll()  // Lambdas are crazy
+			weights, m -> new Matrix(weights.getWid(), weights.getHgt())
 		); // Scale velocity matrix by momentum
 		velocity.scaleMatrix(this.momentum);
 		// Scale gradient by learning rate
@@ -56,9 +46,7 @@ public class SGDMomentum implements Optimizer {
 	// momentum * velocity - learningRate * delta
 	public void updateBiases(Vector biases, Vector delta) {
 		Vector velocity = this.velocityBiases.computeIfAbsent(
-			biases, v -> this.tempBiases.isEmpty()?
-				new Vector(biases.getHgt()) :
-				this.tempBiases.poll()
+			biases, v -> new Vector(biases.getHgt())
 		); // Scale velocity vector by momentum
 		velocity.scaleMatrix(this.momentum);
 		// Scale delta by learning rate
@@ -87,22 +75,7 @@ public class SGDMomentum implements Optimizer {
 		for (Map.Entry<T, T> entry : i.entrySet()) {
 			a[j++] = entry.getValue();
 		} return ByteHelper.toBytes(a); 
-		
-	}
-
-	@Override
-	public Optimizer deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		SGDMomentum s = new SGDMomentum(bytes.readFloat(), bytes.readFloat());
-		s.tempWeights = new ArrayDeque<Matrix>(Arrays.asList(bytes.readObjArr()));
-		s.tempBiases = new ArrayDeque<Vector>(Arrays.asList((Vector[]) bytes.readObjArr()));
-		return s;
 	}
 
 }
 
-//public <T extends Matrix> byte[] toBytes(IdentityHashMap<T, T> i) {
-//byte[] bytes = ByteHelper.toBytes(i.size());
-//for (Map.Entry<T, T> entry : i.entrySet()) {
-//	bytes = ByteHelper.mergeBytes(bytes, ByteHelper.toBytes(entry.getValue()));
-//} return bytes;
-//}

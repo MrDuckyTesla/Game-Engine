@@ -40,10 +40,4 @@ public class Dynamic implements Activation {
 		);
 	}
 
-	@Override
-	public Activation deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		Dynamic d = new Dynamic(bytes.readObjArr());
-		d.layerNum = bytes.readInt(); return d;
-	}
-
 }

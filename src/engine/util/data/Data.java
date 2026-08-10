@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import engine.util.ByteHelper;
 
-public class Data<T extends Serializable<T>> implements Serializable<Data<T>> {
+public class Data<T extends Serializable<T>> {
 	
 	private final T object;
 	
@@ -26,18 +26,18 @@ public class Data<T extends Serializable<T>> implements Serializable<Data<T>> {
 		byte[] bytes = this.storage.load();
 		bytes = this.encryption.decrypt(bytes);
 		bytes = this.compression.decompress(bytes);
-		this.object = this.deserialize(new ByteHelper(bytes)).get();
+		this.object = ByteHelper.load(bytes);
 	}
 	
-	public Data() throws IOException, ReflectiveOperationException {
-		this.checkNullExists();
-		byte[] bytes = this.storage.load();
-		bytes = this.encryption.decrypt(bytes);
-		bytes = this.compression.decompress(bytes);
-		Data<T> d = this.deserialize(new ByteHelper(bytes));
-		this.storage = d.storage; this.compression = d.compression;
-		this.encryption = d.encryption; this.object = d.object;
-	}
+//	public Data() throws IOException, ReflectiveOperationException {
+//		this.checkNullExists();
+//		byte[] bytes = this.storage.load();
+//		bytes = this.encryption.decrypt(bytes);
+//		bytes = this.compression.decompress(bytes);
+//		Data<T> d = this.deserialize(new ByteHelper(bytes));
+//		this.storage = d.storage; this.compression = d.compression;
+//		this.encryption = d.encryption; this.object = d.object;
+//	}
 	
 	public Data<T> setStorage(Storage s) {this.storage = s; return this;}
 	public Data<T> setCompression(Compression s) {this.compression = s; return this;}
@@ -45,19 +45,18 @@ public class Data<T extends Serializable<T>> implements Serializable<Data<T>> {
 	
 	public void save() throws IOException {
 		this.checkNullExists();
-		byte[] bytes = this.serialize();
+		byte[] bytes = this.object.serialize();
 		bytes = this.compression.compress(bytes);
 		bytes = this.encryption.encrypt(bytes);
 		this.storage.save(bytes);
 	}
 	
-	public T load() throws IOException, ReflectiveOperationException {
+	public T load() throws IOException, ClassNotFoundException {
 		this.checkNullExists();
 		byte[] bytes = this.storage.load();
 		bytes = this.encryption.decrypt(bytes);
 		bytes = this.compression.decompress(bytes);
-		
-		return this.deserialize(new ByteHelper(bytes)).object;
+		return ByteHelper.load(bytes);
 	}
 	
 	public T get() {return this.object;}
@@ -66,26 +65,6 @@ public class Data<T extends Serializable<T>> implements Serializable<Data<T>> {
 		if (this.storage == null) {this.storage = new engine.util.data.storages.Local("data/unnamed.mdt");}
 		if (this.compression == null) {this.compression = new engine.util.data.compressions.Raw();}
 		if (this.encryption == null) {this.encryption = new engine.util.data.encryptions.Raw();}
-	}
-
-	@Override
-	public byte[] serialize() {
-		return ByteHelper.mergeBytes(
-			ByteHelper.toBytes(this.object),
-			ByteHelper.toBytes(this.storage),
-			ByteHelper.toBytes(this.compression),
-			ByteHelper.toBytes(this.encryption)
-		);
-	}
-
-	@Override
-	public Data<T> deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		return new Data<T> (
-			bytes.readObj(),
-			bytes.readObj(),
-			bytes.readObj(),
-			bytes.readObj()
-		);
 	}
 
 }

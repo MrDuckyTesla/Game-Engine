@@ -22,9 +22,4 @@ public class Softmax implements Activation {
 		return new byte[] {};
 	}
 
-	@Override
-	public Activation deserialize(ByteHelper bytes) {
-		return new Softmax();
-	}
-
 }

@@ -31,9 +31,4 @@ public class MeanAbsoluteError implements Cost {
 		return new byte[] {};
 	}
 
-	@Override
-	public Cost deserialize(ByteHelper bytes) {
-		return new MeanAbsoluteError();
-	}
-
 }

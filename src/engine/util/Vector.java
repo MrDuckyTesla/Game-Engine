@@ -49,10 +49,4 @@ public class Vector extends Matrix {
 		return ByteHelper.toBytes(super.getMatrix());
 	}
 	
-	@Override
-	public Vector deserialize(ByteHelper bytes) {
-		return new Vector(bytes.readFloatArr());
-	}
-	
-	
 }

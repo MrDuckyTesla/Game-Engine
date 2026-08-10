@@ -25,11 +25,4 @@ public class BinaryCrossEntropy implements Cost {
 		// TODO Auto-generated method stub
 		return new byte[] {};
 	}
-
-	@Override
-	public Cost deserialize(ByteHelper bytes) {
-		// TODO Auto-generated method stub
-		return new BinaryCrossEntropy();
-	}
-
 }

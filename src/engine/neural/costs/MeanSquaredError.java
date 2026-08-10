@@ -31,10 +31,5 @@ public class MeanSquaredError implements Cost {
 	public byte[] serialize() {
 		return new byte[] {};
 	}
-
-	@Override
-	public Cost deserialize(ByteHelper bytes) {
-		return new MeanSquaredError();
-	}
-
+	
 }

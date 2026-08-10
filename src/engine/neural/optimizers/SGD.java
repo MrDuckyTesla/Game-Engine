@@ -28,9 +28,4 @@ public class SGD implements Optimizer {
 		return ByteHelper.toBytes(this.learningRate);
 	}
 
-	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
-		return new SGD(bytes.readFloat());
-	}
-
 }

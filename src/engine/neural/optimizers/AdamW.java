@@ -28,9 +28,4 @@ public class AdamW implements Optimizer {
 		return new byte[] {};
 	}
 
-	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
-		return new AdamW();
-	}
-
 }

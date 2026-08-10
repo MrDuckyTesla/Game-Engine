@@ -15,9 +15,5 @@ public class Raw implements Compression {
 	public byte[] serialize() {
 		return new byte[] {};
 	}
-	@Override
-	public Compression deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		return new Raw();
-	}
-
+	
 }

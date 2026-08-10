@@ -31,9 +31,5 @@ public class Glorot implements Initializer {
 	public byte[] serialize() {
 		return ByteHelper.toBytes(this.uniform);
 	}
-	@Override
-	public Initializer deserialize(ByteHelper bytes) {
-		return new Glorot(bytes.readBool());
-	}
-
+	
 }

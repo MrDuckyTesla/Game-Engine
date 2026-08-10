@@ -26,9 +26,4 @@ public class Symmetric implements Encryption {
 		return new byte[] {};
 	}
 
-	@Override
-	public Encryption deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		return new Symmetric();
-	}
-
 }

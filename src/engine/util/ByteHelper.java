@@ -10,6 +10,67 @@ import engine.util.data.Serializable;
 
 public class ByteHelper {
 	
+	private static ByteBuffer byteStream;
+	private static Serializable<?>[] regisrty;
+	
+	private static void buildRegistry() {
+		Class<?>[] implementations = Serializable.class.getInterfaces();
+		Serializable.class.getClasses();
+		ByteHelper.regisrty = new Serializable[implementations.length];
+	}
+	
+	public static <T extends Serializable<T>> T load(byte[] byteStream) throws ClassNotFoundException {
+		ByteHelper.byteStream = ByteBuffer.wrap(byteStream);
+		while (ByteHelper.byteStream.hasRemaining()) {
+			switch (ByteHelper.byteStream.getShort()) {
+				case 0:  // Object array
+//					ByteHelper.scanObject(Class.forName(ByteHelper.readStringNoID()));
+					for (int i = 0; i < ByteHelper.byteStream.getInt(); i++) {
+						ByteHelper.byteStream.position(ByteHelper.byteStream.position()+ByteHelper.byteStream.getInt());
+					} break;
+				case 6:  // Object
+//					ByteHelper.scanObject(Class.forName(ByteHelper.readStringNoID()));
+					ByteHelper.byteStream.position(ByteHelper.byteStream.position()+ByteHelper.byteStream.getInt());
+					break;
+				case 1:  // String array
+					ByteHelper.readStringArrNoID(); break;
+				case 2:  // Float array
+					ByteHelper.readFloatArrNoID(); break;
+				case 3:  // Int array
+					ByteHelper.readIntArrNoID(); break;
+				case 4:  // Char array
+					ByteHelper.readCharArrNoID(); break;
+				case 5:  // Bool array
+					ByteHelper.readBoolArrNoID(); break;
+				case 7:  // String
+					ByteHelper.readStringNoID(); break;
+				case 8:  // Float
+					ByteHelper.readFloatNoID(); break;
+				case 9:  // Int
+					ByteHelper.readIntNoID(); break;
+				case 10:  // Short
+					ByteHelper.readShortNoID(); break;
+				case 11:  // Char
+					ByteHelper.readCharNoID(); break;
+				case 12:  // Bool
+					ByteHelper.readBoolNoID(); break;
+				default:
+					System.out.println(ByteHelper.byteStream.getShort(ByteHelper.byteStream.position()));
+					throw new IllegalStateException("Unknown Internal ID Found");
+			}
+		} ByteHelper.byteStream.position(0);
+		return null;
+	}
+	
+//	private static void scanObject(Class<?> type) {
+//		Class<?>[] types = type.getInterfaces();
+//		for (int i = 0; i < types.length; i++) {ByteHelper.interfaces.put(types[i], type);}
+//		Class<?> parent = type.getSuperclass();
+//		while (parent != null && !Modifier.isAbstract(parent.getModifiers())) {
+//			parent = parent.getSuperclass();
+//		} if (parent != null) {ByteHelper.abstractClasses.put(parent, type);}
+//	}
+	
 	/**
 	 * Merges multiple byte[] arrays into a singular flat byte[] array
 	 * @param params byte arrays to flatten
@@ -204,7 +265,7 @@ public class ByteHelper {
 	 * @return Metadata of object
 	 */
 	private static <T extends Serializable<T>> byte[] objNameToBytes(T object) {
-		return ByteHelper.toBytes(object.getClass().getName());
+		return ByteHelper.toBytesNoID(object.getClass().getName());
 	}
 
 	/**
@@ -214,7 +275,7 @@ public class ByteHelper {
 	 * [ID: 7][String Length][String]
 	 */
 	public static byte[] toBytes(String s) {
-		return ByteHelper.mergeBytes(ByteHelper.toBytes((short) 7), ByteHelper.toBytesNoID(s));
+		return ByteHelper.mergeBytes(ByteHelper.toBytesNoID((short) 7), ByteHelper.toBytesNoID(s));
 	}
 	
 	/**
@@ -225,7 +286,7 @@ public class ByteHelper {
 	 */
 	private static byte[] toBytesNoID(String s) {
 		byte[] b = s.getBytes(StandardCharsets.UTF_8);
-		return ByteHelper.mergeBytes(ByteHelper.toBytes(b.length), b);
+		return ByteHelper.mergeBytes(ByteHelper.toBytesNoID(b.length), b);
 	}
 	
 	/**
@@ -319,156 +380,129 @@ public class ByteHelper {
 	}
 	
 	/**
-	 * Function that serializes a character
-	 * @param c Int to be serialized
-	 * @return The char in byte form, the bytes are ordered as so:
+	 * Function that serializes a character without an ID
+	 * @param b Bool to be serialized
+	 * @return The bool in byte form, the bytes are ordered as so:
 	 * [Bool]
 	 */
 	private static byte toByteNoID(boolean b) {
 		return (byte) (b ? 1 : 0);
 	}
 	
-	private final ByteBuffer byteStream;
-	private final HashMap<Class<?>, Class<?>> interfaces = new HashMap<>();
-	private final HashMap<Class<?>, Class<?>> abstractClasses = new HashMap<>();
+//	// [ID][Object Type][Array Length][[Byte Length][Object], ...[Byte Length][Object]]
+//	// [ID][Object Type][Byte Length][Object]
+//	private <T extends Serializable<T>> T[] readObjArr() throws ReflectiveOperationException {
+//		this.readShortNoID(); return this.readObjArrNoID();
+//	}
 	
-	public ByteHelper(byte[] byteStream) throws ClassNotFoundException {
-		this.byteStream = ByteBuffer.wrap(byteStream);
-		
-		while (this.byteStream.hasRemaining()) {
-			switch (this.byteStream.getShort(this.byteStream.position())) {
-				case 0:  // Object array
-					this.scanObject(Class.forName(this.readStringNoID()));
-					for (int i = 0; i < this.byteStream.getInt(); i++) {
-						this.byteStream.position(this.byteStream.position()+this.byteStream.getInt());
-					} break;
-				case 6:  // Object
-					this.scanObject(Class.forName(this.readStringNoID()));
-					int length = this.byteStream.getInt();
-					this.byteStream.position(this.byteStream.position() + length);
-					break;
-				case 1:  // String array
-					this.readStringArr(); break;
-				case 2:  // Float array
-					this.readFloatArr(); break;
-				case 3:  // Int array
-					this.readIntArr(); break;
-				case 4:  // Char array
-					this.readCharArr(); break;
-				case 5:  // Bool array
-					this.readBoolArr(); break;
-				case 7:  // String
-					this.readString(); break;
-				case 8:  // Float
-					this.readFloat(); break;
-				case 9:  // Int
-					this.readInt(); break;
-				case 10:  // Short
-					this.readShort(); break;
-				case 11:  // Char
-					this.readChar(); break;
-				case 12:  // Bool
-					this.readBool(); break;
-				default:
-					System.out.println(this.byteStream.getShort(this.byteStream.position()));
-					throw new IllegalStateException("Unknown Internal ID Found");
-			}
-		} this.byteStream.position(0);
+//	@SuppressWarnings("unchecked")
+//	private <T extends Serializable<T>> T[] readObjArrNoID() throws ReflectiveOperationException {
+//		Class<T> type = ((Class<T>) Class.forName(this.readStringNoID())); try {
+//			T prototype = type.getDeclaredConstructor().newInstance();
+//			T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(prototype.getClass(), this.byteStream.getInt()); 
+//			for (int i = 0; i < rtrn.length; i++) {
+//				rtrn[i] = prototype.deserialize(new ByteHelper(this.objHelper()));
+//			} return rtrn;
+//		} catch (NoSuchMethodException e) {
+//			throw new ReflectiveOperationException(
+//				"To use readObj() without parameters, please create an empty constructor for " 
+//				+ type.getName()
+//			);
+//		}
+//	}
+	
+//	private <T extends Serializable<T>> T[] readObjArr(T prototype) throws ReflectiveOperationException {
+//		this.readShortNoID(); return this.readObjArrNoID(prototype);
+//	}
+	
+//	@SuppressWarnings("unchecked")
+//	private <T extends Serializable<T>> T[] readObjArrNoID(T prototype) throws ReflectiveOperationException {
+//		this.readStringNoID(); T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(prototype.getClass(), this.byteStream.getInt()); 
+//		for (int i = 0; i < rtrn.length; i++) {rtrn[i] = this.readObj(prototype);} return rtrn;
+//	}
+	
+	private static String[] readStringArr() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.readStringArrNoID();
 	}
 	
-	public void scanObject(Class<?> type) {
-		Class<?>[] types = type.getInterfaces();
-		for (int i = 0; i < types.length; i++) {this.interfaces.put(types[i], type);}
-		Class<?> parent = type.getSuperclass();
-		while (parent != null && !Modifier.isAbstract(parent.getModifiers())) {
-			parent = parent.getSuperclass();
-		} if (parent != null) {this.abstractClasses.put(parent, type);}
-	}
-	
-	// [ID][Object Type][Array Length][[Byte Length][Object], ...[Byte Length][Object]]
-	// [ID][Object Type][Byte Length][Object]
-	@SuppressWarnings("unchecked")
-	public <T extends Serializable<T>> T[] readObjArr() throws ReflectiveOperationException {
-		this.readShort(); // Ignore ID
-		Class<T> type = ((Class<T>) Class.forName(this.readString())); try {
-			T prototype = type.getDeclaredConstructor().newInstance();
-			T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(prototype.getClass(), this.byteStream.getInt()); 
-			for (int i = 0; i < rtrn.length; i++) {
-				rtrn[i] = prototype.deserialize(new ByteHelper(this.objHelper()));
-			} return rtrn;
-		} catch (NoSuchMethodException e) {
-			throw new ReflectiveOperationException(
-				"To use readObj() without parameters, please create an empty constructor for " 
-				+ type.getName()
-			);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public <T extends Serializable<T>> T[] readObjArr(T prototype) throws ReflectiveOperationException {
-		this.readShort(); // Ignore ID
-		this.readString(); T[] rtrn = (T[]) java.lang.reflect.Array.newInstance(prototype.getClass(), this.byteStream.getInt()); 
-		for (int i = 0; i < rtrn.length; i++) {rtrn[i] = this.readObj(prototype);} return rtrn;
-	}
-	
-	public String[] readStringArr() {
-		this.readShort(); // Ignore ID
-		String[] rtrn = new String[this.byteStream.getInt()]; 
+	private static String[] readStringArrNoID() {
+		String[] rtrn = new String[ByteHelper.byteStream.getInt()]; 
 		for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readString();
+			rtrn[i] = ByteHelper.readStringNoID();
 		} return rtrn;
 	}
 	
-	public float[] readFloatArr() {
-		this.readShort(); // Ignore ID
-		float[] rtrn = new float[this.byteStream.getInt()]; 
+	private static float[] readFloatArr() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.readFloatArrNoID();
+	}
+	
+	private static float[] readFloatArrNoID() {
+		float[] rtrn = new float[ByteHelper.byteStream.getInt()]; 
 		for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readFloat();
+			rtrn[i] = ByteHelper.readFloat();
 		} return rtrn;
 	}
 	
-	public int[] readIntArr() {
-		this.readShort(); // Ignore ID
-		int[] rtrn = new int[this.byteStream.getInt()]; 
+	private static int[] readIntArr() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.readIntArrNoID();
+	}
+	
+	private static int[] readIntArrNoID() {
+		int[] rtrn = new int[ByteHelper.byteStream.getInt()]; 
 		for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readInt();
+			rtrn[i] = ByteHelper.readInt();
 		} return rtrn;
 	}
 	
-	public short[] readShortArr() {
-		this.readShort(); // Ignore ID
-		short[] rtrn = new short[this.byteStream.getInt()]; 
+	private static short[] readShortArr() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.readShortArrNoID();
+	}
+	
+	private static short[] readShortArrNoID() {
+		short[] rtrn = new short[ByteHelper.byteStream.getInt()]; 
 		for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readShort();
+			rtrn[i] = ByteHelper.readShortNoID();
 		} return rtrn;
 	}
 	
-	public char[] readCharArr() {
-		this.readShort(); // Ignore ID
-		char[] rtrn = new char[this.byteStream.getInt()]; 
+	private static char[] readCharArr() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.readCharArrNoID();
+	}
+	
+	private static char[] readCharArrNoID() {
+		char[] rtrn = new char[ByteHelper.byteStream.getInt()]; 
 		for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readChar();
+			rtrn[i] = ByteHelper.readChar();
 		} return rtrn;
 	}
 	
-	public boolean[] readBoolArr() {
-		this.readShort(); // Ignore ID
-		boolean[] rtrn = new boolean[this.byteStream.getInt()]; 
+	private static boolean[] readBoolArr() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.readBoolArrNoID();
+	}
+	
+	private static boolean[] readBoolArrNoID() {
+		boolean[] rtrn = new boolean[ByteHelper.byteStream.getInt()]; 
 		for (int i = 0; i < rtrn.length; i++) {
-			rtrn[i] = this.readBool();
+			rtrn[i] = ByteHelper.readBool();
 		} return rtrn;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T extends Serializable<T>> T readObj() throws ReflectiveOperationException {
-		this.readShort(); // Ignore ID
-		Class<T> type = (Class<T>) Class.forName(this.readString()); 
-		try {
-			T prototype = type.getDeclaredConstructor().newInstance();
-			byte[] bytes = new byte[this.byteStream.getInt()]; this.byteStream.get(bytes);
-			return prototype.deserialize(new ByteHelper(bytes));
-		} catch (NoSuchMethodException e) {return ByteHelper.classConstructor(type);}
-	}
+//	@SuppressWarnings("unchecked")
+//	private <T extends Serializable<T>> T readObj() throws ReflectiveOperationException {
+//		this.readShortNoID(); // Ignore ID
+//		Class<T> type = (Class<T>) Class.forName(this.readStringNoID()); 
+//		try {
+//			T prototype = type.getDeclaredConstructor().newInstance();
+//			byte[] bytes = new byte[this.byteStream.getInt()]; this.byteStream.get(bytes);
+//			return prototype.deserialize(new ByteHelper(bytes));
+//		} catch (NoSuchMethodException e) {return ByteHelper.classConstructor(type);}
+//	}
 	
 	@SuppressWarnings("unchecked")
 	private static <T> T classConstructor(Class<?> type) throws ReflectiveOperationException {
@@ -503,63 +537,80 @@ public class ByteHelper {
 		return ByteHelper.classConstructor(type);
 	}
 	
-	public <T extends Serializable<T>> T readObj(
-		Class<T> type, Class<?>[] constructorParams,  Object...params) throws ReflectiveOperationException {
-		this.readShort(); // Ignore ID
-		this.readString(); return type.getDeclaredConstructor(constructorParams)
-			.newInstance(params).deserialize(new ByteHelper(this.objHelper()));
-	}
+//	private <T extends Serializable<T>> T readObj(
+//		Class<T> type, Class<?>[] constructorParams,  Object...params) throws ReflectiveOperationException {
+//		this.readShortNoID(); // Ignore ID
+//		this.readStringNoID(); return type.getDeclaredConstructor(constructorParams)
+//			.newInstance(params).deserialize(new ByteHelper(this.objHelper()));
+//	}
 		
-	public <T extends Serializable<T>> T readObj(T prototype) throws ReflectiveOperationException {
-		this.readShort(); // Ignore ID
-		this.readString(); T rtrn = prototype.deserialize(new ByteHelper(this.objHelper())); return rtrn;
-	}
+//	private <T extends Serializable<T>> T readObj(T prototype) throws ReflectiveOperationException {
+//		this.readShortNoID(); // Ignore ID
+//		this.readStringNoID(); T rtrn = prototype.deserialize(new ByteHelper(this.objHelper())); return rtrn;
+//	}
 		
-	private byte[] objHelper() {
-		byte[] bytes = new byte[this.byteStream.getInt()];
-		this.byteStream.get(bytes); return bytes;
+	private static byte[] objHelper() {
+		byte[] bytes = new byte[ByteHelper.byteStream.getInt()];
+		ByteHelper.byteStream.get(bytes); return bytes;
 	}
 	
-	public String readString() {
-		this.readShort(); // Ignore ID
-		byte[] str = new byte[this.byteStream.getInt()]; 
-		this.byteStream.get(str);
+	private static String readString() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		byte[] str = new byte[ByteHelper.byteStream.getInt()]; 
+		ByteHelper.byteStream.get(str);
 		return new String(str, StandardCharsets.UTF_8);
 	}
 	
-	private String readStringNoID() {
-		byte[] str = new byte[this.byteStream.getInt()]; 
-		this.byteStream.get(str);
+	private static String readStringNoID() {
+		byte[] str = new byte[ByteHelper.byteStream.getInt()]; 
+		ByteHelper.byteStream.get(str);
 		return new String(str, StandardCharsets.UTF_8);
 	}
 	
-	public float readFloat() {
-		this.readShort(); // Ignore ID
-		return this.byteStream.getFloat();
+	private static float readFloat() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.byteStream.getFloat();
 	}
 	
-	public int readInt() {
-		this.readShort(); // Ignore ID
-		return this.byteStream.getInt();
+	private static float readFloatNoID() {
+
+		return ByteHelper.byteStream.getFloat();
 	}
 	
-	private int readIntNoID() {
-		return this.byteStream.getInt();
+	private static int readInt() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.byteStream.getInt();
 	}
 	
-	public short readShort() {
-		this.byteStream.getShort(); // Ignore ID
-		return this.byteStream.getShort();
+	private static int readIntNoID() {
+		return ByteHelper.byteStream.getInt();
 	}
 	
-	public char readChar() {
-		this.readShort(); // Ignore ID
-		return this.byteStream.getChar();
+	private static short readShort() {
+		ByteHelper.byteStream.getShort(); // Ignore ID
+		return ByteHelper.byteStream.getShort();
 	}
 	
-	public boolean readBool() {
-		this.readShort(); // Ignore ID
-		return this.byteStream.get() == 1;
+	private static short readShortNoID() {
+		return ByteHelper.byteStream.getShort();
+	}
+	
+	private static char readChar() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.byteStream.getChar();
+	}
+	
+	private static char readCharNoID() {
+		return ByteHelper.byteStream.getChar();
+	}
+	
+	private static boolean readBool() {
+		ByteHelper.readShortNoID(); // Ignore ID
+		return ByteHelper.byteStream.get() == 1;
+	}
+	
+	private static boolean readBoolNoID() {
+		return ByteHelper.byteStream.get() == 1;
 	}
 
 }

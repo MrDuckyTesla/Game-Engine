@@ -32,9 +32,4 @@ public class LZW implements Compression {
 		return new byte[] {};
 	}
 
-	@Override
-	public Compression deserialize(ByteHelper bytes) throws ReflectiveOperationException {
-		return new LZW();
-	}
-
 }

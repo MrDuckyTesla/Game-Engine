@@ -21,9 +21,4 @@ public class GELU implements Activation {
 		return new byte[] {};
 	}
 
-	@Override
-	public Activation deserialize(ByteHelper bytes) {
-		return new GELU();
-	}
-
 }
