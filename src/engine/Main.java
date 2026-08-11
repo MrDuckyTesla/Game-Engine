@@ -23,8 +23,8 @@ public class Main extends Game {
 //		catch (IOException e) {e.printStackTrace();} 
 //		catch (ReflectiveOperationException e) {e.printStackTrace();}
 		
-		game.getSettings().setWindowName("Game Engine Test!");
-		game.main();
+//		game.getSettings().setWindowName("Game Engine Test!");
+//		game.main();
 		
 	}
 
