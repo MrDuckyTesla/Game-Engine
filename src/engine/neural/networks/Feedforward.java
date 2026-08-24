@@ -56,6 +56,7 @@ public class Feedforward implements Network {
 	 * @param optimizer The specific way you want to push the network towards minima
 	 */
 	public Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer) {
+		// Enforce legal argument sizes
 		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
 		for (int i : networkSizes) {if (i <= 0) {throw new IllegalArgumentException();}}
 		// Store network geometry
@@ -78,17 +79,17 @@ public class Feedforward implements Network {
 		}
 	}
 	
-//	public Feedforward(ByteHelper bytes) throws ReflectiveOperationException {
-//		this.networkSizes = 			 bytes.readIntArr();
-//		this.initializer = 				 bytes.readObj();
-//		this.activation = 				 bytes.readObj();
-//		this.cost = 					 bytes.readObj();
-//		this.optimizer = 				 bytes.readObj();
-//		this.biases = 		  (Vector[]) bytes.readObjArr();
-//		this.activations = 	  (Vector[]) bytes.readObjArr();
-//		this.preActivations = (Vector[]) bytes.readObjArr();
-//		this.weights = 					 bytes.readObjArr();
-//	}
+	/**
+	 * Only use this constructor if you intend to use Feedforward as a prototype
+	 */
+	@SuppressWarnings("unused")
+	private Feedforward() {
+		this.networkSizes = null;
+		this.initializer = null;
+		this.activation = null;
+		this.cost = null;
+		this.optimizer = null;
+	}
 	
 	private Vector forward(Vector input) {
 		if (input.getHgt() != this.weights[0].getWid()) {
@@ -188,6 +189,12 @@ public class Feedforward implements Network {
 			ByteHelper.toBytes(this.preActivations),
 			ByteHelper.toBytes(this.weights)
 		);
+	}
+
+	@Override
+	public Network deserialize(byte[] bytes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

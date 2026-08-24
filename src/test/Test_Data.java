@@ -52,8 +52,8 @@ public class Test_Data {
 		@Override
 		public byte[] serialize() {
 			return ByteHelper.mergeBytes(
-				ByteHelper.toBytes(test),
-				ByteHelper.toBytes(s),
+				ByteHelper.toBytes(test), 
+				ByteHelper.toBytes(s), 
 				ByteHelper.toBytes(f), 
 				ByteHelper.toBytes(i)
 			);

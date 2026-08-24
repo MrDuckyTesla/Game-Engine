@@ -4,4 +4,4 @@ dictionary.txt
 .classpath
 .gitattributes
 .project
-
+/.apt_generated/

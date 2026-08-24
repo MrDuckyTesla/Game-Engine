@@ -36,6 +36,7 @@
 				engine.util.Matrix.class,
 				engine.util.Vector.class,
 				engine.util.data.compressions.Huffman.class,
+				engine.util.data.compressions.JZip.class,
 				engine.util.data.compressions.LZW.class,
 				engine.util.data.compressions.RLE.class,
 				engine.util.data.compressions.Raw.class,
@@ -79,14 +80,15 @@
 				IDS.put(engine.util.Matrix.class, (short)26);
 				IDS.put(engine.util.Vector.class, (short)27);
 				IDS.put(engine.util.data.compressions.Huffman.class, (short)28);
-				IDS.put(engine.util.data.compressions.LZW.class, (short)29);
-				IDS.put(engine.util.data.compressions.RLE.class, (short)30);
-				IDS.put(engine.util.data.compressions.Raw.class, (short)31);
-				IDS.put(engine.util.data.encryptions.Caesar.class, (short)32);
-				IDS.put(engine.util.data.encryptions.Hash.class, (short)33);
-				IDS.put(engine.util.data.encryptions.Raw.class, (short)34);
-				IDS.put(engine.util.data.encryptions.Symmetric.class, (short)35);
-				IDS.put(engine.util.data.encryptions.XOR.class, (short)36);
-				IDS.put(engine.util.data.storages.Local.class, (short)37);
+				IDS.put(engine.util.data.compressions.JZip.class, (short)29);
+				IDS.put(engine.util.data.compressions.LZW.class, (short)30);
+				IDS.put(engine.util.data.compressions.RLE.class, (short)31);
+				IDS.put(engine.util.data.compressions.Raw.class, (short)32);
+				IDS.put(engine.util.data.encryptions.Caesar.class, (short)33);
+				IDS.put(engine.util.data.encryptions.Hash.class, (short)34);
+				IDS.put(engine.util.data.encryptions.Raw.class, (short)35);
+				IDS.put(engine.util.data.encryptions.Symmetric.class, (short)36);
+				IDS.put(engine.util.data.encryptions.XOR.class, (short)37);
+				IDS.put(engine.util.data.storages.Local.class, (short)38);
 			}
 		}

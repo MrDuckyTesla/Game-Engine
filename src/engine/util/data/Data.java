@@ -1,6 +1,7 @@
 package engine.util.data;
 
 import java.io.IOException;
+import java.util.zip.DataFormatException;
 
 import engine.util.ByteHelper;
 
@@ -21,7 +22,7 @@ public class Data<T extends Serializable<T>> {
 		this.object = object;
 	}
 	
-	public Data(Storage s, Compression c, Encryption e) throws IOException, ReflectiveOperationException {
+	public Data(Storage s, Compression c, Encryption e) throws IOException, ReflectiveOperationException, DataFormatException {
 		this.storage = s; this.compression = c; this.encryption = e;
 		byte[] bytes = this.storage.load();
 		bytes = this.encryption.decrypt(bytes);

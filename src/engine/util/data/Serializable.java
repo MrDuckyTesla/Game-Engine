@@ -7,5 +7,7 @@ public interface Serializable<T> {
 	 * @return Byte representation of implementing class
 	 */
 	public abstract byte[] serialize();
+	
+	public abstract T deserialize(engine.util.ByteHelper bytes);
 
 }

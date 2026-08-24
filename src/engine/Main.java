@@ -15,6 +15,7 @@ public class Main extends Game {
 	public int x = 0, add = 1;
 	
 	public static void main(String[] args) {
+		Feedforward f = new Feedforward();
 //		try {
 //			Data<Network> d = new Data<>();
 //			Feedforward f = (Feedforward) d.load();

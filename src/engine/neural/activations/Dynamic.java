@@ -18,6 +18,11 @@ public class Dynamic implements Activation {
 		} this.layer = layer;
 	}
 	
+	@SuppressWarnings("unused")
+	private Dynamic() {
+		this.layer = new Activation[] {new engine.neural.activations.Linear()};
+	}
+	
 	public void next() {
 		this.layerNum = this.layerNum == this.layer.length-1? 0 : this.layerNum++;
 	}
@@ -38,6 +43,12 @@ public class Dynamic implements Activation {
 			ByteHelper.toBytes(this.layer),
 			ByteHelper.toBytes(this.layerNum)
 		);
+	}
+
+	@Override
+	public Activation deserialize(byte[] bytes) {
+		ByteHelper.wrap(bytes);
+		return null;
 	}
 
 }
