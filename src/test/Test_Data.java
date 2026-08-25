@@ -2,12 +2,8 @@ package test;
 
 import java.io.IOException;
 
-import engine.util.ByteHelper;
-import engine.util.Matrix;
-import engine.util.Vector;
+import engine.util.*;
 import engine.util.data.*;
-import engine.util.data.compressions.*;
-import engine.util.data.encryptions.*;
 import engine.util.data.storages.*;
 
 public class Test_Data {
@@ -16,22 +12,22 @@ public class Test_Data {
 		
 		Test1 test = new Test1();
 		
-		Data<Test1> d = new Data<>(test);  //.setCompression(null).setEncryption(null).setFormat(null).setStorage(null);
+		Data<Test1> d = new Data<>(test);
 		try {
-			d.save();
+//			d.save();
 			Test1 test2 = d.load();
 			System.out.println(test2);
-		} catch (IOException e) {e.printStackTrace();}
+		} catch (IOException e) {e.printStackTrace();} 
 		
 		Matrix m = new Vector(7);
 		m.propagate();
-		System.out.println(m);
-//		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
-//		try {
+//		System.out.println(m);
+		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
+		try {
 //			a.save();
-//			System.out.println(a.load());
-//		} 
-//		catch (IOException e) {e.printStackTrace();}
+			System.out.println(a.load());
+		} 
+		catch (IOException e) {e.printStackTrace();}
 		
 //		System.out.println(test.deserialize(new ByteHelper(test.serialize())));
 		
@@ -51,20 +47,25 @@ public class Test_Data {
 		@Override
 		public byte[] serialize() {
 			return ByteHelper.mergeBytes(
-				this.test.serialize(),
-				ByteHelper.toBytes(s),
+				ByteHelper.toBytes(test), 
+				ByteHelper.toBytes(s), 
 				ByteHelper.toBytes(f), 
 				ByteHelper.toBytes(i)
 			);
 		}
 		@Override
-		public Test1 deserialize(ByteHelper b) {
+		public Test1 deserialize(ByteHelper b, Serializable<?>... prototypes) {
 			Test1 t = new Test1();
-			t.test = test.deserialize(b);
+			t.test = b.readObject(new Test2());
 			t.s = b.readString();
 			t.f = b.readFloatArr();
 			t.i = b.readInt();
 			return t;
+		}
+		@Override
+		public Test1[] getProtoArray(int length) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	} 
 	
@@ -87,12 +88,17 @@ public class Test_Data {
 			);
 		}
 		@Override
-		public Test2 deserialize(ByteHelper b) {
+		public Test2 deserialize(ByteHelper b, Serializable<?>... prototypes) {
 			Test2 t = new Test2();
 			t.s = b.readString();
 			t.f = b.readFloatArr();
 			t.i = b.readInt();
 			return t;
+		}
+		@Override
+		public Test2[] getProtoArray(int length) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 	

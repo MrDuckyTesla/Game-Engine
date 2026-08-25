@@ -3,6 +3,7 @@ package engine.neural.costs;
 import engine.neural.Cost;
 import engine.util.ByteHelper;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class RootMeanSquare implements Cost {
 
@@ -28,8 +29,15 @@ public class RootMeanSquare implements Cost {
 	}
 
 	@Override
-	public Cost deserialize(ByteHelper bytes) {
-		return new RootMeanSquare();
+	public Cost deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cost[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -4,6 +4,7 @@ import engine.neural.*;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class SGD implements Optimizer {
 	
@@ -29,8 +30,15 @@ public class SGD implements Optimizer {
 	}
 
 	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
-		return new SGD(bytes.readFloat());
+	public Optimizer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new SGD( 
+			b.readFloat()
+		);
+	}
+
+	@Override
+	public Optimizer[] getProtoArray(int length) {
+		return new SGD[length];
 	}
 
 }

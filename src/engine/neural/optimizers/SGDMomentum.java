@@ -5,6 +5,7 @@ import java.util.*;
 import engine.neural.*;
 import engine.util.*;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 
 public class SGDMomentum implements Optimizer {
@@ -88,11 +89,16 @@ public class SGDMomentum implements Optimizer {
 	}
 
 	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
+	public Optimizer deserialize(ByteHelper bytes, Serializable<?>... prototypes) {
 		SGDMomentum s = new SGDMomentum(bytes.readFloat(), bytes.readFloat());
 		s.tempWeights = new ArrayDeque<>(Arrays.asList(bytes.readObjArr(new Matrix(0, 0))));
 		s.tempBiases = new ArrayDeque<>(Arrays.asList((Vector[]) bytes.readObjArr(new Vector(0))));
 		return s;
+	}
+
+	@Override
+	public Optimizer[] getProtoArray(int length) {
+		return new SGDMomentum[length];
 	}
 
 }

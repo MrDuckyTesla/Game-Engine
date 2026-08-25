@@ -1,6 +1,8 @@
 package engine.util.data.compressions;
 
+import engine.util.ByteHelper;
 import engine.util.data.Compression;
+import engine.util.data.Serializable;
 
 public class Huffman implements Compression {
 
@@ -26,5 +28,21 @@ public class Huffman implements Compression {
 		return 0;
 	}
 
+	@Override
+	public byte[] serialize() {
+		return new byte[] {};
+	}
+
+	@Override
+	public Compression deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Compression[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

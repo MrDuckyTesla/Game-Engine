@@ -1,4 +1,4 @@
-package engine.physics;
+package engine.util;
 
 public class Vector2D {
 	

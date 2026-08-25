@@ -2,6 +2,7 @@ package engine.neural.activations;
 
 import engine.neural.Activation;
 import engine.util.ByteHelper;
+import engine.util.data.Serializable;
 
 public class Tanh implements Activation {
 
@@ -22,8 +23,13 @@ public class Tanh implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(ByteHelper bytes) {
+	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
 		return new Tanh();
+	}
+
+	@Override
+	public Activation[] getProtoArray(int length) {
+		return new Tanh[length];
 	}
 
 }

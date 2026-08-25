@@ -4,6 +4,7 @@ import engine.neural.*;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class RMSProp implements Optimizer {
 
@@ -27,8 +28,15 @@ public class RMSProp implements Optimizer {
 	}
 
 	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
-		return new RMSProp();
+	public Optimizer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optimizer[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -2,6 +2,7 @@ package engine.neural.activations;
 
 import engine.neural.Activation;
 import engine.util.ByteHelper;
+import engine.util.data.Serializable;
 
 public class Linear implements Activation {
 
@@ -21,8 +22,13 @@ public class Linear implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(ByteHelper bytes) {
+	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
 		return new Linear();
+	}
+
+	@Override
+	public Activation[] getProtoArray(int length) {
+		return new Linear[length];
 	}
 
 }

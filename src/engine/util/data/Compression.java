@@ -1,6 +1,6 @@
 package engine.util.data;
 
-public interface Compression {
+public interface Compression extends Serializable<Compression> {
 	
 	public abstract byte[] compress(byte[] bytes);
 	

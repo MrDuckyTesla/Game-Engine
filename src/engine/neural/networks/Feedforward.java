@@ -7,6 +7,7 @@ import engine.neural.*;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 /**
  * "Simple" multi-layer neural network
@@ -56,6 +57,7 @@ public class Feedforward implements Network {
 	 * @param optimizer The specific way you want to push the network towards minima
 	 */
 	public Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer) {
+		// Enforce legal argument sizes
 		if (networkSizes.length < 3) {throw new IllegalArgumentException();}
 		for (int i : networkSizes) {if (i <= 0) {throw new IllegalArgumentException();}}
 		// Store network geometry
@@ -179,18 +181,26 @@ public class Feedforward implements Network {
 	}
 
 	@Override
-	public Network deserialize(ByteHelper bytes) {
-		Feedforward f = new Feedforward(
-			bytes.readIntArr(),
-			bytes.readObj(this.initializer),
-			bytes.readObj(this.activation),
-			bytes.readObj(this.cost),
-			bytes.readObj(this.optimizer)
-		); f.biases = (Vector[]) bytes.readObjArr(new Vector(0));
-		f.activations = (Vector[]) bytes.readObjArr(new Vector(0));
-		f.preActivations = (Vector[]) bytes.readObjArr(new Vector(0));
-		f.weights = bytes.readObjArr(new Matrix(0, 0));
+	public Network deserialize(ByteHelper b, Serializable<?>... prototypes) {
+//		Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer)
+		Feedforward f = new Feedforward( 
+			b.readIntArr(),
+			(Initializer) b.readObject(prototypes[0]),
+			(Activation) b.readObject(prototypes[1]),
+			(Cost) b.readObject(prototypes[2]),
+			(Optimizer) b.readObject(prototypes[3])
+		);
+		f.biases = b.readObjArr(new Vector());
+		f.activations = b.readObjArr(new Vector());
+		f.preActivations = b.readObjArr(new Vector());
+		f.weights = b.readObjArr(new Matrix());
 		return f;
+	}
+
+	@Override
+	public Network[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

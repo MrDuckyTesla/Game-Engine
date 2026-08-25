@@ -2,7 +2,7 @@ package engine.util.data;
 
 import java.io.IOException;
 
-public interface Storage {
+public interface Storage extends Serializable<Storage> {
 	
 	public abstract void save(byte[] bytes) throws IOException;
 	

@@ -21,33 +21,42 @@ public class Data<T extends Serializable<T>> {
 		this.object = object;
 	}
 	
+//	public Data() throws IOException {
+//		this.checkNullExists();
+//		byte[] bytes = this.storage.load();
+//		bytes = this.encryption.decrypt(bytes);
+//		bytes = this.compression.decompress(bytes);
+//		Data<T> d = this.deserialize(new ByteHelper(bytes));
+//		this.storage = d.storage; this.compression = d.compression;
+//		this.encryption = d.encryption; this.object = d.object;
+//	}
+	
 	public Data<T> setStorage(Storage s) {this.storage = s; return this;}
 	public Data<T> setCompression(Compression s) {this.compression = s; return this;}
 	public Data<T> setEncryption(Encryption s) {this.encryption = s; return this;}
 	
 	public void save() throws IOException {
-		if (this.storage == null) {this.storage = new engine.util.data.storages.Local("data/unnamed.mdt");}
-		if (this.compression == null) {this.compression = new engine.util.data.compressions.Raw();}
-		if (this.encryption == null) {this.encryption = new engine.util.data.encryptions.Raw();}
-		
-		byte[] bytes = object.serialize();
+		this.checkNullExists();
+		byte[] bytes = this.object.serialize();
 		bytes = this.compression.compress(bytes);
 		bytes = this.encryption.encrypt(bytes);
 		this.storage.save(bytes);
 	}
 	
-	public T load() throws IOException {
-		if (this.storage == null) {this.storage = new engine.util.data.storages.Local("data/unnamed.mdt");}
-		if (this.compression == null) {this.compression = new engine.util.data.compressions.Raw();}
-		if (this.encryption == null) {this.encryption = new engine.util.data.encryptions.Raw();}
-		
+	public T load(Serializable<?>... prototypes) throws IOException {
+		this.checkNullExists();
 		byte[] bytes = this.storage.load();
 		bytes = this.encryption.decrypt(bytes);
 		bytes = this.compression.decompress(bytes);
-		
-		return this.object.deserialize(new ByteHelper(bytes));
+		return this.object.deserialize(new ByteHelper(bytes), prototypes);
 	}
 	
 	public T get() {return this.object;}
+	
+	private void checkNullExists() {
+		if (this.storage == null) {this.storage = new engine.util.data.storages.Local("data/unnamed.mdt");}
+		if (this.compression == null) {this.compression = new engine.util.data.compressions.Raw();}
+		if (this.encryption == null) {this.encryption = new engine.util.data.encryptions.Raw();}
+	}
 
 }

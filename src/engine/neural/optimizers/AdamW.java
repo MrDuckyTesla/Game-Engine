@@ -4,6 +4,7 @@ import engine.neural.Optimizer;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class AdamW implements Optimizer {
 
@@ -29,8 +30,15 @@ public class AdamW implements Optimizer {
 	}
 
 	@Override
-	public Optimizer deserialize(ByteHelper bytes) {
-		return new AdamW();
+	public Optimizer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optimizer[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

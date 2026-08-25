@@ -3,6 +3,7 @@ package engine.neural.costs;
 import engine.neural.Cost;
 import engine.util.ByteHelper;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class MeanSquaredError implements Cost {
 
@@ -33,8 +34,13 @@ public class MeanSquaredError implements Cost {
 	}
 
 	@Override
-	public Cost deserialize(ByteHelper bytes) {
+	public Cost deserialize(ByteHelper b, Serializable<?>... prototypes) {
 		return new MeanSquaredError();
 	}
 
+	@Override
+	public Cost[] getProtoArray(int length) {
+		return new MeanSquaredError[length];
+	}
+	
 }

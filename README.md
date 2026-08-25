@@ -1,8 +1,8 @@
 # Quick Statistics <br>
 
 Start Date:  7/11/2024 <br>
-Last Updated:  8/5/2026 <br>
-Current Version 0.1.2.5 <br>
+Last Updated:  8/24/2026 <br>
+Current Version 0.1.3.5 <br>
 
 ![Repo Size](https://img.shields.io/github/repo-size/MrDuckyTesla/Game-Engine)
 ![Commits](https://img.shields.io/github/commit-activity/y/MrDuckyTesla/Game-Engine)
@@ -111,6 +111,7 @@ animation interface. <br>
 > - Make ToolKit more "float friendly" by removing exact with epsilon. <br>
 > - Majority of code is most likely suboptimal as most was made from scratch, so rewriting certain algorithms to be 
 faster is welcome. <br>
+> - Write missing ByteHelper primitive read and write functions. <br>
 
 	 	
 ## Small demos that I wanna make to prove that the engine works: <br>

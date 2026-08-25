@@ -2,6 +2,7 @@ package engine.neural.activations;
 
 import engine.neural.Activation;
 import engine.util.ByteHelper;
+import engine.util.data.Serializable;
 
 public class Dynamic implements Activation {
 	
@@ -19,7 +20,7 @@ public class Dynamic implements Activation {
 	}
 	
 	public void next() {
-		this.layerNum = this.layerNum == this.layer.length-1? 0 : this.layerNum++;
+		this.layerNum = this.layerNum == this.layer.length-1? 0 : ++this.layerNum;
 	}
 
 	@Override
@@ -41,13 +42,14 @@ public class Dynamic implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(ByteHelper bytes) {
-		Activation[] a = new Activation[bytes.readInt()];
-		for (int i = 0; i < a.length; i++) {
-			a[i] = bytes.readObj(this.layer[i]);
-		} Dynamic d = new Dynamic(a);
-		d.layerNum = bytes.readInt();
-		return d;
+	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		Dynamic d = new Dynamic((Activation[]) b.readObjArr(prototypes[0]));
+		d.layerNum = b.readInt(); return d;
+	}
+
+	@Override
+	public Activation[] getProtoArray(int length) {
+		return new Dynamic[length];
 	}
 
 }

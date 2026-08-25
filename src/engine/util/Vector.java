@@ -1,6 +1,10 @@
 package engine.util;
 
+import engine.util.data.Serializable;
+
 public class Vector extends Matrix {
+	
+	public Vector() {}
 	
 	public Vector(float[] v) {
 		super(1, v.length);
@@ -48,9 +52,15 @@ public class Vector extends Matrix {
 	}
 	
 	@Override
-	public Vector deserialize(ByteHelper bytes) {
-		return new Vector(bytes.readFloatArr());
+	public Vector deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new Vector(
+			b.readFloatArr()
+		);
 	}
-	
+
+	@Override
+	public Vector[] getProtoArray(int length) {
+		return new Vector[length];
+	}
 	
 }
