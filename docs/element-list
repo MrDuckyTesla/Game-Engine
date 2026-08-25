@@ -1,12 +1,13 @@
 engine
 engine.app
-engine.data
 engine.entity
 engine.entity.abilities
 engine.entity.entities
 engine.entity.enums
 engine.entity.movement
 engine.graphics
+engine.graphics.anim
+engine.graphics.anim.sources
 engine.menu
 engine.neural
 engine.neural.activations
@@ -16,4 +17,11 @@ engine.neural.networks
 engine.neural.optimizers
 engine.physics
 engine.util
+engine.util.data
+engine.util.data.compressions
+engine.util.data.easy
+engine.util.data.encryptions
+engine.util.data.storages
+engine.util.processor
+obsolete
 test
