@@ -18,11 +18,6 @@ public class Dynamic implements Activation {
 		} this.layer = layer;
 	}
 	
-	@SuppressWarnings("unused")
-	private Dynamic() {
-		this.layer = new Activation[] {new engine.neural.activations.Linear()};
-	}
-	
 	public void next() {
 		this.layerNum = this.layerNum == this.layer.length-1? 0 : this.layerNum++;
 	}
@@ -46,9 +41,19 @@ public class Dynamic implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(byte[] bytes) {
-		ByteHelper.wrap(bytes);
-		return null;
+	public Activation deserialize(ByteHelper b) {
+		Dynamic d = new Dynamic(b.readObjArr(this.getPrototype()));
+		d.layerNum = b.readInt(); return d;
+	}
+
+	@Override
+	public Activation[] getProtoArray(int length) {
+		return new Activation[length];
+	}
+
+	@Override
+	public Activation getPrototype() {
+		return new Dynamic(new Activation[] {new engine.neural.activations.Linear()});
 	}
 
 }

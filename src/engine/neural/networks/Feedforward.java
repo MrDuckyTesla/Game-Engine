@@ -79,18 +79,6 @@ public class Feedforward implements Network {
 		}
 	}
 	
-	/**
-	 * Only use this constructor if you intend to use Feedforward as a prototype
-	 */
-	@SuppressWarnings("unused")
-	private Feedforward() {
-		this.networkSizes = null;
-		this.initializer = null;
-		this.activation = null;
-		this.cost = null;
-		this.optimizer = null;
-	}
-	
 	private Vector forward(Vector input) {
 		if (input.getHgt() != this.weights[0].getWid()) {
 			throw new IllegalArgumentException("Input size mismatch");
@@ -192,7 +180,19 @@ public class Feedforward implements Network {
 	}
 
 	@Override
-	public Network deserialize(byte[] bytes) {
+	public Network deserialize(ByteHelper b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Network getPrototype() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Network[] getProtoArray(int length) {
 		// TODO Auto-generated method stub
 		return null;
 	}

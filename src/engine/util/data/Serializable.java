@@ -8,6 +8,8 @@ public interface Serializable<T> {
 	 */
 	public abstract byte[] serialize();
 	
-	public abstract T deserialize(engine.util.ByteHelper bytes);
+	public abstract T deserialize(engine.util.ByteHelper b);
+	
+	public abstract T[] getProtoArray(int length);
 
 }

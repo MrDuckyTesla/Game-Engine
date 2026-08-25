@@ -1,85 +1,11 @@
 package engine.util;
 
-import java.util.*;
-import java.lang.reflect.*;
-
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 import engine.util.data.Serializable;
-import engine.util.data.SerializableRegistry;
 
 public class ByteHelper {
-	
-	private static Serializable<?>[] PROTOTYPES;
-	
-	public static short getID(Class<?> c) {
-		return SerializableRegistry.IDS.get(c);
-	}
-	
-	public static Class<?> getClass(short id) {
-		return SerializableRegistry.REGISTRY[id];
-	}
-	
-	public static Serializable<?> getProto(short id) {
-		return ByteHelper.PROTOTYPES[id];
-	}
-	
-	static {
-		ByteHelper.PROTOTYPES = new Serializable[SerializableRegistry.REGISTRY.length];
-		for (int i = 0; i < ByteHelper.PROTOTYPES.length; i++) {
-			ByteHelper.PROTOTYPES[i] = ByteHelper.classConstructor(SerializableRegistry.REGISTRY[i]);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	private static <T> T classConstructor(Class<?> type) {
-		Constructor<?>[] con = type.getDeclaredConstructors(); 
-		Arrays.sort(con, Comparator.comparingInt(Constructor::getParameterCount));
-		for (int i = 0; i < con.length; i++) {
-			if (con[i].getParameterCount() == 0) {
-				try {con[i].setAccessible(true); return (T) con[i].newInstance();} 
-				catch (Exception e) {e.printStackTrace();}
-			} Parameter[] prm = con[i].getParameters();
-			Object[] obj = new Object[prm.length];
-			try {
-				for (int j = 0; j < obj.length; j++) {
-					obj[j] = ByteHelper.recursiveClass(prm[j].getType());
-				} return (T) con[i].newInstance(obj);
-			} catch (Exception e) {
-				System.out.println("Could not instantiate "+type.getCanonicalName()+" to registry due to "+e.getCause()+".");
-				e.printStackTrace(); 
-			}
-		} return null;
-	}
-	
-	private static Object recursiveClass(Class<?> type) throws ReflectiveOperationException {
-		if (type.isInterface()) {return null;}
-		if (type.isArray()) {return Array.newInstance(type.getComponentType(), 0);}
-		if (type == boolean.class) {return false;}
-		if (type == byte.class) {return (byte) 0;}
-		if (type == short.class) {return (short) 0;}
-		if (type == char.class) {return '\u0000';}
-		if (type == int.class) {return 0;}
-		if (type == float.class) {return 0f;}
-		if (type == double.class) {return 0d;}
-		if (type == long.class) {return 0l;}
-		if (type == String.class) {return "";}
-		return ByteHelper.classConstructor(type);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static <T extends Serializable<?>> T load(byte[] bytes) {
-		ByteHelper b = new ByteHelper(bytes);
-		Serializable<?> proto = ByteHelper.getProto(b.readShort());
-		return (T) proto.deserialize(b);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static <T extends Serializable<?>> T load(byte[] bytes, T proto) {
-		ByteHelper b = new ByteHelper(bytes); b.readShort();
-		return (T) proto.deserialize(b);
-	}
 	
 	/**
 	 * Merges multiple byte[] arrays into a singular flat byte[] array
@@ -101,17 +27,17 @@ public class ByteHelper {
 	 * @param <T> Object that implements Serializable
 	 * @param o Object array being serialized
 	 * @return The object in byte form, the bytes are ordered as so:
-	 * [ID][Array Length][[ID][Byte Length][Object], ...[ID][Byte Length][Object]]
+	 * [Array Length][Byte Length][Object], ...[ID][Byte Length][Object]]
 	 */
 	public static <T extends Serializable<T>> byte[] toBytes(T[] o) {
 		if (o.length == 0) {throw new IllegalArgumentException("Given array was length 0");}
-		byte[][] bytes = new byte[o.length+2][]; bytes[0] = ByteHelper.toBytes(ByteHelper.getID(o[0].getClass())); 
-		for (int i = 0; i < o.length; i++) {bytes[i+2] = ByteHelper.toBytes(o[i]);}
-		bytes[1] = ByteHelper.toBytes(o.length); return ByteHelper.mergeBytes(bytes);
+		byte[][] bytes = new byte[o.length+1][]; bytes[0] = ByteHelper.toBytes(o.length);
+		for (int i = 0; i < o.length; i++) {bytes[i] = ByteHelper.toBytes(o[i+1]);}
+		return ByteHelper.mergeBytes(bytes);
 	}
 	
 	/**
-	 * Function that serializes an array of strings without an ID
+	 * Function that serializes an array of strings
 	 * @param s String array being serialized
 	 * @return The String in byte form, the bytes are ordered as so:
 	 * [Array Length][[String Length][String], ...[String Length][String]]
@@ -178,9 +104,7 @@ public class ByteHelper {
 	public static <T extends Serializable<T>> byte[] toBytes(T object) {
 		byte[] bytes = object.serialize();
 		return ByteHelper.mergeBytes(
-			ByteHelper.toBytes(ByteHelper.getID(object.getClass())),
-			ByteBuffer.allocate(4).putInt(bytes.length).array(), 
-			bytes
+			ByteBuffer.allocate(4).putInt(bytes.length).array(), bytes
 		);
 	}
 	
@@ -263,22 +187,12 @@ public class ByteHelper {
 	
 	public byte[] get() {return this.byteStream.array();}
 	
-	// [ID][Array Length][[ID][Byte Length][Object], ...[ID][Byte Length][Object]]
-	@SuppressWarnings("unchecked")
-	public <T extends Serializable<T>> T[] readObjArr() {
-		T[] proto = (T[]) Array.newInstance(ByteHelper.getClass(this.readShort()), this.readInt());
-		for (int i = 0; i < proto.length; i++) {
-			proto[i] = this.readObject();
-		} return (T[]) proto;
-	}
-	
-	// [ID][Array Length][[ID][Byte Length][Object], ...[ID][Byte Length][Object]]
-	@SuppressWarnings("unchecked")
+	// [Array Length][[Byte Length][Object], ...[Byte Length][Object]]
 	public <T extends Serializable<T>> T[] readObjArr(T proto) {
-		T[] arr = (T[]) Array.newInstance(ByteHelper.getClass(this.readShort()), this.readInt());
+		T[] arr = proto.getProtoArray(this.readInt());
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = this.readObject(proto);
-		} return (T[]) arr;
+		} return arr;
 	}
 	
 	public String[] readStringArr() {
@@ -323,21 +237,9 @@ public class ByteHelper {
 		} return rtrn;
 	}
 	
-	public <T extends Serializable<T>> T readObject(T proto) {
-		return proto.deserialize(new ByteHelper(this.byteStream.get(new byte[this.readInt()]).array()));
-	}
-	
-	//[ID][Byte Length][Object]
 	@SuppressWarnings("unchecked")
-	public <T extends Serializable<?>> T readObject() {
-		short id = this.readShort();
-		Serializable<T> proto = (Serializable<T>) ByteHelper.getProto(id);
-		if (proto == null) {
-		    throw new IllegalStateException(
-		        "No automatic deserialization prototype exists for Class " + 
-		        ByteHelper.getClass(id).getName() + ". Use readObject(prototype) instead."
-		    );
-		} return proto.deserialize(new ByteHelper(this.byteStream.get(new byte[this.readInt()]).array()));
+	public <T extends Serializable<?>> T readObject(T proto) {
+		return (T) proto.deserialize(new ByteHelper(this.byteStream.get(new byte[this.readInt()]).array()));
 	}
 	
 	public String readString() {

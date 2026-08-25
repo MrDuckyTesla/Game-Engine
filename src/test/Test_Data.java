@@ -22,11 +22,10 @@ public class Test_Data {
 			Test1 test2 = d.load();
 			System.out.println(test2);
 		} catch (IOException e) {e.printStackTrace();} 
-		catch (ClassNotFoundException e) {e.printStackTrace();} 
 		
-		Matrix m = new Vector(7);
-		m.propagate();
-		System.out.println(m);
+//		Matrix m = new Vector(7);
+//		m.propagate();
+//		System.out.println(m);
 //		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
 //		try {
 //			a.save();
@@ -58,15 +57,20 @@ public class Test_Data {
 				ByteHelper.toBytes(i)
 			);
 		}
-//		@Override
-//		public Test1 deserialize(ByteHelper b) {
-//			Test1 t = new Test1();
-//			t.test = test.deserialize(b);
-//			t.s = b.readString();
-//			t.f = b.readFloatArr();
-//			t.i = b.readInt();
-//			return t;
-//		}
+		@Override
+		public Test1 deserialize(ByteHelper b) {
+			Test1 t = new Test1();
+			t.test = b.readObject(new Test2());
+			t.s = b.readString();
+			t.f = b.readFloatArr();
+			t.i = b.readInt();
+			return t;
+		}
+		@Override
+		public Test1[] getProtoArray(int length) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	} 
 	
 	private static class Test2 implements Serializable<Test2> {
@@ -87,14 +91,19 @@ public class Test_Data {
 				ByteHelper.toBytes(i)
 			);
 		}
-//		@Override
-//		public Test2 deserialize(ByteHelper b) {
-//			Test2 t = new Test2();
-//			t.s = b.readString();
-//			t.f = b.readFloatArr();
-//			t.i = b.readInt();
-//			return t;
-//		}
+		@Override
+		public Test2 deserialize(ByteHelper b) {
+			Test2 t = new Test2();
+			t.s = b.readString();
+			t.f = b.readFloatArr();
+			t.i = b.readInt();
+			return t;
+		}
+		@Override
+		public Test2[] getProtoArray(int length) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 	
 	

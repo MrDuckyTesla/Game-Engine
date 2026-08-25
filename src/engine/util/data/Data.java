@@ -1,7 +1,6 @@
 package engine.util.data;
 
 import java.io.IOException;
-import java.util.zip.DataFormatException;
 
 import engine.util.ByteHelper;
 
@@ -22,15 +21,7 @@ public class Data<T extends Serializable<T>> {
 		this.object = object;
 	}
 	
-	public Data(Storage s, Compression c, Encryption e) throws IOException, ReflectiveOperationException, DataFormatException {
-		this.storage = s; this.compression = c; this.encryption = e;
-		byte[] bytes = this.storage.load();
-		bytes = this.encryption.decrypt(bytes);
-		bytes = this.compression.decompress(bytes);
-		this.object = ByteHelper.load(bytes);
-	}
-	
-//	public Data() throws IOException, ReflectiveOperationException {
+//	public Data() throws IOException {
 //		this.checkNullExists();
 //		byte[] bytes = this.storage.load();
 //		bytes = this.encryption.decrypt(bytes);
@@ -52,12 +43,12 @@ public class Data<T extends Serializable<T>> {
 		this.storage.save(bytes);
 	}
 	
-	public T load() throws IOException, ClassNotFoundException {
+	public T load() throws IOException {
 		this.checkNullExists();
 		byte[] bytes = this.storage.load();
 		bytes = this.encryption.decrypt(bytes);
 		bytes = this.compression.decompress(bytes);
-		return ByteHelper.load(bytes);
+		return this.object.deserialize(new ByteHelper(bytes));
 	}
 	
 	public T get() {return this.object;}
