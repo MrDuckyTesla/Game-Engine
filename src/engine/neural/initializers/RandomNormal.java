@@ -3,6 +3,7 @@ package engine.neural.initializers;
 import engine.neural.Initializer;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
+import engine.util.data.Serializable;
 
 public class RandomNormal implements Initializer {
 
@@ -27,6 +28,17 @@ public class RandomNormal implements Initializer {
 			ByteHelper.toBytes(mean),
 			ByteHelper.toBytes(stdDev)
 		);
+	}
+	@Override
+	public Initializer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new RandomNormal(
+			b.readFloat(), 
+			b.readFloat()
+		);
+	}
+	@Override
+	public Initializer[] getProtoArray(int length) {
+		return new RandomNormal[length];
 	}
 
 }

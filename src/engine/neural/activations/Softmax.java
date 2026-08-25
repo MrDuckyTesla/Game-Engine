@@ -2,6 +2,7 @@ package engine.neural.activations;
 
 import engine.neural.Activation;
 import engine.util.ByteHelper;
+import engine.util.data.Serializable;
 
 public class Softmax implements Activation {
 
@@ -20,6 +21,18 @@ public class Softmax implements Activation {
 	@Override
 	public byte[] serialize() {
 		return new byte[] {};
+	}
+
+	@Override
+	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Activation[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

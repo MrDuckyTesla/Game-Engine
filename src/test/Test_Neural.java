@@ -8,14 +8,8 @@ import engine.neural.costs.*;
 import engine.neural.initializers.*;
 import engine.neural.networks.*;
 import engine.neural.optimizers.*;
-import engine.util.ByteHelper;
-import engine.util.Timer;
 import engine.util.Vector;
 import engine.util.data.Data;
-import engine.util.data.compressions.RLE;
-import engine.util.data.storages.Local;
-import obsolete.ToolKit;
-import processing.core.PApplet;
 
 public class Test_Neural {
 
@@ -119,8 +113,8 @@ public class Test_Neural {
 		Data<Network> d = new Data<>(test);
 		try {
 //			d.setStorage(new Local("data/network.mdt"));
-			d.save();
-			Feedforward f = (Feedforward) d.load();
+//			d.save();
+			Feedforward f = (Feedforward) d.load(initializer, activation, cost, optimizer);
 			System.out.println("TEST");
 			System.out.println();
 //			f.train(inputs, expected, 2);
@@ -135,10 +129,7 @@ public class Test_Neural {
 			System.out.println("0.2 * 1 = "+f.predict(new Vector(new float[] {0.2f, 1})));
 			System.out.println("10 * 1 = "+f.predict(new Vector(new float[] {10, 1})));
 			System.out.println("2 * 10 = "+f.predict(new Vector(new float[] {2, 10})));
-		} catch (IOException e) {e.printStackTrace();} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (IOException e) {e.printStackTrace();}
 		
 //		test.saveNetwork("Test");
 		

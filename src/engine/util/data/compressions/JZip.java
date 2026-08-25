@@ -7,6 +7,7 @@ import java.util.zip.Inflater;
 
 import engine.util.ByteHelper;
 import engine.util.data.Compression;
+import engine.util.data.Serializable;
 
 public class JZip implements Compression {
 
@@ -56,7 +57,13 @@ public class JZip implements Compression {
 	}
 
 	@Override
-	public Compression deserialize(byte[] bytes) {
+	public Compression deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Compression[] getProtoArray(int length) {
 		// TODO Auto-generated method stub
 		return null;
 	}

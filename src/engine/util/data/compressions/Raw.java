@@ -2,6 +2,7 @@ package engine.util.data.compressions;
 
 import engine.util.ByteHelper;
 import engine.util.data.Compression;
+import engine.util.data.Serializable;
 
 public class Raw implements Compression {
 	
@@ -14,6 +15,14 @@ public class Raw implements Compression {
 	@Override
 	public byte[] serialize() {
 		return new byte[] {};
+	}
+	@Override
+	public Compression deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new Raw();
+	}
+	@Override
+	public Compression[] getProtoArray(int length) {
+		return new Raw[length];
 	}
 	
 }

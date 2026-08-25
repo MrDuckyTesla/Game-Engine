@@ -1,8 +1,8 @@
 # Quick Statistics <br>
 
 Start Date:  7/11/2024 <br>
-Last Updated:  8/10/2026 <br>
-Current Version 0.1.3.0 <br>
+Last Updated:  8/24/2026 <br>
+Current Version 0.1.3.5 <br>
 
 ![Repo Size](https://img.shields.io/github/repo-size/MrDuckyTesla/Game-Engine)
 ![Commits](https://img.shields.io/github/commit-activity/y/MrDuckyTesla/Game-Engine)

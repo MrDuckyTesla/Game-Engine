@@ -3,6 +3,7 @@ package engine.neural.initializers;
 import engine.neural.*;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
+import engine.util.data.Serializable;
 
 public class RandomUniform implements Initializer {
 
@@ -28,6 +29,17 @@ public class RandomUniform implements Initializer {
 			ByteHelper.toBytes(min),
 			ByteHelper.toBytes(max)
 		);
+	}
+	@Override
+	public Initializer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new RandomUniform(
+			b.readFloat(),
+			b.readFloat()
+		);
+	}
+	@Override
+	public Initializer[] getProtoArray(int length) {
+		return new RandomUniform[length];
 	}
 
 }

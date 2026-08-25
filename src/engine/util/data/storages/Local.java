@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.*;
 
 import engine.util.ByteHelper;
+import engine.util.data.Serializable;
 import engine.util.data.Storage;
 
 public class Local implements Storage {
@@ -33,8 +34,14 @@ public class Local implements Storage {
 		return ByteHelper.toBytes(this.path.toString());
 	}
 
-	public static Local createPrototype() {
-		return new Local();
+	@Override
+	public Storage deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new Local(b.readString());
+	}
+
+	@Override
+	public Storage[] getProtoArray(int length) {
+		return new Local[length];
 	}
 
 }

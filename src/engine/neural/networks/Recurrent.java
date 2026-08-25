@@ -3,6 +3,7 @@ package engine.neural.networks;
 import engine.neural.Network;
 import engine.util.ByteHelper;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class Recurrent implements Network{
 
@@ -36,6 +37,18 @@ public class Recurrent implements Network{
 
 	@Override
 	public byte[] serialize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Network deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Network[] getProtoArray(int length) {
 		// TODO Auto-generated method stub
 		return null;
 	}

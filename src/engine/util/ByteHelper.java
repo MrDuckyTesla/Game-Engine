@@ -27,12 +27,12 @@ public class ByteHelper {
 	 * @param <T> Object that implements Serializable
 	 * @param o Object array being serialized
 	 * @return The object in byte form, the bytes are ordered as so:
-	 * [Array Length][Byte Length][Object], ...[ID][Byte Length][Object]]
+	 * [Array Length][[Byte Length][Object], ...[Byte Length][Object]]
 	 */
 	public static <T extends Serializable<T>> byte[] toBytes(T[] o) {
 		if (o.length == 0) {throw new IllegalArgumentException("Given array was length 0");}
 		byte[][] bytes = new byte[o.length+1][]; bytes[0] = ByteHelper.toBytes(o.length);
-		for (int i = 0; i < o.length; i++) {bytes[i] = ByteHelper.toBytes(o[i+1]);}
+		for (int i = 0; i < o.length; i++) {bytes[i+1] = ByteHelper.toBytes(o[i]);}
 		return ByteHelper.mergeBytes(bytes);
 	}
 	
@@ -99,7 +99,7 @@ public class ByteHelper {
 	 * @param <T> Object that implements Serializable
 	 * @param object  Object being serialized
 	 * @return The object in byte form, the bytes are ordered as so:
-	 * [ID][Byte Length][Object]
+	 * [Byte Length][Object]
 	 */
 	public static <T extends Serializable<T>> byte[] toBytes(T object) {
 		byte[] bytes = object.serialize();
@@ -188,8 +188,9 @@ public class ByteHelper {
 	public byte[] get() {return this.byteStream.array();}
 	
 	// [Array Length][[Byte Length][Object], ...[Byte Length][Object]]
-	public <T extends Serializable<T>> T[] readObjArr(T proto) {
-		T[] arr = proto.getProtoArray(this.readInt());
+	@SuppressWarnings("unchecked")
+	public <T extends Serializable<?>> T[] readObjArr(T proto) {
+		T[] arr = (T[]) proto.getProtoArray(this.readInt());
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = this.readObject(proto);
 		} return arr;
@@ -239,7 +240,8 @@ public class ByteHelper {
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Serializable<?>> T readObject(T proto) {
-		return (T) proto.deserialize(new ByteHelper(this.byteStream.get(new byte[this.readInt()]).array()));
+		byte[] bytes = new byte[this.readInt()]; this.byteStream.get(bytes);
+		return (T) proto.deserialize(new ByteHelper(bytes));
 	}
 	
 	public String readString() {

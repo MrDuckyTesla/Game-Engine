@@ -43,12 +43,12 @@ public class Data<T extends Serializable<T>> {
 		this.storage.save(bytes);
 	}
 	
-	public T load() throws IOException {
+	public T load(Serializable<?>... prototypes) throws IOException {
 		this.checkNullExists();
 		byte[] bytes = this.storage.load();
 		bytes = this.encryption.decrypt(bytes);
 		bytes = this.compression.decompress(bytes);
-		return this.object.deserialize(new ByteHelper(bytes));
+		return this.object.deserialize(new ByteHelper(bytes), prototypes);
 	}
 	
 	public T get() {return this.object;}

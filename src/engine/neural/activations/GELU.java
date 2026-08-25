@@ -2,6 +2,7 @@ package engine.neural.activations;
 
 import engine.neural.Activation;
 import engine.util.ByteHelper;
+import engine.util.data.Serializable;
 
 public class GELU implements Activation {
 
@@ -19,6 +20,16 @@ public class GELU implements Activation {
 	@Override
 	public byte[] serialize() {
 		return new byte[] {};
+	}
+
+	@Override
+	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new GELU();
+	}
+
+	@Override
+	public Activation[] getProtoArray(int length) {
+		return new GELU[length];
 	}
 
 }

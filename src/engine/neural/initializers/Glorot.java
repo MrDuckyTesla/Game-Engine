@@ -3,6 +3,7 @@ package engine.neural.initializers;
 import engine.neural.*;
 import engine.util.ByteHelper;
 import engine.util.Matrix;
+import engine.util.data.Serializable;
 
 public class Glorot implements Initializer {
 	
@@ -30,6 +31,14 @@ public class Glorot implements Initializer {
 	@Override
 	public byte[] serialize() {
 		return ByteHelper.toBytes(this.uniform);
+	}
+	@Override
+	public Initializer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new Glorot(b.readBool());
+	}
+	@Override
+	public Initializer[] getProtoArray(int length) {
+		return new Glorot[length];
 	}
 	
 }

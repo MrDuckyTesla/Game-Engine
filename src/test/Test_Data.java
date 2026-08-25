@@ -2,12 +2,8 @@ package test;
 
 import java.io.IOException;
 
-import engine.util.ByteHelper;
-import engine.util.Matrix;
-import engine.util.Vector;
+import engine.util.*;
 import engine.util.data.*;
-import engine.util.data.compressions.*;
-import engine.util.data.encryptions.*;
 import engine.util.data.storages.*;
 
 public class Test_Data {
@@ -18,20 +14,20 @@ public class Test_Data {
 		
 		Data<Test1> d = new Data<>(test);
 		try {
-			d.save();
+//			d.save();
 			Test1 test2 = d.load();
 			System.out.println(test2);
 		} catch (IOException e) {e.printStackTrace();} 
 		
-//		Matrix m = new Vector(7);
-//		m.propagate();
+		Matrix m = new Vector(7);
+		m.propagate();
 //		System.out.println(m);
-//		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
-//		try {
+		Data<Matrix> a = new Data<>(m).setStorage(new Local("data/matrix test.mdt"));
+		try {
 //			a.save();
-//			System.out.println(a.load());
-//		} 
-//		catch (IOException e) {e.printStackTrace();}
+			System.out.println(a.load());
+		} 
+		catch (IOException e) {e.printStackTrace();}
 		
 //		System.out.println(test.deserialize(new ByteHelper(test.serialize())));
 		
@@ -58,7 +54,7 @@ public class Test_Data {
 			);
 		}
 		@Override
-		public Test1 deserialize(ByteHelper b) {
+		public Test1 deserialize(ByteHelper b, Serializable<?>... prototypes) {
 			Test1 t = new Test1();
 			t.test = b.readObject(new Test2());
 			t.s = b.readString();
@@ -92,7 +88,7 @@ public class Test_Data {
 			);
 		}
 		@Override
-		public Test2 deserialize(ByteHelper b) {
+		public Test2 deserialize(ByteHelper b, Serializable<?>... prototypes) {
 			Test2 t = new Test2();
 			t.s = b.readString();
 			t.f = b.readFloatArr();

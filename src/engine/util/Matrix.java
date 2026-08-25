@@ -360,4 +360,18 @@ public class Matrix implements Iterable<Float>, Serializable<Matrix> {
 		);
 	}
 
+	@Override
+	public Matrix deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		return new Matrix(
+			b.readFloatArr(),
+			b.readInt(),
+			b.readInt()
+		);
+	}
+
+	@Override
+	public Matrix[] getProtoArray(int length) {
+		return new Matrix[length];
+	}
+
 }

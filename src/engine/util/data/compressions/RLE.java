@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 
 import engine.util.ByteHelper;
 import engine.util.data.Compression;
+import engine.util.data.Serializable;
 
 public class RLE implements Compression {
 	
@@ -43,6 +44,20 @@ public class RLE implements Compression {
 			ByteHelper.toBytes(this.before),
 			ByteHelper.toBytes(this.after)
 		);
+	}
+
+	@Override
+	public Compression deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		RLE r = new RLE();
+		r.before = b.readInt();
+		r.after = b.readInt();
+		return r;
+	}
+
+	@Override
+	public Compression[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

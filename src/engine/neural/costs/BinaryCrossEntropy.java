@@ -3,6 +3,7 @@ package engine.neural.costs;
 import engine.neural.Cost;
 import engine.util.ByteHelper;
 import engine.util.Vector;
+import engine.util.data.Serializable;
 
 public class BinaryCrossEntropy implements Cost {
 
@@ -24,5 +25,17 @@ public class BinaryCrossEntropy implements Cost {
 	public byte[] serialize() {
 		// TODO Auto-generated method stub
 		return new byte[] {};
+	}
+
+	@Override
+	public Cost deserialize(ByteHelper b, Serializable<?>... prototypes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cost[] getProtoArray(int length) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
