@@ -1,6 +1,6 @@
 package obsolete;
 
-import engine.entity.Move;
+import obsolete.entity.Move;
 import processing.core.PImage;
 
 public class Animator {

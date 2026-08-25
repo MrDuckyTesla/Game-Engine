@@ -1,5 +1,6 @@
 package engine.util.data.compressions;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -26,14 +27,18 @@ public class JZip implements Compression {
 		this.before = bytes.length;
 		Deflater d = new Deflater();
 		d.setStrategy(this.strategy);
-		d.setInput(bytes); d.finish();
-		byte[] c = new byte[bytes.length]; 
+		d.setInput(bytes, 4, bytes.length-4); 
+		d.finish(); byte[] c = new byte[bytes.length]; 
 		this.after = d.deflate(c); d.end();
-		return Arrays.copyOf(c, this.after);
+		return ByteHelper.mergeBytes(
+			ByteHelper.toBytes(this.before),
+			Arrays.copyOf(c, this.after)
+		);
 	}
 
 	@Override
 	public byte[] decompress(byte[] bytes) {
+		this.before = ByteBuffer.wrap(bytes).getInt();
 		Inflater i = new Inflater();
 		byte[] b = new byte[this.before];
 		i.setInput(bytes); 
@@ -46,26 +51,29 @@ public class JZip implements Compression {
 
 	@Override
 	public int getSavedSpace() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.after - this.before;
 	}
 	
 	@Override
 	public byte[] serialize() {
-		// TODO Auto-generated method stub
-		return null;
+		return ByteHelper.mergeBytes(
+			ByteHelper.toBytes(this.strategy),
+			ByteHelper.toBytes(this.before),
+			ByteHelper.toBytes(this.after)
+		);
 	}
 
 	@Override
 	public Compression deserialize(ByteHelper b, Serializable<?>... prototypes) {
-		// TODO Auto-generated method stub
-		return null;
+		JZip j = new JZip(b.readInt());
+		j.before = b.readInt();
+		j.after = b.readInt();
+		return j;
 	}
 
 	@Override
 	public Compression[] getProtoArray(int length) {
-		// TODO Auto-generated method stub
-		return null;
+		return new JZip[length];
 	}
 
 }
