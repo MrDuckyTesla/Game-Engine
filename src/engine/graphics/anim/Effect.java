@@ -1,6 +1,10 @@
 package engine.graphics.anim;
 
-// Transparent, follow, mirror, fade, etc.
+import java.awt.image.BufferedImage;
+
+// Transparent, mirror, fade, etc.
 public interface Effect {
+	
+	public abstract BufferedImage apply(BufferedImage img);
 
 }

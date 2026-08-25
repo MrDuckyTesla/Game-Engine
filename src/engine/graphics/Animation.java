@@ -1,8 +1,8 @@
 package engine.graphics;
 
-public class Window {
+public class Animation {
 
-	public Window() {
+	public Animation() {
 		// TODO Auto-generated constructor stub
 	}
 

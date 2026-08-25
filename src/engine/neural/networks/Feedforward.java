@@ -199,8 +199,7 @@ public class Feedforward implements Network {
 
 	@Override
 	public Network[] getProtoArray(int length) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Feedforward[length];
 	}
 	
 }
