@@ -1,8 +1,8 @@
-package engine.entity;
+package obsolete.entity;
 
-import engine.entity.enums.Entities;
-import engine.entity.enums.Triggers;
-import engine.entity.movement.Interaction;
+import obsolete.entity.enums.Entities;
+import obsolete.entity.enums.Triggers;
+import obsolete.entity.movement.Interaction;
 
 public abstract class Trigger extends Entity {
 	

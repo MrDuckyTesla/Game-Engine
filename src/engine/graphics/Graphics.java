@@ -71,8 +71,6 @@ public abstract class Graphics implements Serializable<Graphics> {
 		this.j.setLocationRelativeTo(null);  // Centered window
 		this.j.setVisible(true);
 		
-		this.s.setPixelScale();
-		
 		c.createBufferStrategy(2);
 		BufferStrategy bs = c.getBufferStrategy();
 		while (this.isOpen) {

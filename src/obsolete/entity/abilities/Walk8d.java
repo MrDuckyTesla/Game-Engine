@@ -1,7 +1,7 @@
-package engine.entity.abilities;
+package obsolete.entity.abilities;
 
-import engine.entity.*;
-import engine.entity.enums.*;
+import obsolete.entity.*;
+import obsolete.entity.enums.*;
 
 public class Walk8d extends Ability {
 	

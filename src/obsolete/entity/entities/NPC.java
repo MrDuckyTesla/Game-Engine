@@ -1,16 +1,16 @@
-package engine.entity.entities;
+package obsolete.entity.entities;
 
 import engine.Room;
-import engine.entity.Ability;
-import engine.entity.Entity;
-import engine.entity.Move;
-import engine.entity.Trigger;
-import engine.entity.abilities.*;
-import engine.entity.enums.Abilities;
-import engine.entity.enums.Entities;
-import engine.entity.enums.Triggers;
-import engine.entity.movement.*;
 import obsolete.ToolKit;
+import obsolete.entity.Ability;
+import obsolete.entity.Entity;
+import obsolete.entity.Move;
+import obsolete.entity.Trigger;
+import obsolete.entity.abilities.*;
+import obsolete.entity.enums.Abilities;
+import obsolete.entity.enums.Entities;
+import obsolete.entity.enums.Triggers;
+import obsolete.entity.movement.*;
 import processing.core.PImage;
 
 public class NPC extends Entity{

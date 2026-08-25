@@ -2,12 +2,12 @@ package obsolete;
 
 import engine.Level;
 import engine.Room;
-import engine.entity.*;
-import engine.entity.abilities.*;
-import engine.entity.entities.Enemy;
-import engine.entity.entities.MultiState;
-import engine.entity.enums.Entities;
-import engine.entity.movement.*;
+import obsolete.entity.*;
+import obsolete.entity.abilities.*;
+import obsolete.entity.entities.Enemy;
+import obsolete.entity.entities.MultiState;
+import obsolete.entity.enums.Entities;
+import obsolete.entity.movement.*;
 import processing.core.*;
 
 public final class Main extends PApplet {

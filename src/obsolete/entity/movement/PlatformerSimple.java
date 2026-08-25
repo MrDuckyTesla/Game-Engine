@@ -1,10 +1,10 @@
-package engine.entity.movement;
+package obsolete.entity.movement;
 
-import engine.entity.*;
-import engine.entity.enums.Moves;
 import engine.util.*;
 import obsolete.Point;
 import obsolete.Rect;
+import obsolete.entity.*;
+import obsolete.entity.enums.Moves;
 
 // Legacy version without procedural animation
 public class PlatformerSimple extends Move {

@@ -1,11 +1,11 @@
-package engine.entity.entities;
+package obsolete.entity.entities;
 
 import engine.Room;
-import engine.entity.Ability;
-import engine.entity.Entity;
-import engine.entity.Move;
-import engine.entity.Trigger;
-import engine.entity.enums.Entities;
+import obsolete.entity.Ability;
+import obsolete.entity.Entity;
+import obsolete.entity.Move;
+import obsolete.entity.Trigger;
+import obsolete.entity.enums.Entities;
 import processing.core.PImage;
 
 public class MultiState {

@@ -1,7 +1,7 @@
-package engine.entity.movement;
+package obsolete.entity.movement;
 
-import engine.entity.Entity;
-import engine.entity.Move;
+import obsolete.entity.Entity;
+import obsolete.entity.Move;
 
 // Version with Inverse Kinematics, and procedural Animation (basically it will actually just use the physics engine)
 public class PlatformerComplex extends PlatformerSimple {

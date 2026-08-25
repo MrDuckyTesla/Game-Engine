@@ -1,10 +1,10 @@
-package engine.entity.abilities;
+package obsolete.entity.abilities;
 
-import engine.entity.*;
-import engine.entity.enums.*;
-import engine.entity.movement.*;
 import obsolete.ToolKit;
-import engine.entity.entities.Interaction;
+import obsolete.entity.*;
+import obsolete.entity.entities.Interaction;
+import obsolete.entity.enums.*;
+import obsolete.entity.movement.*;
 
 public class Sword8d extends Ability {
 	

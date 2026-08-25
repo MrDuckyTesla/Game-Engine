@@ -1,9 +1,9 @@
-package engine.entity;
+package obsolete.entity;
 
 import java.util.ArrayList;
 
-import engine.entity.enums.Moves;
 import obsolete.Point;
+import obsolete.entity.enums.Moves;
 
 public abstract class Move {
 	

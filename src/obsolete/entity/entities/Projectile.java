@@ -1,8 +1,8 @@
-package engine.entity.entities;
+package obsolete.entity.entities;
 
-import engine.entity.Entity;
-import engine.entity.Trigger;
-import engine.entity.enums.Triggers;
+import obsolete.entity.Entity;
+import obsolete.entity.Trigger;
+import obsolete.entity.enums.Triggers;
 
 public class Projectile extends Trigger {
 

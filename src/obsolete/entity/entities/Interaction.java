@@ -1,12 +1,12 @@
-package engine.entity.entities;
+package obsolete.entity.entities;
 
 import engine.Room;
-import engine.entity.*;
-import engine.entity.enums.Entities;
-import engine.entity.enums.Triggers;
 import engine.util.*;
 import obsolete.Point;
 import obsolete.ToolKit;
+import obsolete.entity.*;
+import obsolete.entity.enums.Entities;
+import obsolete.entity.enums.Triggers;
 
 public class Interaction extends Trigger {
 	

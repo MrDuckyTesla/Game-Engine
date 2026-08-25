@@ -1,12 +1,12 @@
-package engine.entity.movement;
+package obsolete.entity.movement;
 
-import engine.entity.*;
-import engine.entity.enums.Moves;
-import engine.entity.enums.Triggers;
 import engine.util.*;
 import obsolete.Point;
 import obsolete.Rect;
 import obsolete.ToolKit;
+import obsolete.entity.*;
+import obsolete.entity.enums.Moves;
+import obsolete.entity.enums.Triggers;
 import processing.core.PApplet;
 
 public class EightDirectional extends Move {

@@ -1,10 +1,10 @@
-package engine.entity.entities;
+package obsolete.entity.entities;
 
 import engine.Room;
-import engine.entity.Ability;
-import engine.entity.Move;
-import engine.entity.abilities.*;
-import engine.entity.enums.Entities;
+import obsolete.entity.Ability;
+import obsolete.entity.Move;
+import obsolete.entity.abilities.*;
+import obsolete.entity.enums.Entities;
 import processing.core.PImage;
 
 public class Enemy extends NPC {

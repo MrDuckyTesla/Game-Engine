@@ -25,7 +25,7 @@ public class Main extends Graphics {
 	@Override
 	public void update() {
 		x+=add;
-		if (x > 800 || x< 0) {add *= -1;}
+		if (x > 780 || x< 0) {add *= -1;}
 	}
 	
 	@Override

@@ -1,9 +1,9 @@
-package engine.entity.abilities;
+package obsolete.entity.abilities;
 
-import engine.entity.*;
-import engine.entity.enums.*;
-import engine.entity.movement.EightDirectional;
 import obsolete.ToolKit;
+import obsolete.entity.*;
+import obsolete.entity.enums.*;
+import obsolete.entity.movement.EightDirectional;
 
 //this class ONLY works on objects using EightDirectionalMove()
 public class Sprint8d extends Ability {

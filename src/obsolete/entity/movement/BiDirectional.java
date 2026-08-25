@@ -1,10 +1,10 @@
-package engine.entity.movement;
+package obsolete.entity.movement;
 
-import engine.entity.Entity;
-import engine.entity.Move;
-import engine.entity.enums.Moves;
 import obsolete.Point;
 import obsolete.Rect;
+import obsolete.entity.Entity;
+import obsolete.entity.Move;
+import obsolete.entity.enums.Moves;
 
 public class BiDirectional extends Move {
 	
