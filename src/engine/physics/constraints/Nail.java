@@ -4,9 +4,9 @@ import engine.physics.Body;
 import engine.physics.Constraint;
 import engine.physics.Force;
 
-public class Spring implements Constraint {
+public class Nail implements Constraint {
 
-	public Spring() {
+	public Nail() {
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,6 +1,7 @@
 package engine.anim.animations;
 
 import engine.anim.Animation;
+import engine.entity.Entity;
 
 public class FrameByFrame implements Animation {
 
@@ -9,7 +10,7 @@ public class FrameByFrame implements Animation {
 	}
 
 	@Override
-	public void draw(int x, int y) {
+	public void draw(Entity e) {
 		// TODO Auto-generated method stub
 		
 	}

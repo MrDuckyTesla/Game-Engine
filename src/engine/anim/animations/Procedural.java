@@ -3,6 +3,7 @@ package engine.anim.animations;
 import engine.anim.Animation;
 import engine.anim.Motion;
 import engine.anim.sources.Image;
+import engine.entity.Entity;
 
 public class Procedural implements Animation {
 
@@ -25,7 +26,7 @@ public class Procedural implements Animation {
 	}
 
 	@Override
-	public void draw(int x, int y) {
+	public void draw(Entity e) {
 		// TODO Auto-generated method stub
 		
 	}

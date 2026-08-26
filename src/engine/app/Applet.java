@@ -1,4 +1,4 @@
-package engine;
+package engine.app;
 
 import javax.swing.*;
 
@@ -11,7 +11,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
-public abstract class Graphics implements FastSerializable<Graphics> {
+public abstract class Applet implements FastSerializable<Applet> {
 	
 	private Stack<Graphics2D> stack = new Stack<>();
 	private Graphics2D g;
@@ -25,7 +25,7 @@ public abstract class Graphics implements FastSerializable<Graphics> {
 	public abstract void render();
 	
 	public byte[] save() {return new byte[] {};}
-	public <T extends Graphics> T load(byte[] bytes) {return null;}
+	public <T extends Applet> T load(byte[] bytes) {return null;}
 	
 	public Settings getSettings() {return this.s;}
 	
@@ -161,8 +161,8 @@ public abstract class Graphics implements FastSerializable<Graphics> {
 	public void fill(int rgb, boolean hasAlpha) {this.g.setColor(new Color(rgb, hasAlpha));}
 	public void fill(int rgb) {this.g.setColor(new Color(rgb));}
 	
-	public Graphics2D getGraphics() {return this.g;}
-	public JFrame getFrame() {return this.j;}
+//	public Graphics2D getGraphics() {return this.g;}
+//	public JFrame getFrame() {return this.j;}
 
 	@Override
 	public byte[] serialize() {
@@ -172,15 +172,15 @@ public abstract class Graphics implements FastSerializable<Graphics> {
 	}
 
 	@Override
-	public Graphics deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
+	public Applet deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		// TODO Auto-generated method stub
 		this.load(null);
 		return null;
 	}
 
 	@Override
-	public Graphics[] getProtoArray(int length) {
-		return new Graphics[length];
+	public Applet[] getProtoArray(int length) {
+		return new Applet[length];
 	}
 
 }
