@@ -1,8 +1,8 @@
 package engine.neural.activations;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Activation;
-import engine.util.ByteHelper;
-import engine.util.data.Serializable;
 
 public class ReLU implements Activation {
 
@@ -22,7 +22,7 @@ public class ReLU implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Activation deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		return new ReLU();
 	}
 

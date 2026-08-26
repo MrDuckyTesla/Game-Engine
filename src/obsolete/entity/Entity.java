@@ -3,7 +3,6 @@ package obsolete.entity;
 import java.util.ArrayList;
 
 import engine.Room;
-import engine.util.*;
 import obsolete.Animator;
 import obsolete.Point;
 import obsolete.ToolKit;

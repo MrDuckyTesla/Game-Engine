@@ -1,9 +1,9 @@
 package engine.neural.initializers;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.*;
-import engine.util.ByteHelper;
-import engine.util.Matrix;
-import engine.util.data.Serializable;
+import engine.neural.util.Matrix;
 
 public class Kaiming implements Initializer {
 
@@ -33,7 +33,7 @@ public class Kaiming implements Initializer {
 		return ByteHelper.toBytes(this.uniform);
 	}
 	@Override
-	public Initializer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Initializer deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		return new Kaiming(b.readBool());
 	}
 	@Override

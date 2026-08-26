@@ -1,9 +1,9 @@
 package engine.neural.costs;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Cost;
-import engine.util.ByteHelper;
-import engine.util.Vector;
-import engine.util.data.Serializable;
+import engine.neural.util.Vector;
 
 public class RootMeanSquare implements Cost {
 
@@ -29,7 +29,7 @@ public class RootMeanSquare implements Cost {
 	}
 
 	@Override
-	public Cost deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Cost deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

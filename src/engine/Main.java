@@ -1,7 +1,5 @@
 package engine;
 
-import engine.graphics.Graphics;
-
 public class Main extends Graphics {
 	
 	private static Graphics game = new Main();

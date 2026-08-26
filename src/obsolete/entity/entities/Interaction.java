@@ -1,7 +1,6 @@
 package obsolete.entity.entities;
 
 import engine.Room;
-import engine.util.*;
 import obsolete.Point;
 import obsolete.ToolKit;
 import obsolete.entity.*;

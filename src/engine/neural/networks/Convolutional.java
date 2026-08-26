@@ -1,9 +1,9 @@
 package engine.neural.networks;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Network;
-import engine.util.ByteHelper;
-import engine.util.Vector;
-import engine.util.data.Serializable;
+import engine.neural.util.Vector;
 
 public class Convolutional implements Network {
 
@@ -42,7 +42,7 @@ public class Convolutional implements Network {
 	}
 
 	@Override
-	public Network deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Network deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

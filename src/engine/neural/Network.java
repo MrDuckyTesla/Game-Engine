@@ -1,9 +1,9 @@
 package engine.neural;
 
-import engine.util.Vector;
-import engine.util.data.Serializable;
+import engine.data.serializations.FastSerializable;
+import engine.neural.util.Vector;
 
-public interface Network extends Serializable<Network> {
+public interface Network extends FastSerializable<Network> {
 	
 	public abstract void train(Vector[] inputs, Vector[] expected, int epochs);
 	

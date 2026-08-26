@@ -1,8 +1,9 @@
 package engine.neural.costs;
 
-import engine.util.*;
-import engine.util.data.Serializable;
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Cost;
+import engine.neural.util.Vector;
 
 public class MeanAbsoluteError implements Cost {
 
@@ -32,7 +33,7 @@ public class MeanAbsoluteError implements Cost {
 	}
 
 	@Override
-	public Cost deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Cost deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		return new MeanAbsoluteError();
 	}
 

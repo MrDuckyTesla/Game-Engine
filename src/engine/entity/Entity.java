@@ -1,9 +1,9 @@
 package engine.entity;
 
-public class Entity {
+public interface Entity {
 
-	public Entity() {
-		// TODO Auto-generated constructor stub
-	}
+	public abstract void update();
+	
+	public abstract void show();
 
 }

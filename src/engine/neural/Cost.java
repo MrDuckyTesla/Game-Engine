@@ -1,9 +1,9 @@
 package engine.neural;
 
-import engine.util.Vector;
-import engine.util.data.Serializable;
+import engine.data.serializations.FastSerializable;
+import engine.neural.util.Vector;
 
-public interface Cost extends Serializable<Cost> {
+public interface Cost extends FastSerializable<Cost> {
 	
 	public abstract float calculate(Vector output, Vector target);
 	
