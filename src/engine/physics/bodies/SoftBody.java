@@ -1,8 +1,9 @@
 package engine.physics.bodies;
 
+import engine.app.Applet;
 import engine.physics.Body;
 import engine.physics.Collider;
-import engine.physics.Force;
+import engine.physics.util.State;
 
 public class SoftBody implements Body {
 
@@ -11,13 +12,19 @@ public class SoftBody implements Body {
 	}
 
 	@Override
-	public Collider getCollider() {
+	public Collider[] getColliders() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Force getForce() {
+	public void show(Applet app) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState() {
 		// TODO Auto-generated method stub
 		return null;
 	}

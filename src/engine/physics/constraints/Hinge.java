@@ -2,7 +2,6 @@ package engine.physics.constraints;
 
 import engine.physics.Body;
 import engine.physics.Constraint;
-import engine.physics.Force;
 
 public class Hinge implements Constraint {
 
@@ -18,18 +17,6 @@ public class Hinge implements Constraint {
 
 	@Override
 	public Body getBodyB() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Force getForceA(float dt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Force getForceB(float dt) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,6 +1,6 @@
 package obsolete.entity.movement;
 
-import obsolete.Point;
+import engine.physics.util.Point;
 import obsolete.entity.Entity;
 import obsolete.entity.Move;
 import obsolete.entity.enums.Moves;

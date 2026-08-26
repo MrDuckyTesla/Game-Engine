@@ -2,7 +2,7 @@ package engine;
 
 import java.util.*;
 
-import obsolete.Point;
+import engine.physics.util.Point;
 import obsolete.ToolKit;
 import obsolete.entity.*;
 import obsolete.entity.entities.Player;

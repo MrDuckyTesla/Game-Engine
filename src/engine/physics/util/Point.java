@@ -1,30 +1,18 @@
-package obsolete;
+package engine.physics.util;
 
 public class Point implements Comparable<Object> {
 	
 	private float x, y;
 	
 	public Point() {this.instantiate(0, 0);}
-//	public Point(PApplet app) {this.instantiate(app, 0, 0);}
 	public Point(float x) {this.instantiate(x, 0);}
-//	public Point(PApplet app, float x) {this.instantiate(app, x, 0);}
 	public Point(Point p) {this.instantiate(p.getX(), p.getY());}
-//	public Point(PApplet app, Point p) {this.instantiate(app, p.getX(), p.getY());}
 	public Point(float x, float y) {this.instantiate(x, y);}
-//	public Point(PApplet app, float x, float y) {this.instantiate(app, x, y);}
 	public Point(float[] coord) {this.instantiate(coord[0], coord[1]);}
-//	public Point(PApplet app, float[] coord) {this.instantiate(app, coord[0], coord[1]);}
 	
 	private void instantiate(float x, float y) {this.x = x; this.y = y;}
-//	private void instantiate(PApplet app, float x, float y) {Point.app = app; Point.hasApp = true; this.x = x; this.y = y;}
-//	
-//	public boolean rectApp(float w, float h) {if (!Point.hasApp) {return false;} Point.app.rect(this.x, this.y, w, h); return true;}
+	
 	public boolean isZero() {return this.x == 0 && this.y == 0;}
-//
-//	public boolean displayPoint() {if (!Point.hasApp) {return false;} Point.app.point(this.x, this.y); return true;}
-//	public boolean displayPoint(float r) {if (!Point.hasApp) {return false;} Point.app.circle(this.x, this.y, r); return true;}
-//	public boolean displayPoint(PApplet app) {app.point(this.x, this.y); return true;}
-//	public boolean displayPoint(PApplet app, float r) {app.circle(this.x, this.y, r); return true;}
 	
 	public void resetX() {this.x = 0;}
 	public void resetY() {this.y = 0;}

@@ -2,7 +2,7 @@ package obsolete.entity;
 
 import java.util.ArrayList;
 
-import obsolete.Point;
+import engine.physics.util.Point;
 import obsolete.entity.enums.Moves;
 
 public abstract class Move {

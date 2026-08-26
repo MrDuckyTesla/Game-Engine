@@ -3,8 +3,8 @@ package obsolete.entity;
 import java.util.ArrayList;
 
 import engine.Room;
+import engine.physics.util.Point;
 import obsolete.Animator;
-import obsolete.Point;
 import obsolete.ToolKit;
 import obsolete.entity.enums.Entities;
 import obsolete.entity.enums.Moves;

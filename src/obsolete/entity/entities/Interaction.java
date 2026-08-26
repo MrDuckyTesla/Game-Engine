@@ -1,7 +1,7 @@
 package obsolete.entity.entities;
 
 import engine.Room;
-import obsolete.Point;
+import engine.physics.util.Point;
 import obsolete.ToolKit;
 import obsolete.entity.*;
 import obsolete.entity.enums.Entities;

@@ -20,6 +20,8 @@ public abstract class Applet implements FastSerializable<Applet> {
 	private long time = 0L, lastTick = 0L, lastFrame = 0L;
 	private boolean isOpen = true;
 	
+	public abstract void setup();
+	
 	public abstract void update();
 	
 	public abstract void render();

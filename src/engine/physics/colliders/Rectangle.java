@@ -3,9 +3,11 @@ package engine.physics.colliders;
 import engine.physics.Collider;
 
 public class Rectangle implements Collider {
+	
+	private int wid, hgt;
 
-	public Rectangle() {
-		// TODO Auto-generated constructor stub
+	public Rectangle(int wid, int hgt) {
+		this.wid = wid; this.hgt = hgt;
 	}
 
 	@Override
@@ -13,5 +15,9 @@ public class Rectangle implements Collider {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public int getWid() {return this.wid;}
+	
+	public int getHgt() {return this.hgt;}
 
 }

@@ -5,9 +5,5 @@ public interface Constraint {
 	public abstract Body getBodyA();
 	
 	public abstract Body getBodyB();
-	
-	public abstract Force getForceA(float dt);
-	
-	public abstract Force getForceB(float dt);
 
 }

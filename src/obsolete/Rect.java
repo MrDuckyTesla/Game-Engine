@@ -1,5 +1,6 @@
 package obsolete;
 
+import engine.physics.util.Point;
 import processing.core.PApplet;
 
 /**

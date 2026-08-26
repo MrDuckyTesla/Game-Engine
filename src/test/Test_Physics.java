@@ -1,6 +1,9 @@
 package test;
 
 import engine.app.Applet;
+import engine.physics.*;
+import engine.physics.bodies.Container;
+import engine.physics.colliders.Rectangle;
 
 public class Test_Physics extends Applet {
 	
@@ -10,10 +13,17 @@ public class Test_Physics extends Applet {
 		test.getSettings().setWindowName("Physics Engine Test!");
 		test.run();
 	}
+	
+	@Override
+	public void setup() {
+		Collider rect = new Rectangle(200, 200);
+		Body con = new Container(rect);
+		
+	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -2,8 +2,12 @@ package engine.physics;
 
 public interface Body {
 	
-	public abstract Collider getCollider();
+	public abstract Collider[] getColliders();
 	
-	public abstract Force getForce();
+	public abstract void show(engine.app.Applet app);
+	
+	public abstract engine.physics.util.State getState();
+	
+	
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import engine.Room;
+import engine.physics.util.Point;
 import obsolete.entity.Entity;
 import processing.core.PApplet;
 import processing.core.PImage;

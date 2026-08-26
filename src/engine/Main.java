@@ -12,6 +12,12 @@ public class Main extends Applet {
 		game.run();
 		
 	}
+	
+	@Override
+	public void setup() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void update() {

@@ -2,6 +2,7 @@ package obsolete;
 
 import java.util.ArrayList;
 
+import engine.physics.util.Point;
 import processing.core.PApplet;
 
 public class Path {

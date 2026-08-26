@@ -2,11 +2,10 @@ package engine.physics.constraints;
 
 import engine.physics.Body;
 import engine.physics.Constraint;
-import engine.physics.Force;
 
-public class Nail implements Constraint {
+public class Anchor implements Constraint {
 
-	public Nail() {
+	public Anchor() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,18 +17,6 @@ public class Nail implements Constraint {
 
 	@Override
 	public Body getBodyB() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Force getForceA(float dt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Force getForceB(float dt) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -3,9 +3,11 @@ package engine.physics.colliders;
 import engine.physics.Collider;
 
 public class Circle implements Collider {
+	
+	private int radius;
 
-	public Circle() {
-		// TODO Auto-generated constructor stub
+	public Circle(int radius) {
+		this.radius = radius;
 	}
 
 	@Override
@@ -13,5 +15,7 @@ public class Circle implements Collider {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public int getRadius() {return this.radius;}
 
 }
