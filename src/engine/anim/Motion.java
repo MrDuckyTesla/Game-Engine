@@ -2,6 +2,6 @@ package engine.anim;
 
 public interface Motion {
 	
-	public abstract engine.physics.Vector2D move();
+	public abstract engine.physics.util.Vector2D move();
 
 }

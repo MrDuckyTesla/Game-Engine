@@ -1,4 +1,4 @@
-package engine.physics;
+package engine.physics.colliders;
 
 public class Rectangle {
 

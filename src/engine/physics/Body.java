@@ -1,5 +1,5 @@
 package engine.physics;
 
-public interface Force {
+public interface Body {
 
 }

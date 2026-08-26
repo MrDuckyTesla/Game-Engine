@@ -1,7 +1,7 @@
 package engine.anim.motions;
 
 import engine.anim.Motion;
-import engine.physics.Vector2D;
+import engine.physics.util.Vector2D;
 
 public class Sine implements Motion {
 
