@@ -3,11 +3,11 @@
 
 package engine.neural.networks;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.*;
-import engine.util.ByteHelper;
-import engine.util.Matrix;
-import engine.util.Vector;
-import engine.util.data.Serializable;
+import engine.neural.util.Matrix;
+import engine.neural.util.Vector;
 
 /**
  * "Simple" multi-layer neural network
@@ -181,7 +181,7 @@ public class Feedforward implements Network {
 	}
 
 	@Override
-	public Network deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Network deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 //		Feedforward(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer)
 		Feedforward f = new Feedforward( 
 			b.readIntArr(),

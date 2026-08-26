@@ -1,8 +1,8 @@
 package engine.neural.activations;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Activation;
-import engine.util.ByteHelper;
-import engine.util.data.Serializable;
 
 public class Softmax implements Activation {
 
@@ -24,7 +24,7 @@ public class Softmax implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Activation deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

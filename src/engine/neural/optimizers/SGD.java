@@ -1,10 +1,10 @@
 package engine.neural.optimizers;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.*;
-import engine.util.ByteHelper;
-import engine.util.Matrix;
-import engine.util.Vector;
-import engine.util.data.Serializable;
+import engine.neural.util.Matrix;
+import engine.neural.util.Vector;
 
 public class SGD implements Optimizer {
 	
@@ -30,7 +30,7 @@ public class SGD implements Optimizer {
 	}
 
 	@Override
-	public Optimizer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Optimizer deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		return new SGD( 
 			b.readFloat()
 		);

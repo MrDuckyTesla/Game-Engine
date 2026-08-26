@@ -1,7 +1,5 @@
 package engine.physics;
 
-import engine.util.Vector2D;
-
 public class Force {
 	
 	private Vector2D acc, vel, pos;

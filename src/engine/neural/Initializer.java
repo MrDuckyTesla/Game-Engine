@@ -1,9 +1,9 @@
 package engine.neural;
 
-import engine.util.Matrix;
-import engine.util.data.Serializable;
+import engine.data.serializations.FastSerializable;
+import engine.neural.util.Matrix;
 
-public interface Initializer extends Serializable<Initializer> {
+public interface Initializer extends FastSerializable<Initializer> {
 	
 	public abstract void initialize(Matrix weights);
 

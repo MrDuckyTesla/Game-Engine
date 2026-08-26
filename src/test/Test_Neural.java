@@ -2,14 +2,14 @@ package test;
 
 import java.io.IOException;
 
+import engine.data.datatypes.FastData;
 import engine.neural.*;
 import engine.neural.activations.*;
 import engine.neural.costs.*;
 import engine.neural.initializers.*;
 import engine.neural.networks.*;
 import engine.neural.optimizers.*;
-import engine.util.Vector;
-import engine.util.data.Data;
+import engine.neural.util.Vector;
 
 public class Test_Neural {
 
@@ -110,7 +110,7 @@ public class Test_Neural {
 			batches++;
 		} 
 //		test.deserialize(new ByteHelper(test.serialize()));
-		Data<Network> d = new Data<>(test);
+		FastData<Network> d = new FastData<>(test);
 		try {
 //			d.setStorage(new Local("data/network.mdt"));
 //			d.save();

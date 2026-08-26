@@ -1,6 +1,5 @@
 package obsolete.entity.movement;
 
-import engine.util.*;
 import obsolete.Point;
 import obsolete.Rect;
 import obsolete.ToolKit;

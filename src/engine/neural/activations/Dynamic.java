@@ -1,22 +1,22 @@
 package engine.neural.activations;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Activation;
-import engine.util.ByteHelper;
-import engine.util.data.Serializable;
 
 public class Dynamic implements Activation {
 	
 	private final Activation[] layer;
 	private int layerNum = 0;
 
-	public Dynamic(Activation[] layer) {
-		if (layer.length == 0) {
+	public Dynamic(Activation... activations) {
+		if (activations.length == 0) {
 			throw new IllegalArgumentException();
-		} for (Activation a : layer) {
+		} for (Activation a : activations) {
 			if (a == null) {
 				throw new IllegalArgumentException();
 			}
-		} this.layer = layer;
+		} this.layer = activations;
 	}
 	
 	public void next() {
@@ -42,7 +42,7 @@ public class Dynamic implements Activation {
 	}
 
 	@Override
-	public Activation deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Activation deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		Dynamic d = new Dynamic((Activation[]) b.readObjArr(prototypes[0]));
 		d.layerNum = b.readInt(); return d;
 	}

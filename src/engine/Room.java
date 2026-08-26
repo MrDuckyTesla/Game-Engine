@@ -2,7 +2,6 @@ package engine;
 
 import java.util.*;
 
-import engine.util.*;
 import obsolete.Point;
 import obsolete.ToolKit;
 import obsolete.entity.*;

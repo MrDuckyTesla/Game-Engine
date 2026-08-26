@@ -1,6 +1,6 @@
 package engine.entity;
 
-import engine.util.Vector2D;
+import engine.physics.Vector2D;
 
 public interface Body {
 	

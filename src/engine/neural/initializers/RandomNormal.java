@@ -1,9 +1,9 @@
 package engine.neural.initializers;
 
+import engine.data.serializations.FastSerializable;
+import engine.data.util.ByteHelper;
 import engine.neural.Initializer;
-import engine.util.ByteHelper;
-import engine.util.Matrix;
-import engine.util.data.Serializable;
+import engine.neural.util.Matrix;
 
 public class RandomNormal implements Initializer {
 
@@ -30,7 +30,7 @@ public class RandomNormal implements Initializer {
 		);
 	}
 	@Override
-	public Initializer deserialize(ByteHelper b, Serializable<?>... prototypes) {
+	public Initializer deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		return new RandomNormal(
 			b.readFloat(), 
 			b.readFloat()
