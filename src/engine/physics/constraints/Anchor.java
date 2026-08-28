@@ -21,4 +21,10 @@ public class Anchor implements Constraint {
 		return null;
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

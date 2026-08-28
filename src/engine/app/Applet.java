@@ -75,6 +75,9 @@ public abstract class Applet implements FastSerializable<Applet> {
 		
 		c.createBufferStrategy(2);
 		BufferStrategy bs = c.getBufferStrategy();
+		
+		this.setup();
+		
 		while (this.isOpen) {
 			this.time = System.nanoTime();
 			

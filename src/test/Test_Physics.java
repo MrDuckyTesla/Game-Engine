@@ -3,7 +3,9 @@ package test;
 import engine.app.Applet;
 import engine.physics.*;
 import engine.physics.bodies.Container;
-import engine.physics.colliders.Rectangle;
+import engine.physics.shapes.Rectangle;
+import engine.physics.util.State;
+import engine.physics.util.Vector2D;
 
 public class Test_Physics extends Applet {
 	
@@ -16,14 +18,13 @@ public class Test_Physics extends Applet {
 	
 	@Override
 	public void setup() {
-		Collider rect = new Rectangle(200, 200);
-		Body con = new Container(rect);
-		
+		Shape rect = new Rectangle(200, 200);
+		State state = new State(new Vector2D(200, 200));
+		Body con = new Container(state, rect);
 	}
 
 	@Override
 	public void update() {
-		
 		
 	}
 

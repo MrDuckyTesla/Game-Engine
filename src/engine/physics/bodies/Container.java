@@ -4,41 +4,38 @@ import java.util.ArrayList;
 
 import engine.app.Applet;
 import engine.physics.Body;
-import engine.physics.Collider;
+import engine.physics.Shape;
 import engine.physics.util.State;
 
 public class Container implements Body {
 	
-	private final Collider[] colliders;
-	public ArrayList<Body> bodies = new ArrayList<>();
+	public final ArrayList<Body> bodies = new ArrayList<>();
+	private final State state;
+	private final Shape collider;
 
-	public Container(Collider...colliders) {
-		this.colliders = colliders;
+	public Container(State state, Shape col, Body... bodies) {
+		this.state = state; this.collider = col;
+		for (Body b : bodies) {this.bodies.add(b);}
 	}
 	
-	public void addBody(Body body) {
-		this.bodies.add(body);
-	}
-	
-	public void removeBody(Body body) {
-		this.bodies.remove(body);
-	}
+	public void addBody(Body body) {this.bodies.add(body);}
+	public void removeBody(Body body) {this.bodies.remove(body);}
 
 	@Override
-	public Collider[] getColliders() {
-		return this.colliders;
+	public Shape[] getColliders() {
+		return new Shape[] {this.collider};
 	}
 
 	@Override
 	public void show(Applet app) {
-		// TODO Auto-generated method stub
+		// Draw 4 rectangles as borders
+		
+		// Draw all bodies inside
+		for (Body b : this.bodies) {b.show(app);}
 		
 	}
 
 	@Override
-	public State getState() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public State getState() {return this.state;}
 
 }

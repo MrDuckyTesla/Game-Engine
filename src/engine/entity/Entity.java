@@ -1,6 +1,6 @@
 package engine.entity;
 
-public interface Entity {
+public interface Entity extends Comparable<Entity> {
 
 	public abstract void update();
 	

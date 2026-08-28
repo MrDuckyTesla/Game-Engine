@@ -2,7 +2,7 @@ package engine.physics.bodies;
 
 import engine.app.Applet;
 import engine.physics.Body;
-import engine.physics.Collider;
+import engine.physics.Shape;
 import engine.physics.util.State;
 
 public class RigidBody implements Body {
@@ -12,7 +12,7 @@ public class RigidBody implements Body {
 	}
 
 	@Override
-	public Collider[] getColliders() {
+	public Shape[] getColliders() {
 		// TODO Auto-generated method stub
 		return null;
 	}
