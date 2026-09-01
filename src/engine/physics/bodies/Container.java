@@ -6,6 +6,7 @@ import engine.app.Applet;
 import engine.physics.Body;
 import engine.physics.Shape;
 import engine.physics.util.State;
+import engine.physics.util.Vector2D;
 
 public class Container implements Body {
 	
@@ -28,8 +29,8 @@ public class Container implements Body {
 
 	@Override
 	public void show(Applet app) {
-		// Draw 4 rectangles as borders
-		
+		Vector2D pos = state.getPos();
+		this.collider.show(app, (int) pos.getX(), (int) pos.getY());
 		// Draw all bodies inside
 		for (Body b : this.bodies) {b.show(app);}
 		

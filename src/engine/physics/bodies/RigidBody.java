@@ -7,7 +7,7 @@ import engine.physics.util.State;
 
 public class RigidBody implements Body {
 
-	public RigidBody() {
+	public RigidBody(Shape s) {
 		// TODO Auto-generated constructor stub
 	}
 
