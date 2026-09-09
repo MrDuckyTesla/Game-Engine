@@ -1,10 +1,12 @@
 package engine.physics;
 
+import engine.physics.bodies.Rigidbody;
+
 public interface Constraint {
 	
-	public abstract Body getBodyA();
+	public abstract Rigidbody getBodyA();
 	
-	public abstract Body getBodyB();
+	public abstract Rigidbody getBodyB();
 	
 	public abstract void update();
 

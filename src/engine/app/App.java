@@ -11,7 +11,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
-public abstract class Applet implements FastSerializable<Applet> {
+public abstract class App implements FastSerializable<App> {
 	
 	private Stack<Graphics2D> stack = new Stack<>();
 	private Graphics2D g;
@@ -27,7 +27,7 @@ public abstract class Applet implements FastSerializable<Applet> {
 	public abstract void render();
 	
 	public byte[] save() {return new byte[] {};}
-	public <T extends Applet> T load(byte[] bytes) {return null;}
+	public <T extends App> T load(byte[] bytes) {return null;}
 	
 	public Settings getSettings() {return this.s;}
 	
@@ -177,15 +177,15 @@ public abstract class Applet implements FastSerializable<Applet> {
 	}
 
 	@Override
-	public Applet deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
+	public App deserialize(ByteHelper b, FastSerializable<?>... prototypes) {
 		// TODO Auto-generated method stub
 		this.load(null);
 		return null;
 	}
 
 	@Override
-	public Applet[] getProtoArray(int length) {
-		return new Applet[length];
+	public App[] getProtoArray(int length) {
+		return new App[length];
 	}
 
 }

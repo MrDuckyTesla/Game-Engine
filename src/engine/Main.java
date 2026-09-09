@@ -1,10 +1,10 @@
 package engine;
 
-import engine.app.Applet;
+import engine.app.App;
 
-public class Main extends Applet {
+public class Main extends App {
 	
-	private static Applet game = new Main();
+	private static App game = new Main();
 	public int x = 0, add = 1;
 	
 	public static void main(String[] args) {

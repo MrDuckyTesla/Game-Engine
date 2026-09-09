@@ -1,25 +1,32 @@
 package engine.physics.shapes;
 
-import engine.app.Applet;
+import engine.app.App;
+import engine.physics.Body;
 import engine.physics.Collision;
-import engine.physics.Shape;
+import engine.physics.util.State;
 
-public class Polygon implements Shape {
+public class Polygon implements Body {
 
 	public Polygon() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Collision getCollision(Shape other) {
+	public void show(App app, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void show(Applet app, int x, int y) {
+	public Collision getCollision(Body other) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

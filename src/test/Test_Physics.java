@@ -1,18 +1,17 @@
 package test;
 
-import engine.app.Applet;
+import engine.app.App;
 import engine.physics.*;
-import engine.physics.bodies.Container;
-import engine.physics.bodies.RigidBody;
+import engine.physics.bodies.Rigidbody;
 import engine.physics.shapes.Circle;
 import engine.physics.shapes.Rectangle;
 import engine.physics.util.State;
 import engine.physics.util.Vector2D;
 
-public class Test_Physics extends Applet {
+public class Test_Physics extends App {
 	
-	private static final Applet test = new Test_Physics();
-	private Container con;
+	private static final App test = new Test_Physics();
+//	private Container con;
 
 	public static void main(String[] args) {
 		test.getSettings().setWindowName("Physics Engine Test!");
@@ -21,10 +20,9 @@ public class Test_Physics extends Applet {
 	
 	@Override
 	public void setup() {
-		Shape rect = new Rectangle(200, 200);
-		State state = new State(new Vector2D(200, 200));
-		con = new Container(state, rect);
-		con.addBody(new RigidBody(new Circle(10)));
+		Body rect = new Rectangle(200, 200);
+//		con = new Container(state, rect);
+//		con.addBody(new RigidBody(new RigidCircle(10)));
 	}
 
 	@Override
@@ -36,7 +34,7 @@ public class Test_Physics extends Applet {
 	public void render() {
 		test.background();
 		test.rect(400, 400, 20, 20);
-		con.show(test);
+//		con.show(test);
 		
 	}
 }

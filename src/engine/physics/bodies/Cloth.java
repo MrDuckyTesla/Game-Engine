@@ -5,7 +5,7 @@ import engine.physics.Body;
 import engine.physics.Collision;
 import engine.physics.util.State;
 
-public class Rigidbody implements Body {
+public class Cloth implements Body {
 
 	@Override
 	public void show(App app) {

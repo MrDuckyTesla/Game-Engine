@@ -1,7 +1,7 @@
 package engine.physics.constraints;
 
-import engine.physics.Body;
 import engine.physics.Constraint;
+import engine.physics.bodies.Rigidbody;
 
 public class Spring implements Constraint {
 
@@ -10,13 +10,13 @@ public class Spring implements Constraint {
 	}
 
 	@Override
-	public Body getBodyA() {
+	public Rigidbody getBodyA() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Body getBodyB() {
+	public Rigidbody getBodyB() {
 		// TODO Auto-generated method stub
 		return null;
 	}

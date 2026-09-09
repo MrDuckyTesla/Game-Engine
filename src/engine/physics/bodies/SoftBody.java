@@ -1,30 +1,26 @@
 package engine.physics.bodies;
 
-import engine.app.Applet;
+import engine.app.App;
 import engine.physics.Body;
-import engine.physics.Shape;
+import engine.physics.Collision;
 import engine.physics.util.State;
 
-public class SoftBody implements Body {
-
-	public SoftBody() {
-		// TODO Auto-generated constructor stub
-	}
+public class Softbody implements Body {
 
 	@Override
-	public Shape[] getColliders() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void show(Applet app) {
+	public void show(App app) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public State getState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collision getCollision(Body other) {
 		// TODO Auto-generated method stub
 		return null;
 	}
