@@ -20,7 +20,7 @@ public class Test_Physics extends App {
 	
 	@Override
 	public void setup() {
-		Body rect = new Rectangle(200, 200);
+//		Body rect = new Rectangle(200, 200);
 //		con = new Container(state, rect);
 //		con.addBody(new RigidBody(new RigidCircle(10)));
 	}
