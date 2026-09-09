@@ -7,6 +7,7 @@ import engine.physics.Body;
 import engine.physics.Collision;
 import engine.physics.Shape;
 import engine.physics.util.State;
+import engine.physics.util.Vector2D;
 
 public class Container implements Body {
 	
@@ -24,7 +25,8 @@ public class Container implements Body {
 
 	@Override
 	public void show(App app) {
-		this.shape.show(app);
+		Vector2D pos = state.getPos();
+		this.shape.show(app, (int) pos.getX(), (int) pos.getY());
 		// Draw all bodies inside
 		for (Body b : this.bodies) {b.show(app);}
 	}
