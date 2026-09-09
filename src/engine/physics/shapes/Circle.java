@@ -20,8 +20,8 @@ public class Circle implements Body {
 	}
 	
 	@Override
-	public void show(App app, int x, int y) {
-		app.circ(x, y, this.radius);
+	public void show(App app) {
+//		app.circ(x, y, this.radius);
 	}
 	
 	@Override

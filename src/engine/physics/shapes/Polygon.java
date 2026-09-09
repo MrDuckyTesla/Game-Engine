@@ -12,7 +12,7 @@ public class Polygon implements Body {
 	}
 
 	@Override
-	public void show(App app, int x, int y) {
+	public void show(App app) {
 		// TODO Auto-generated method stub
 		
 	}
