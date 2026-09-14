@@ -17,30 +17,30 @@ public class Feedforward implements Network {
 	/**
 	 * Keeps track of the network geometry
 	 */
-	private final int[] networkSizes;
+	protected final int[] networkSizes;
 	
-	private Vector[] biases, activations, preActivations;
-	private Matrix[] weights;
+	protected Vector[] biases, activations, preActivations;
+	protected Matrix[] weights;
 	
 	/**
 	 * Variable that tracks the initializer being used
 	 */
-	private final Initializer initializer;
+	protected final Initializer initializer;
 	
 	/**
 	 * Variable that tracks the activation function being used
 	 */
-	private final Activation activation;
+	protected final Activation activation;
 	
 	/**
 	 * Variable that tracks the cost function being used
 	 */
-	private final Cost cost;
+	protected final Cost cost;
 	
 	/**
 	 * Variable that tracks the optimizer being used
 	 */
-	private final Optimizer optimizer;
+	protected final Optimizer optimizer;
 	
 	/**
 	 * Variable that keeps track of the last cost of the network
@@ -80,7 +80,7 @@ public class Feedforward implements Network {
 		}
 	}
 	
-	private Vector forward(Vector input) {
+	public Vector forward(Vector input) {
 		if (input.getHgt() != this.weights[0].getWid()) {
 			throw new IllegalArgumentException("Input size mismatch");
 		} // Activations has length + 1 compared to other arrays
@@ -99,7 +99,7 @@ public class Feedforward implements Network {
 		} return input;  // Return prediction
 	}
 	
-	private void backward(Vector output, Vector expected) {
+	public void backward(Vector output, Vector expected) {
 		// Initialize delta with error vector
 		Vector delta = this.cost.derivative(output, expected);
 		// Element wise multiplication of the activation derivative of last preactivation
