@@ -7,12 +7,14 @@ import engine.neural.*;
 import engine.neural.util.Matrix;
 import engine.neural.util.Vector;
 
+import engine.neural.networks.Policy.Simulation.SimulationResult;
+
 public class Policy<T> extends Feedforward {
 	
 	private RewardFunction<T> rewardFun;
 	private Vector noise;
 	private Random rand = new Random();
-	private float reward;
+	private float reward, avgReward = 0;
 
 	public Policy(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer, RewardFunction<T> reward) {
 		super(networkSizes, initializer, activation, cost, optimizer);
@@ -27,12 +29,23 @@ public class Policy<T> extends Feedforward {
 	
 	@FunctionalInterface
 	public interface Simulation<T> {
-		T[] simulate(Vector noise);
+		SimulationResult<T> simulate(Vector noise, Object...args);
+		
+		public static class SimulationResult<T> {
+			public final T[] sim;
+			public final Object[] arg;
+			
+			public SimulationResult(T[] sim, Object...args) {
+				this.sim = sim; this.arg = args;
+			}
+		}
 	}
 	
 	public void correct() {
 		Vector delta = this.noise.copy();
-		delta.scaleMatrix(-reward);
+		this.avgReward = 0.99f*this.avgReward + 0.01f*reward;
+		delta.scaleMatrix(-(reward - this.avgReward));
+//		delta.scaleMatrix(-reward);
 		// Element wise multiplication of the activation derivative of last preactivation
 		for (int i = 0; i < delta.getHgt(); i++) {
 			delta.scale(i, this.activation.derivative(this.preActivations[this.weights.length-1].get(i)));
@@ -64,11 +77,11 @@ public class Policy<T> extends Feedforward {
 		
 		for (int i = 0; i < num; i++) {
 			for (int j = 0; j < this.noise.getLength(); j++) {
-				this.noise.set(j, (float) this.rand.nextGaussian()/50);
-			} T[] currSim = (T[]) s.simulate(this.noise);
-			float currReward = this.rewardFun.calculate(currSim, args);
+				this.noise.set(j, (float) this.rand.nextGaussian()/10);
+			} SimulationResult<T> result = s.simulate(this.noise, args);
+			float currReward = this.rewardFun.calculate(result.sim, result.arg);
 			if (currReward > bestReward) {
-				stateOfBestSim = currSim; bestReward = currReward;
+				stateOfBestSim = result.sim; bestReward = currReward;
 				bestNoise = new Vector(this.noise.getMatrix());
 			}
 		} this.noise = bestNoise; this.reward = bestReward;

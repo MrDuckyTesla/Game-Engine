@@ -155,6 +155,12 @@ public class Matrix implements Iterable<Float>, FastSerializable<Matrix> {
 		} return false;
 	}
 	
+	public void negate() {
+		for (int i = 0; i < this.matrix.length; i++) {
+			this.matrix[i] *= -1;
+		}
+	}
+	
 	// Get
 	
 	public int getLength() {return this.matrix.length;}
