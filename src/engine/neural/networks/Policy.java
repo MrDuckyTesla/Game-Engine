@@ -12,7 +12,7 @@ import engine.neural.networks.Policy.Simulation.SimulationResult;
 public class Policy<T> extends Feedforward {
 	
 	private RewardFunction<T> rewardFun;
-	private Vector noise;
+	private Vector noise, lastPrediction;
 	private Random rand = new Random();
 	private float reward, avgReward = 0;
 
@@ -42,9 +42,14 @@ public class Policy<T> extends Feedforward {
 	}
 	
 	public void correct() {
-		Vector delta = this.noise.copy();
-		this.avgReward = 0.99f*this.avgReward + 0.01f*reward;
-		delta.scaleMatrix(-(reward - this.avgReward));
+		
+		Vector delta = this.lastPrediction.copy();
+		delta.addMatrix(this.noise.getMatrix());
+		delta.addMatrix(this.activations[this.activations.length - 1].copy().negate().getMatrix());
+		
+//		this.avgReward = 0.99f*this.avgReward + 0.01f*reward;
+//		delta.scaleMatrix(-(reward - this.avgReward));
+		
 //		delta.scaleMatrix(-reward);
 		// Element wise multiplication of the activation derivative of last preactivation
 		for (int i = 0; i < delta.getHgt(); i++) {
@@ -70,20 +75,32 @@ public class Policy<T> extends Feedforward {
 		}
 	}
 	
-	public  T[] computeBestNoise(int num, Simulation<T> s, Object...args) {
-		T[] stateOfBestSim = null;
-		Vector bestNoise = null;
-		float bestReward = Float.NEGATIVE_INFINITY;
+	public  T[] computeBestNoise(int num, Vector prediction, Simulation<T> s, Object...args) {
+		
+		Vector bestNoise = new Vector(this.noise.getMatrix());
+		
+		this.lastPrediction = prediction.copy();
+
+		SimulationResult<T> bestResult = s.simulate(bestNoise, args);
+		float bestReward = this.rewardFun.calculate(bestResult.sim, bestResult.arg);
+
+		T[] stateOfBestSim = bestResult.sim;
 		
 		for (int i = 0; i < num; i++) {
-			for (int j = 0; j < this.noise.getLength(); j++) {
-				this.noise.set(j, (float) this.rand.nextGaussian()/10);
-			} SimulationResult<T> result = s.simulate(this.noise, args);
+			Vector candidate = new Vector(bestNoise.getMatrix());
+			for (int j = 0; j < candidate.getLength(); j++) {
+				candidate.set(j, Math.max(-1, Math.min(1, candidate.get(j) + (float) this.rand.nextGaussian() * 0.1f)));
+			}
+			SimulationResult<T> result = s.simulate(candidate, args);
 			float currReward = this.rewardFun.calculate(result.sim, result.arg);
 			if (currReward > bestReward) {
 				stateOfBestSim = result.sim; bestReward = currReward;
-				bestNoise = new Vector(this.noise.getMatrix());
+				bestNoise = new Vector(candidate.getMatrix());
 			}
+//			if (-currReward > bestReward) {
+//				stateOfBestSim = result.sim; bestReward = -currReward;
+//				bestNoise = new Vector(this.noise.getMatrix()); bestNoise.negate();
+//			}
 		} this.noise = bestNoise; this.reward = bestReward;
 		return stateOfBestSim;
 	}

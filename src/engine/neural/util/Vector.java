@@ -64,4 +64,12 @@ public class Vector extends Matrix {
 		return new Vector[length];
 	}
 	
+	@Override
+	public Vector negate() {
+		float[] matrix = this.getMatrix().clone();
+		for (int i = 0; i < matrix.length; i++) {
+			matrix[i] *= -1;
+		} return new Vector(matrix);
+	}
+	
 }
