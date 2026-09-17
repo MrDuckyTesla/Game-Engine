@@ -43,9 +43,8 @@ public class Policy<T> extends Feedforward {
 	public void backward() {
 		// Create delta vector as prediction + noise
 		Vector delta = this.lastPrediction.copy();
-		delta.addMatrix(this.noise.negate().getMatrix());
-//		Vector delta = noise.negate();
-//		System.out.println(delta);
+		this.noise.scaleMatrix(-1);
+		delta.addMatrix(this.noise.getMatrix());
 		// Element wise multiplication of the activation derivative of last preactivation
 		for (int i = 0; i < delta.getHgt(); i++) {
 			delta.scale(i, this.activation.derivative(this.preActivations[this.weights.length-1].get(i)));
@@ -95,7 +94,6 @@ public class Policy<T> extends Feedforward {
 				stateOfBestSim = result.sim; bestReward = currReward;
 				bestNoise = new Vector(candidate.getMatrix());
 			} // Set noise to best noise and return the simulation
-//			System.out.println(bestReward);
 		} this.noise = bestNoise; return stateOfBestSim;
 	}
 	
