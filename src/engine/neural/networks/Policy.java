@@ -14,7 +14,6 @@ public class Policy<T> extends Feedforward {
 	private RewardFunction<T> rewardFun;
 	private Vector noise, lastPrediction;
 	private Random rand = new Random();
-	private float reward, avgReward = 0;
 
 	public Policy(int[] networkSizes, Initializer initializer, Activation activation, Cost cost, Optimizer optimizer, RewardFunction<T> reward) {
 		super(networkSizes, initializer, activation, cost, optimizer);
@@ -41,16 +40,12 @@ public class Policy<T> extends Feedforward {
 		}
 	}
 	
-	public void correct() {
-		
+	public void backward() {
+		// Create delta vector as prediction + noise
 		Vector delta = this.lastPrediction.copy();
-		delta.addMatrix(this.noise.getMatrix());
-		delta.addMatrix(this.activations[this.activations.length - 1].copy().negate().getMatrix());
-		
-//		this.avgReward = 0.99f*this.avgReward + 0.01f*reward;
-//		delta.scaleMatrix(-(reward - this.avgReward));
-		
-//		delta.scaleMatrix(-reward);
+		delta.addMatrix(this.noise.negate().getMatrix());
+//		Vector delta = noise.negate();
+//		System.out.println(delta);
 		// Element wise multiplication of the activation derivative of last preactivation
 		for (int i = 0; i < delta.getHgt(); i++) {
 			delta.scale(i, this.activation.derivative(this.preActivations[this.weights.length-1].get(i)));
@@ -76,33 +71,32 @@ public class Policy<T> extends Feedforward {
 	}
 	
 	public  T[] computeBestNoise(int num, Vector prediction, Simulation<T> s, Object...args) {
-		
-		Vector bestNoise = new Vector(this.noise.getMatrix());
-		
+		// Set the best noise to the current noise
+		Vector bestNoise = new Vector(this.noise.getMatrix().length);
+		// Set the last prediction to the current prediction
 		this.lastPrediction = prediction.copy();
-
+		// Set the best results to the current simulation
 		SimulationResult<T> bestResult = s.simulate(bestNoise, args);
 		float bestReward = this.rewardFun.calculate(bestResult.sim, bestResult.arg);
-
-		T[] stateOfBestSim = bestResult.sim;
-		
+		T[] stateOfBestSim = bestResult.sim; Vector candidate;
+		// For the amount of simulations requested 
 		for (int i = 0; i < num; i++) {
-			Vector candidate = new Vector(bestNoise.getMatrix());
+			// get a candidate noise vector
+			candidate = new Vector(this.noise.getMatrix().length);
 			for (int j = 0; j < candidate.getLength(); j++) {
-				candidate.set(j, Math.max(-1, Math.min(1, candidate.get(j) + (float) this.rand.nextGaussian() * 0.1f)));
-			}
+				// Add noise to candidate whilst keeping it within -1, 1 range
+				candidate.set(j, (float) rand.nextGaussian());
+			} // Simulate the candidate with noise
 			SimulationResult<T> result = s.simulate(candidate, args);
+			// Get the reward associated with candidates simulation
 			float currReward = this.rewardFun.calculate(result.sim, result.arg);
+			// Replace best reward if current reward is better
 			if (currReward > bestReward) {
 				stateOfBestSim = result.sim; bestReward = currReward;
 				bestNoise = new Vector(candidate.getMatrix());
-			}
-//			if (-currReward > bestReward) {
-//				stateOfBestSim = result.sim; bestReward = -currReward;
-//				bestNoise = new Vector(this.noise.getMatrix()); bestNoise.negate();
-//			}
-		} this.noise = bestNoise; this.reward = bestReward;
-		return stateOfBestSim;
+			} // Set noise to best noise and return the simulation
+//			System.out.println(bestReward);
+		} this.noise = bestNoise; return stateOfBestSim;
 	}
 	
 	public Vector getNoise() {return this.noise;}
